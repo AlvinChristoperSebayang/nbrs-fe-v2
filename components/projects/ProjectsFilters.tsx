@@ -59,6 +59,7 @@ function ChipRow({
             <Link
               key={option.id}
               href={buildTargetHref(option.slug)}
+              scroll={false}
               aria-pressed={isActive}
               className={`inline-flex items-center gap-2 rounded-full border px-5 py-2.5 text-sm transition ${
                 isActive
@@ -104,6 +105,7 @@ export function ProjectsFilters({
         {hasActiveFilters && (
           <Link
             href="/projects"
+            scroll={false}
             className="inline-flex shrink-0 items-center rounded-full border border-black/20 px-5 py-2.5 text-sm text-black transition hover:border-black"
           >
             Reset Filters

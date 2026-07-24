@@ -4,6 +4,7 @@ import { Container } from "@/components/ui/Container";
 import { ProjectsHero } from "@/components/projects/ProjectsHero";
 import { ProjectsFilters } from "@/components/projects/ProjectsFilters";
 import { ProjectsGrid } from "@/components/projects/ProjectsGrid";
+import { PreserveScrollOnNavigate } from "@/components/projects/PreserveScrollOnNavigate";
 
 export const dynamic = "force-dynamic";
 
@@ -82,27 +83,30 @@ export default async function ProjectsIndexPage(
         subheading={pageSubheading}
       />
       <Container className="py-16">
-        <ProjectsFilters
-          sectors={sectors}
-          practices={practices}
-          selectedSectors={selectedSectors}
-          selectedPractices={selectedPractices}
-        />
+        <PreserveScrollOnNavigate>
+          <ProjectsFilters
+            sectors={sectors}
+            practices={practices}
+            selectedSectors={selectedSectors}
+            selectedPractices={selectedPractices}
+          />
 
-        <div className="mt-12">
-          <ProjectsGrid projects={projects} />
-        </div>
-
-        {hasMore && (
-          <div className="mt-12 flex justify-center">
-            <Link
-              href={`/projects?${loadMoreParams.toString()}`}
-              className="inline-flex items-center rounded-full border border-black px-8 py-3 text-sm uppercase text-black transition hover:bg-black hover:text-white"
-            >
-              Load more
-            </Link>
+          <div className="mt-12">
+            <ProjectsGrid projects={projects} />
           </div>
-        )}
+
+          {hasMore && (
+            <div className="mt-12 flex justify-center">
+              <Link
+                href={`/projects?${loadMoreParams.toString()}`}
+                scroll={false}
+                className="inline-flex items-center rounded-full border border-black px-8 py-3 text-sm uppercase text-black transition hover:bg-black hover:text-white"
+              >
+                Load more
+              </Link>
+            </div>
+          )}
+        </PreserveScrollOnNavigate>
       </Container>
     </>
   );
