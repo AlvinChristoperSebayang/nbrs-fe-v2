@@ -1,0 +1,14 @@
+header::before{
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 0%;
+        background-color: white;
+        z-index: 5;
+        transition: height 0.3s ease-in-out;
+}
+header.scrolled::before{
+        height: 100%;
+}

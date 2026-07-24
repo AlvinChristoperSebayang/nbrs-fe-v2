@@ -1,5 +1,4 @@
 @import "tailwindcss";
-
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -8,8 +7,8 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-roboto);
+  --font-heading: var(--font-trade-gothic);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -19,8 +18,80 @@
   }
 }
 
+@keyframes hero-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+}
+
+.font-trade-gothic {
+  font-family: var(--font-heading);
+}
+@layer components {
+  .container {
+    width: 100%;
+    padding-inline: 1.25rem; /* 20px */
+  }
+
+  @media (min-width: 1024px) {
+    .container {
+      padding-inline: 8.4375rem; /* 135px */
+    }
+    .section-about .image__wrapper{
+      height: calc(100% + 100px) !important;
+    }
+  }
+  @media(min-width:768px){
+    .image__wrapper{
+      width: calc(100% + 40px);
+      margin-left: -20px;
+    }
+  }
+  @media(min-width: 1280px) {
+    .container {
+      padding-inline: 55px; 
+      max-width: 1280px;
+    }
+    
+  }
+  @media(min-width: 1536px) {
+    .container {
+      max-width: 1536px;
+      padding-inline: 8.4375rem; 
+    }
+  }
+}
+
+.swiper-pagination-bullet{
+  @apply !w-8 !rounded-none !h-0.5
+}
+.swiper-pagination-horizontal{
+  @apply !w-fit
+}
+
+@media(max-width:768px){
+  .image-about__wrapper{
+    width: calc(100% + 40px);
+    margin-left: -20px;
+  }
+  .hero-slider .slider-area{
+    margin-left: 20px;
+  }
+ .hero-slider .swipe-controls{
+    margin-right: 35px;
+  }
+  .hero-slider .swiper-pagination-bullet{
+    width:18px !important;
+  }
 }
