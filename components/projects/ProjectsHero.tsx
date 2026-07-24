@@ -10,7 +10,7 @@ export function ProjectsHero({
   subheading?: string | null;
 } = {}) {
   return (
-    <section className="relative max-md:h-100 lg:h-[90vh] w-full overflow-hidden ">
+    <section className="relative max-md:h-100 lg:h-[90vh] w-full overflow-hidden project-hero">
       <img
         src={image || "/images/hero/hero3.png"}
         alt=""
