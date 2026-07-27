@@ -1,47 +1,53 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { getProjectBySlug, getProjects } from "@/lib/projects";
+import { getProjectDetail } from "@/lib/project-detail";
 import { Container } from "@/components/ui/Container";
-import { PageHeader } from "@/components/PageHeader";
+import { ProjectDetailHero } from "@/components/projects/ProjectDetailHero";
 
-export async function generateStaticParams() {
-  const projects = await getProjects();
-  return projects.map((project) => ({ slug: project.slug }));
-}
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata(
   props: PageProps<"/projects/[slug]">
 ): Promise<Metadata> {
   const { slug } = await props.params;
-  const project = await getProjectBySlug(slug);
+  const project = await getProjectDetail(slug);
 
-  return { title: project?.title ?? "Not Found" };
+  return { title: project?.seoPageTitle ?? project?.heading ?? "Not Found" };
 }
 
 export default async function ProjectPage(
   props: PageProps<"/projects/[slug]">
 ) {
   const { slug } = await props.params;
-  const project = await getProjectBySlug(slug);
+  const project = await getProjectDetail(slug);
 
   if (!project) notFound();
 
+  const sectorLabel = project.sectors.map((s) => s.title).join(", ");
+  const practiceLabel = project.practices.map((p) => p.title).join(", ");
+  const locationLabel = project.locations.map((l) => l.title).join(", ");
+  const clientLabel = project.clients.map((c) => c.title).join(", ");
+  const collaboratorsLabel = project.collaborators
+    .map((c) => c.title)
+    .join(", ");
+
   return (
-    <Container className="py-16">
-      <article>
-        <PageHeader title={project.title} description={project.sector} />
-        {project.completedAt && (
-          <p className="-mt-6 mb-8 text-sm text-zinc-500">
-            {project.completedAt}
-          </p>
-        )}
-        <img
-          src={project.image}
-          alt={project.title}
-          className="mb-8 min-h-screen w-full object-cover"
-        />
-        <div>{project.content}</div>
-      </article>
-    </Container>
+    <article>
+      <ProjectDetailHero
+        title={project.heading}
+        subheading={project.subheading}
+        sectorLabel={sectorLabel}
+        practiceLabel={practiceLabel}
+        image={project.thumbnailUrl}
+        location={locationLabel}
+        client={clientLabel}
+        collaborators={collaboratorsLabel}
+      />
+      {project.storyText && (
+        <Container className="py-16">
+          <div dangerouslySetInnerHTML={{ __html: project.storyText }} />
+        </Container>
+      )}
+    </article>
   );
 }

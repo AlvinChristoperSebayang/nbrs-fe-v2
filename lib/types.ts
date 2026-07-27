@@ -23,8 +23,9 @@ export type Sector = {
 
 export type NewsItem = {
   title: string;
-  href: string;
+  href?: string;
   image?: string;
+  description?: string;
 };
 
 export type Project = {

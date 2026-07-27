@@ -6,7 +6,7 @@ import { HeroSlider } from "@/components/hero/HeroSlider";
 import { heroSlides } from "@/lib/hero";
 import { AboutSection } from "@/components/home/AboutSection";
 import { SectorsSection } from "@/components/home/SectorsSection";
-import { LatestNews } from "@/components/news/LatestNews";
+import { GridEffect } from "@/components/ui/GridEffect";
 import { CtaSection } from "@/components/cta/CtaSection";
 import type { Sector, NewsItem, CtaContent } from "@/lib/types";
 
@@ -59,10 +59,12 @@ const latestNews: NewsItem[] = [
   {
     title: "Project Update: Melonba Mega School",
     href: "/blog/project-update-melonba-mega-school",
+    image: "/images/hero/hero1.png",
   },
   {
     title: "Te-Kworo Foundation Update",
     href: "/blog/te-kworo-foundation-update",
+    image: "/images/hero/hero2.png",
   },
 ];
 
@@ -81,9 +83,9 @@ export default async function Home() {
   return (
     <>
       <HeroSlider slides={heroSlides} />
-      <AboutSection />
+      <AboutSection image_url="/images/home-about.png" background_color="#C9E5D2" />
       <SectorsSection sectors={sectors} />
-      <LatestNews items={latestNews} />
+    <GridEffect items={latestNews} backgroundColor="#EEEEEE" />
       <CtaSection cta={cta} />
     </>
   );

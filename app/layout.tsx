@@ -23,7 +23,7 @@ export default function RootLayout({
       lang="en"
       className={`${roboto.variable} ${tradeGothic.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col">
+      <body className="flex min-h-full flex-col" suppressHydrationWarning>
         <AosInit />
         <Header />
         {children}

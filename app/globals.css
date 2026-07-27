@@ -95,3 +95,17 @@ body {
     width:18px !important;
   }
 }
+@layer utilities {
+  @media (max-width: 768px) {
+    .uncontainer-mobile {
+      @apply w-[calc(100%+40px)] -ml-5
+    }
+  }
+  .scrollbar-hide {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}

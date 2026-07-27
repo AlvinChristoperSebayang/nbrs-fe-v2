@@ -14,8 +14,8 @@ export function CtaSection({ cta }: { cta: CtaContent[] }) {
       />
       {/* <div className="absolute inset-0 bg-black/20" /> */}
       <Container className="relative flex items-center justify-center py-24 sm:py-32 lg:py-[116px]">
-        <div className="w-full border-t-[4px] border-white bg-black/35 px-6 py-10 text-center sm:px-12 sm:py-14 lg:py-[100px]">
-          <h2 className="font-heading text-lg lg:text-2xl uppercase tracking-tight text-white sm:text-4xl lg:text-[40px]">
+        <div className="w-full border-t-[4px] border-white bg-black/35 px-[8px] py-10 text-center sm:px-[8px] sm:py-14 lg:py-[100px]">
+          <h2 className="font-heading text-[28px] lg:text-2xl uppercase tracking-tight text-white sm:text-4xl lg:text-[40px]">
             {content.title}
           </h2>
 
@@ -28,7 +28,7 @@ export function CtaSection({ cta }: { cta: CtaContent[] }) {
           {content.buttonText && content.buttonHref && (
             <Link
               href={content.buttonHref}
-              className="group mt-5 inline-flex items-center gap-2 rounded-full bg-white px-[48px] py-[26px]  text-sm lg:text-xl text-[#B4521E] transition hover:bg-white/90 uppercase "
+              className="group mt-5 inline-flex items-center gap-2 rounded-full bg-white lg:px-[48px] p-[18px] lg:py-[26px]  text-[14px] lg:text-xl text-[#B4521E] transition hover:bg-white/90 uppercase "
             >
               {content.buttonText}
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
