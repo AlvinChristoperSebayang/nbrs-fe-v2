@@ -38,7 +38,7 @@ export default async function ProjectsIndexPage(
       practiceSlugs: selectedPractices,
     });
   } catch (error) {
-    console.error("Failed to load projects listing from Craft:", error);
+    console.warn("Failed to load projects listing from Craft:", error);
   }
 
   if (!listing) {

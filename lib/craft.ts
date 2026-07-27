@@ -13,15 +13,16 @@ export async function craftFetch<T>(
     cache: "no-store",
   });
 
-  const contentType = res.headers.get("content-type") ?? "";
-  if (!contentType.includes("application/json")) {
-    const body = await res.text();
+  const body = await res.text();
+  let json: any;
+  try {
+    json = JSON.parse(body);
+  } catch {
     throw new Error(
       `Craft GraphQL request failed (${res.status} ${res.statusText}): ${body.slice(0, 300)}`
     );
   }
 
-  const json = await res.json();
   if (json.errors) {
     throw new Error(
       json.errors.map((error: { message: string }) => error.message).join("\n")
