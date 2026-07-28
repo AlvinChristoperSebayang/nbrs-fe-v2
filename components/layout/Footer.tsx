@@ -48,8 +48,8 @@ const peopleColumn: FooterGroup[] = [
     links: [
       { label: "About NBRS", href: "/about" },
       { label: "Design Approach", href: "/about" },
-      { label: "Awards", href: "/about" },
-      { label: "Research Envision", href: "/about" },
+      { label: "Awards", href: "/awards" },
+      { label: "Research Envision", href: "/research" },
       { label: "Sustainability", href: "/about" },
       { label: "Social Responsibility", href: "/about" },
       { label: "News", href: "/blog" },

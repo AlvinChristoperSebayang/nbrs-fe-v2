@@ -1,56 +1,100 @@
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 
+export type HeroProps = {
+  image: string;
+  title: React.ReactNode;
+  description?: React.ReactNode;
+  button?: {
+    text: string;
+    href: string;
+  };
+  titleClassName?: string;
+  descriptionClassName?: string;
+  dividerClassName?: string;
+  containerClassName?: string;
+  contentClassName?: string;
+  overlayClassName?: string;
+  showDivider?: boolean;
+};
+
 export function Hero({
   image,
   title,
   description,
   button,
-}: {
-  image: string;
-  title: string;
-  description?: string;
-  button?: {
-    text: string;
-    href: string;
-  };
-}) {
+  titleClassName = "",
+  descriptionClassName = "",
+  dividerClassName = "",
+  containerClassName = "",
+  contentClassName = "",
+  overlayClassName = "bg-black/40",
+  showDivider = true,
+}: HeroProps) {
   return (
     <section className="relative max-md:h-[80vh] lg:h-[90vh] w-full overflow-hidden">
+      {/* Background Image */}
       <img
         src={image}
         alt=""
         className="absolute inset-0 h-full w-full object-cover lg:min-h-screen"
       />
-      <div className="absolute inset-0 bg-black/40" />
-      <Container className="relative flex h-full flex-col justify-center pb-12 lg:pb-16">
-        <div className="flex flex-col items-start max-w-[650px]">
-          <h1
-            data-aos="fade-up"
-            className="font-heading max-w-2xl text-4xl uppercase leading-[1.05] text-white sm:text-5xl lg:text-[70px]"
-          >
-            {title}
-          </h1>
-          <div
-            data-aos="fade-up"
-            data-aos-delay="100"
-            className="mt-4 lg:h-2 h-1 w-full origin-left bg-white"
-          />
-          {description && (
-            <p
+
+      {/* Background Overlay */}
+      <div className={`absolute inset-0 ${overlayClassName}`} />
+
+      {/* Content Container */}
+      <Container
+        className={`relative flex h-full flex-col justify-center pb-12 lg:pb-16 ${containerClassName}`}
+      >
+        <div className={`flex flex-col items-start max-w-[650px] ${contentClassName}`}>
+          {/* Title */}
+          {typeof title === "string" ? (
+            <h1
               data-aos="fade-up"
-              data-aos-delay="200"
-              className="mt-6 text-sm text-white sm:text-base"
+              className={`font-heading max-w-2xl text-4xl uppercase leading-[1.05] text-white sm:text-5xl lg:text-[70px] ${titleClassName}`}
             >
-              {description}
-            </p>
+              {title}
+            </h1>
+          ) : (
+            <div data-aos="fade-up" className={titleClassName}>
+              {title}
+            </div>
           )}
+
+          {/* Divider Line */}
+          {showDivider && (
+            <div
+              data-aos="fade-up"
+              data-aos-delay="100"
+              className={`mt-4 lg:h-2 h-1 w-full origin-left bg-white ${dividerClassName}`}
+            />
+          )}
+
+          {/* Description */}
+          {description && (
+            typeof description === "string" ? (
+              <p
+                data-aos="fade-up"
+                data-aos-delay="200"
+                className={`mt-6 text-sm text-white sm:text-base ${descriptionClassName}`}
+              >
+                {description}
+              </p>
+            ) : (
+              <div data-aos="fade-up" data-aos-delay="200" className={descriptionClassName}>
+                {description}
+              </div>
+            )
+          )}
+
+          {/* Optional Button */}
           {button && (
             <Link
               href={button.href}
               data-aos="fade-up"
               data-aos-delay="300"
-              className="group mt-8 inline-flex items-center gap-2 rounded-[5px] bg-white/30 px-6 py-4 text-xs  text-white backdrop-blur transition sm:text-base"
+              className="group mt-8 inline-flex items-center gap-2 rounded-[5px] bg-white/30 px-6 py-4 text-xs text-white backdrop-blur transition sm:text-base"
             >
               {button.text}
               <svg
