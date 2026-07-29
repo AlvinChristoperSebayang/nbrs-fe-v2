@@ -1,74 +1,57 @@
 import type { Metadata } from "next";
-import { Hero } from "@/components/ui/Hero";
 import { AboutPracticeSection } from "@/components/about/AboutPracticeSection";
 import { AboutTimelineSection } from "@/components/about/AboutTimelineSection";
+import { CtaSection } from "@/components/cta/CtaSection";
 import { AboutSection } from "@/components/home/AboutSection";
 import { GridEffect } from "@/components/ui/GridEffect";
-import { CtaSection } from "@/components/cta/CtaSection";
-import { getPageCta } from "@/lib/cta";
-import type { NewsItem, CtaContent } from "@/lib/types";
-
+import { Hero } from "@/components/ui/Hero";
+import { ABOUT_FALLBACK, getAboutContent } from "@/lib/about";
 
 export const metadata: Metadata = {
   title: "About Us",
 };
 
-
 export default async function AboutPage() {
-  const latestNews: NewsItem[] = [
-    {
-      title: "SOCIAL ARCHITECTURE",
-      image: "/images/hero/about-hero.png",
-      description: "People and community at the core."
-    },
-    {
-      title: "REAL INSIGHT",
-      image: "/images/about/real-insight.jpg",
-      description: "We design for the people who will use the spaces we create."
-    },
-    {
-      title: "CREATIVE PARTNERSHIPS",
-      image: "/images/about/creative-partnership.jpg",
-      description: "We collaborate with clients, communities and stakeholders to create spaces that matter."
-    },
-  ];
-  const cta: CtaContent[] = [
-    {
-      image: "/images/contact-bg.png",
-      title: "Let’s Shape What’s Next-Together",
-      description: "Whether it’s a place to gather, to heal, to learn or to live - we’re ready to collaborate. Let’s shape spaces that matter, together.",
-      buttonText: "Let’s Shape What’s Next-Together",
-      buttonHref: "/contact",
-    },
-  ];
+  const about = await getAboutContent().catch(() => ABOUT_FALLBACK);
+
   return (
     <article>
       <Hero
-        image="/images/hero/about-hero.png"
-        title="Designing Environments That Influence Society"
-        description="NBRS approaches architecture and design as a social art, uplifting people, connecting communities, and shaping how we live."
+        image={about.hero.image}
+        title={about.hero.title}
+        description={about.hero.description}
       />
-      <div className="lg:pb-32">
+      <div className="bg-[#FFFFFF] lg:pb-32">
         <AboutSection
-          image_url="/images/about-us-about.png"
+          image_url={about.intro.image}
           background_color="#FDD4B6"
-          heading="People‑centred design for good"
-          description="We create environments that foster wellbeing, belonging and transformation. Design that responds directly to human needs."
-      />
+          heading={about.intro.heading}
+          description={about.intro.description}
+        />
       </div>
-      <GridEffect title="What We Do" items={latestNews} backgroundColor="#EDEDED" />
+      <GridEffect
+        title={about.approachHeading}
+        items={about.approachItems}
+        // Unlike Homepage, an empty CTA Element intentionally hides this link.
+        viewAllLabel={about.viewAll?.label ?? ""}
+        viewAllUrl={about.viewAll?.href ?? ""}
+        backgroundColor="#EDEDED"
+      />
       <AboutPracticeSection
-        heading="A Practice Built on Care, Joy and Collaboration"
-        description="Integrated design studios across Sydney and Melbourne, including architecture, interior design, landscape architecture and heritage advice. United by a mission to design for people, place and purpose."
-        mainImage="/images/about/practice1.jpg"
+        heading={about.practice.heading}
+        description={about.practice.description}
+        mainImage={about.practice.images[0]}
         galleryImages={[
-          "/images/about/practice2.jpg",
-          "/images/about/practice3.jpg",
-          "/images/about/practice4.jpg",
+          about.practice.images[1],
+          about.practice.images[2],
+          about.practice.images[3],
         ]}
       />
-      <AboutTimelineSection />
-      <CtaSection content={await getPageCta("aboutUs", cta[0]).catch(() => cta[0])} />
+      <AboutTimelineSection
+        label={about.timeline.heading}
+        items={about.timeline.items.length ? about.timeline.items : ABOUT_FALLBACK.timeline.items}
+      />
+      <CtaSection content={about.cta} />
     </article>
   );
 }
