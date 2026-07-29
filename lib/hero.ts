@@ -1,7 +1,9 @@
+import type { ImageSource } from "./types";
+
 export type HeroSlide = {
   title: string;
   headline: string;
-  image: string;
+  image: ImageSource;
 };
 
 export const heroSlides: HeroSlide[] = [

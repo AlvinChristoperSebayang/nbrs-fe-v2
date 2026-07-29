@@ -1,5 +1,6 @@
 import { Container } from "@/components/ui/Container";
-import Image from "next/image";
+import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
+import type { ImageSource } from "@/lib/types";
 
 export function AboutPracticeSection({
   heading,
@@ -9,8 +10,8 @@ export function AboutPracticeSection({
 }: {
   heading: string;
   description: string;
-  mainImage: string;
-  galleryImages: [string, string, string];
+  mainImage: ImageSource;
+  galleryImages: [ImageSource, ImageSource, ImageSource];
 }) {
   return (
     <section className="bg-white py-16 lg:py-24">
@@ -36,11 +37,9 @@ export function AboutPracticeSection({
             data-aos-delay="100"
             className="relative h-56 w-full overflow-hidden sm:h-48 lg:col-span-1 lg:h-56"
           >
-            <Image
+            <ResponsiveImage
               src={mainImage}
               alt=""
-              fill
-              sizes="(min-width: 1024px) 33vw, 100vw"
               className="h-full w-full object-cover"
             />
           </div>
@@ -49,16 +48,14 @@ export function AboutPracticeSection({
         <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3 lg:mt-6 lg:gap-6">
           {galleryImages.map((src, index) => (
             <div
-              key={src + index}
+              key={index}
               data-aos="fade-up"
               data-aos-delay={index * 100}
               className="relative h-56 w-full overflow-hidden sm:h-48 lg:h-56"
             >
-              <Image
+              <ResponsiveImage
                 src={src}
                 alt=""
-                fill
-                sizes="(min-width: 640px) 33vw, 100vw"
                 className="h-full w-full object-cover"
               />
             </div>

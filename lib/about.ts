@@ -1,8 +1,9 @@
 import { craftFetch } from "./craft";
 import { mapCta } from "./cta";
+import { toImageSource } from "./media";
 import type { CtaContent, NewsItem } from "./types";
 
-type Asset = { url: string };
+type Asset = { mobile?: string; tablet?: string; desktop?: string };
 
 type RawAboutEntry = {
   aboutHeroHeading: string | null;
@@ -34,12 +35,12 @@ type RawAboutEntry = {
 type AboutResponse = { entries: RawAboutEntry[] };
 
 export type AboutContent = {
-  hero: { title: string; description: string; image: string };
-  intro: { heading: string; description: string; image: string };
+  hero: { title: string; description: string; image: import("./types").ImageSource };
+  intro: { heading: string; description: string; image: import("./types").ImageSource };
   approachHeading: string;
   approachItems: NewsItem[];
   viewAll: { label: string; href: string } | null;
-  practice: { heading: string; description: string; images: [string, string, string, string] };
+  practice: { heading: string; description: string; images: [import("./types").ImageSource, import("./types").ImageSource, import("./types").ImageSource, import("./types").ImageSource] };
   timeline: { heading: string; items: Array<{ year: string; description: string }> };
   cta: CtaContent;
 };
@@ -95,19 +96,19 @@ const ABOUT_QUERY = /* GraphQL */ `
         description2
         heroTitle
         aboutHeroHeading
-        aboutHeroImage { url: url @transform(width: 2400, format: "webp", quality: 85, immediately: true) }
+        aboutHeroImage { mobile: url @transform(width: 600, height: 800, mode: "crop", format: "webp", quality: 80, immediately: true) tablet: url @transform(width: 1440, height: 1000, mode: "crop", format: "webp", quality: 82, immediately: true) desktop: url @transform(width: 2400, height: 1200, mode: "crop", format: "webp", quality: 85, immediately: true) }
         aboutIntroHeading
         aboutIntroText
-        aboutIntroImage { url: url @transform(width: 1200, format: "webp", quality: 80, immediately: true) }
+        aboutIntroImage { mobile: url @transform(width: 600, height: 450, mode: "crop", format: "webp", quality: 80, immediately: true) tablet: url @transform(width: 900, height: 675, mode: "crop", format: "webp", quality: 80, immediately: true) desktop: url @transform(width: 1200, height: 900, mode: "crop", format: "webp", quality: 80, immediately: true) }
         aboutPracticeHeading
         aboutPracticeText
-        aboutPracticeImages { url: url @transform(width: 1200, format: "webp", quality: 80, immediately: true) }
+        aboutPracticeImages { mobile: url @transform(width: 600, height: 450, mode: "crop", format: "webp", quality: 80, immediately: true) tablet: url @transform(width: 900, height: 675, mode: "crop", format: "webp", quality: 80, immediately: true) desktop: url @transform(width: 1200, height: 900, mode: "crop", format: "webp", quality: 80, immediately: true) }
         aboutTimelineHeading
         timeline { ... on slide2_Entry { year text } }
-        whatWeDoV2 { ... on whatWeDoContent_Entry { title description2 image { url: url @transform(width: 1200, format: "webp", quality: 80, immediately: true) } } }
+        whatWeDoV2 { ... on whatWeDoContent_Entry { title description2 image { mobile: url @transform(width: 600, height: 450, mode: "crop", format: "webp", quality: 80, immediately: true) tablet: url @transform(width: 900, height: 675, mode: "crop", format: "webp", quality: 80, immediately: true) desktop: url @transform(width: 1200, height: 900, mode: "crop", format: "webp", quality: 80, immediately: true) } } }
         ctaElement { label url_1 { url } }
         ctaSection {
-          ctaSectionBackgroundImage { url: url @transform(width: 2400, format: "webp", quality: 85, immediately: true) }
+          ctaSectionBackgroundImage { mobile: url @transform(width: 600, height: 900, mode: "crop", format: "webp", quality: 80, immediately: true) tablet: url @transform(width: 1440, height: 900, mode: "crop", format: "webp", quality: 82, immediately: true) desktop: url @transform(width: 2400, height: 1000, mode: "crop", format: "webp", quality: 85, immediately: true) }
           ctaSectionHeading
           ctaSectionDescription
           ctaSectionButtonLabel
@@ -125,11 +126,11 @@ export async function getAboutContent(): Promise<AboutContent> {
   if (!about) return ABOUT_FALLBACK;
 
   const approachItems = about.whatWeDoV2
-    .filter((item) => item.title && item.image[0]?.url)
+    .filter((item) => item.title && toImageSource(item.image[0]))
     .map((item) => ({
       title: item.title!.replace(/\n/g, " "),
       description: item.description2?.trim() || undefined,
-      image: item.image[0].url,
+      image: toImageSource(item.image[0])!,
     }));
   const ctaLabel = about.ctaElement?.label?.trim();
   const ctaUrl = about.ctaElement?.url_1?.url?.trim();
@@ -138,12 +139,12 @@ export async function getAboutContent(): Promise<AboutContent> {
     hero: {
       title: about.aboutHeroHeading?.trim() || ABOUT_FALLBACK.hero.title,
       description: about.description2?.trim() || ABOUT_FALLBACK.hero.description,
-      image: about.aboutHeroImage[0]?.url || ABOUT_FALLBACK.hero.image,
+      image: toImageSource(about.aboutHeroImage[0]) || ABOUT_FALLBACK.hero.image,
     },
     intro: {
       heading: about.aboutIntroHeading?.trim() || ABOUT_FALLBACK.intro.heading,
       description: about.aboutIntroText?.trim() || ABOUT_FALLBACK.intro.description,
-      image: about.aboutIntroImage[0]?.url || ABOUT_FALLBACK.intro.image,
+      image: toImageSource(about.aboutIntroImage[0]) || ABOUT_FALLBACK.intro.image,
     },
     approachHeading: about.heroTitle?.trim() || ABOUT_FALLBACK.approachHeading,
     approachItems: approachItems.length ? approachItems : ABOUT_FALLBACK.approachItems,
@@ -151,8 +152,8 @@ export async function getAboutContent(): Promise<AboutContent> {
     practice: {
       heading: about.aboutPracticeHeading?.trim() || ABOUT_FALLBACK.practice.heading,
       description: about.aboutPracticeText?.trim() || ABOUT_FALLBACK.practice.description,
-      images: about.aboutPracticeImages.length === 4
-        ? [about.aboutPracticeImages[0].url, about.aboutPracticeImages[1].url, about.aboutPracticeImages[2].url, about.aboutPracticeImages[3].url]
+      images: about.aboutPracticeImages.length === 4 && about.aboutPracticeImages.every(toImageSource)
+        ? [toImageSource(about.aboutPracticeImages[0])!, toImageSource(about.aboutPracticeImages[1])!, toImageSource(about.aboutPracticeImages[2])!, toImageSource(about.aboutPracticeImages[3])!]
         : ABOUT_FALLBACK.practice.images,
     },
     timeline: {

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
+import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
 import { Container } from "@/components/ui/Container";
 import type { NewsItem } from "@/lib/types";
 
@@ -91,12 +91,10 @@ export function GridEffect({
           <div className="absolute w-full h-full overflow-hidden top-0 left-0 z-[5] uncontainer-mobile">
             {items.map((item, index) =>
               item.image ? (
-                <Image
+                <ResponsiveImage
                   key={item.title}
                   src={item.image}
                   alt=""
-                  fill
-                  sizes="100vw"
                   className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${
                     index === activeIndex ? "opacity-100" : "opacity-0"
                   }`}

@@ -1,7 +1,7 @@
 "use client";
 
 import { useId, useState, type CSSProperties } from "react";
-import Image from "next/image";
+import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { A11y, Autoplay, EffectFade, Navigation, Pagination } from "swiper/modules";
 import type { Swiper as SwiperInstance } from "swiper/types";
@@ -9,6 +9,7 @@ import "swiper/css";
 import "swiper/css/effect-fade";
 import "swiper/css/pagination";
 import type { HeroSlide } from "@/lib/hero";
+import type { ImageSource } from "@/lib/types";
 import { Container } from "@/components/ui/Container";
 
 const swiperVars = {
@@ -17,10 +18,9 @@ const swiperVars = {
   "--swiper-pagination-bullet-inactive-opacity": "0.3",
 } as CSSProperties;
 
-function imageSource(image: string) {
-  return image.startsWith("http") || image.startsWith("/")
-    ? image
-    : `/images/hero/${image}`;
+function imageSource(image: ImageSource): ImageSource {
+  if (typeof image !== "string") return image;
+  return image.startsWith("http") || image.startsWith("/") ? image : `/images/hero/${image}`;
 }
 
 export function HeroSlider({ slides }: { slides: HeroSlide[] }) {
@@ -40,15 +40,14 @@ export function HeroSlider({ slides }: { slides: HeroSlide[] }) {
     <section className="relative overflow-hidden hero-slider">
       {/* Background: same image as the inset, cross-fading between slides instead of snapping */}
       {slides.map((slide, index) => (
-        <Image
+        <ResponsiveImage
           key={slide.title}
           src={imageSource(slide.image)}
           alt=""
-          fill
-          sizes="100vw"
           className={`absolute inset-0 z-10 h-full w-full scale-110 object-cover transition-opacity duration-1000 ease-in-out ${
             index === activeIndex ? "opacity-100" : "opacity-0"
           }`}
+          priority
         />
       ))}
       <div className="absolute inset-0 top-0 left-0 z-20 h-full w-full bg-black/30" />
@@ -93,11 +92,9 @@ export function HeroSlider({ slides }: { slides: HeroSlide[] }) {
 
               return (
                 <SwiperSlide key={slide.title} className="relative">
-                  <Image
+                  <ResponsiveImage
                     src={src}
                     alt=""
-                    fill
-                    sizes="(min-width: 1024px) 69vw, 100vw"
                     className="h-full w-full object-cover"
                   />
                 </SwiperSlide>

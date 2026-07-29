@@ -1,4 +1,6 @@
 import { craftFetch } from "./craft";
+import { toImageSource } from "./media";
+import type { ImageSource } from "./types";
 
 export type ResearchCategory = {
   id: string;
@@ -11,7 +13,7 @@ export type ResearchListItem = {
   id: string;
   slug: string;
   title: string;
-  thumbnailUrl: string | null;
+  thumbnailUrl: ImageSource | null;
   sectors: ResearchCategory[];
   practices: ResearchCategory[];
 };
@@ -19,13 +21,13 @@ export type ResearchListItem = {
 export type ResearchListingResult = {
   pageHeading: string | null;
   pageSubheading: string | null;
-  pageHeroImageUrl: string | null;
+  pageHeroImageUrl: ImageSource | null;
   sectors: ResearchCategory[];
   practices: ResearchCategory[];
   articles: ResearchListItem[];
 };
 
-type RawAsset = { url: string };
+type RawAsset = { mobile?: string; tablet?: string; desktop?: string };
 type RawCategory = ResearchCategory;
 
 type ResearchListingResponse = {
@@ -52,7 +54,7 @@ const RESEARCH_LISTING_QUERY = /* GraphQL */ `
       ... on latestResearch_Entry {
         pageHeading
         pageSubheading
-        seoImage { url: url @transform(width: 2400, format: "webp", quality: 85, immediately: true) }
+        seoImage { mobile: url @transform(width: 600, height: 800, mode: "crop", format: "webp", quality: 80, immediately: true) tablet: url @transform(width: 1440, height: 1000, mode: "crop", format: "webp", quality: 82, immediately: true) desktop: url @transform(width: 2400, height: 1200, mode: "crop", format: "webp", quality: 85, immediately: true) }
       }
     }
     sectors: categories(group: "sector") {
@@ -66,7 +68,7 @@ const RESEARCH_LISTING_QUERY = /* GraphQL */ `
         id
         slug
         artHdrHeading
-        thumbnail { url: url @transform(width: 1200, format: "webp", quality: 80, immediately: true) }
+        thumbnail { mobile: url @transform(width: 600, height: 450, mode: "crop", format: "webp", quality: 80, immediately: true) tablet: url @transform(width: 900, height: 675, mode: "crop", format: "webp", quality: 80, immediately: true) desktop: url @transform(width: 1200, height: 900, mode: "crop", format: "webp", quality: 80, immediately: true) }
         catDiscipline {
           ... on discipline_Category { id title slug accentColor }
         }
@@ -85,14 +87,14 @@ export async function getResearchListing(): Promise<ResearchListingResult> {
   return {
     pageHeading: page?.pageHeading ?? null,
     pageSubheading: page?.pageSubheading ?? null,
-    pageHeroImageUrl: page?.seoImage?.[0]?.url ?? null,
+    pageHeroImageUrl: toImageSource(page?.seoImage?.[0]),
     sectors: data.sectors ?? [],
     practices: data.practices ?? [],
     articles: (data.articles ?? []).map((article) => ({
       id: article.id,
       slug: article.slug,
       title: article.artHdrHeading ?? article.slug,
-      thumbnailUrl: article.thumbnail?.[0]?.url ?? null,
+      thumbnailUrl: toImageSource(article.thumbnail?.[0]),
       sectors: article.catSector ?? [],
       practices: article.catDiscipline ?? [],
     })),

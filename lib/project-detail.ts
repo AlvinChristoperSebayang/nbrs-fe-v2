@@ -1,15 +1,17 @@
 import { craftFetch } from "./craft";
+import { toImageSource } from "./media";
 import type { ProjectCategory } from "./projects-listing";
+import type { ImageSource } from "./types";
 
 export type ProjectSplashSlide = {
-  imageUrl: string | null;
+  imageUrl: ImageSource | null;
   imageCropping: string | null;
-  portraitImageUrl: string | null;
+  portraitImageUrl: ImageSource | null;
   portraitImageCropping: string | null;
 };
 
 export type ProjectGallerySlide = {
-  imageUrl: string | null;
+  imageUrl: ImageSource | null;
   heading: string | null;
   text: string | null;
 };
@@ -33,7 +35,7 @@ export type ProjectRelatedProject = {
   uri: string | null;
   heading: string | null;
   subheading: string | null;
-  thumbnailUrl: string | null;
+  thumbnailUrl: ImageSource | null;
 };
 
 export type ProjectDetail = {
@@ -44,11 +46,11 @@ export type ProjectDetail = {
   postDate: string | null;
   heading: string;
   subheading: string | null;
-  thumbnailUrl: string | null;
-  popupGalleryUrls: string[];
+  thumbnailUrl: ImageSource | null;
+  popupGalleryUrls: ImageSource[];
   splash: ProjectSplashSlide[];
   impactText: string | null;
-  impactMediaUrls: string[];
+  impactMediaUrls: ImageSource[];
   impactNumber: string | null;
   impactLabel: string | null;
   storyText: string | null;
@@ -56,7 +58,7 @@ export type ProjectDetail = {
   detailSize: number | null;
   detailStatus: string | null;
   detailBudget: number | null;
-  insightsHeroImageUrl: string | null;
+  insightsHeroImageUrl: ImageSource | null;
   insightsText: string | null;
   insightsGallery: ProjectGallerySlide[];
   awards: ProjectAward[];
@@ -72,11 +74,14 @@ export type ProjectDetail = {
   locations: ProjectCategory[];
   seoPageTitle: string | null;
   seoMetaDescription: string | null;
-  seoImageUrl: string | null;
+  seoImageUrl: ImageSource | null;
 };
 
 type RawAsset = {
-  url: string;
+  url?: string;
+  mobile?: string;
+  tablet?: string;
+  desktop?: string;
   width: number | null;
   height: number | null;
   title: string | null;
@@ -188,7 +193,9 @@ const PROJECT_DETAIL_QUERY = /* GraphQL */ `
         proHdrHeading
         proHdrSubheading
         thumbnail {
-          url: url @transform(width: 2400, format: "webp", quality: 85, immediately: true)
+          mobile: url @transform(width: 600, height: 750, mode: "crop", format: "webp", quality: 80, immediately: true)
+          tablet: url @transform(width: 1440, height: 900, mode: "crop", format: "webp", quality: 82, immediately: true)
+          desktop: url @transform(width: 2400, height: 1500, mode: "crop", format: "webp", quality: 85, immediately: true)
           width
           height
           title
@@ -353,16 +360,16 @@ export async function getProjectDetail(
     postDate: entry.postDate,
     heading: entry.proHdrHeading,
     subheading: entry.proHdrSubheading,
-    thumbnailUrl: entry.thumbnail?.[0]?.url ?? null,
-    popupGalleryUrls: (entry.proHdrPopupGallery ?? []).map((a) => a.url),
+    thumbnailUrl: toImageSource(entry.thumbnail?.[0]),
+    popupGalleryUrls: (entry.proHdrPopupGallery ?? []).map(toImageSource).filter((image): image is ImageSource => Boolean(image)),
     splash: (entry.proHdrSplash ?? []).map((slide) => ({
-      imageUrl: slide.image?.[0]?.url ?? null,
+      imageUrl: toImageSource(slide.image?.[0]),
       imageCropping: slide.imageCropping,
-      portraitImageUrl: slide.optionalPortraitImage?.[0]?.url ?? null,
+      portraitImageUrl: toImageSource(slide.optionalPortraitImage?.[0]),
       portraitImageCropping: slide.portraitImageCropping,
     })),
     impactText: entry.proImpText,
-    impactMediaUrls: (entry.proImpMedia ?? []).map((a) => a.url),
+    impactMediaUrls: (entry.proImpMedia ?? []).map(toImageSource).filter((image): image is ImageSource => Boolean(image)),
     impactNumber: entry.proImpNumber,
     impactLabel: entry.proImpLabel,
     storyText: entry.proStoryText,
@@ -370,10 +377,10 @@ export async function getProjectDetail(
     detailSize: entry.proDetSize,
     detailStatus: entry.proDetStatus,
     detailBudget: entry.proDetBudget,
-    insightsHeroImageUrl: entry.proInsHeroImage?.[0]?.url ?? null,
+    insightsHeroImageUrl: toImageSource(entry.proInsHeroImage?.[0]),
     insightsText: entry.proInsText,
     insightsGallery: (entry.proInsGallery ?? []).map((slide) => ({
-      imageUrl: slide.image?.[0]?.url ?? null,
+      imageUrl: toImageSource(slide.image?.[0]),
       heading: slide.heading,
       text: slide.text,
     })),
@@ -392,7 +399,7 @@ export async function getProjectDetail(
       uri: project.uri,
       heading: project.proHdrHeading,
       subheading: project.proHdrSubheading,
-      thumbnailUrl: project.thumbnail?.[0]?.url ?? null,
+      thumbnailUrl: toImageSource(project.thumbnail?.[0]),
     })),
     sectors: toProjectCategories(entry.catSector),
     practices: toProjectCategories(entry.catDiscipline),
@@ -402,6 +409,6 @@ export async function getProjectDetail(
     locations: toProjectCategories(entry.catLocation),
     seoPageTitle: entry.seoPageTitle,
     seoMetaDescription: entry.seoMetaDescription,
-    seoImageUrl: entry.seoImage?.[0]?.url ?? null,
+    seoImageUrl: toImageSource(entry.seoImage?.[0]),
   };
 }

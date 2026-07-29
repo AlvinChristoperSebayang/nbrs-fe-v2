@@ -1,9 +1,10 @@
 import Link from "next/link";
-import Image from "next/image";
+import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
+import type { ImageSource } from "@/lib/types";
 import { Container } from "@/components/ui/Container";
 
 export type HeroProps = {
-  image: string;
+  image: ImageSource;
   title: React.ReactNode;
   description?: React.ReactNode;
   button?: {
@@ -35,12 +36,11 @@ export function Hero({
   return (
     <section className="relative max-md:h-[80vh] lg:h-[90vh] w-full overflow-hidden">
       {/* Background Image */}
-      <Image
+      <ResponsiveImage
         src={image}
         alt=""
-        fill
-        sizes="100vw"
         className="absolute inset-0 h-full w-full object-cover lg:min-h-screen"
+        priority
       />
 
       {/* Background Overlay */}

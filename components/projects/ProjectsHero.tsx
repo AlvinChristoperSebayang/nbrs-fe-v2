@@ -1,22 +1,22 @@
 import { Container } from "@/components/ui/Container";
-import Image from "next/image";
+import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
+import type { ImageSource } from "@/lib/types";
 
 export function ProjectsHero({
   image,
   title,
 }: {
-  image?: string | null;
+  image?: ImageSource | null;
   title?: string | null;
   subheading?: string | null;
 } = {}) {
   return (
     <section className="relative max-md:h-100 lg:h-[90vh] w-full overflow-hidden project-hero">
-      <Image
+      <ResponsiveImage
         src={image || "/images/hero/hero3.png"}
         alt=""
-        fill
-        sizes="100vw"
         className="absolute inset-0 h-full w-full object-cover lg:min-h-screen"
+        priority
       />
       <div className="absolute inset-0 bg-black/20" />
       <Container className="relative flex h-full flex-col justify-center pb-12 lg:pb-16">

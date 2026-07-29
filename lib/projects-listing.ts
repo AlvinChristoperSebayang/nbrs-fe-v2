@@ -1,4 +1,6 @@
 import { craftFetch } from "./craft";
+import { toImageSource } from "./media";
+import type { ImageSource } from "./types";
 
 export type ProjectCategory = {
   id: string;
@@ -14,7 +16,7 @@ export type ProjectListItem = {
   postDate: string | null;
   heading: string;
   subheading: string | null;
-  thumbnailUrl: string | null;
+  thumbnailUrl: ImageSource | null;
   sectors: ProjectCategory[];
   // Labelled "Practice" on the frontend, but this is the `discipline`
   // category group under the hood — see app/projects/result.md §5.
@@ -24,7 +26,7 @@ export type ProjectListItem = {
 export type ProjectsListingResult = {
   pageHeading: string | null;
   pageSubheading: string | null;
-  pageHeroImageUrl: string | null;
+  pageHeroImageUrl: ImageSource | null;
   sectors: ProjectCategory[];
   practices: ProjectCategory[];
   projects: ProjectListItem[];
@@ -44,7 +46,9 @@ type RawCategory = {
 };
 
 type RawAsset = {
-  url: string;
+  mobile?: string;
+  tablet?: string;
+  desktop?: string;
   width: number | null;
   height: number | null;
   title: string | null;
@@ -97,7 +101,9 @@ const PROJECTS_LISTING_QUERY = /* GraphQL */ `
         seoPageTitle
         seoMetaDescription
         seoImage {
-          url: url @transform(width: 2400, format: "webp", quality: 85, immediately: true)
+          mobile: url @transform(width: 600, height: 800, mode: "crop", format: "webp", quality: 80, immediately: true)
+          tablet: url @transform(width: 1440, height: 1000, mode: "crop", format: "webp", quality: 82, immediately: true)
+          desktop: url @transform(width: 2400, height: 1200, mode: "crop", format: "webp", quality: 85, immediately: true)
           width
           height
           title
@@ -138,7 +144,9 @@ const PROJECTS_LISTING_QUERY = /* GraphQL */ `
         proHdrHeading
         proHdrSubheading
         thumbnail {
-          url: url @transform(width: 1200, format: "webp", quality: 80, immediately: true)
+          mobile: url @transform(width: 600, height: 450, mode: "crop", format: "webp", quality: 80, immediately: true)
+          tablet: url @transform(width: 900, height: 675, mode: "crop", format: "webp", quality: 80, immediately: true)
+          desktop: url @transform(width: 1200, height: 900, mode: "crop", format: "webp", quality: 80, immediately: true)
           width
           height
           title
@@ -211,7 +219,7 @@ export async function getProjectsListing({
   return {
     pageHeading: page?.pageHeading ?? null,
     pageSubheading: page?.pageSubheading ?? null,
-    pageHeroImageUrl: page?.seoImage?.[0]?.url ?? null,
+    pageHeroImageUrl: toImageSource(page?.seoImage?.[0]),
     sectors: data.sectors ?? [],
     practices: data.practices ?? [],
     projects: (data.projects ?? []).map((entry) => ({
@@ -221,7 +229,7 @@ export async function getProjectsListing({
       postDate: entry.postDate,
       heading: entry.proHdrHeading,
       subheading: entry.proHdrSubheading,
-      thumbnailUrl: entry.thumbnail?.[0]?.url ?? null,
+      thumbnailUrl: toImageSource(entry.thumbnail?.[0]),
       sectors: entry.catSector ?? [],
       practices: entry.catDiscipline ?? [],
     })),

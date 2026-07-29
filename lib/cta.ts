@@ -1,9 +1,10 @@
 import { craftFetch } from "./craft";
+import { toImageSource } from "./media";
 import type { CtaContent } from "./types";
 
 type RawCta = {
   ctaSection: {
-    ctaSectionBackgroundImage: Array<{ url: string }>;
+    ctaSectionBackgroundImage: Array<{ mobile?: string; tablet?: string; desktop?: string }>;
     ctaSectionHeading: string | null;
     ctaSectionDescription: string | null;
     ctaSectionButtonLabel: string | null;
@@ -15,7 +16,7 @@ type CtaResponse = { entries: RawCta[] };
 
 const CTA_FIELDS = /* GraphQL */ `
   ctaSection {
-    ctaSectionBackgroundImage { url: url @transform(width: 2400, format: "webp", quality: 85, immediately: true) }
+    ctaSectionBackgroundImage { mobile: url @transform(width: 600, height: 900, mode: "crop", format: "webp", quality: 80, immediately: true) tablet: url @transform(width: 1440, height: 900, mode: "crop", format: "webp", quality: 82, immediately: true) desktop: url @transform(width: 2400, height: 1000, mode: "crop", format: "webp", quality: 85, immediately: true) }
     ctaSectionHeading
     ctaSectionDescription
     ctaSectionButtonLabel
@@ -37,12 +38,13 @@ const CTA_QUERY = /* GraphQL */ `
 export function mapCta(raw: RawCta | undefined, fallback: CtaContent): CtaContent {
   const cta = raw?.ctaSection;
 
-  if (!cta?.ctaSectionBackgroundImage[0]?.url || !cta.ctaSectionHeading) {
+  const image = toImageSource(cta?.ctaSectionBackgroundImage[0]);
+  if (!image || !cta?.ctaSectionHeading) {
     return fallback;
   }
 
   return {
-    image: cta.ctaSectionBackgroundImage[0].url,
+    image,
     title: cta.ctaSectionHeading,
     description: cta.ctaSectionDescription?.trim() || undefined,
     buttonText: cta.ctaSectionButtonLabel?.trim() || undefined,

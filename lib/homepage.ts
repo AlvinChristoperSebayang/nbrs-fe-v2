@@ -1,9 +1,10 @@
 import { craftFetch } from "./craft";
 import { mapCta } from "./cta";
 import type { HeroSlide } from "./hero";
+import { toImageSource } from "./media";
 import type { CtaContent, NewsItem, Sector } from "./types";
 
-type RawAsset = { url: string };
+type RawAsset = { mobile?: string; tablet?: string; desktop?: string };
 type RawNewsArticle = {
   slug: string;
   artHdrHeading: string | null;
@@ -70,7 +71,11 @@ const HOMEPAGE_QUERY = /* GraphQL */ `
             subheading
             linkText
             linkUrl
-            image { url: url @transform(width: 2400, format: "webp", quality: 85, immediately: true) }
+            image {
+              mobile: url @transform(width: 600, height: 800, mode: "crop", format: "webp", quality: 80, immediately: true)
+              tablet: url @transform(width: 1440, height: 1000, mode: "crop", format: "webp", quality: 82, immediately: true)
+              desktop: url @transform(width: 2400, height: 1200, mode: "crop", format: "webp", quality: 85, immediately: true)
+            }
           }
         }
         whatWeDo {
@@ -89,7 +94,7 @@ const HOMEPAGE_QUERY = /* GraphQL */ `
             uri
             tagline
             accentColor
-            thumbnail { url: url @transform(width: 1200, format: "webp", quality: 80, immediately: true) }
+            thumbnail { mobile: url @transform(width: 600, height: 450, mode: "crop", format: "webp", quality: 80, immediately: true) tablet: url @transform(width: 900, height: 675, mode: "crop", format: "webp", quality: 80, immediately: true) desktop: url @transform(width: 1200, height: 900, mode: "crop", format: "webp", quality: 80, immediately: true) }
           }
         }
         sectionHeading
@@ -98,11 +103,11 @@ const HOMEPAGE_QUERY = /* GraphQL */ `
           ... on news_Entry {
             slug
             artHdrHeading
-            thumbnail { url: url @transform(width: 1200, format: "webp", quality: 80, immediately: true) }
+            thumbnail { mobile: url @transform(width: 600, height: 450, mode: "crop", format: "webp", quality: 80, immediately: true) tablet: url @transform(width: 900, height: 675, mode: "crop", format: "webp", quality: 80, immediately: true) desktop: url @transform(width: 1200, height: 900, mode: "crop", format: "webp", quality: 80, immediately: true) }
           }
         }
         ctaSection {
-          ctaSectionBackgroundImage { url: url @transform(width: 2400, format: "webp", quality: 85, immediately: true) }
+          ctaSectionBackgroundImage { mobile: url @transform(width: 600, height: 900, mode: "crop", format: "webp", quality: 80, immediately: true) tablet: url @transform(width: 1440, height: 900, mode: "crop", format: "webp", quality: 82, immediately: true) desktop: url @transform(width: 2400, height: 1000, mode: "crop", format: "webp", quality: 85, immediately: true) }
           ctaSectionHeading
           ctaSectionDescription
           ctaSectionButtonLabel
@@ -114,7 +119,7 @@ const HOMEPAGE_QUERY = /* GraphQL */ `
       ... on news_Entry {
         slug
         artHdrHeading
-        thumbnail { url: url @transform(width: 1200, format: "webp", quality: 80, immediately: true) }
+        thumbnail { mobile: url @transform(width: 600, height: 450, mode: "crop", format: "webp", quality: 80, immediately: true) tablet: url @transform(width: 900, height: 675, mode: "crop", format: "webp", quality: 80, immediately: true) desktop: url @transform(width: 1200, height: 900, mode: "crop", format: "webp", quality: 80, immediately: true) }
       }
     }
   }
@@ -128,11 +133,11 @@ function plainText(value: string | null): string | null {
 
 function mapNewsArticles(articles: RawNewsArticle[]): NewsItem[] {
   return articles
-    .filter((article) => article.artHdrHeading && article.thumbnail[0]?.url)
+    .filter((article) => article.artHdrHeading && toImageSource(article.thumbnail[0]))
     .map((article) => ({
       title: article.artHdrHeading as string,
       href: `/blog/${article.slug}`,
-      image: article.thumbnail[0].url,
+      image: toImageSource(article.thumbnail[0])!,
     }));
 }
 
@@ -160,11 +165,11 @@ export async function getHomepageContent(): Promise<HomepageContent> {
 
   return {
     slides: (homepage.heroBannerCarousel ?? [])
-      .filter((slide) => slide.heading && slide.image[0]?.url)
+      .filter((slide) => slide.heading && toImageSource(slide.image[0]))
       .map((slide) => ({
         title: slide.heading as string,
         headline: slide.subheading ?? "",
-        image: slide.image[0].url,
+        image: toImageSource(slide.image[0])!,
       })),
     about: homepage.whatWeDo[0]
       ? {
@@ -175,10 +180,10 @@ export async function getHomepageContent(): Promise<HomepageContent> {
         }
       : null,
     sectors: (homepage.homepageFeaturedSectors ?? [])
-      .filter((sector) => sector.thumbnail[0]?.url)
+      .filter((sector) => toImageSource(sector.thumbnail[0]))
       .map((sector) => ({
         label: sector.title,
-        image: sector.thumbnail[0].url,
+        image: toImageSource(sector.thumbnail[0])!,
         href: `/${sector.uri ?? `sector/${sector.slug}`}`,
         description: sector.tagline ?? "",
         hoverColor: sector.accentColor ?? "#E0EFF4",

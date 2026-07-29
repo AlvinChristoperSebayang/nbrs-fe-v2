@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
+import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
 import { Container } from "@/components/ui/Container";
 import type { CtaContent } from "@/lib/types";
 
@@ -7,12 +7,11 @@ export function CtaSection({ content }: { content: CtaContent }) {
 
   return (
     <section className="relative overflow-hidden">
-      <Image
+      <ResponsiveImage
         src={content.image}
         alt=""
-        fill
-        sizes="100vw"
         className="absolute inset-0 h-full w-full object-cover"
+        priority
       />
       {/* <div className="absolute inset-0 bg-black/20" /> */}
       <Container className="relative flex items-center justify-center py-24 sm:py-32 lg:py-[116px]">

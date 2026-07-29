@@ -1,13 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
+import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
+import type { ImageSource } from "@/lib/types";
 
 export function ProjectThumbnail({
   src,
   alt,
 }: {
-  src: string;
+  src: ImageSource;
   alt: string;
 }) {
   const [failed, setFailed] = useState(false);
@@ -15,11 +16,9 @@ export function ProjectThumbnail({
   if (failed) return null;
 
   return (
-    <Image
+    <ResponsiveImage
       src={src}
       alt={alt}
-      fill
-      sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
       onError={() => setFailed(true)}
       className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
     />

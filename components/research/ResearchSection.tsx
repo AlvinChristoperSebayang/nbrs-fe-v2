@@ -7,6 +7,7 @@ import {
   SECTOR_OPTIONS,
 } from "@/lib/research-data";
 import type { ResearchCategory, ResearchListItem } from "@/lib/research-listing";
+import type { ImageSource } from "@/lib/types";
 import { ResearchCard } from "./ResearchCard";
 
 type ResearchSectionProps = {
@@ -21,7 +22,7 @@ type VisibleResearchItem = {
   id: string;
   slug: string;
   title: string;
-  image: string;
+  image: ImageSource;
   hoverColor: string;
   sectorSlugs: string[];
   practiceSlugs: string[];

@@ -1,5 +1,6 @@
 import { Container } from "@/components/ui/Container";
-import Image from "next/image";
+import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
+import type { ImageSource } from "@/lib/types";
 
 export function ProjectDetailHero({
   title,
@@ -15,7 +16,7 @@ export function ProjectDetailHero({
   subheading?: string | null;
   sectorLabel?: string | null;
   practiceLabel?: string | null;
-  image?: string | null;
+  image?: ImageSource | null;
   location?: string | null;
   client?: string | null;
   collaborators?: string | null;
@@ -65,12 +66,9 @@ export function ProjectDetailHero({
             
             className="uncontainer-mobile overflow-hidden"
           >
-            <Image
+            <ResponsiveImage
               src={image}
               alt={title}
-              width={1600}
-              height={1000}
-              sizes="(min-width: 1024px) 100vw, 100vw"
               data-aos="zoom-out"
               data-aos-delay="150"
               className="lg:aspect-[16/10] max-md:min-h-[438px] w-full object-cover"

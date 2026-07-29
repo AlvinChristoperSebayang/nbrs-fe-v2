@@ -13,9 +13,17 @@ export type Post = {
   publishedAt: string;
 };
 
+export type ResponsiveImage = {
+  mobile: string;
+  tablet: string;
+  desktop: string;
+};
+
+export type ImageSource = string | ResponsiveImage;
+
 export type Sector = {
   label: string;
-  image: string;
+  image: ImageSource;
   href: string;
   description: string;
   hoverColor: string;
@@ -24,7 +32,7 @@ export type Sector = {
 export type NewsItem = {
   title: string;
   href?: string;
-  image?: string;
+  image?: ImageSource;
   description?: string;
 };
 
@@ -33,13 +41,13 @@ export type Project = {
   title: string;
   excerpt: string;
   content: string;
-  image: string;
+  image: ImageSource;
   sector?: string;
   completedAt?: string;
 };
 
 export type CtaContent = {
-  image: string;
+  image: ImageSource;
   title: string;
   description?: string;
   buttonText?: string;
