@@ -50,7 +50,7 @@ export function ResearchCard({ item }: { item: ResearchCardItem }) {
 
       {/* Card Info Box */}
       <div
-        className="flex min-h-[200px] max-h-[200px] md:min-h-[200px] flex-col justify-between p-6 transition-colors duration-300 h-full"
+        className="flex min-h-[200px]  flex-col justify-between px-5 py-[22px] transition-colors duration-300 h-full"
         style={{
           backgroundColor: isHovered ? item.hoverColor : "#000000",
           color: isHovered ? "#000000" : "#ffffff",
