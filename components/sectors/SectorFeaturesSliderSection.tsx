@@ -3,11 +3,13 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
+import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
+import type { ImageSource } from "@/lib/types";
 
 export type FeatureItem = {
   title: string;
   description: string;
-  image: string;
+  image: ImageSource;
   href?: string;
 };
 
@@ -51,7 +53,7 @@ export function SectorFeaturesSliderSection({
         <div className="relative w-full h-[460px] sm:h-[500px] overflow-hidden">
           {/* Background Images */}
           {items.map((item, index) => (
-            <img
+            <ResponsiveImage
               key={index}
               src={item.image}
               alt={item.title}
@@ -153,7 +155,7 @@ export function SectorFeaturesSliderSection({
             {/* Background Images */}
             <div className="absolute w-full h-full overflow-hidden top-0 left-0 z-[5]">
               {items.map((item, index) => (
-                <img
+                <ResponsiveImage
                   key={index}
                   src={item.image}
                   alt={item.title}

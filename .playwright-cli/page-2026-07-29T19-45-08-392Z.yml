@@ -1,0 +1,244 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - navigation [ref=e4]:
+      - link [ref=e5] [cursor=pointer]:
+        - /url: /
+        - img "Logo" [ref=e6]
+      - button "Open menu" [ref=e7] [cursor=pointer]
+  - generic:
+    - generic:
+      - list:
+        - listitem:
+          - link:
+            - /url: /about
+            - generic: "01"
+            - generic: About
+        - listitem:
+          - link:
+            - /url: /services
+            - generic: "02"
+            - generic: Services
+        - listitem:
+          - link:
+            - /url: /practices
+            - generic: "03"
+            - generic: Practices
+        - listitem:
+          - link:
+            - /url: /blog
+            - generic: "04"
+            - generic: Blog
+        - listitem:
+          - link:
+            - /url: /research
+            - generic: "05"
+            - generic: Research
+        - listitem:
+          - link:
+            - /url: /awards
+            - generic: "06"
+            - generic: Awards
+        - listitem:
+          - link:
+            - /url: /sectors
+            - generic: "07"
+            - generic: Sectors
+        - listitem:
+          - link:
+            - /url: /social-sustainability
+            - generic: "08"
+            - generic: Social Sustainability
+  - article [ref=e11]:
+    - generic [ref=e15]:
+      - heading "EDUCATION" [level=1] [ref=e16]
+      - paragraph [ref=e18]: Every bright future begins with an eagerness to embrace the new.
+    - generic [ref=e21]:
+      - generic [ref=e22]:
+        - generic [ref=e23]:
+          - generic [ref=e24]: "Principles:"
+          - generic [ref=e25]: Education
+        - paragraph [ref=e27]: Home to one of Australia’s largest dedicated education teams, we partner with clients and students to design for better learning outcomes. With experience in primary, secondary, tertiary and special needs education, our research based methodology results in innovative spaces that inspire and nurture learning beyond the conventional.
+      - 'img "Principles: Education principle 1" [ref=e30]'
+      - 'img "Principles: Education principle 2" [ref=e33]'
+      - 'img "Principles: Education principle 3" [ref=e36]'
+      - 'img "Principles: Education principle 4" [ref=e39]'
+      - 'img "Principles: Education principle 5" [ref=e42]'
+    - generic [ref=e45]:
+      - generic [ref=e46]: FEATURES
+      - generic [ref=e48]:
+        - generic [ref=e49]:
+          - img "Empowering educators" [ref=e50]
+          - img "Setting the new standard" [ref=e51]
+          - img "Collaborative approach" [ref=e52]
+        - generic [ref=e53]:
+          - generic [ref=e55] [cursor=pointer]:
+            - heading "Empowering educators" [level=3] [ref=e56]
+            - paragraph [ref=e57]: We believe in giving teachers and facilitators the flexibility to design their own spaces, and deliver programs in a way that works best for them.
+          - generic [ref=e59] [cursor=pointer]:
+            - heading "Setting the new standard" [level=3] [ref=e60]
+            - paragraph [ref=e61]: Whether it’s schools and kindergartens, universities and academic campuses, or spaces created to support those with a disability or learning difficulties, our research-based design draws on current trends and best-practice to set the standard for the industry.
+          - generic [ref=e63] [cursor=pointer]:
+            - heading "Collaborative approach" [level=3] [ref=e64]
+            - paragraph [ref=e65]: We take a highly collaborative approach to design, working with Government and the private sector to apply our deep understanding of key learning stages, to the specific requirements of a project.
+    - generic [ref=e67]:
+      - heading "KEY PROJECTS" [level=2] [ref=e68]
+      - generic [ref=e69]:
+        - link [ref=e70] [cursor=pointer]:
+          - /url: /projects/taronga-institute-of-science-and-learning
+          - img "Taronga Institute of Science and Learning" [ref=e73]
+          - heading "Taronga Institute of Science and Learning" [level=3] [ref=e75]
+        - link [ref=e78] [cursor=pointer]:
+          - /url: /projects/armidale-secondary-college
+          - img "Armidale Secondary College" [ref=e81]
+          - heading "Armidale Secondary College" [level=3] [ref=e83]
+        - link [ref=e86] [cursor=pointer]:
+          - /url: /projects/knox-performing-arts-centre
+          - img "Knox Grammar Junior School Academy and Performing Arts Centre" [ref=e89]
+          - heading "Knox Grammar Junior School Academy and Performing Arts Centre" [level=3] [ref=e91]
+    - generic [ref=e96]:
+      - img "Macella Salzmann | Architect NSW 6524" [ref=e99]
+      - generic [ref=e100]:
+        - paragraph [ref=e104]: “Architecture is a form of communication unlike any other.”
+        - paragraph [ref=e105]: "- Macella Salzmann | Architect NSW 6524"
+    - generic [ref=e110]:
+      - heading "LATEST PROJECTS" [level=2] [ref=e111]
+      - generic [ref=e112]:
+        - generic [ref=e113]: Project
+        - generic [ref=e114]: Sectors
+        - generic [ref=e115]: Status
+      - generic [ref=e117]:
+        - link "Taronga Institute of Science and Learning Architecture, Interior Design, Landscape Architecture Built" [ref=e118] [cursor=pointer]:
+          - /url: /projects/taronga-institute-of-science-and-learning
+          - generic [ref=e119]: Taronga Institute of Science and Learning
+          - generic [ref=e120]: Architecture, Interior Design, Landscape Architecture
+          - generic [ref=e121]: Built
+        - link "Armidale Secondary College Architecture, Heritage, Interior Design, Landscape Architecture Built" [ref=e125] [cursor=pointer]:
+          - /url: /projects/armidale-secondary-college
+          - generic [ref=e126]: Armidale Secondary College
+          - generic [ref=e127]: Architecture, Heritage, Interior Design, Landscape Architecture
+          - generic [ref=e128]: Built
+        - link "St Mary & St Mina's Coptic Orthodox College Architecture Built" [ref=e132] [cursor=pointer]:
+          - /url: /projects/st-mary-st-minas-coptic-orthodox-college
+          - generic [ref=e133]: St Mary & St Mina's Coptic Orthodox College
+          - generic [ref=e134]: Architecture
+          - generic [ref=e135]: Built
+        - link "Canterbury South Public School Architecture, Landscape Architecture Built" [ref=e139] [cursor=pointer]:
+          - /url: /projects/canterbury-south-public-school
+          - generic [ref=e140]: Canterbury South Public School
+          - generic [ref=e141]: Architecture, Landscape Architecture
+          - generic [ref=e142]: Built
+        - link "UNSW C20 Morven Brown Study Space Interior Design Built" [ref=e146] [cursor=pointer]:
+          - /url: /projects/unsw-c20-morven-brown-study-space
+          - generic [ref=e147]: UNSW C20 Morven Brown Study Space
+          - generic [ref=e148]: Interior Design
+          - generic [ref=e149]: Built
+    - generic [ref=e155]:
+      - heading "Let's shape what's next-together" [level=2] [ref=e156]
+      - paragraph [ref=e157]: Whether it's a place to gather, to heal, to learn or to live - we're ready to collaborate. Let's shape spaces that matter, together.
+      - link "Let's shape what's next-together" [ref=e158] [cursor=pointer]:
+        - /url: /contact
+  - contentinfo [ref=e161]:
+    - generic [ref=e162]:
+      - generic [ref=e163]:
+        - generic [ref=e164]:
+          - img "NBRS" [ref=e165]
+          - generic [ref=e166]:
+            - heading "Business Details" [level=3] [ref=e167]
+            - paragraph [ref=e168]: "Nominated Architect:"
+            - paragraph [ref=e169]: Andrew DuffinNSW 5602 | QLD 5465 | VIC00024
+            - paragraph [ref=e170]: ABN 16 002 247 565
+          - generic [ref=e171]:
+            - heading "Contact Us" [level=3] [ref=e172]
+            - paragraph [ref=e173]: NBRS operates on a9-day fortnight schedule.
+            - generic [ref=e174]:
+              - link "LinkedIn" [ref=e175] [cursor=pointer]:
+                - /url: https://www.linkedin.com
+              - link "Instagram" [ref=e179] [cursor=pointer]:
+                - /url: https://www.instagram.com
+              - link "YouTube" [ref=e184] [cursor=pointer]:
+                - /url: https://www.youtube.com
+        - generic [ref=e188]:
+          - generic [ref=e189]:
+            - button "Sectors" [expanded]
+            - list [ref=e190]:
+              - listitem [ref=e191]:
+                - link "Education" [ref=e192] [cursor=pointer]:
+                  - /url: /services
+              - listitem [ref=e193]:
+                - link "Wellness" [ref=e194] [cursor=pointer]:
+                  - /url: /services
+              - listitem [ref=e195]:
+                - link "Community" [ref=e196] [cursor=pointer]:
+                  - /url: /services
+              - listitem [ref=e197]:
+                - link "Secure Spaces" [ref=e198] [cursor=pointer]:
+                  - /url: /services
+              - listitem [ref=e199]:
+                - link "Heritage" [ref=e200] [cursor=pointer]:
+                  - /url: /services
+          - generic [ref=e201]:
+            - button "Practices"
+            - list [ref=e202]:
+              - listitem [ref=e203]:
+                - link "Architecture" [ref=e204] [cursor=pointer]:
+                  - /url: /services
+              - listitem [ref=e205]:
+                - link "Landscape Architecture" [ref=e206] [cursor=pointer]:
+                  - /url: /services
+              - listitem [ref=e207]:
+                - link "Interior Design" [ref=e208] [cursor=pointer]:
+                  - /url: /services
+          - generic [ref=e209]:
+            - button "Legal"
+            - list [ref=e210]:
+              - listitem [ref=e211]:
+                - link "Terms & Conditions" [ref=e212] [cursor=pointer]:
+                  - /url: /terms
+              - listitem [ref=e213]:
+                - link "Privacy Policy" [ref=e214] [cursor=pointer]:
+                  - /url: /privacy
+              - listitem [ref=e215]:
+                - link "Sitemap" [ref=e216] [cursor=pointer]:
+                  - /url: /sitemap
+        - generic [ref=e217]:
+          - generic [ref=e218]:
+            - button "Purpose"
+            - list [ref=e219]:
+              - listitem [ref=e220]:
+                - link "About NBRS" [ref=e221] [cursor=pointer]:
+                  - /url: /about
+              - listitem [ref=e222]:
+                - link "Design Approach" [ref=e223] [cursor=pointer]:
+                  - /url: /about
+              - listitem [ref=e224]:
+                - link "Awards" [ref=e225] [cursor=pointer]:
+                  - /url: /awards
+              - listitem [ref=e226]:
+                - link "Research Envision" [ref=e227] [cursor=pointer]:
+                  - /url: /research
+              - listitem [ref=e228]:
+                - link "Sustainability" [ref=e229] [cursor=pointer]:
+                  - /url: /about
+              - listitem [ref=e230]:
+                - link "Social Responsibility" [ref=e231] [cursor=pointer]:
+                  - /url: /social-sustainability
+              - listitem [ref=e232]:
+                - link "News" [ref=e233] [cursor=pointer]:
+                  - /url: /blog
+          - generic [ref=e234]:
+            - button "People"
+            - list [ref=e235]:
+              - listitem [ref=e236]:
+                - link "Our Leaders" [ref=e237] [cursor=pointer]:
+                  - /url: /about
+              - listitem [ref=e238]:
+                - link "Culture" [ref=e239] [cursor=pointer]:
+                  - /url: /about
+              - listitem [ref=e240]:
+                - link "Careers" [ref=e241] [cursor=pointer]:
+                  - /url: /about
+              - listitem [ref=e242]:
+                - link "Envision" [ref=e243] [cursor=pointer]:
+                  - /url: /about
+      - paragraph [ref=e244]: We acknowledge the Aboriginal and Torres Strait Islander peoples as the Traditional Custodians of this land and waters. We pay our respects to Aboriginal and Torres Strait Islander Elders, past and present, and acknowledge the diversity and strength of Aboriginal and Torres Strait Islander peoples and communities today.
+  - button "Open Next.js Dev Tools" [ref=e250] [cursor=pointer]

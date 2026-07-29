@@ -1,4 +1,6 @@
 import { Container } from "@/components/ui/Container";
+import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
+import type { ImageSource } from "@/lib/types";
 
 export function SectorPrinciplesSection({
   title,
@@ -7,7 +9,7 @@ export function SectorPrinciplesSection({
 }: {
   title: string;
   description: string;
-  images: string[];
+  images: ImageSource[];
 }) {
   const colonIndex = title.indexOf(":");
   const prefix = colonIndex !== -1 ? title.slice(0, colonIndex + 1) : "PRINCIPLES:";
@@ -41,7 +43,7 @@ export function SectorPrinciplesSection({
               data-aos-delay={100 + index * 100}
               className="group relative block aspect-[5/4] w-full overflow-hidden rounded-[5px] bg-zinc-100"
             >
-              <img
+              <ResponsiveImage
                 src={imgUrl}
                 alt={`${title} principle ${index + 1}`}
                 className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"

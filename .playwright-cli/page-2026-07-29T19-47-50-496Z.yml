@@ -1,0 +1,253 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - navigation [ref=e4]:
+      - link [ref=e5] [cursor=pointer]:
+        - /url: /
+        - img "Logo" [ref=e6]
+      - button "Open menu" [ref=e7] [cursor=pointer]
+  - generic:
+    - generic:
+      - list:
+        - listitem:
+          - link:
+            - /url: /about
+            - generic: "01"
+            - generic: About
+        - listitem:
+          - link:
+            - /url: /services
+            - generic: "02"
+            - generic: Services
+        - listitem:
+          - link:
+            - /url: /practices
+            - generic: "03"
+            - generic: Practices
+        - listitem:
+          - link:
+            - /url: /blog
+            - generic: "04"
+            - generic: Blog
+        - listitem:
+          - link:
+            - /url: /research
+            - generic: "05"
+            - generic: Research
+        - listitem:
+          - link:
+            - /url: /awards
+            - generic: "06"
+            - generic: Awards
+        - listitem:
+          - link:
+            - /url: /sectors
+            - generic: "07"
+            - generic: Sectors
+        - listitem:
+          - link:
+            - /url: /social-sustainability
+            - generic: "08"
+            - generic: Social Sustainability
+  - article [ref=e11]:
+    - generic [ref=e15]:
+      - heading "HERITAGE" [level=1] [ref=e16]
+      - paragraph [ref=e18]: True belonging comes from appreciating our place in time.
+    - generic [ref=e21]:
+      - generic [ref=e22]:
+        - generic [ref=e23]:
+          - generic [ref=e24]: "Principles:"
+          - generic [ref=e25]: Heritage
+        - paragraph [ref=e27]: Preserving heritage by co-designing our connection to the past, present and future. We place our focus on the spaces, our heritage and people behind our successes.
+      - 'img "Principles: Heritage principle 1" [ref=e30]'
+      - 'img "Principles: Heritage principle 2" [ref=e33]'
+      - 'img "Principles: Heritage principle 3" [ref=e36]'
+      - 'img "Principles: Heritage principle 4" [ref=e39]'
+      - 'img "Principles: Heritage principle 5" [ref=e42]'
+    - generic [ref=e44]:
+      - generic [ref=e45]:
+        - heading "Our heritage services" [level=2] [ref=e46]
+        - paragraph [ref=e47]: Our heritage expertise spans the past, present and future. NBRS Heritage has a broad heritage management and conservation focus across Sydney, Australia and internationally. Our experience involves advising on complex and sensitive environments.
+      - generic [ref=e48]:
+        - generic [ref=e49]:
+          - heading "Heritage advisory services" [level=3] [ref=e50]
+          - generic [ref=e51]:
+            - generic [ref=e52]: Heritage Planning and Strategy Reports
+            - generic [ref=e53]: Heritage Overview and Due Diligence Reports
+            - generic [ref=e54]: Heritage Assessments
+            - generic [ref=e55]: Historical Research
+            - generic [ref=e56]: Heritage Impact Statements
+            - generic [ref=e57]: Conservation Management Plans
+            - generic [ref=e58]: Expert Witness Applications
+            - generic [ref=e59]: Development advice
+            - generic [ref=e60]: Heritage Asset Action Plans
+            - generic [ref=e61]: Expert Witness Services
+            - generic [ref=e62]: Heritage Interpretation Plans and Strategies
+        - generic [ref=e63]:
+          - heading "Heritage conservation and architectural services" [level=3] [ref=e64]
+          - generic [ref=e65]:
+            - generic [ref=e66]: Conservation Works Documentation
+            - generic [ref=e67]: Conservation Works Schedules and Specifications
+            - generic [ref=e68]: Salvage Methodology Reports
+            - generic [ref=e69]: Maintenance Schedules
+            - generic [ref=e70]: Coordination of specialist sub-consultants
+            - generic [ref=e71]: Archival Photographic Recording
+            - generic [ref=e72]: Measured Drawings
+            - generic [ref=e73]: Heritage Interpretation Design
+            - generic [ref=e74]: Design and Documentation
+            - generic [ref=e75]: Adaptive Re-use
+            - generic [ref=e76]: Alterations and Additions
+            - generic [ref=e77]: Infill Development
+            - generic [ref=e78]: Building Compliance and services upgrades
+            - generic [ref=e79]: Historic Colour schemes
+    - generic [ref=e81]:
+      - heading "KEY PROJECTS" [level=2] [ref=e82]
+      - generic [ref=e83]:
+        - link [ref=e84] [cursor=pointer]:
+          - /url: /projects/262-liverpool-street
+          - img "262 Liverpool Street" [ref=e87]
+          - heading "262 Liverpool Street" [level=3] [ref=e89]
+        - link [ref=e92] [cursor=pointer]:
+          - /url: /projects/60-martin-place
+          - img "60 Martin Place" [ref=e95]
+          - heading "60 Martin Place" [level=3] [ref=e97]
+        - link [ref=e100] [cursor=pointer]:
+          - /url: /projects/new-life-bondi-junction
+          - img "New Life Bondi Junction" [ref=e103]
+          - heading "New Life Bondi Junction" [level=3] [ref=e105]
+    - generic [ref=e110]:
+      - img "Samantha Polkinghorne" [ref=e113]
+      - generic [ref=e114]:
+        - paragraph [ref=e118]: "?Reinvigorating old buildings through their successful adaptation offers opportunities to create more subtle layered environments.?"
+        - paragraph [ref=e119]: "- Samantha Polkinghorne"
+    - generic [ref=e124]:
+      - heading "LATEST PROJECTS" [level=2] [ref=e125]
+      - generic [ref=e126]:
+        - generic [ref=e127]: Project
+        - generic [ref=e128]: Sectors
+        - generic [ref=e129]: Status
+      - generic [ref=e131]:
+        - link "262 Liverpool Street Heritage Built" [ref=e132] [cursor=pointer]:
+          - /url: /projects/262-liverpool-street
+          - generic [ref=e133]: 262 Liverpool Street
+          - generic [ref=e134]: Heritage
+          - generic [ref=e135]: Built
+        - link "60 Martin Place Heritage Built" [ref=e139] [cursor=pointer]:
+          - /url: /projects/60-martin-place
+          - generic [ref=e140]: 60 Martin Place
+          - generic [ref=e141]: Heritage
+          - generic [ref=e142]: Built
+        - link "New Life Bondi Junction Heritage Built" [ref=e146] [cursor=pointer]:
+          - /url: /projects/new-life-bondi-junction
+          - generic [ref=e147]: New Life Bondi Junction
+          - generic [ref=e148]: Heritage
+          - generic [ref=e149]: Built
+    - generic [ref=e155]:
+      - heading "Let's shape what's next-together" [level=2] [ref=e156]
+      - paragraph [ref=e157]: Whether it's a place to gather, to heal, to learn or to live - we're ready to collaborate. Let's shape spaces that matter, together.
+      - link "Let's shape what's next-together" [ref=e158] [cursor=pointer]:
+        - /url: /contact
+  - contentinfo [ref=e161]:
+    - generic [ref=e162]:
+      - generic [ref=e163]:
+        - generic [ref=e164]:
+          - img "NBRS" [ref=e165]
+          - generic [ref=e166]:
+            - heading "Business Details" [level=3] [ref=e167]
+            - paragraph [ref=e168]: "Nominated Architect:"
+            - paragraph [ref=e169]: Andrew DuffinNSW 5602 | QLD 5465 | VIC00024
+            - paragraph [ref=e170]: ABN 16 002 247 565
+          - generic [ref=e171]:
+            - heading "Contact Us" [level=3] [ref=e172]
+            - paragraph [ref=e173]: NBRS operates on a9-day fortnight schedule.
+            - generic [ref=e174]:
+              - link "LinkedIn" [ref=e175] [cursor=pointer]:
+                - /url: https://www.linkedin.com
+              - link "Instagram" [ref=e179] [cursor=pointer]:
+                - /url: https://www.instagram.com
+              - link "YouTube" [ref=e184] [cursor=pointer]:
+                - /url: https://www.youtube.com
+        - generic [ref=e188]:
+          - generic [ref=e189]:
+            - button "Sectors" [expanded]
+            - list [ref=e190]:
+              - listitem [ref=e191]:
+                - link "Education" [ref=e192] [cursor=pointer]:
+                  - /url: /services
+              - listitem [ref=e193]:
+                - link "Wellness" [ref=e194] [cursor=pointer]:
+                  - /url: /services
+              - listitem [ref=e195]:
+                - link "Community" [ref=e196] [cursor=pointer]:
+                  - /url: /services
+              - listitem [ref=e197]:
+                - link "Secure Spaces" [ref=e198] [cursor=pointer]:
+                  - /url: /services
+              - listitem [ref=e199]:
+                - link "Heritage" [ref=e200] [cursor=pointer]:
+                  - /url: /services
+          - generic [ref=e201]:
+            - button "Practices"
+            - list [ref=e202]:
+              - listitem [ref=e203]:
+                - link "Architecture" [ref=e204] [cursor=pointer]:
+                  - /url: /services
+              - listitem [ref=e205]:
+                - link "Landscape Architecture" [ref=e206] [cursor=pointer]:
+                  - /url: /services
+              - listitem [ref=e207]:
+                - link "Interior Design" [ref=e208] [cursor=pointer]:
+                  - /url: /services
+          - generic [ref=e209]:
+            - button "Legal"
+            - list [ref=e210]:
+              - listitem [ref=e211]:
+                - link "Terms & Conditions" [ref=e212] [cursor=pointer]:
+                  - /url: /terms
+              - listitem [ref=e213]:
+                - link "Privacy Policy" [ref=e214] [cursor=pointer]:
+                  - /url: /privacy
+              - listitem [ref=e215]:
+                - link "Sitemap" [ref=e216] [cursor=pointer]:
+                  - /url: /sitemap
+        - generic [ref=e217]:
+          - generic [ref=e218]:
+            - button "Purpose"
+            - list [ref=e219]:
+              - listitem [ref=e220]:
+                - link "About NBRS" [ref=e221] [cursor=pointer]:
+                  - /url: /about
+              - listitem [ref=e222]:
+                - link "Design Approach" [ref=e223] [cursor=pointer]:
+                  - /url: /about
+              - listitem [ref=e224]:
+                - link "Awards" [ref=e225] [cursor=pointer]:
+                  - /url: /awards
+              - listitem [ref=e226]:
+                - link "Research Envision" [ref=e227] [cursor=pointer]:
+                  - /url: /research
+              - listitem [ref=e228]:
+                - link "Sustainability" [ref=e229] [cursor=pointer]:
+                  - /url: /about
+              - listitem [ref=e230]:
+                - link "Social Responsibility" [ref=e231] [cursor=pointer]:
+                  - /url: /social-sustainability
+              - listitem [ref=e232]:
+                - link "News" [ref=e233] [cursor=pointer]:
+                  - /url: /blog
+          - generic [ref=e234]:
+            - button "People"
+            - list [ref=e235]:
+              - listitem [ref=e236]:
+                - link "Our Leaders" [ref=e237] [cursor=pointer]:
+                  - /url: /about
+              - listitem [ref=e238]:
+                - link "Culture" [ref=e239] [cursor=pointer]:
+                  - /url: /about
+              - listitem [ref=e240]:
+                - link "Careers" [ref=e241] [cursor=pointer]:
+                  - /url: /about
+              - listitem [ref=e242]:
+                - link "Envision" [ref=e243] [cursor=pointer]:
+                  - /url: /about
+      - paragraph [ref=e244]: We acknowledge the Aboriginal and Torres Strait Islander peoples as the Traditional Custodians of this land and waters. We pay our respects to Aboriginal and Torres Strait Islander Elders, past and present, and acknowledge the diversity and strength of Aboriginal and Torres Strait Islander peoples and communities today.
+  - alert [ref=e245]

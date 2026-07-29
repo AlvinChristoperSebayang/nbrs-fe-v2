@@ -1,11 +1,13 @@
 import { Container } from "@/components/ui/Container";
+import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
+import type { ImageSource } from "@/lib/types";
 
 export function SectorQuoteSection({
   image,
   quote,
   author,
 }: {
-  image: string;
+  image: ImageSource;
   quote: string;
   author: string;
 }) {
@@ -15,7 +17,7 @@ export function SectorQuoteSection({
         <div className="relative flex flex-col lg:block max-w-5xl mx-auto">
           {/* Top (Mobile) / Left (Desktop) Image */}
           <div data-aos="fade-up" className="w-full overflow-hidden lg:w-[60%]">
-            <img
+            <ResponsiveImage
               src={image}
               alt={author}
               className="h-80 sm:h-96 w-full object-cover lg:h-[485px] max-md:rounded-none lg:rounded-sm"

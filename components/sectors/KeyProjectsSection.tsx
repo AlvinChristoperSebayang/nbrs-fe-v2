@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
+import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
+import type { ImageSource } from "@/lib/types";
 
 export type KeyProjectItem = {
   id: string;
   title: string;
-  image: string;
+  image: ImageSource;
   href: string;
 };
 
@@ -38,7 +40,7 @@ export function KeyProjectsSection({
             >
               {/* Project Cover Image */}
               <div className="aspect-[370/300] w-full overflow-hidden bg-zinc-100 mb-4 rounded-sm">
-                <img
+                <ResponsiveImage
                   src={project.image}
                   alt={project.title}
                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
