@@ -34,7 +34,7 @@ export default function AwardsPage() {
         }}
       />
 
-      <div className="lg:pb-32">
+      <div className="">
         <AboutSection
           image_url="/images/about-us-about.png"
           background_color="#DEE1F2"

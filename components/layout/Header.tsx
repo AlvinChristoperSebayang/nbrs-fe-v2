@@ -7,9 +7,12 @@ import { Container } from "@/components/ui/Container";
 const navLinks = [
   { href: "/about", label: "About" },
   { href: "/services", label: "Services" },
+  { href: "/practices", label: "Practices" },
   { href: "/blog", label: "Blog" },
   { href: "/research", label: "Research" },
   { href: "/awards", label: "Awards" },
+  { href: "/sectors", label: "Sectors" },
+  { href: "/social-sustainability", label: "Social Sustainability" },
 ];
 
 export function Header() {
@@ -101,9 +104,7 @@ export function Header() {
         </Container>
       </header>
 
-      {/* Full-screen menu, wipes open from the hamburger button as a clip-path circle.
-          Rendered as a sibling of <header>, not a child — a transformed ancestor
-          would turn its own box into the containing block for this fixed element. */}
+      {/* Full-screen menu, wipes open from the hamburger button as a clip-path circle. */}
       <div
         aria-hidden={!open}
         onClick={() => setOpen(false)}

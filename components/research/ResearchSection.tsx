@@ -1,11 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
   SECTOR_OPTIONS,
   PRACTICE_OPTIONS,
   DUMMY_RESEARCH_ITEMS,
+  ResearchItem,
+  CategoryOption,
 } from "@/lib/research-data";
+import {
+  fetchResearchListing,
+  GraphQLCategoryNode,
+  GraphQLResearchEntry,
+} from "@/lib/graphql-research";
 import { ResearchCard } from "./ResearchCard";
 
 function ArrowIcon() {
@@ -27,9 +34,150 @@ function ArrowIcon() {
   );
 }
 
+// Fallback color palette if accentColor is missing in GraphQL node
+const CATEGORY_COLORS: Record<string, string> = {
+  education: "#EDE3F0",
+  community: "#F2E8D8",
+  wellness: "#DEE1F2",
+  heritage: "#F0C7BD",
+  "secure-spaces": "#FDD4B6",
+};
+
 export function ResearchSection() {
   const [selectedSectors, setSelectedSectors] = useState<string[]>([]);
   const [selectedPractices, setSelectedPractices] = useState<string[]>([]);
+
+  const [sectorOptions, setSectorOptions] =
+    useState<CategoryOption[]>(SECTOR_OPTIONS);
+  const [practiceOptions, setPracticeOptions] =
+    useState<CategoryOption[]>(PRACTICE_OPTIONS);
+
+  const [researchItems, setResearchItems] =
+    useState<ResearchItem[]>(DUMMY_RESEARCH_ITEMS);
+  const [totalCount, setTotalCount] = useState<number>(DUMMY_RESEARCH_ITEMS.length);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoadingMore, setIsLoadingMore] = useState<boolean>(false);
+
+  const [heading, setHeading] = useState<string>("ENVISION");
+  const [subheading, setSubheading] = useState<string>(
+    "In‑depth investigations into emerging industry themes, exploring the intersection of design, performance and community impact."
+  );
+
+  const mapGraphQLCategory = (cat: GraphQLCategoryNode): CategoryOption => ({
+    id: cat.id,
+    label: cat.title,
+    slug: cat.slug,
+    hoverColor: cat.accentColor || CATEGORY_COLORS[cat.slug] || "#EDE3F0",
+  });
+
+  const mapGraphQLResearchEntry = (entry: GraphQLResearchEntry): ResearchItem => {
+    const sector = entry.catSector?.[0];
+    const discipline = entry.catDiscipline?.[0];
+
+    const sectorSlug = sector?.slug || "general";
+    const sectorName = sector?.title || "Research";
+    const practiceSlug = discipline?.slug || "architecture";
+    const practiceName = discipline?.title || "Architecture";
+
+    const hoverColor =
+      sector?.accentColor ||
+      discipline?.accentColor ||
+      CATEGORY_COLORS[sectorSlug] ||
+      "#EDE3F0";
+
+    const imageUrl =
+      entry.thumbnail?.[0]?.url2 ||
+      entry.thumbnail?.[0]?.url ||
+      "/images/home/sector2.png";
+
+    return {
+      id: entry.id,
+      slug: entry.slug,
+      title: entry.artHdrHeading || entry.title,
+      excerpt: "",
+      sectorSlug,
+      sectorName,
+      practiceSlug,
+      practiceName,
+      image: imageUrl,
+      hoverColor,
+    };
+  };
+
+  // Perform GraphQL Query for initial page / filter change
+  const loadData = useCallback(async () => {
+    setIsLoading(true);
+    const data = await fetchResearchListing({
+      limit: 9,
+      offset: 0,
+      selectedSectors,
+      selectedPractices,
+    });
+
+    if (data) {
+      // Update banner heading
+      if (data.page?.[0]?.pageHeading) {
+        setHeading(data.page[0].pageHeading);
+      }
+      if (data.page?.[0]?.pageSubheading) {
+        setSubheading(data.page[0].pageSubheading);
+      }
+
+      // Update category chips if returned
+      if (data.sectors && data.sectors.length > 0) {
+        setSectorOptions(data.sectors.map(mapGraphQLCategory));
+      }
+      if (data.practices && data.practices.length > 0) {
+        setPracticeOptions(data.practices.map(mapGraphQLCategory));
+      }
+
+      // Update research cards & total
+      if (data.research) {
+        setResearchItems(data.research.map(mapGraphQLResearchEntry));
+      }
+      if (typeof data.total === "number") {
+        setTotalCount(data.total);
+      }
+    } else {
+      // Fallback local filtering if GraphQL endpoint offline
+      const filtered = DUMMY_RESEARCH_ITEMS.filter((item) => {
+        const matchesSector =
+          selectedSectors.length === 0 || selectedSectors.includes(item.sectorSlug);
+        const matchesPractice =
+          selectedPractices.length === 0 || selectedPractices.includes(item.practiceSlug);
+        return matchesSector && matchesPractice;
+      });
+      setResearchItems(filtered);
+      setTotalCount(filtered.length);
+    }
+    setIsLoading(false);
+  }, [selectedSectors, selectedPractices]);
+
+  useEffect(() => {
+    loadData();
+  }, [loadData]);
+
+  // Load More Next Page
+  const handleLoadMore = async () => {
+    setIsLoadingMore(true);
+    const nextOffset = researchItems.length;
+
+    const data = await fetchResearchListing({
+      limit: 9,
+      offset: nextOffset,
+      selectedSectors,
+      selectedPractices,
+    });
+
+    if (data && data.research) {
+      const newItems = data.research.map(mapGraphQLResearchEntry);
+      setResearchItems((prev) => [...prev, ...newItems]);
+      if (typeof data.total === "number") {
+        setTotalCount(data.total);
+      }
+    }
+    setIsLoadingMore(false);
+  };
 
   const toggleSector = (slug: string) => {
     setSelectedSectors((prev) =>
@@ -50,24 +198,17 @@ export function ResearchSection() {
     setSelectedPractices([]);
   };
 
-  const filteredItems = DUMMY_RESEARCH_ITEMS.filter((item) => {
-    const matchesSector =
-      selectedSectors.length === 0 || selectedSectors.includes(item.sectorSlug);
-    const matchesPractice =
-      selectedPractices.length === 0 || selectedPractices.includes(item.practiceSlug);
-    return matchesSector && matchesPractice;
-  });
+  const hasMore = researchItems.length < totalCount;
 
   return (
     <div className="flex flex-col gap-7 bg-white text-black">
       {/* Header section */}
       <div className="flex flex-col gap-4 max-w-xl">
         <h2 className="font-heading text-4xl uppercase leading-none text-black lg:text-[40px]">
-          ENVISION
+          {heading}
         </h2>
         <p className="text-base text-zinc-800 leading-normal">
-          In‑depth investigations into emerging industry themes, exploring the
-          intersection of design, performance and community impact.
+          {subheading}
         </p>
       </div>
 
@@ -79,11 +220,11 @@ export function ResearchSection() {
           Filter by Sector
         </p>
         <div className="flex flex-wrap items-center gap-3">
-          {SECTOR_OPTIONS.map((sector) => {
+          {sectorOptions.map((sector) => {
             const isActive = selectedSectors.includes(sector.slug);
             return (
               <button
-                key={sector.id}
+                key={sector.id || sector.slug}
                 type="button"
                 onClick={() => toggleSector(sector.slug)}
                 className={`inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm transition ${
@@ -116,11 +257,11 @@ export function ResearchSection() {
           Filter by Practice
         </p>
         <div className="flex flex-wrap items-center gap-3">
-          {PRACTICE_OPTIONS.map((practice) => {
+          {practiceOptions.map((practice) => {
             const isActive = selectedPractices.includes(practice.slug);
             return (
               <button
-                key={practice.id}
+                key={practice.id || practice.slug}
                 type="button"
                 onClick={() => togglePractice(practice.slug)}
                 className={`inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm transition ${
@@ -148,12 +289,37 @@ export function ResearchSection() {
       </div>
 
       {/* Grid of Research Cards */}
-      <div className="mt-6">
-        {filteredItems.length > 0 ? (
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-3">
-            {filteredItems.map((item) => (
-              <ResearchCard key={item.id} item={item} />
-            ))}
+      <div className="mt-6 relative min-h-[300px]">
+        {isLoading && (
+          <div className="absolute inset-0 bg-white/70 backdrop-blur-[2px] z-10 flex items-center justify-center">
+            <span className="text-sm font-bold uppercase tracking-wider text-black animate-pulse">
+              Loading Research...
+            </span>
+          </div>
+        )}
+
+        {researchItems.length > 0 ? (
+          <div className="flex flex-col gap-10">
+            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-3">
+              {researchItems.map((item) => (
+                <ResearchCard key={item.id || item.slug} item={item} />
+              ))}
+            </div>
+
+            {/* Load More Button */}
+            {hasMore && (
+              <div className="flex justify-center mt-4">
+                <button
+                  type="button"
+                  onClick={handleLoadMore}
+                  disabled={isLoadingMore}
+                  className="inline-flex items-center gap-3 rounded-full bg-black text-white px-8 py-3.5 text-sm font-bold uppercase tracking-wider hover:bg-zinc-800 transition disabled:opacity-50"
+                >
+                  {isLoadingMore ? "Loading..." : "Load More Research"}
+                  <ArrowIcon />
+                </button>
+              </div>
+            )}
           </div>
         ) : (
           <div className="py-16 text-center">
