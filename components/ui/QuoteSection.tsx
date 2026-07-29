@@ -1,4 +1,6 @@
 import { Container } from "@/components/ui/Container";
+import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
+import type { ImageSource } from "@/lib/types";
 
 export function QuoteSection({
   image,
@@ -8,7 +10,7 @@ export function QuoteSection({
   quoteIconColor = "#B5B5B5",
   boxBgClass = "bg-[#EDEEF5]",
 }: {
-  image: string;
+  image: ImageSource;
   quote: string;
   author: string;
   role?: string;
@@ -20,7 +22,7 @@ export function QuoteSection({
       <Container className="uncontainer-mobile overflow-hidden max-md:px-0">
         <div className="relative flex flex-col lg:block">
           <div data-aos="fade-up" className="w-full overflow-hidden lg:w-[65%]">
-            <img
+            <ResponsiveImage
               src={image}
               alt={author}
               className="h-72 w-full object-cover sm:h-96 lg:h-[485px] rounded-sm"

@@ -1,4 +1,6 @@
 import { Container } from "@/components/ui/Container";
+import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
+import type { ImageSource } from "@/lib/types";
 
 export function TextGrid({
   heading,
@@ -8,8 +10,8 @@ export function TextGrid({
 }: {
   heading: string;
   description: string;
-  topImages: string[];
-  galleryImages: string[];
+  topImages: ImageSource[];
+  galleryImages: ImageSource[];
 }) {
   const textColSpan = topImages.length >= 2 ? "lg:col-span-1" : "lg:col-span-2";
 
@@ -34,12 +36,12 @@ export function TextGrid({
 
           {topImages.map((src, index) => (
             <div
-              key={src + index}
+              key={`top-${index}`}
               data-aos="fade-up"
               data-aos-delay={100 + index * 100}
               className="h-56 w-full overflow-hidden sm:h-48 lg:col-span-1 lg:h-[300px]"
             >
-              <img src={src} alt="" className="h-full w-full object-cover" />
+              <ResponsiveImage src={src} alt="" className="h-full w-full object-cover" />
             </div>
           ))}
         </div>
@@ -47,12 +49,12 @@ export function TextGrid({
         <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3 lg:mt-6 lg:gap-6">
           {galleryImages.map((src, index) => (
             <div
-              key={src + index}
+              key={`gallery-${index}`}
               data-aos="fade-up"
               data-aos-delay={index * 100}
               className="h-56 w-full overflow-hidden sm:h-48 lg:h-[300px]"
             >
-              <img src={src} alt="" className="h-full w-full object-cover" />
+              <ResponsiveImage src={src} alt="" className="h-full w-full object-cover" />
             </div>
           ))}
         </div>

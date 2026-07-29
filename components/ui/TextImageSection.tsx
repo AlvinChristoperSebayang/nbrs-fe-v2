@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
+import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
+import type { ImageSource } from "@/lib/types";
 
 export function TextImageSection({
   heading,
@@ -10,7 +12,7 @@ export function TextImageSection({
 }: {
   heading: string;
   description: string;
-  image: string;
+  image: ImageSource;
   buttonText?: string;
   buttonHref?: string;
 }) {
@@ -55,7 +57,7 @@ export function TextImageSection({
           data-aos-delay="150"
           className="w-full overflow-hidden lg:w-[65%]"
         >
-          <img
+          <ResponsiveImage
             src={image}
             alt=""
             className="h-64 w-full object-cover sm:h-80 lg:h-[420px]"
