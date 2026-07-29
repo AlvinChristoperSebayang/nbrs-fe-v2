@@ -22,13 +22,13 @@ export function AboutPracticeSection({
             className="flex flex-col justify-center lg:col-span-2"
           >
             <div className="flex flex-col w-full max-w-[569px]">
-              <h2 className="font-heading  text-3xl uppercase leading-[1.05] tracking-tight sm:text-4xl lg:text-[60px]">
+              <h2 className="font-heading text-[#000000] text-3xl uppercase leading-[1.05] tracking-tight sm:text-4xl lg:text-[60px]">
                 {heading}
               </h2>
               <div className="mt-4 h-1 w-full bg-black lg:h-1.5" />
-            <p className="mt-6  text-sm text-black sm:text-base">
-              {description}
-            </p>
+              <p className="mt-6  text-sm text-black sm:text-base">
+                {description}
+              </p>
             </div>
           </div>
 

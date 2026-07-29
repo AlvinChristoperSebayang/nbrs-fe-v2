@@ -1,37 +1,27 @@
 import type { Metadata } from "next";
-import { Hero } from "@/components/ui/Hero";
-import { SectorsSection } from "@/components/home/SectorsSection";
 import { CtaSection } from "@/components/cta/CtaSection";
-import { SECTORS_DATA } from "@/lib/sectors-data";
-import type { CtaContent } from "@/lib/types";
+import { SectorsSection } from "@/components/home/SectorsSection";
+import { Hero } from "@/components/ui/Hero";
+import { getSectorsPageContent } from "@/lib/sectors-page";
 
 export const metadata: Metadata = {
   title: "Exploring Our Sectors",
 };
 
-const cta: CtaContent[] = [
-  {
-    image: "/images/contact-bg.png",
-    title: "LET’S SHAPE WHAT’S NEXT-TOGETHER",
-    description:
-      "Whether it’s a place to gather, to heal, to learn or to live - we’re ready to collaborate. Let’s shape spaces that matter, together.",
-    buttonText: "LET’S SHAPE WHAT’S NEXT-TOGETHER",
-    buttonHref: "/contact",
-  },
-];
+export default async function SectorsPage() {
+  const content = await getSectorsPageContent();
 
-export default function SectorsPage() {
   return (
     <article className="bg-white text-black min-h-screen">
       <Hero
-        image="/images/hero/hero4.png"
-        title="EXPLORING OUR SECTORS"
-        description="Identify how we can support your project through the breadth of our sector expertise."
+        image={content.hero.image}
+        title={content.hero.title}
+        description={content.hero.description}
       />
 
-      <SectorsSection sectors={SECTORS_DATA} />
+      <SectorsSection sectors={content.sectors} />
 
-      <CtaSection content={cta[0]} />
+      <CtaSection content={content.cta} />
     </article>
   );
 }

@@ -23,7 +23,7 @@ export function TextImageSection({
           data-aos="fade-up"
           className="flex flex-col items-start gap-4 lg:w-[35%]"
         >
-          <h2 className="font-heading text-3xl uppercase leading-[1.05] tracking-tight sm:text-4xl">
+          <h2 className="font-heading text-[#000000] text-3xl uppercase leading-[1.05] tracking-tight sm:text-4xl">
             {heading}
           </h2>
           <p className="text-sm text-black/70 sm:text-base">{description}</p>
