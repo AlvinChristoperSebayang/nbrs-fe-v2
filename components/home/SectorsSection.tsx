@@ -6,7 +6,7 @@ export function SectorsSection({ sectors }: { sectors: Sector[] }) {
   return (
     <section className="bg-white py-16 lg:py-24">
       <Container>
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-[30px] lg:gap-y-[35px]">
           <div data-aos="fade-up" className="flex flex-col justify-center">
             <h2 className="font-heading text-4xl leading-[1.05] uppercase text-black sm:text-[40px] lg:text-[70px] border-b-4 border-black">
               Designing spaces bespoke to{" "}
@@ -22,7 +22,7 @@ export function SectorsSection({ sectors }: { sectors: Sector[] }) {
               href={sector.href}
               data-aos="fade-up"
               data-aos-delay={100 + index * 100}
-              className="group relative block aspect-[5/4] overflow-hidden rounded-[5px]"
+              className="group relative block aspect-[5/4] overflow-hidden rounded-[5px] lg:aspect-[37/30]"
             >
               <div
                 className={`absolute  top-[-100%] group-hover:top-0  duration-300 z-10 opacity-100  w-full h-full`}
@@ -30,12 +30,12 @@ export function SectorsSection({ sectors }: { sectors: Sector[] }) {
               >
                 <div className="relative h-full w-full flex flex-col items-start justify-between gap-4 p-5">
                   <div className="flex flex-col gap-2 text-left">
-                  <span className="font-heading text-lg lg:text-[34px] uppercase text-black">
-                    {sector.label}
-                  </span>
-                  <span className="font-heading text-sm lg:text-[18px] uppercase text-black">
-                    {sector.description}
-                  </span>
+                    <span className="font-heading text-lg lg:text-[34px] uppercase text-black">
+                      {sector.label}
+                    </span>
+                    <span className="font-heading text-sm lg:text-[18px] uppercase text-black">
+                      {sector.description}
+                    </span>
                   </div>
                   <svg
                     className="self-end"

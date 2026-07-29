@@ -2,8 +2,7 @@ import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import type { CtaContent } from "@/lib/types";
 
-export function CtaSection({ cta }: { cta: CtaContent[] }) {
-  const [content] = cta;
+export function CtaSection({ content }: { content: CtaContent }) {
 
   return (
     <section className="relative overflow-hidden">

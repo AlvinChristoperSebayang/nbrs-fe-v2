@@ -1,13 +1,10 @@
-import Link from "next/link";
-import { getPages } from "@/lib/pages";
-import { getPosts } from "@/lib/posts";
-import { Container } from "@/components/ui/Container";
 import { HeroSlider } from "@/components/hero/HeroSlider";
 import { heroSlides } from "@/lib/hero";
 import { AboutSection } from "@/components/home/AboutSection";
 import { SectorsSection } from "@/components/home/SectorsSection";
 import { GridEffect } from "@/components/ui/GridEffect";
 import { CtaSection } from "@/components/cta/CtaSection";
+import { getHomepageContent } from "@/lib/homepage";
 import type { Sector, NewsItem, CtaContent } from "@/lib/types";
 
 const sectors: Sector[] = [
@@ -78,15 +75,34 @@ const cta: CtaContent[] = [
 ];
 
 export default async function Home() {
-  const [pages, posts] = await Promise.all([getPages(), getPosts()]);
+  let homepage: Awaited<ReturnType<typeof getHomepageContent>> | null = null;
+
+  try {
+    homepage = await getHomepageContent();
+  } catch (error) {
+    console.warn("Failed to load Homepage content from Craft:", error);
+  }
+
+  const homepageSlides = homepage?.slides.length ? homepage.slides : heroSlides;
+  const homepageSectors = homepage?.sectors.length ? homepage.sectors : sectors;
+  const homepageNews = homepage?.latestNews.length ? homepage.latestNews : latestNews;
 
   return (
     <>
-      <HeroSlider slides={heroSlides} />
-      <AboutSection image_url="/images/home-about.png" background_color="#C9E5D2" />
-      <SectorsSection sectors={sectors} />
-    <GridEffect items={latestNews} backgroundColor="#EEEEEE" />
-      <CtaSection cta={cta} />
+      <HeroSlider slides={homepageSlides} />
+      <AboutSection
+        image_url="/images/home-about.png"
+        background_color="#C9E5D2"
+        heading={homepage?.about?.heading ?? undefined}
+        description={homepage?.about?.description ?? undefined}
+      />
+      <SectorsSection sectors={homepageSectors} />
+      <GridEffect
+        items={homepageNews}
+        title={homepage?.latestNewsHeading ?? undefined}
+        backgroundColor="#EEEEEE"
+      />
+      <CtaSection content={homepage?.cta?.image ? homepage.cta : cta[0]} />
     </>
   );
 }

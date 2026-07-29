@@ -5,6 +5,7 @@ import { AboutTimelineSection } from "@/components/about/AboutTimelineSection";
 import { AboutSection } from "@/components/home/AboutSection";
 import { GridEffect } from "@/components/ui/GridEffect";
 import { CtaSection } from "@/components/cta/CtaSection";
+import { getPageCta } from "@/lib/cta";
 import type { NewsItem, CtaContent } from "@/lib/types";
 
 
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
 };
 
 
-export default function AboutPage() {
+export default async function AboutPage() {
   const latestNews: NewsItem[] = [
     {
       title: "SOCIAL ARCHITECTURE",
@@ -67,7 +68,7 @@ export default function AboutPage() {
         ]}
       />
       <AboutTimelineSection />
-      <CtaSection cta={cta} />
+      <CtaSection content={await getPageCta("aboutUs", cta[0]).catch(() => cta[0])} />
     </article>
   );
 }

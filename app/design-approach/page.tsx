@@ -5,13 +5,14 @@ import { TextGrid } from "@/components/ui/TextGrid";
 import { QuoteSection } from "@/components/ui/QuoteSection";
 import { TextImageSection } from "@/components/ui/TextImageSection";
 import { CtaSection } from "@/components/cta/CtaSection";
+import { getPageCta } from "@/lib/cta";
 import type { NewsItem,CtaContent } from "@/lib/types";
 
 export const metadata: Metadata = {
   title: "Design Approach",
 };
 
-export default function DesignApproachPage() {
+export default async function DesignApproachPage() {
   const pillars: NewsItem[] = [
     {
       title: "Site & Program",
@@ -82,7 +83,7 @@ export default function DesignApproachPage() {
         buttonText="View Projects"
         buttonHref="/projects"
       />
-      <CtaSection cta={cta} />
+      <CtaSection content={await getPageCta("pages", cta[0], "design-approach").catch(() => cta[0])} />
     </article>
   );
 }

@@ -16,6 +16,12 @@ const swiperVars = {
   "--swiper-pagination-bullet-inactive-opacity": "0.3",
 } as CSSProperties;
 
+function imageSource(image: string) {
+  return image.startsWith("http") || image.startsWith("/")
+    ? image
+    : `/images/hero/${image}`;
+}
+
 export function HeroSlider({ slides }: { slides: HeroSlide[] }) {
   const uid = useId().replace(/[^a-zA-Z0-9]/g, "");
   const paginationId = `hero-pagination-${uid}`;
@@ -35,7 +41,7 @@ export function HeroSlider({ slides }: { slides: HeroSlide[] }) {
       {slides.map((slide, index) => (
         <img
           key={slide.title}
-          src={`/images/hero/${slide.image}`}
+          src={imageSource(slide.image)}
           alt=""
           className={`absolute inset-0 z-10 h-full w-full scale-110 object-cover transition-opacity duration-1000 ease-in-out ${
             index === activeIndex ? "opacity-100" : "opacity-0"
@@ -80,7 +86,7 @@ export function HeroSlider({ slides }: { slides: HeroSlide[] }) {
             className="h-64 w-full overflow-hidden shadow-2xl ring-1 ring-white sm:h-96 lg:h-130 xl:h-160"
           >
             {slides.map((slide) => {
-              const src = `/images/hero/${slide.image}`;
+              const src = imageSource(slide.image);
 
               return (
                 <SwiperSlide key={slide.title}>

@@ -3,6 +3,7 @@ import { Hero } from "@/components/ui/Hero";
 import { Container } from "@/components/ui/Container";
 import { AboutSection } from "@/components/home/AboutSection";
 import { CtaSection } from "@/components/cta/CtaSection";
+import { getPageCta } from "@/lib/cta";
 import { AwardsSection } from "@/components/awards/AwardsSection";
 import type { CtaContent } from "@/lib/types";
 
@@ -21,7 +22,7 @@ const cta: CtaContent[] = [
   },
 ];
 
-export default function AwardsPage() {
+export default async function AwardsPage() {
   return (
     <article className="bg-white text-black min-h-screen">
       <Hero
@@ -49,7 +50,7 @@ export default function AwardsPage() {
         </Container>
       </section>
 
-      <CtaSection cta={cta} />
+      <CtaSection content={await getPageCta("pages", cta[0], "awards").catch(() => cta[0])} />
     </article>
   );
 }

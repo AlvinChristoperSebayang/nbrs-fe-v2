@@ -4,6 +4,11 @@ import { useState } from "react";
 import Link from "next/link";
 import type { ResearchItem } from "@/lib/research-data";
 
+type ResearchCardItem = Pick<
+  ResearchItem,
+  "id" | "slug" | "title" | "image" | "hoverColor"
+>;
+
 function renderFormattedTitle(title: string) {
   const colonIndex = title.indexOf(":");
   if (colonIndex !== -1) {
@@ -24,7 +29,7 @@ function renderFormattedTitle(title: string) {
   );
 }
 
-export function ResearchCard({ item }: { item: ResearchItem }) {
+export function ResearchCard({ item }: { item: ResearchCardItem }) {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
