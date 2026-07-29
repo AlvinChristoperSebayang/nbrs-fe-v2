@@ -1,4 +1,5 @@
 import { Container } from "@/components/ui/Container";
+import Image from "next/image";
 
 export function ProjectDetailHero({
   title,
@@ -64,9 +65,12 @@ export function ProjectDetailHero({
             
             className="uncontainer-mobile overflow-hidden"
           >
-            <img
+            <Image
               src={image}
               alt={title}
+              width={1600}
+              height={1000}
+              sizes="(min-width: 1024px) 100vw, 100vw"
               data-aos="zoom-out"
               data-aos-delay="150"
               className="lg:aspect-[16/10] max-md:min-h-[438px] w-full object-cover"

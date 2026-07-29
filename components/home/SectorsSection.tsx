@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import type { Sector } from "@/lib/types";
 
@@ -56,9 +57,11 @@ export function SectorsSection({ sectors }: { sectors: Sector[] }) {
                   </svg>
                 </div>
               </div>
-              <img
+              <Image
                 src={sector.image}
                 alt={sector.label}
+                fill
+                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 z-[5]"
               />
               <div className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-4 p-5 z-[6]">

@@ -93,7 +93,7 @@ export default async function SingleSectorPage({
       <ProjectListTableSection rows={sector.tableProjects} />
 
       {/* 7. CTA Section */}
-      <CtaSection cta={cta} />
+      <CtaSection content={cta[0]} />
     </article>
   );
 }

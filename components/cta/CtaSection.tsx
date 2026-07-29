@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import type { CtaContent } from "@/lib/types";
 
@@ -6,9 +7,11 @@ export function CtaSection({ content }: { content: CtaContent }) {
 
   return (
     <section className="relative overflow-hidden">
-      <img
+      <Image
         src={content.image}
         alt=""
+        fill
+        sizes="100vw"
         className="absolute inset-0 h-full w-full object-cover"
       />
       {/* <div className="absolute inset-0 bg-black/20" /> */}

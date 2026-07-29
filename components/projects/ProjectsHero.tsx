@@ -1,9 +1,9 @@
 import { Container } from "@/components/ui/Container";
+import Image from "next/image";
 
 export function ProjectsHero({
   image,
   title,
-  subheading,
 }: {
   image?: string | null;
   title?: string | null;
@@ -11,9 +11,11 @@ export function ProjectsHero({
 } = {}) {
   return (
     <section className="relative max-md:h-100 lg:h-[90vh] w-full overflow-hidden project-hero">
-      <img
+      <Image
         src={image || "/images/hero/hero3.png"}
         alt=""
+        fill
+        sizes="100vw"
         className="absolute inset-0 h-full w-full object-cover lg:min-h-screen"
       />
       <div className="absolute inset-0 bg-black/20" />

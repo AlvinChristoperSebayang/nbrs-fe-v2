@@ -210,7 +210,7 @@ export default async function ResearchDetailPage({
       <AtAGlanceSection title="AT A GLANCE" />
 
       {/* 6. CTA SECTION */}
-      <CtaSection cta={cta} />
+      <CtaSection content={cta[0]} />
       
       {/* 5. RELATED RESEARCH SECTION */}
       <RelatedResearchSection currentSlug={item.slug} />

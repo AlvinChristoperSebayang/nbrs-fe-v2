@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 
 export type HeroProps = {
@@ -34,9 +35,11 @@ export function Hero({
   return (
     <section className="relative max-md:h-[80vh] lg:h-[90vh] w-full overflow-hidden">
       {/* Background Image */}
-      <img
+      <Image
         src={image}
         alt=""
+        fill
+        sizes="100vw"
         className="absolute inset-0 h-full w-full object-cover lg:min-h-screen"
       />
 

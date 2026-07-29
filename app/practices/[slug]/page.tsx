@@ -82,7 +82,7 @@ export default async function PracticeDetailPage({
       <SectorsSection sectors={SECTORS_DATA} />
 
       {/* 5. CTA SECTION */}
-      <CtaSection cta={cta} />
+      <CtaSection content={cta[0]} />
     </article>
   );
 }

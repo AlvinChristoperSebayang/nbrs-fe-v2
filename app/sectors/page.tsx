@@ -31,7 +31,7 @@ export default function SectorsPage() {
 
       <SectorsSection sectors={SECTORS_DATA} />
 
-      <CtaSection cta={cta} />
+      <CtaSection content={cta[0]} />
     </article>
   );
 }

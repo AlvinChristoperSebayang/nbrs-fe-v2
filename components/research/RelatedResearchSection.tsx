@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import { DUMMY_RESEARCH_ITEMS, ResearchItem } from "@/lib/research-data";
 
@@ -40,9 +41,11 @@ export function RelatedResearchSection({
             >
               {/* Card Image */}
               <div className="relative aspect-[370/200] w-full overflow-hidden bg-zinc-800">
-                <img
+                <Image
                   src={rel.image || "/images/hero/hero1.png"}
                   alt={rel.title}
+                  fill
+                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
               </div>

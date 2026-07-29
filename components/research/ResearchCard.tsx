@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import type { ResearchItem } from "@/lib/research-data";
 
 type ResearchCardItem = Pick<
@@ -41,9 +42,11 @@ export function ResearchCard({ item }: { item: ResearchCardItem }) {
     >
       {/* Card Image */}
       <div className="relative aspect-[370/300] w-full overflow-hidden bg-zinc-100 min-h-[150px] max-h-[150px] md:min-h-[300px] md:max-h-[300px]">
-        <img
+        <Image
           src={item.image}
           alt={item.title}
+          fill
+          sizes="(min-width: 1280px) 33vw, (min-width: 640px) 50vw, 100vw"
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
       </div>

@@ -2,6 +2,39 @@ const CRAFT_GRAPHQL_URL =
   process.env.CRAFT_GRAPHQL_URL ??
   "https://phpstack-1082258-6573734.cloudwaysapps.com/api/";
 
+type GraphQLResponse = {
+  data?: unknown;
+  errors?: Array<{ message?: unknown }>;
+};
+
+function isGraphQLResponse(value: unknown): value is GraphQLResponse {
+  return typeof value === "object" && value !== null;
+}
+
+function normalizeLocalAssetUrls(value: unknown): unknown {
+  if (process.env.NODE_ENV !== "development") return value;
+
+  if (typeof value === "string") {
+    return value.replace(
+      /^https:\/\/nbrs-staging\.test\/media\//,
+      "http://nbrs-staging.test/media/"
+    );
+  }
+
+  if (Array.isArray(value)) return value.map(normalizeLocalAssetUrls);
+
+  if (typeof value === "object" && value !== null) {
+    return Object.fromEntries(
+      Object.entries(value).map(([key, nestedValue]) => [
+        key,
+        normalizeLocalAssetUrls(nestedValue),
+      ])
+    );
+  }
+
+  return value;
+}
+
 export async function craftFetch<T>(
   query: string,
   variables?: Record<string, unknown>
@@ -14,7 +47,7 @@ export async function craftFetch<T>(
   });
 
   const body = await res.text();
-  let json: any;
+  let json: unknown;
   try {
     json = JSON.parse(body);
   } catch {
@@ -23,9 +56,15 @@ export async function craftFetch<T>(
     );
   }
 
+  if (!isGraphQLResponse(json)) {
+    throw new Error("Craft GraphQL request returned an invalid JSON response.");
+  }
+
   if (json.errors) {
     throw new Error(
-      json.errors.map((error: { message: string }) => error.message).join("\n")
+      json.errors
+        .map((error) => (typeof error.message === "string" ? error.message : "Unknown GraphQL error"))
+        .join("\n")
     );
   }
 
@@ -35,5 +74,5 @@ export async function craftFetch<T>(
     );
   }
 
-  return json.data as T;
+  return normalizeLocalAssetUrls(json.data) as T;
 }

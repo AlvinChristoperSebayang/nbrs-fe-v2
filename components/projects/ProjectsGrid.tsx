@@ -41,7 +41,7 @@ export function ProjectsGrid({ projects }: { projects: ProjectListItem[] }) {
           data-aos-delay={(index % 3) * 100}
         >
           <Link href={`/projects/${project.slug}`} className="group block w-full h-full flex flex-col">
-            <div className="aspect-[4/3] w-full overflow-hidden bg-[#7A0C0C]">
+            <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#7A0C0C]">
               {project.thumbnailUrl && (
                 <ProjectThumbnail
                   src={project.thumbnailUrl}

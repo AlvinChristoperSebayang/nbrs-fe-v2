@@ -1,4 +1,5 @@
 import { Container } from "@/components/ui/Container";
+import Image from "next/image";
 
 export function AboutSection({
   image_url,
@@ -37,9 +38,11 @@ export function AboutSection({
             data-aos-delay="200"
             className="lg:absolute relative image-about__wrapper lg:top-0 lg:right-[55px] 2xl:right-[135px] h-80 sm:h-96 lg:w-[65%] 2xl:w-[55%] image__wrapper"
           >
-            <img
+            <Image
               src={image_url}
               alt={image_alt}
+              fill
+              sizes="(min-width: 1024px) 65vw, 100vw"
               className="absolute inset-0 h-full w-full object-cover image-about"
             />
           </div>

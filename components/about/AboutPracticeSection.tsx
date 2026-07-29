@@ -1,4 +1,5 @@
 import { Container } from "@/components/ui/Container";
+import Image from "next/image";
 
 export function AboutPracticeSection({
   heading,
@@ -33,11 +34,13 @@ export function AboutPracticeSection({
           <div
             data-aos="fade-up"
             data-aos-delay="100"
-            className="h-56 w-full overflow-hidden sm:h-48 lg:col-span-1 lg:h-56"
+            className="relative h-56 w-full overflow-hidden sm:h-48 lg:col-span-1 lg:h-56"
           >
-            <img
+            <Image
               src={mainImage}
               alt=""
+              fill
+              sizes="(min-width: 1024px) 33vw, 100vw"
               className="h-full w-full object-cover"
             />
           </div>
@@ -49,9 +52,15 @@ export function AboutPracticeSection({
               key={src + index}
               data-aos="fade-up"
               data-aos-delay={index * 100}
-              className="h-56 w-full overflow-hidden sm:h-48 lg:h-56"
+              className="relative h-56 w-full overflow-hidden sm:h-48 lg:h-56"
             >
-              <img src={src} alt="" className="h-full w-full object-cover" />
+              <Image
+                src={src}
+                alt=""
+                fill
+                sizes="(min-width: 640px) 33vw, 100vw"
+                className="h-full w-full object-cover"
+              />
             </div>
           ))}
         </div>
