@@ -95,19 +95,19 @@ const ABOUT_QUERY = /* GraphQL */ `
         description2
         heroTitle
         aboutHeroHeading
-        aboutHeroImage { url }
+        aboutHeroImage { url: url @transform(width: 2400, format: "webp", quality: 85, immediately: true) }
         aboutIntroHeading
         aboutIntroText
-        aboutIntroImage { url }
+        aboutIntroImage { url: url @transform(width: 1200, format: "webp", quality: 80, immediately: true) }
         aboutPracticeHeading
         aboutPracticeText
-        aboutPracticeImages { url }
+        aboutPracticeImages { url: url @transform(width: 1200, format: "webp", quality: 80, immediately: true) }
         aboutTimelineHeading
         timeline { ... on slide2_Entry { year text } }
-        whatWeDoV2 { ... on whatWeDoContent_Entry { title description2 image { url } } }
+        whatWeDoV2 { ... on whatWeDoContent_Entry { title description2 image { url: url @transform(width: 1200, format: "webp", quality: 80, immediately: true) } } }
         ctaElement { label url_1 { url } }
         ctaSection {
-          ctaSectionBackgroundImage { url }
+          ctaSectionBackgroundImage { url: url @transform(width: 2400, format: "webp", quality: 85, immediately: true) }
           ctaSectionHeading
           ctaSectionDescription
           ctaSectionButtonLabel

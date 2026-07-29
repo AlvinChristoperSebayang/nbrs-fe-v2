@@ -52,7 +52,7 @@ const RESEARCH_LISTING_QUERY = /* GraphQL */ `
       ... on latestResearch_Entry {
         pageHeading
         pageSubheading
-        seoImage { url }
+        seoImage { url: url @transform(width: 2400, format: "webp", quality: 85, immediately: true) }
       }
     }
     sectors: categories(group: "sector") {
@@ -66,7 +66,7 @@ const RESEARCH_LISTING_QUERY = /* GraphQL */ `
         id
         slug
         artHdrHeading
-        thumbnail { url }
+        thumbnail { url: url @transform(width: 1200, format: "webp", quality: 80, immediately: true) }
         catDiscipline {
           ... on discipline_Category { id title slug accentColor }
         }

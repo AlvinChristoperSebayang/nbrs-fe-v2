@@ -188,13 +188,13 @@ const PROJECT_DETAIL_QUERY = /* GraphQL */ `
         proHdrHeading
         proHdrSubheading
         thumbnail {
-          url
+          url: url @transform(width: 2400, format: "webp", quality: 85, immediately: true)
           width
           height
           title
         }
         proHdrPopupGallery {
-          url
+          url: url @transform(width: 1600, format: "webp", quality: 82, immediately: true)
           width
           height
           title
@@ -202,14 +202,14 @@ const PROJECT_DETAIL_QUERY = /* GraphQL */ `
         proHdrSplash {
           ... on slide4_Entry {
             image {
-              url
+              url: url @transform(width: 2400, format: "webp", quality: 85, immediately: true)
               width
               height
               title
             }
             imageCropping
             optionalPortraitImage {
-              url
+              url: url @transform(width: 1200, format: "webp", quality: 80, immediately: true)
               width
               height
               title
@@ -219,7 +219,7 @@ const PROJECT_DETAIL_QUERY = /* GraphQL */ `
         }
         proImpText
         proImpMedia {
-          url
+          url: url @transform(width: 1600, format: "webp", quality: 82, immediately: true)
           width
           height
           title
@@ -232,7 +232,7 @@ const PROJECT_DETAIL_QUERY = /* GraphQL */ `
         proDetStatus
         proDetBudget
         proInsHeroImage {
-          url
+          url: url @transform(width: 1600, format: "webp", quality: 82, immediately: true)
           width
           height
           title
@@ -241,7 +241,7 @@ const PROJECT_DETAIL_QUERY = /* GraphQL */ `
         proInsGallery {
           ... on slide3_Entry {
             image {
-              url
+              url: url @transform(width: 1600, format: "webp", quality: 82, immediately: true)
               width
               height
               title
@@ -277,7 +277,7 @@ const PROJECT_DETAIL_QUERY = /* GraphQL */ `
             proHdrHeading
             proHdrSubheading
             thumbnail {
-              url
+              url: url @transform(width: 1200, format: "webp", quality: 80, immediately: true)
               width
               height
               title
@@ -323,7 +323,7 @@ const PROJECT_DETAIL_QUERY = /* GraphQL */ `
         seoPageTitle
         seoMetaDescription
         seoImage {
-          url
+          url: url @transform(width: 2400, format: "webp", quality: 85, immediately: true)
           width
           height
           title

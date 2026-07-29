@@ -97,7 +97,7 @@ const PROJECTS_LISTING_QUERY = /* GraphQL */ `
         seoPageTitle
         seoMetaDescription
         seoImage {
-          url
+          url: url @transform(width: 2400, format: "webp", quality: 85, immediately: true)
           width
           height
           title
@@ -138,7 +138,7 @@ const PROJECTS_LISTING_QUERY = /* GraphQL */ `
         proHdrHeading
         proHdrSubheading
         thumbnail {
-          url
+          url: url @transform(width: 1200, format: "webp", quality: 80, immediately: true)
           width
           height
           title

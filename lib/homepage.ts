@@ -70,7 +70,7 @@ const HOMEPAGE_QUERY = /* GraphQL */ `
             subheading
             linkText
             linkUrl
-            image { url }
+            image { url: url @transform(width: 2400, format: "webp", quality: 85, immediately: true) }
           }
         }
         whatWeDo {
@@ -89,7 +89,7 @@ const HOMEPAGE_QUERY = /* GraphQL */ `
             uri
             tagline
             accentColor
-            thumbnail { url }
+            thumbnail { url: url @transform(width: 1200, format: "webp", quality: 80, immediately: true) }
           }
         }
         sectionHeading
@@ -98,11 +98,11 @@ const HOMEPAGE_QUERY = /* GraphQL */ `
           ... on news_Entry {
             slug
             artHdrHeading
-            thumbnail { url }
+            thumbnail { url: url @transform(width: 1200, format: "webp", quality: 80, immediately: true) }
           }
         }
         ctaSection {
-          ctaSectionBackgroundImage { url }
+          ctaSectionBackgroundImage { url: url @transform(width: 2400, format: "webp", quality: 85, immediately: true) }
           ctaSectionHeading
           ctaSectionDescription
           ctaSectionButtonLabel
@@ -114,7 +114,7 @@ const HOMEPAGE_QUERY = /* GraphQL */ `
       ... on news_Entry {
         slug
         artHdrHeading
-        thumbnail { url }
+        thumbnail { url: url @transform(width: 1200, format: "webp", quality: 80, immediately: true) }
       }
     }
   }

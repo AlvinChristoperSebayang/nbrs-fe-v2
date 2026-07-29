@@ -15,7 +15,7 @@ type CtaResponse = { entries: RawCta[] };
 
 const CTA_FIELDS = /* GraphQL */ `
   ctaSection {
-    ctaSectionBackgroundImage { url }
+    ctaSectionBackgroundImage { url: url @transform(width: 2400, format: "webp", quality: 85, immediately: true) }
     ctaSectionHeading
     ctaSectionDescription
     ctaSectionButtonLabel
