@@ -1,0 +1,185 @@
+"use client";
+
+import { useState } from "react";
+import { Container } from "@/components/ui/Container";
+
+export type AccordionItem = {
+  id: string;
+  title: string;
+  content: string;
+};
+
+const DEFAULT_ACCORDION_ITEMS: AccordionItem[] = [
+  {
+    id: "learning-development",
+    title: "Learning and Development",
+    content:
+      "We are committed to nurturing our people through structured and informal learning, CPD sessions, internal design workshops, and mentoring, ensuring continual professional and personal advancement.\n\nWe support the career progression of emerging professionals providing the opportunity for skills development and architectural registration.",
+  },
+  {
+    id: "health-wellbeing",
+    title: "Health and Wellbeing",
+    content:
+      "We offer comprehensive health initiatives, mental health support, biophilic workspace designs, and wellness programs that prioritize employee wellbeing.",
+  },
+  {
+    id: "social-connection",
+    title: "Social Connection",
+    content:
+      "Our social club, team gatherings, and studio rituals bring our team together for celebrations, networking, and creative exchanges across all our studios.",
+  },
+  {
+    id: "work-life-balance",
+    title: "Work-Life Balance",
+    content:
+      "We champion flexible working arrangements and our 9-Day Fortnight program to support personal balance, rest, and connection outside of work.",
+  },
+  {
+    id: "commitment-cause",
+    title: "Commitment to Cause",
+    content:
+      "Every project we undertake reflects our commitment to social impact, environmental sustainability, community flourishing, and design for good.",
+  },
+];
+
+export type CareersAccordionSectionProps = {
+  title?: React.ReactNode;
+  items?: AccordionItem[];
+  introParagraphs?: React.ReactNode | null;
+  showDefaultIntro?: boolean;
+};
+
+export function CareersAccordionSection({
+  title = (
+    <>
+      CAREERS
+      <br />
+      AT NBRS
+    </>
+  ),
+  items = DEFAULT_ACCORDION_ITEMS,
+  introParagraphs,
+  showDefaultIntro = false,
+}: CareersAccordionSectionProps) {
+  const [openId, setOpenId] = useState<string | null>(null);
+
+  const toggleAccordion = (id: string) => {
+    setOpenId((prev) => (prev === id ? null : id));
+  };
+
+  return (
+    <section className="bg-white pb-16 lg:pb-24 text-black">
+      <Container>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+          {/* Left Column: Light Gray Watermark Title */}
+          <div data-aos="fade-up" className="lg:col-span-4 lg:sticky lg:top-28">
+            <h2 className="hidden md:block font-heading text-4xl sm:text-5xl lg:text-[64px] font-bold uppercase text-zinc-200/90 leading-none tracking-wide border-b-4 border-zinc-200/40 pb-4">
+              {title}
+            </h2>
+          </div>
+
+          {/* Right Column: Optional Overview Paragraphs & Accordions */}
+          <div
+            data-aos="fade-up"
+            data-aos-delay="150"
+            className="lg:col-span-8 flex flex-col gap-8 sm:gap-10"
+          >
+            {/* Custom Intro Paragraphs */}
+            {introParagraphs && (
+              <div className="font-sans text-sm sm:text-base text-zinc-800 leading-relaxed flex flex-col gap-3 max-w-3xl pt-8 lg:pt-0">
+                {introParagraphs}
+              </div>
+            )}
+
+            {/* Default Careers Intro Paragraphs */}
+            {!introParagraphs && showDefaultIntro && (
+              <div className="font-sans text-sm sm:text-base text-zinc-800 leading-relaxed flex flex-col gap-3 max-w-3xl pt-0">
+                <p>
+                  At NBRS, we cultivate a safe and inclusive studio where diverse
+                  talent can thrive. We recognise potential, celebrate
+                  initiative, and foster a culture that supports flexibility,
+                  personal well‑being, and continual growth.
+                </p>
+                <p>
+                  We seek individuals who share our commitment to design
+                  excellence and positive social impact. Those interested in
+                  joining our award‑winning studio are invited to connect with us at{" "}
+                  <a
+                    href="mailto:careers@nbrs.com.au"
+                    className="font-medium text-black underline underline-offset-4 hover:text-rose-600 transition-colors"
+                  >
+                    careers@nbrs.com.au
+                  </a>
+                </p>
+              </div>
+            )}
+
+            {/* Accordions List */}
+            <div className="flex flex-col gap-6">
+              {items.map((item) => {
+                const isOpen = openId === item.id;
+                return (
+                  <div
+                    key={item.id}
+                    className="overflow-hidden rounded-[3px] border-2 border-zinc-200 bg-white shadow-sm transition-all duration-300"
+                  >
+                    {/* Accordion Header */}
+                    <button
+                      type="button"
+                      onClick={() => toggleAccordion(item.id)}
+                      aria-expanded={isOpen}
+                      className="w-full flex items-center justify-between gap-6 p-6 sm:p-7 text-left focus:outline-none cursor-pointer select-none"
+                    >
+                      <span className="font-heading text-2xl sm:text-3xl font-bold uppercase text-black tracking-wide leading-tight">
+                        {item.title}
+                      </span>
+
+                      {/* Smooth Rotating Circular Arrow Button */}
+                      <div
+                        className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${
+                          isOpen
+                            ? "bg-zinc-300 text-white rotate-180"
+                            : "bg-black text-white rotate-0"
+                        }`}
+                      >
+                        <svg
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <path d="M12 5v14M19 12l-7 7-7-7" />
+                        </svg>
+                      </div>
+                    </button>
+
+                    {/* Smooth Grid Height & Opacity Transition */}
+                    <div
+                      className={`grid transition-[grid-template-rows,opacity] duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${
+                        isOpen
+                          ? "grid-rows-[1fr] opacity-100"
+                          : "grid-rows-[0fr] opacity-0"
+                      }`}
+                    >
+                      <div className="overflow-hidden">
+                        <div className="px-6 pb-7 sm:px-7 font-sans text-base sm:text-lg text-zinc-800 leading-relaxed border-t border-zinc-100 pt-5 flex flex-col gap-4">
+                          {item.content.split("\n\n").map((para, idx) => (
+                            <p key={idx}>{para}</p>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </Container>
+    </section>
+  );
+}
