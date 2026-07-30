@@ -1,0 +1,255 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - navigation [ref=e4]:
+      - link [ref=e5] [cursor=pointer]:
+        - /url: /
+        - img "NBRS Architecture Logo" [ref=e6]
+      - button "Open menu" [ref=e7] [cursor=pointer]
+  - generic:
+    - generic:
+      - list:
+        - listitem:
+          - generic:
+            - link:
+              - /url: /about
+              - generic: "01"
+              - generic: Purpose
+            - button
+          - generic:
+            - link:
+              - /url: /about
+              - generic: About NBRS
+            - link:
+              - /url: /social-sustainability
+              - generic: Sustainability
+            - link:
+              - /url: /research
+              - generic: Insights
+            - link:
+              - /url: /design-approach
+              - generic: Social responsibility
+        - listitem:
+          - generic:
+            - link:
+              - /url: /people
+              - generic: "02"
+              - generic: People
+            - button
+          - generic:
+            - link:
+              - /url: /people/team
+              - generic: Our leaders
+            - link:
+              - /url: /people/culture
+              - generic: Culture
+            - link:
+              - /url: /people/careers
+              - generic: Careers
+            - link:
+              - /url: /people/envision-student-program
+              - generic: Envision student partnerships
+        - listitem:
+          - generic:
+            - link:
+              - /url: /sectors
+              - generic: "03"
+              - generic: Sectors
+            - button
+          - generic:
+            - link:
+              - /url: /sectors/education
+              - generic: Education
+            - link:
+              - /url: /sectors/heritage
+              - generic: Heritage
+            - link:
+              - /url: /sectors/wellness
+              - generic: Wellness
+            - link:
+              - /url: /sectors/community
+              - generic: Community
+            - link:
+              - /url: /sectors/secure-spaces
+              - generic: Secure spaces
+        - listitem:
+          - generic:
+            - link:
+              - /url: /practices
+              - generic: "04"
+              - generic: Practices
+            - button
+          - generic:
+            - link:
+              - /url: /practices/architecture
+              - generic: Architecture
+            - link:
+              - /url: /practices/landscape-architecture
+              - generic: Landscape architecture
+            - link:
+              - /url: /practices/interior-design
+              - generic: Interior design
+        - listitem:
+          - generic:
+            - link:
+              - /url: /projects
+              - generic: "05"
+              - generic: Projects
+        - listitem:
+          - generic:
+            - link:
+              - /url: /news
+              - generic: "06"
+              - generic: News
+        - listitem:
+          - generic:
+            - link:
+              - /url: /contact
+              - generic: "07"
+              - generic: Contact us
+  - article [ref=e11]:
+    - generic [ref=e15]:
+      - heading "Design for good" [level=1] [ref=e16]
+      - paragraph [ref=e18]: NBRS partakes in several social initiatives bringing smiles to communities in need and helping to positively shape their lives with designs that provide opportunities for a better future.
+    - generic [ref=e20]:
+      - generic [ref=e21]:
+        - heading "Te-Kworo Foundation" [level=2] [ref=e22]
+        - generic [ref=e23]:
+          - paragraph [ref=e24]: NBRS provides design for good expertise to support vulnerable communities in Northern Uganda.
+          - paragraph [ref=e25]: Established by Alice Achan in 2002, Te-Kworo Foundation delivers education, maternal and child healthcare, and social protection for girls and women.
+          - paragraph [ref=e26]: In partnership with the Sonic Healthcare Foundation and the Barbara May Foundation, NBRS designed a 42-bed maternal health facility.
+      - img "Te-Kworo Foundation" [ref=e28]
+    - generic [ref=e29]:
+      - generic [ref=e31]:
+        - img "Architects Without Frontiers (AWF)" [ref=e33]
+        - article [ref=e34]:
+          - heading "Architects Without Frontiers (AWF)" [level=2] [ref=e35]
+          - generic [ref=e36]:
+            - paragraph [ref=e37]: NBRS collaborates closely with AWF, the Asia-Pacific's leading not-for-profit design organisation. AWF delivers community infrastructure for disadvantaged regions.
+            - paragraph [ref=e38]: Our partnership includes the San Miguel National High School in the Philippines and the Home of Hope campus in India for One Life to Love.
+      - generic [ref=e40]:
+        - img "One Life to Love" [ref=e42]
+        - article [ref=e43]:
+          - heading "One Life to Love" [level=2] [ref=e44]
+          - generic [ref=e45]:
+            - paragraph [ref=e46]: Through AWF, NBRS supports One Life to Love, a not-for-profit dedicated to the care and education of abandoned and at-risk children in India.
+            - paragraph [ref=e47]: NBRS has designed a campus in Bangalore housing orphans, neglected families, a school and a skills centre. Construction is starting in 2026.
+    - generic [ref=e48]:
+      - heading "Proudly supporting a range of other organisations" [level=3] [ref=e53]
+      - generic [ref=e56]:
+        - generic [ref=e57]:
+          - img "Architects Without Frontiers"
+        - generic [ref=e58]:
+          - img "Te-Kworo Foundation"
+        - generic [ref=e59]:
+          - img "One Life To Love"
+        - generic [ref=e60]:
+          - img "Chain Reaction Challenge Foundation"
+        - generic [ref=e61]:
+          - img "Children's Medical Research Institute - Jeans for Genes"
+        - generic [ref=e62]:
+          - img "Cancer Council"
+  - contentinfo [ref=e63]:
+    - generic [ref=e64]:
+      - generic [ref=e65]:
+        - generic [ref=e66]:
+          - img "NBRS" [ref=e67]
+          - generic [ref=e68]:
+            - heading "Business Details" [level=3] [ref=e69]
+            - paragraph [ref=e70]: "Nominated Architect:"
+            - paragraph [ref=e71]: Andrew DuffinNSW 5602 | QLD 5465 | VIC00024
+            - paragraph [ref=e72]: ABN 16 002 247 565
+          - generic [ref=e73]:
+            - heading "Contact Us" [level=3] [ref=e74]
+            - paragraph [ref=e75]: NBRS operates on a9-day fortnight schedule.
+            - generic [ref=e76]:
+              - link "LinkedIn" [ref=e77] [cursor=pointer]:
+                - /url: https://www.linkedin.com
+              - link "Instagram" [ref=e81] [cursor=pointer]:
+                - /url: https://www.instagram.com
+              - link "YouTube" [ref=e86] [cursor=pointer]:
+                - /url: https://www.youtube.com
+        - generic [ref=e90]:
+          - generic [ref=e91]:
+            - button "Sectors" [expanded]
+            - list [ref=e92]:
+              - listitem [ref=e93]:
+                - link "Education" [ref=e94] [cursor=pointer]:
+                  - /url: /services
+              - listitem [ref=e95]:
+                - link "Wellness" [ref=e96] [cursor=pointer]:
+                  - /url: /services
+              - listitem [ref=e97]:
+                - link "Community" [ref=e98] [cursor=pointer]:
+                  - /url: /services
+              - listitem [ref=e99]:
+                - link "Secure Spaces" [ref=e100] [cursor=pointer]:
+                  - /url: /services
+              - listitem [ref=e101]:
+                - link "Heritage" [ref=e102] [cursor=pointer]:
+                  - /url: /services
+          - generic [ref=e103]:
+            - button "Practices"
+            - list [ref=e104]:
+              - listitem [ref=e105]:
+                - link "Architecture" [ref=e106] [cursor=pointer]:
+                  - /url: /services
+              - listitem [ref=e107]:
+                - link "Landscape Architecture" [ref=e108] [cursor=pointer]:
+                  - /url: /services
+              - listitem [ref=e109]:
+                - link "Interior Design" [ref=e110] [cursor=pointer]:
+                  - /url: /services
+          - generic [ref=e111]:
+            - button "Legal"
+            - list [ref=e112]:
+              - listitem [ref=e113]:
+                - link "Terms & Conditions" [ref=e114] [cursor=pointer]:
+                  - /url: /terms
+              - listitem [ref=e115]:
+                - link "Privacy Policy" [ref=e116] [cursor=pointer]:
+                  - /url: /privacy
+              - listitem [ref=e117]:
+                - link "Sitemap" [ref=e118] [cursor=pointer]:
+                  - /url: /sitemap
+        - generic [ref=e119]:
+          - generic [ref=e120]:
+            - button "Purpose"
+            - list [ref=e121]:
+              - listitem [ref=e122]:
+                - link "About NBRS" [ref=e123] [cursor=pointer]:
+                  - /url: /about
+              - listitem [ref=e124]:
+                - link "Design Approach" [ref=e125] [cursor=pointer]:
+                  - /url: /about
+              - listitem [ref=e126]:
+                - link "Awards" [ref=e127] [cursor=pointer]:
+                  - /url: /awards
+              - listitem [ref=e128]:
+                - link "Research Envision" [ref=e129] [cursor=pointer]:
+                  - /url: /research
+              - listitem [ref=e130]:
+                - link "Sustainability" [ref=e131] [cursor=pointer]:
+                  - /url: /about
+              - listitem [ref=e132]:
+                - link "Social Responsibility" [ref=e133] [cursor=pointer]:
+                  - /url: /social-sustainability
+              - listitem [ref=e134]:
+                - link "News" [ref=e135] [cursor=pointer]:
+                  - /url: /blog
+          - generic [ref=e136]:
+            - button "People"
+            - list [ref=e137]:
+              - listitem [ref=e138]:
+                - link "Our Leaders" [ref=e139] [cursor=pointer]:
+                  - /url: /about
+              - listitem [ref=e140]:
+                - link "Culture" [ref=e141] [cursor=pointer]:
+                  - /url: /about
+              - listitem [ref=e142]:
+                - link "Careers" [ref=e143] [cursor=pointer]:
+                  - /url: /about
+              - listitem [ref=e144]:
+                - link "Envision" [ref=e145] [cursor=pointer]:
+                  - /url: /about
+      - paragraph [ref=e146]: We acknowledge the Aboriginal and Torres Strait Islander peoples as the Traditional Custodians of this land and waters. We pay our respects to Aboriginal and Torres Strait Islander Elders, past and present, and acknowledge the diversity and strength of Aboriginal and Torres Strait Islander peoples and communities today.
+  - button "Open Next.js Dev Tools" [ref=e152] [cursor=pointer]

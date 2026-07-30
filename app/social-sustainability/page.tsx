@@ -1,51 +1,31 @@
 import type { Metadata } from "next";
-import { Hero } from "@/components/ui/Hero";
-import { AboutSection } from "@/components/home/AboutSection";
-import { FeatureGlassSection } from "@/components/sustainability/FeatureGlassSection";
+import { SocialInitiativesSection } from "@/components/sustainability/SocialInitiativesSection";
 import { SupportedOrganisations } from "@/components/sustainability/SupportedOrganisations";
+import { Hero } from "@/components/ui/Hero";
+import {
+  getSocialSustainabilityContent,
+  SOCIAL_SUSTAINABILITY_FALLBACK,
+} from "@/lib/social-sustainability";
 
-export const metadata: Metadata = {
-  title: "Social Sustainability",
-};
+export const metadata: Metadata = { title: "Social Sustainability" };
 
-export default function SocialSustainabilityPage() {
+export default async function SocialSustainabilityPage() {
+  const content = await getSocialSustainabilityContent().catch(
+    () => SOCIAL_SUSTAINABILITY_FALLBACK
+  );
+
   return (
-    <article className="bg-white text-black min-h-screen">
+    <article className="min-h-screen bg-white text-black">
       <Hero
-        image="/images/hero/hero6.png"
-        title="SOCIAL SUSTAINABILITY"
-        description="Creating environments that uplift people, foster inclusion, and support long-term community wellbeing."
+        image={content.hero.image}
+        title={content.hero.title}
+        description={content.hero.description}
       />
-
-      <div className="lg:pb-10">
-        <AboutSection
-          image_url="/images/about-us-about.png"
-          background_color="#F0C7BD"
-          heading="People‑centred design for good"
-          description="We create environments that foster wellbeing, belonging and transformation. Design that responds directly to human needs."
-        />
-      </div>
-
-      <FeatureGlassSection
-        title="Te-Kworo Foundation"
-        paragraphs={[
-          "NBRS partners with the Te-Kworo Foundation to transform lives in Northern Uganda through sustainable community architecture, health clinics, and educational infrastructure.",
-          "Together, we aim to build empowering environments that foster local resilience, dignity, and generational hope.",
-        ]}
-        image="/images/about/real-insight.jpg"
-        reverse={true}
+      <SocialInitiativesSection initiatives={content.initiatives} />
+      <SupportedOrganisations
+        heading={content.supportingHeading}
+        organisations={content.supportingOrganisations}
       />
-
-      <FeatureGlassSection
-        title="One Life to Love"
-        paragraphs={[
-          "Through AWF, NBRS supports One Life to Love, a not‑for‑profit dedicated to the care and education of abandoned and at‑risk children in India.",
-          "NBRS has designed a campus in Bangalore housing orphans, neglected families, a school and a skills centre. Construction is starting in 2026.",
-        ]}
-        image="/images/about/creative-partnership.jpg"
-        reverse={false}
-      />
-      <SupportedOrganisations />
     </article>
   );
 }

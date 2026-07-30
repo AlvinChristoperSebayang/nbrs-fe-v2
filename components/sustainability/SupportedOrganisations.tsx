@@ -1,6 +1,13 @@
 import { Container } from "@/components/ui/Container";
+import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
+import type { ImageSource } from "@/lib/types";
 
-const ORGANISATIONS = [
+type Organisation = {
+  name: string;
+  logo: ImageSource;
+};
+
+const ORGANISATIONS: Organisation[] = [
   {
     name: "Architects Without Frontiers",
     logo: "/images/purpose/footerlogo 1.png",
@@ -27,7 +34,15 @@ const ORGANISATIONS = [
   },
 ];
 
-export function SupportedOrganisations() {
+type SupportedOrganisationsProps = {
+  heading?: string;
+  organisations?: Organisation[];
+};
+
+export function SupportedOrganisations({
+  heading = "Proudly supporting a range of other organisations",
+  organisations = ORGANISATIONS,
+}: SupportedOrganisationsProps) {
   return (
     <section className="text-black">
       {/* Desktop Header Banner (Full Left Bleed, Text Aligned to Container) */}
@@ -39,7 +54,7 @@ export function SupportedOrganisations() {
           >
             <div className="absolute top-0 bottom-0 right-full w-[100vw] bg-[#F0C7BD]" />
             <h3 className="relative z-10 font-heading text-3xl lg:text-[40px] uppercase font-bold text-black leading-tight">
-              Proudly supporting a range of other organisations
+              {heading}
             </h3>
           </div>
         </Container>
@@ -51,42 +66,34 @@ export function SupportedOrganisations() {
           {/* Mobile Header Title (Visible on Mobile) */}
           <div data-aos="fade-up" className="block md:hidden text-center mb-8 px-2">
             <h3 className="font-heading text-[28px] uppercase font-bold text-black leading-tight">
-              Proudly supporting a range of other organisations
+              {heading}
             </h3>
           </div>
 
           {/* Desktop Grid (3 columns, transparent logo view) */}
           <div className="hidden md:grid md:grid-cols-3 gap-12 lg:gap-16 items-center justify-items-center">
-            {ORGANISATIONS.map((org, index) => (
+            {organisations.map((org, index) => (
               <div
                 key={org.name}
                 data-aos="fade-up"
                 data-aos-delay={100 + index * 100}
                 className="flex items-center justify-center p-4 h-24 lg:h-28 w-full max-w-[280px]"
               >
-                <img
-                  src={org.logo}
-                  alt={org.name}
-                  className="max-h-full max-w-full object-contain transition-all duration-300"
-                />
+                <ResponsiveImage src={org.logo} alt={org.name} className="max-h-full max-w-full object-contain transition-all duration-300" />
               </div>
             ))}
           </div>
 
           {/* Mobile Grid (2 columns with white rounded cards) */}
           <div className="grid grid-cols-2 md:hidden gap-4">
-            {ORGANISATIONS.map((org, index) => (
+            {organisations.map((org, index) => (
               <div
                 key={org.name}
                 data-aos="fade-up"
                 data-aos-delay={index * 100}
                 className="bg-white rounded-2xl h-[130px] p-8 flex items-center justify-center"
               >
-                <img
-                  src={org.logo}
-                  alt={org.name}
-                  className="max-h-full max-w-full object-contain"
-                />
+                <ResponsiveImage src={org.logo} alt={org.name} className="max-h-full max-w-full object-contain" />
               </div>
             ))}
           </div>
