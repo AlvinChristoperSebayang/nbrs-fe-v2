@@ -81,15 +81,14 @@ const envisionFaqItems: AccordionItem[] = [
   },
 ];
 
-const cta: CtaContent[] = [
-  {
+const cta = {
     image: "/images/hero/hero5.png",
     title: "INTERESTED IN ENVISION STUDENT PROGRAM?",
     description: "Connect with our studio team to learn more about upcoming student intakes.",
     buttonText: "CAREERS@NBRS.COM.AU",
     buttonHref: "mailto:careers@nbrs.com.au",
-  },
-];
+  }
+
 
 export default function EnvisionStudentProgramPage() {
   return (
@@ -138,7 +137,7 @@ export default function EnvisionStudentProgramPage() {
       />
 
       {/* 4. CTA SECTION */}
-      <CtaSection cta={cta} />
+      <CtaSection content={cta} />
     </article>
   );
 }

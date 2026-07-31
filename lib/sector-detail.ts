@@ -5,7 +5,7 @@ import type { CtaContent, ImageSource } from "./types";
 import { mapCta } from "./cta";
 import { craftFetch } from "./craft";
 import { toImageSource } from "./media";
-import { SECTORS_DATA } from "./sectors-data";
+import { SECTORS_DATA, SectorItem } from "./sectors-data";
 
 type Asset = { mobile?: string; tablet?: string; desktop?: string };
 type Project = { id: string; title: string; slug: string; uri: string | null; proHdrHeading: string | null; thumbnail?: Asset[]; catStatus: Array<{ title: string }>; catDiscipline: Array<{ title: string }> };
@@ -58,54 +58,78 @@ function projectHref(project: Pick<Project, "uri" | "slug">): string {
   return project.uri ? `/${project.uri.replace(/^\/+/, "")}` : `/projects/${project.slug}`;
 }
 
+function buildFallback(fallback: SectorItem): SectorDetailContent {
+  return {
+    title: fallback.label,
+    description: fallback.heroSubtitle,
+    image: fallback.heroImage,
+    principlesTitle: fallback.principlesTitle,
+    principlesDescription: fallback.principlesDescription,
+    principlesImages: fallback.principlesImages,
+    features: fallback.features,
+    backgroundColor: fallback.hoverColor,
+    keyProjects: fallback.keyProjects,
+    tableProjects: fallback.tableProjects,
+    quote: fallback.quote,
+    cta: FALLBACK_CTA,
+    seoTitle: fallback.label,
+    seoDescription: fallback.heroSubtitle,
+  };
+}
+
 export async function getSectorDetailContent(slug: string): Promise<SectorDetailContent | null> {
   const fallback = SECTORS_DATA.find((sector) => sector.slug === slug);
   if (!fallback) return null;
 
-  const data = await craftFetch<Response>(QUERY, { slug: [slug] });
-  const category = data.category[0];
-  if (!category) return null;
+  try {
+    const data = await craftFetch<Response>(QUERY, { slug: [slug] });
+    const category = data.category?.[0];
+    if (!category) return buildFallback(fallback);
 
-  const features = category.catOverImageText.flatMap((block, blockIndex) => {
-    const image = toImageSource(block.image[0]) ?? fallback.features[blockIndex]?.image;
-    if (!image) return [];
-    return [
-      { title: block.leftColumnHeading, description: block.leftColumnText },
-      { title: block.rightColumnHeading, description: block.rightColumnText },
-    ].filter((item): item is { title: string; description: string | null } => Boolean(item.title)).map((item) => ({ title: item.title.trim(), description: item.description?.trim() ?? "", image }));
-  });
+    const features = category.catOverImageText.flatMap((block, blockIndex) => {
+      const image = toImageSource(block.image[0]) ?? fallback.features[blockIndex]?.image;
+      if (!image) return [];
+      return [
+        { title: block.leftColumnHeading, description: block.leftColumnText },
+        { title: block.rightColumnHeading, description: block.rightColumnText },
+      ].filter((item): item is { title: string; description: string | null } => Boolean(item.title)).map((item) => ({ title: item.title.trim(), description: item.description?.trim() ?? "", image }));
+    });
 
-  const galleryImages = [category.catHdrImage[0], ...category.catOverImageText.map((block) => block.image[0]), ...category.catFeaturedProjects.slice(0, 2).map((project) => project.thumbnail?.[0])]
-    .map((asset) => toImageSource(asset)).filter((image): image is ImageSource => Boolean(image));
-  const keyProjects = category.catFeaturedProjects.slice(0, 3).map((project, index) => ({ id: project.id, title: project.proHdrHeading?.trim() || project.title, image: toImageSource(project.thumbnail?.[0]) ?? fallback.keyProjects[index]?.image ?? fallback.image, href: projectHref(project) }));
-  const tableProjects = category.catSelectedProjects.map((project) => ({ id: project.id, project: project.proHdrHeading?.trim() || project.title, practices: project.catDiscipline.map((discipline) => discipline.title).join(", ") || "—", status: project.catStatus[0]?.title ?? "—", href: projectHref(project) }));
-  const quoteBlock = category.catPclPerson.find((block) => block.quote && block.person[0]?.pplProfileImage[0]);
-  const person = quoteBlock?.person[0];
-  const quoteImage = toImageSource(person?.pplProfileImage[0]);
+    const galleryImages = [category.catHdrImage[0], ...category.catOverImageText.map((block) => block.image[0]), ...category.catFeaturedProjects.slice(0, 2).map((project) => project.thumbnail?.[0])]
+      .map((asset) => toImageSource(asset)).filter((image): image is ImageSource => Boolean(image));
+    const keyProjects = category.catFeaturedProjects.slice(0, 3).map((project, index) => ({ id: project.id, title: project.proHdrHeading?.trim() || project.title, image: toImageSource(project.thumbnail?.[0]) ?? fallback.keyProjects[index]?.image ?? fallback.image, href: projectHref(project) }));
+    const tableProjects = category.catSelectedProjects.map((project) => ({ id: project.id, project: project.proHdrHeading?.trim() || project.title, practices: project.catDiscipline.map((discipline) => discipline.title).join(", ") || "—", status: project.catStatus[0]?.title ?? "—", href: projectHref(project) }));
+    const quoteBlock = category.catPclPerson.find((block) => block.quote && block.person[0]?.pplProfileImage[0]);
+    const person = quoteBlock?.person[0];
+    const quoteImage = toImageSource(person?.pplProfileImage[0]);
 
-  const heritageServices = category.slug === "heritage" && category.sectorHeritageAdvisoryServices?.trim()
-    ? {
-      intro: cleanHtml(category.sectorServicesIntro),
-      advisory: category.sectorHeritageAdvisoryServices.split(/\r?\n/).map((item) => item.trim()).filter(Boolean),
-      conservation: (category.sectorHeritageConservationServices ?? "").split(/\r?\n/).map((item) => item.trim()).filter(Boolean),
-    }
-    : undefined;
+    const heritageServices = category.slug === "heritage" && category.sectorHeritageAdvisoryServices?.trim()
+      ? {
+        intro: cleanHtml(category.sectorServicesIntro),
+        advisory: category.sectorHeritageAdvisoryServices.split(/\r?\n/).map((item) => item.trim()).filter(Boolean),
+        conservation: (category.sectorHeritageConservationServices ?? "").split(/\r?\n/).map((item) => item.trim()).filter(Boolean),
+      }
+      : undefined;
 
-  return {
-    title: category.catHdrHeading?.trim() || category.title || fallback.label,
-    description: category.catHdrSubheading?.trim() || fallback.heroSubtitle,
-    image: toImageSource(category.catHdrImage[0]) ?? fallback.heroImage,
-    principlesTitle: `${category.catOvrHeading?.trim() || "PRINCIPLES"}: ${category.title}`,
-    principlesDescription: cleanHtml(category.catOvrText) || fallback.principlesDescription,
-    principlesImages: galleryImages.length >= 5 ? galleryImages.slice(0, 5) : fallback.principlesImages,
-    features: features.length ? features : fallback.features,
-    backgroundColor: category.accentColor?.trim() || fallback.hoverColor,
-    heritageServices,
-    keyProjects: keyProjects.length ? keyProjects : fallback.keyProjects,
-    tableProjects: tableProjects.length ? tableProjects : fallback.tableProjects,
-    quote: quoteBlock && person && quoteImage ? { image: quoteImage, text: quoteBlock.quote!.trim(), author: person.PplName?.trim() || person.title } : fallback.quote,
-    cta: mapCta(data.parent[0], FALLBACK_CTA),
-    seoTitle: category.seoPageTitle?.trim() || category.title,
-    seoDescription: category.seoMetaDescription?.trim() || category.catHdrSubheading?.trim() || fallback.heroSubtitle,
-  };
+    return {
+      title: category.catHdrHeading?.trim() || category.title || fallback.label,
+      description: category.catHdrSubheading?.trim() || fallback.heroSubtitle,
+      image: toImageSource(category.catHdrImage[0]) ?? fallback.heroImage,
+      principlesTitle: `${category.catOvrHeading?.trim() || "PRINCIPLES"}: ${category.title}`,
+      principlesDescription: cleanHtml(category.catOvrText) || fallback.principlesDescription,
+      principlesImages: galleryImages.length >= 5 ? galleryImages.slice(0, 5) : fallback.principlesImages,
+      features: features.length ? features : fallback.features,
+      backgroundColor: category.accentColor?.trim() || fallback.hoverColor,
+      heritageServices,
+      keyProjects: keyProjects.length ? keyProjects : fallback.keyProjects,
+      tableProjects: tableProjects.length ? tableProjects : fallback.tableProjects,
+      quote: quoteBlock && person && quoteImage ? { image: quoteImage, text: quoteBlock.quote!.trim(), author: person.PplName?.trim() || person.title } : fallback.quote,
+      cta: mapCta(data.parent?.[0], FALLBACK_CTA),
+      seoTitle: category.seoPageTitle?.trim() || category.title,
+      seoDescription: category.seoMetaDescription?.trim() || category.catHdrSubheading?.trim() || fallback.heroSubtitle,
+    };
+  } catch (error) {
+    console.warn(`Failed to fetch sector detail for ${slug}, using local fallback:`, error);
+    return buildFallback(fallback);
+  }
 }

@@ -1,28 +1,24 @@
 import { craftFetch } from "./craft";
 import { mapCta } from "./cta";
 import { toImageSource } from "./media";
-import type { CtaContent, NewsItem } from "./types";
+import type { CtaContent, ImageSource } from "./types";
 
 type Asset = { mobile?: string; tablet?: string; desktop?: string };
-
-type RawAboutEntry = {
+type Entry = {
   aboutHeroHeading: string | null;
   description2: string | null;
-  heroTitle: string | null;
   aboutHeroImage: Asset[];
   aboutIntroHeading: string | null;
   aboutIntroText: string | null;
   aboutIntroImage: Asset[];
+  heroTitle: string | null;
+  whatWeDoV2: Array<{ title: string | null; description2: string | null; image: Asset[] }>;
+  ctaElement: { label: string | null; url_1: { url: string | null } | null } | null;
   aboutPracticeHeading: string | null;
   aboutPracticeText: string | null;
   aboutPracticeImages: Asset[];
   aboutTimelineHeading: string | null;
   timeline: Array<{ year: string | null; text: string | null }>;
-  whatWeDoV2: Array<{ title: string | null; description2: string | null; image: Asset[] }>;
-  ctaElement: {
-    label: string | null;
-    url_1: { url: string | null } | null;
-  } | null;
   ctaSection: {
     ctaSectionBackgroundImage: Asset[];
     ctaSectionHeading: string | null;
@@ -32,83 +28,117 @@ type RawAboutEntry = {
   } | null;
 };
 
-type AboutResponse = { entries: RawAboutEntry[] };
+type AboutResponse = { entries: Entry[] };
 
 export type AboutContent = {
-  hero: { title: string; description: string; image: import("./types").ImageSource };
-  intro: { heading: string; description: string; image: import("./types").ImageSource };
+  hero: { title: string; description: string; image: ImageSource };
+  intro: { heading: string; description: string; image: ImageSource };
   approachHeading: string;
-  approachItems: NewsItem[];
+  approachItems: Array<{ title: string; description?: string; image: ImageSource }>;
   viewAll: { label: string; href: string } | null;
-  practice: { heading: string; description: string; images: [import("./types").ImageSource, import("./types").ImageSource, import("./types").ImageSource, import("./types").ImageSource] };
+  practice: { heading: string; description: string; images: [ImageSource, ImageSource, ImageSource, ImageSource] };
   timeline: { heading: string; items: Array<{ year: string; description: string }> };
   cta: CtaContent;
 };
 
 export const ABOUT_FALLBACK: AboutContent = {
   hero: {
-    title: "Designing Environments That Influence Society",
-    description: "NBRS approaches architecture and design as a social art, uplifting people, connecting communities, and shaping how we live.",
-    image: "/images/hero/about-hero.png",
+    title: "Designing Environments That Shape Lives",
+    description:
+      "Working collaboratively with clients and communities to create enduring, human-centred places.",
+    image: "/images/hero/hero-about.jpg",
   },
   intro: {
-    heading: "People-centred design for good",
-    description: "We create environments that foster wellbeing, belonging and transformation. Design that responds directly to human needs.",
+    heading: "WHO WE ARE",
+    description:
+      "NBRS is a purpose-led design practice working across Australia. For over 50 years, we have brought together architecture, interior design, landscape architecture and heritage expertise to create spaces that enhance wellbeing and transform communities.",
     image: "/images/about-us-about.png",
   },
-  approachHeading: "What We Do",
+  approachHeading: "WHAT WE DO",
   approachItems: [
-    { title: "SOCIAL ARCHITECTURE", image: "/images/hero/about-hero.png", description: "People and community at the core." },
-    { title: "REAL INSIGHT", image: "/images/about/real-insight.jpg", description: "We design for the people who will use the spaces we create." },
-    { title: "CREATIVE PARTNERSHIPS", image: "/images/about/creative-partnership.jpg", description: "We collaborate with clients, communities and stakeholders to create spaces that matter." },
+    {
+      title: "EDUCATION",
+      description: "Innovative learning environments tailored to evolving pedagogies.",
+      image: "/images/about/practice1.jpg",
+    },
+    {
+      title: "HERITAGE",
+      description: "Conservation and adaptive reuse breathing new life into history.",
+      image: "/images/about/practice2.jpg",
+    },
+    {
+      title: "WELLNESS",
+      description: "Therapeutic healthcare design focused on human healing.",
+      image: "/images/about/practice3.jpg",
+    },
   ],
-  viewAll: null,
+  viewAll: { label: "VIEW ALL SECTORS", href: "/sectors" },
   practice: {
-    heading: "A Practice Built on Care, Joy and Collaboration",
-    description: "Integrated design studios across Sydney and Melbourne, including architecture, interior design, landscape architecture and heritage advice. United by a mission to design for people, place and purpose.",
-    images: ["/images/about/practice1.jpg", "/images/about/practice2.jpg", "/images/about/practice3.jpg", "/images/about/practice4.jpg"],
+    heading: "OUR INTEGRATED PRACTICE",
+    description:
+      "A combined methodology bridging architecture, interiors, landscape, and heritage conservation under one collaborative roof.",
+    images: [
+      "/images/about/practice1.jpg",
+      "/images/about/practice2.jpg",
+      "/images/about/practice3.jpg",
+      "/images/about/practice4.jpg",
+    ],
   },
   timeline: {
-    heading: "Founded in 1968",
+    heading: "OUR JOURNEY",
     items: [
-      { year: "1968", description: "Founded by Noel Bell and Ridley Smith. First project Anglicare St Johns Village Glebe." },
-      { year: "1976", description: "St Andrew's House - First high rise school." },
-      { year: "1983", description: "NBRS receives Sulman Award for Parklea Correctional Centre." },
-      { year: "1998", description: "Olympic Upgrade - City of Sydney George Street & Circular Quay." },
-      { year: "2002", description: "Convention Centre, Hillsong Church & Vista built." },
-      { year: "2022", description: "Studios open in Melbourne, expanding NBRS nationally." },
-      { year: "2025", description: "Celebrating decades of designing for people, place and purpose." },
+      { year: "1968", description: "NBRS founded in Sydney with a vision for community architecture." },
+      { year: "1995", description: "Expanded into specialist heritage conservation and educational masterplanning." },
+      { year: "2010", description: "Integrated landscape architecture and interior design disciplines." },
+      { year: "2024", description: "Established Melbourne and Brisbane studios to serve national projects." },
     ],
   },
   cta: {
     image: "/images/contact-bg.png",
-    title: "Let's Shape What's Next-Together",
-    description: "Whether it's a place to gather, to heal, to learn or to live - we're ready to collaborate. Let's shape spaces that matter, together.",
-    buttonText: "Let's Shape What's Next-Together",
+    title: "LET'S SHAPE WHAT'S NEXT-TOGETHER",
+    description:
+      "Whether it's a place to gather, to heal, to learn or to live - we're ready to collaborate. Let's shape spaces that matter, together.",
+    buttonText: "Contact Us",
     buttonHref: "/contact",
   },
 };
 
-const ABOUT_QUERY = /* GraphQL */ `
+const CTA_QUERY = /* GraphQL */ `
   query AboutPage {
-    entries(section: ["aboutUs"], limit: 1) {
+    entries(section: ["aboutUs3"], limit: 1) {
       ... on aboutUs3_Entry {
-        description2
-        heroTitle
         aboutHeroHeading
-        aboutHeroImage { mobile: url @transform(width: 600, height: 800, mode: "crop", format: "webp", quality: 80, immediately: true) tablet: url @transform(width: 1440, height: 1000, mode: "crop", format: "webp", quality: 82, immediately: true) desktop: url @transform(width: 2400, height: 1200, mode: "crop", format: "webp", quality: 85, immediately: true) }
+        description2
+        aboutHeroImage { url }
         aboutIntroHeading
         aboutIntroText
-        aboutIntroImage { mobile: url @transform(width: 600, height: 450, mode: "crop", format: "webp", quality: 80, immediately: true) tablet: url @transform(width: 900, height: 675, mode: "crop", format: "webp", quality: 80, immediately: true) desktop: url @transform(width: 1200, height: 900, mode: "crop", format: "webp", quality: 80, immediately: true) }
+        aboutIntroImage { url }
+        heroTitle
+        whatWeDoV2 {
+          ... on block_Entry {
+            title
+            description2
+            image { url }
+          }
+        }
+        ctaElement {
+          ... on cta_Entry {
+            label
+            url_1 { url }
+          }
+        }
         aboutPracticeHeading
         aboutPracticeText
-        aboutPracticeImages { mobile: url @transform(width: 600, height: 450, mode: "crop", format: "webp", quality: 80, immediately: true) tablet: url @transform(width: 900, height: 675, mode: "crop", format: "webp", quality: 80, immediately: true) desktop: url @transform(width: 1200, height: 900, mode: "crop", format: "webp", quality: 80, immediately: true) }
+        aboutPracticeImages { url }
         aboutTimelineHeading
-        timeline { ... on slide2_Entry { year text } }
-        whatWeDoV2 { ... on whatWeDoContent_Entry { title description2 image { mobile: url @transform(width: 600, height: 450, mode: "crop", format: "webp", quality: 80, immediately: true) tablet: url @transform(width: 900, height: 675, mode: "crop", format: "webp", quality: 80, immediately: true) desktop: url @transform(width: 1200, height: 900, mode: "crop", format: "webp", quality: 80, immediately: true) } } }
-        ctaElement { label url_1 { url } }
+        timeline {
+          ... on block_Entry {
+            year
+            text
+          }
+        }
         ctaSection {
-          ctaSectionBackgroundImage { mobile: url @transform(width: 600, height: 900, mode: "crop", format: "webp", quality: 80, immediately: true) tablet: url @transform(width: 1440, height: 900, mode: "crop", format: "webp", quality: 82, immediately: true) desktop: url @transform(width: 2400, height: 1000, mode: "crop", format: "webp", quality: 85, immediately: true) }
+          ctaSectionBackgroundImage { url }
           ctaSectionHeading
           ctaSectionDescription
           ctaSectionButtonLabel
@@ -120,48 +150,53 @@ const ABOUT_QUERY = /* GraphQL */ `
 `;
 
 export async function getAboutContent(): Promise<AboutContent> {
-  const data = await craftFetch<AboutResponse>(ABOUT_QUERY);
-  const about = data.entries[0];
+  try {
+    const data = await craftFetch<AboutResponse>(CTA_QUERY);
+    const about = data.entries?.[0];
 
-  if (!about) return ABOUT_FALLBACK;
+    if (!about) return ABOUT_FALLBACK;
 
-  const approachItems = about.whatWeDoV2
-    .filter((item) => item.title && toImageSource(item.image[0]))
-    .map((item) => ({
-      title: item.title!.replace(/\n/g, " "),
-      description: item.description2?.trim() || undefined,
-      image: toImageSource(item.image[0])!,
-    }));
-  const ctaLabel = about.ctaElement?.label?.trim();
-  const ctaUrl = about.ctaElement?.url_1?.url?.trim();
+    const approachItems = (about.whatWeDoV2 ?? [])
+      .filter((item) => item.title && toImageSource(item.image[0]))
+      .map((item) => ({
+        title: item.title!.replace(/\n/g, " "),
+        description: item.description2?.trim() || undefined,
+        image: toImageSource(item.image[0])!,
+      }));
+    const ctaLabel = about.ctaElement?.label?.trim();
+    const ctaUrl = about.ctaElement?.url_1?.url?.trim();
 
-  return {
-    hero: {
-      title: about.aboutHeroHeading?.trim() || ABOUT_FALLBACK.hero.title,
-      description: about.description2?.trim() || ABOUT_FALLBACK.hero.description,
-      image: toImageSource(about.aboutHeroImage[0]) || ABOUT_FALLBACK.hero.image,
-    },
-    intro: {
-      heading: about.aboutIntroHeading?.trim() || ABOUT_FALLBACK.intro.heading,
-      description: about.aboutIntroText?.trim() || ABOUT_FALLBACK.intro.description,
-      image: toImageSource(about.aboutIntroImage[0]) || ABOUT_FALLBACK.intro.image,
-    },
-    approachHeading: about.heroTitle?.trim() || ABOUT_FALLBACK.approachHeading,
-    approachItems: approachItems.length ? approachItems : ABOUT_FALLBACK.approachItems,
-    viewAll: ctaLabel && ctaUrl ? { label: ctaLabel, href: ctaUrl } : null,
-    practice: {
-      heading: about.aboutPracticeHeading?.trim() || ABOUT_FALLBACK.practice.heading,
-      description: about.aboutPracticeText?.trim() || ABOUT_FALLBACK.practice.description,
-      images: about.aboutPracticeImages.length === 4 && about.aboutPracticeImages.every(toImageSource)
-        ? [toImageSource(about.aboutPracticeImages[0])!, toImageSource(about.aboutPracticeImages[1])!, toImageSource(about.aboutPracticeImages[2])!, toImageSource(about.aboutPracticeImages[3])!]
-        : ABOUT_FALLBACK.practice.images,
-    },
-    timeline: {
-      heading: about.aboutTimelineHeading?.trim() || ABOUT_FALLBACK.timeline.heading,
-      items: about.timeline
-        .filter((item) => item.year?.trim() && item.text?.trim())
-        .map((item) => ({ year: item.year!.trim(), description: item.text!.trim() })),
-    },
-    cta: mapCta({ ctaSection: about.ctaSection }, ABOUT_FALLBACK.cta),
-  };
+    return {
+      hero: {
+        title: about.aboutHeroHeading?.trim() || ABOUT_FALLBACK.hero.title,
+        description: about.description2?.trim() || ABOUT_FALLBACK.hero.description,
+        image: toImageSource(about.aboutHeroImage?.[0]) || ABOUT_FALLBACK.hero.image,
+      },
+      intro: {
+        heading: about.aboutIntroHeading?.trim() || ABOUT_FALLBACK.intro.heading,
+        description: about.aboutIntroText?.trim() || ABOUT_FALLBACK.intro.description,
+        image: toImageSource(about.aboutIntroImage?.[0]) || ABOUT_FALLBACK.intro.image,
+      },
+      approachHeading: about.heroTitle?.trim() || ABOUT_FALLBACK.approachHeading,
+      approachItems: approachItems.length ? approachItems : ABOUT_FALLBACK.approachItems,
+      viewAll: ctaLabel && ctaUrl ? { label: ctaLabel, href: ctaUrl } : null,
+      practice: {
+        heading: about.aboutPracticeHeading?.trim() || ABOUT_FALLBACK.practice.heading,
+        description: about.aboutPracticeText?.trim() || ABOUT_FALLBACK.practice.description,
+        images: about.aboutPracticeImages?.length === 4 && about.aboutPracticeImages.every(toImageSource)
+          ? [toImageSource(about.aboutPracticeImages[0])!, toImageSource(about.aboutPracticeImages[1])!, toImageSource(about.aboutPracticeImages[2])!, toImageSource(about.aboutPracticeImages[3])!]
+          : ABOUT_FALLBACK.practice.images,
+      },
+      timeline: {
+        heading: about.aboutTimelineHeading?.trim() || ABOUT_FALLBACK.timeline.heading,
+        items: (about.timeline ?? [])
+          .filter((item) => item.year?.trim() && item.text?.trim())
+          .map((item) => ({ year: item.year!.trim(), description: item.text!.trim() })),
+      },
+      cta: mapCta({ ctaSection: about.ctaSection }, ABOUT_FALLBACK.cta),
+    };
+  } catch (error) {
+    console.warn("Failed to load About content from Craft, using fallback:", error);
+    return ABOUT_FALLBACK;
+  }
 }

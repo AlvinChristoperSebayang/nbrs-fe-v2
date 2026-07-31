@@ -52,20 +52,25 @@ query SectorsPage {
 }`;
 
 export async function getSectorsPageContent(): Promise<SectorsPageContent> {
-  const data = await craftFetch<{ entries: Entry[] }>(QUERY);
-  const entry = data.entries[0];
-  if (!entry) return FALLBACK;
+  try {
+    const data = await craftFetch<{ entries: Entry[] }>(QUERY);
+    const entry = data.entries?.[0];
+    if (!entry) return FALLBACK;
 
-  const sectors = entry.sectorsFeatured.map((sector) => {
-    const fallback = FALLBACK.sectors.find((item) => item.href === `/sectors/${sector.slug}`);
-    const image = toImageSource(sector.thumbnail[0]);
-    if (!fallback || !image) return null;
-    return { label: sector.title.trim() || fallback.label, image, href: `/sectors/${sector.slug}`, description: sector.tagline?.trim() || fallback.description, hoverColor: sector.accentColor?.trim() || fallback.hoverColor };
-  }).filter((sector): sector is Sector => Boolean(sector));
+    const sectors = entry.sectorsFeatured?.map((sector) => {
+      const fallback = FALLBACK.sectors.find((item) => item.href === `/sectors/${sector.slug}`);
+      const image = toImageSource(sector.thumbnail?.[0]);
+      if (!fallback || !image) return null;
+      return { label: sector.title.trim() || fallback.label, image, href: `/sectors/${sector.slug}`, description: sector.tagline?.trim() || fallback.description, hoverColor: sector.accentColor?.trim() || fallback.hoverColor };
+    }).filter((sector): sector is Sector => Boolean(sector));
 
-  return {
-    hero: { title: entry.sectorsHeroHeading?.trim() || FALLBACK.hero.title, description: entry.sectorsHeroDescription?.trim() || FALLBACK.hero.description, image: toImageSource(entry.sectorsHeroImage[0]) || FALLBACK.hero.image },
-    sectors: sectors.length ? sectors : FALLBACK.sectors,
-    cta: mapCta(entry, FALLBACK.cta),
-  };
+    return {
+      hero: { title: entry.sectorsHeroHeading?.trim() || FALLBACK.hero.title, description: entry.sectorsHeroDescription?.trim() || FALLBACK.hero.description, image: toImageSource(entry.sectorsHeroImage?.[0]) || FALLBACK.hero.image },
+      sectors: sectors?.length ? sectors : FALLBACK.sectors,
+      cta: mapCta(entry, FALLBACK.cta),
+    };
+  } catch (error) {
+    console.warn("Failed to fetch sectors page from Craft, using fallback:", error);
+    return FALLBACK;
+  }
 }

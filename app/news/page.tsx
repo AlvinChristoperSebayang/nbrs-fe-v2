@@ -10,15 +10,13 @@ export const metadata: Metadata = {
   title: "News",
 };
 
-const cta: CtaContent[] = [
-  {
+const cta: CtaContent = {
     image: "/images/contact-bg.png",
     title: "GET IN TOUCH",
     description: "Interested in our latest news or have press inquiries? Get in touch with our team.",
     buttonText: "CONTACT US",
     buttonHref: "/contact",
-  },
-];
+  }
 
 export default function NewsPage() {
   return (
@@ -48,7 +46,7 @@ export default function NewsPage() {
       </section>
 
       {/* 3. CTA SECTION */}
-      <CtaSection cta={cta} />
+      <CtaSection content={cta} />
     </article>
   );
 }

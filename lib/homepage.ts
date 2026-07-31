@@ -142,61 +142,64 @@ function mapNewsArticles(articles: RawNewsArticle[]): NewsItem[] {
 }
 
 export async function getHomepageContent(): Promise<HomepageContent> {
-  const data = await craftFetch<HomepageResponse>(HOMEPAGE_QUERY);
-  const homepage = data.entries[0];
-
-  if (!homepage) {
-    return {
-      slides: [],
-      about: null,
-      sectors: [],
-      latestNewsHeading: null,
-      latestNews: [],
-      cta: null,
-    };
-  }
-
-  const automaticNews = mapNewsArticles(data.articles ?? []).slice(0, 3);
-  const selectedNews = mapNewsArticles(homepage.homepageFeaturedNews ?? []);
-  const latestNews =
-    homepage.homepageNewsSource === "manual" && selectedNews.length
-      ? selectedNews
-      : automaticNews;
-
-  return {
-    slides: (homepage.heroBannerCarousel ?? [])
-      .filter((slide) => slide.heading && toImageSource(slide.image[0]))
-      .map((slide) => ({
-        title: slide.heading as string,
-        headline: slide.subheading ?? "",
-        image: toImageSource(slide.image[0])!,
-      })),
-    about: homepage.whatWeDo[0]
-      ? {
-          heading: homepage.whatWeDo[0].heading,
-          description:
-            plainText(homepage.whatWeDo[0].subheading) ??
-            plainText(homepage.whatWeDo[0].text),
-        }
-      : null,
-    sectors: (homepage.homepageFeaturedSectors ?? [])
-      .filter((sector) => toImageSource(sector.thumbnail[0]))
-      .map((sector) => ({
-        label: sector.title,
-        image: toImageSource(sector.thumbnail[0])!,
-        href: `/${sector.uri ?? `sector/${sector.slug}`}`,
-        description: sector.tagline ?? "",
-        hoverColor: sector.accentColor ?? "#E0EFF4",
-      })),
-    latestNewsHeading: homepage.sectionHeading,
-    // Manual order comes directly from Craft's Entries relation.
-    // Fetch extra automatic records so missing thumbnails do not leave empty cards.
-    latestNews,
-    cta: homepage.ctaSection
-      ? mapCta({ ctaSection: homepage.ctaSection }, {
-          image: "",
-          title: "",
-        })
-      : null,
+  const emptyFallback: HomepageContent = {
+    slides: [],
+    about: null,
+    sectors: [],
+    latestNewsHeading: null,
+    latestNews: [],
+    cta: null,
   };
+
+  try {
+    const data = await craftFetch<HomepageResponse>(HOMEPAGE_QUERY);
+    const homepage = data.entries?.[0];
+
+    if (!homepage) return emptyFallback;
+
+    const automaticNews = mapNewsArticles(data.articles ?? []).slice(0, 3);
+    const selectedNews = mapNewsArticles(homepage.homepageFeaturedNews ?? []);
+    const latestNews =
+      homepage.homepageNewsSource === "manual" && selectedNews.length
+        ? selectedNews
+        : automaticNews;
+
+    return {
+      slides: (homepage.heroBannerCarousel ?? [])
+        .filter((slide) => slide.heading && toImageSource(slide.image[0]))
+        .map((slide) => ({
+          title: slide.heading as string,
+          headline: slide.subheading ?? "",
+          image: toImageSource(slide.image[0])!,
+        })),
+      about: homepage.whatWeDo?.[0]
+        ? {
+            heading: homepage.whatWeDo[0].heading,
+            description:
+              plainText(homepage.whatWeDo[0].subheading) ??
+              plainText(homepage.whatWeDo[0].text),
+          }
+        : null,
+      sectors: (homepage.homepageFeaturedSectors ?? [])
+        .filter((sector) => toImageSource(sector.thumbnail[0]))
+        .map((sector) => ({
+          label: sector.title,
+          image: toImageSource(sector.thumbnail[0])!,
+          href: `/${sector.uri ?? `sector/${sector.slug}`}`,
+          description: sector.tagline ?? "",
+          hoverColor: sector.accentColor ?? "#E0EFF4",
+        })),
+      latestNewsHeading: homepage.sectionHeading,
+      latestNews,
+      cta: homepage.ctaSection
+        ? mapCta({ ctaSection: homepage.ctaSection }, {
+            image: "",
+            title: "",
+          })
+        : null,
+    };
+  } catch (error) {
+    console.warn("Failed to load Homepage content from Craft, using fallback:", error);
+    return emptyFallback;
+  }
 }

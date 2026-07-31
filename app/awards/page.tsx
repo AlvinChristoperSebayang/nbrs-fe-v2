@@ -11,16 +11,14 @@ export const metadata: Metadata = {
   title: "Awards",
 };
 
-const cta: CtaContent[] = [
-  {
-    image: "/images/contact-bg.png",
-    title: "Let’s Shape What’s Next-Together",
-    description:
-      "Whether it’s a place to gather, to heal, to learn or to live - we’re ready to collaborate. Let’s shape spaces that matter, together.",
-    buttonText: "Let’s Shape What’s Next-Together",
-    buttonHref: "/contact",
-  },
-];
+const cta: CtaContent = {
+  image: "/images/contact-bg.png",
+  title: "Let’s Shape What’s Next-Together",
+  description:
+    "Whether it’s a place to gather, to heal, to learn or to live - we’re ready to collaborate. Let’s shape spaces that matter, together.",
+  buttonText: "Let’s Shape What’s Next-Together",
+  buttonHref: "/contact",
+};
 
 export default async function AwardsPage() {
   return (
@@ -50,7 +48,7 @@ export default async function AwardsPage() {
         </Container>
       </section>
 
-      <CtaSection content={await getPageCta("pages", cta[0], "awards").catch(() => cta[0])} />
+      <CtaSection content={await getPageCta("pages", cta, "awards").catch(() => cta)} />
     </article>
   );
 }

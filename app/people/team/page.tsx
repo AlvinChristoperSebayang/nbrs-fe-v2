@@ -8,15 +8,13 @@ export const metadata: Metadata = {
   title: "Meet Our Leaders | Our People",
 };
 
-const cta: CtaContent[] = [
-  {
-    image: "/images/contact-bg.png",
-    title: "GET IN TOUCH",
-    description: "Want to join our collective or collaborate on a project? Reach out to our leadership team.",
-    buttonText: "CONTACT US",
-    buttonHref: "/contact",
-  },
-];
+const cta: CtaContent = {
+  image: "/images/contact-bg.png",
+  title: "GET IN TOUCH",
+  description: "Want to join our collective or collaborate on a project? Reach out to our leadership team.",
+  buttonText: "CONTACT US",
+  buttonHref: "/contact",
+};
 
 export default function TeamPage() {
   return (
@@ -32,7 +30,7 @@ export default function TeamPage() {
       <TeamListSection />
 
       {/* 3. CTA SECTION */}
-      <CtaSection cta={cta} />
+      <CtaSection content={cta} />
     </article>
   );
 }

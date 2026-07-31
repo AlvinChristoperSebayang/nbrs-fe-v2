@@ -43,17 +43,19 @@ export async function craftFetch<T>(
     method: "POST",
     headers: { "Content-Type": "application/json", Accept: "application/json" },
     body: JSON.stringify({ query, variables }),
-    cache: "no-store",
+    next: { revalidate: 60 },
   });
+
+  if (!res.ok) {
+    throw new Error(`Craft GraphQL request failed with status ${res.status}`);
+  }
 
   const body = await res.text();
   let json: unknown;
   try {
     json = JSON.parse(body);
   } catch {
-    throw new Error(
-      `Craft GraphQL request failed (${res.status} ${res.statusText}): ${body.slice(0, 300)}`
-    );
+    throw new Error(`Craft GraphQL returned non-JSON response`);
   }
 
   if (!isGraphQLResponse(json)) {
@@ -69,9 +71,7 @@ export async function craftFetch<T>(
   }
 
   if (!json.data) {
-    throw new Error(
-      `Craft GraphQL request returned no data: ${JSON.stringify(json).slice(0, 300)}`
-    );
+    throw new Error("Craft GraphQL request returned no data");
   }
 
   return normalizeLocalAssetUrls(json.data) as T;

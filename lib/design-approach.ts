@@ -64,18 +64,23 @@ function path(value: string | null): string | null {
 }
 
 export async function getDesignApproachContent(): Promise<DesignApproachContent> {
-  const data = await craftFetch<{ entries: Entry[] }>(QUERY);
-  const entry = data.entries[0];
-  if (!entry) return DESIGN_APPROACH_FALLBACK;
-  const items = entry.thumbnailGrid.filter((item) => item.heading?.trim() && toImageSource(item.image[0])).map((item) => ({ title: item.heading!.trim(), description: item.text?.trim() || undefined, image: toImageSource(item.image[0])! }));
-  const images = entry.gallery.map((item) => toImageSource(item.image[0])).filter((image): image is ImageSource => Boolean(image));
-  const link = entry.links[0];
-  return {
-    hero: { title: entry.designApproachHeroHeading?.trim() || DESIGN_APPROACH_FALLBACK.hero.title, description: entry.designApproachHeroDescription?.trim() || DESIGN_APPROACH_FALLBACK.hero.description, image: toImageSource(entry.designApproachHeroImage[0]) || DESIGN_APPROACH_FALLBACK.hero.image, button: { text: entry.designApproachHeroCtaLabel?.trim() || DESIGN_APPROACH_FALLBACK.hero.button.text, href: entry.designApproachHeroCtaUrl?.trim() || DESIGN_APPROACH_FALLBACK.hero.button.href } },
-    pillars: { title: entry.designApproachPillarsHeading?.trim() || DESIGN_APPROACH_FALLBACK.pillars.title, description: entry.designApproachPillarsDescription?.trim() || DESIGN_APPROACH_FALLBACK.pillars.description, items: items.length ? items : DESIGN_APPROACH_FALLBACK.pillars.items },
-    communities: { heading: entry.designApproachCommunitiesHeading?.trim() || DESIGN_APPROACH_FALLBACK.communities.heading, description: entry.designApproachCommunitiesDescription?.trim() || DESIGN_APPROACH_FALLBACK.communities.description, topImages: images.length >= 5 ? images.slice(0, 2) : DESIGN_APPROACH_FALLBACK.communities.topImages, galleryImages: images.length >= 5 ? images.slice(2, 5) : DESIGN_APPROACH_FALLBACK.communities.galleryImages },
-    quote: { image: toImageSource(entry.thumbnailImage[0]) || DESIGN_APPROACH_FALLBACK.quote.image, quote: entry.quote?.trim() || DESIGN_APPROACH_FALLBACK.quote.quote, author: entry.citation?.trim() || DESIGN_APPROACH_FALLBACK.quote.author, role: entry.jobRole?.trim() || DESIGN_APPROACH_FALLBACK.quote.role },
-    project: { heading: entry.sectionHeading?.trim() || DESIGN_APPROACH_FALLBACK.project.heading, description: text(entry.text) || DESIGN_APPROACH_FALLBACK.project.description, image: toImageSource(entry.image[0]) || DESIGN_APPROACH_FALLBACK.project.image, buttonText: link?.linkText?.trim() || DESIGN_APPROACH_FALLBACK.project.buttonText, buttonHref: path(link?.linkUrl) || DESIGN_APPROACH_FALLBACK.project.buttonHref },
-    cta: mapCta(entry, DESIGN_APPROACH_FALLBACK.cta),
-  };
+  try {
+    const data = await craftFetch<{ entries: Entry[] }>(QUERY);
+    const entry = data.entries?.[0];
+    if (!entry) return DESIGN_APPROACH_FALLBACK;
+    const items = entry.thumbnailGrid.filter((item) => item.heading?.trim() && toImageSource(item.image[0])).map((item) => ({ title: item.heading!.trim(), description: item.text?.trim() || undefined, image: toImageSource(item.image[0])! }));
+    const images = entry.gallery.map((item) => toImageSource(item.image[0])).filter((image): image is ImageSource => Boolean(image));
+    const link = entry.links[0];
+    return {
+      hero: { title: entry.designApproachHeroHeading?.trim() || DESIGN_APPROACH_FALLBACK.hero.title, description: entry.designApproachHeroDescription?.trim() || DESIGN_APPROACH_FALLBACK.hero.description, image: toImageSource(entry.designApproachHeroImage[0]) || DESIGN_APPROACH_FALLBACK.hero.image, button: { text: entry.designApproachHeroCtaLabel?.trim() || DESIGN_APPROACH_FALLBACK.hero.button.text, href: entry.designApproachHeroCtaUrl?.trim() || DESIGN_APPROACH_FALLBACK.hero.button.href } },
+      pillars: { title: entry.designApproachPillarsHeading?.trim() || DESIGN_APPROACH_FALLBACK.pillars.title, description: entry.designApproachPillarsDescription?.trim() || DESIGN_APPROACH_FALLBACK.pillars.description, items: items.length ? items : DESIGN_APPROACH_FALLBACK.pillars.items },
+      communities: { heading: entry.designApproachCommunitiesHeading?.trim() || DESIGN_APPROACH_FALLBACK.communities.heading, description: entry.designApproachCommunitiesDescription?.trim() || DESIGN_APPROACH_FALLBACK.communities.description, topImages: images.length >= 5 ? images.slice(0, 2) : DESIGN_APPROACH_FALLBACK.communities.topImages, galleryImages: images.length >= 5 ? images.slice(2, 5) : DESIGN_APPROACH_FALLBACK.communities.galleryImages },
+      quote: { image: toImageSource(entry.thumbnailImage[0]) || DESIGN_APPROACH_FALLBACK.quote.image, quote: entry.quote?.trim() || DESIGN_APPROACH_FALLBACK.quote.quote, author: entry.citation?.trim() || DESIGN_APPROACH_FALLBACK.quote.author, role: entry.jobRole?.trim() || DESIGN_APPROACH_FALLBACK.quote.role },
+      project: { heading: entry.sectionHeading?.trim() || DESIGN_APPROACH_FALLBACK.project.heading, description: text(entry.text) || DESIGN_APPROACH_FALLBACK.project.description, image: toImageSource(entry.image[0]) || DESIGN_APPROACH_FALLBACK.project.image, buttonText: link?.linkText?.trim() || DESIGN_APPROACH_FALLBACK.project.buttonText, buttonHref: path(link?.linkUrl) || DESIGN_APPROACH_FALLBACK.project.buttonHref },
+      cta: mapCta(entry, DESIGN_APPROACH_FALLBACK.cta),
+    };
+  } catch (error) {
+    console.warn("Failed to fetch design approach from Craft, using fallback:", error);
+    return DESIGN_APPROACH_FALLBACK;
+  }
 }

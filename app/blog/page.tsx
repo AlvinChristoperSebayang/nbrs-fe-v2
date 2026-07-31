@@ -10,15 +10,13 @@ export const metadata: Metadata = {
   title: "Blog",
 };
 
-const cta: CtaContent[] = [
-  {
-    image: "/images/contact-bg.png",
-    title: "GET IN TOUCH",
-    description: "Want to contribute or learn more about our publications? Reach out to our design team.",
-    buttonText: "CONTACT US",
-    buttonHref: "/contact",
-  },
-];
+const cta: CtaContent = {
+  image: "/images/contact-bg.png",
+  title: "GET IN TOUCH",
+  description: "Want to contribute or learn more about our publications? Reach out to our design team.",
+  buttonText: "CONTACT US",
+  buttonHref: "/contact",
+};
 
 export default async function BlogIndexPage() {
   const posts = await getPosts();
@@ -51,7 +49,7 @@ export default async function BlogIndexPage() {
       </section>
 
       {/* 3. CTA SECTION */}
-      <CtaSection cta={cta} />
+      <CtaSection content={cta} />
     </article>
   );
 }

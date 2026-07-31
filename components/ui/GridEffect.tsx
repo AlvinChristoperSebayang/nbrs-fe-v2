@@ -27,7 +27,7 @@ export function GridEffect({
   return (
     <section className="lg:py-24" style={{ backgroundColor }}>
       <Container className="overflow-hidden">
-        <div className="mb-6 lg:flex hidden items-start justify-between gap-6">
+        <div data-aos="fade-up" className="mb-6 lg:flex hidden items-start justify-between gap-6">
           <div className="flex flex-col gap-2">
             <span className="font-heading text-[28px] lg:text-[24px] uppercase text-black">
               {title}
@@ -61,7 +61,7 @@ export function GridEffect({
         </div>
 
         <div className="relative w-full">
-          <div className="mb-6 lg:hidden flex lg:flex-row flex-col lg:items-center items-start justify-between relative z-10 px-4 pt-12">
+          <div data-aos="fade-up" className="mb-6 lg:hidden flex lg:flex-row flex-col lg:items-center items-start justify-between relative z-10 px-4 pt-12">
             <span className="font-heading text-[28px] lg:text-[22px] uppercase text-white">
               {title}
             </span>
@@ -103,7 +103,7 @@ export function GridEffect({
             )}
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 items-stretch sm:inset-x-0 pb-20 gap-10 lg:gap-20 lg:py-40 lg:px-4 relative z-10">
+          <div data-aos="fade-up" data-aos-delay="150" className="grid grid-cols-1 lg:grid-cols-3 items-stretch sm:inset-x-0 pb-20 gap-10 lg:gap-20 lg:py-40 lg:px-4 relative z-10">
             {items.map((item, index) => {
               const isActive = index === activeIndex;
               const hasHref = Boolean(item.href);

@@ -26,16 +26,14 @@ export async function generateMetadata({
   };
 }
 
-const cta: CtaContent[] = [
-  {
-    image: "/images/contact-bg.png",
-    title: "LET’S SHAPE WHAT’S NEXT-TOGETHER",
-    description:
-      "Whether it’s a place to gather, to heal, to learn or to live - we’re ready to collaborate. Let’s shape spaces that matter, together.",
-    buttonText: "Contact Us",
-    buttonHref: "/contact",
-  },
-];
+const cta: CtaContent = {
+  image: "/images/contact-bg.png",
+  title: "LET’S SHAPE WHAT’S NEXT-TOGETHER",
+  description:
+    "Whether it’s a place to gather, to heal, to learn or to live - we’re ready to collaborate. Let’s shape spaces that matter, together.",
+  buttonText: "Contact Us",
+  buttonHref: "/contact",
+};
 
 export default async function ResearchDetailPage({
   params,
@@ -210,7 +208,7 @@ export default async function ResearchDetailPage({
       <AtAGlanceSection title="AT A GLANCE" />
 
       {/* 6. CTA SECTION */}
-      <CtaSection content={cta[0]} />
+      <CtaSection content={cta} />
       
       {/* 5. RELATED RESEARCH SECTION */}
       <RelatedResearchSection currentSlug={item.slug} />

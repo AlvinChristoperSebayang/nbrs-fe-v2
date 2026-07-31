@@ -65,14 +65,12 @@ const latestNews: NewsItem[] = [
   },
 ];
 
-const cta: CtaContent[] = [
-  {
-    image: "/images/contact-bg.png",
-    title: "GET IN TOUCH",
-    buttonText: "Contact Us",
-    buttonHref: "/contact",
-  },
-];
+const cta: CtaContent = {
+  image: "/images/contact-bg.png",
+  title: "GET IN TOUCH",
+  buttonText: "Contact Us",
+  buttonHref: "/contact",
+};
 
 export default async function Home() {
   let homepage: Awaited<ReturnType<typeof getHomepageContent>> | null = null;
@@ -102,7 +100,7 @@ export default async function Home() {
         title={homepage?.latestNewsHeading ?? undefined}
         backgroundColor="#EEEEEE"
       />
-      <CtaSection content={homepage?.cta?.image ? homepage.cta : cta[0]} />
+      <CtaSection content={homepage?.cta?.image ? homepage.cta : cta} />
     </>
   );
 }

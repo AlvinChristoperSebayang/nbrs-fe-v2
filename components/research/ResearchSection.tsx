@@ -77,12 +77,12 @@ export function ResearchSection({ heading, subheading, sectors, practices, items
 
   return (
     <div className="flex flex-col gap-7 bg-white text-black">
-      <div className="flex max-w-xl flex-col gap-4">
+      <div data-aos="fade-up" className="flex max-w-xl flex-col gap-4">
         <h2 className="font-heading text-4xl uppercase leading-none text-black lg:text-[40px]">{heading || "ENVISION"}</h2>
         <p className="text-base leading-normal text-zinc-800">{subheading || "In-depth investigations into emerging industry themes, exploring the intersection of design, performance and community impact."}</p>
       </div>
       <hr className="border-t border-zinc-200" />
-      <div className="flex flex-col gap-3">
+      <div data-aos="fade-up" data-aos-delay="100" className="flex flex-col gap-3">
         <p className="text-base font-bold text-black">Filter by Sector</p>
         <div className="flex flex-wrap items-center gap-3">
           {visibleSectors.map((sector) => {
@@ -92,7 +92,7 @@ export function ResearchSection({ heading, subheading, sectors, practices, items
           {selectedSectors.length > 0 && <button type="button" onClick={() => setSelectedSectors([])} className="inline-flex items-center rounded-full border border-[#DBDBDB] px-6 py-2.5 text-sm text-black transition hover:border-black">Reset Filters</button>}
         </div>
       </div>
-      <div className="flex flex-col gap-3">
+      <div data-aos="fade-up" data-aos-delay="150" className="flex flex-col gap-3">
         <p className="text-base font-bold text-black">Filter by Practice</p>
         <div className="flex flex-wrap items-center gap-3">
           {visiblePractices.map((practice) => {
@@ -102,7 +102,7 @@ export function ResearchSection({ heading, subheading, sectors, practices, items
           {selectedPractices.length > 0 && <button type="button" onClick={() => setSelectedPractices([])} className="inline-flex items-center rounded-full border border-[#DBDBDB] px-6 py-2.5 text-sm text-black transition hover:border-black">Reset Filters</button>}
         </div>
       </div>
-      <div className="mt-6">
+      <div data-aos="fade-up" data-aos-delay="200" className="mt-6">
         {filteredItems.length > 0 ? <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-3">{filteredItems.map((item) => <ResearchCard key={item.id} item={item} />)}</div> : <div className="py-16 text-center"><p className="text-lg text-zinc-600">No research items match the selected filters.</p><button type="button" onClick={resetAllFilters} className="mt-4 inline-flex items-center rounded-full border border-black px-6 py-2.5 text-sm text-black transition hover:bg-black hover:text-white">Reset All Filters</button></div>}
       </div>
     </div>

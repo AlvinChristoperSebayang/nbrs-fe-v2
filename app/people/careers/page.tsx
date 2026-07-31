@@ -8,15 +8,14 @@ export const metadata: Metadata = {
   title: "Careers | Our People",
 };
 
-const cta: CtaContent[] = [
-  {
+const cta: CtaContent = {
     image: "/images/hero/hero4.png",
     title: "INTERESTED IN NBRS CAREERS?",
     description: "Learn more about working at NBRS",
     buttonText: "CAREERS@NBRS.COM.AU",
     buttonHref: "mailto:careers@nbrs.com.au",
-  },
-];
+  };
+
 
 export default function CareersPage() {
   return (
@@ -28,7 +27,7 @@ export default function CareersPage() {
       <CareersAccordionSection showDefaultIntro={true} />
 
       {/* 3. CAREERS CTA SECTION */}
-      <CtaSection cta={cta} />
+      <CtaSection content={cta} />
     </article>
   );
 }

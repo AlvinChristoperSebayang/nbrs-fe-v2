@@ -9,15 +9,13 @@ export const metadata: Metadata = {
   title: "Our Culture | Our People",
 };
 
-const cta: CtaContent[] = [
-  {
+const cta: CtaContent = {
     image: "/images/contact-bg.png",
     title: "GET IN TOUCH",
     description: "Want to experience our studio culture or collaborate with us? Reach out today.",
     buttonText: "CONTACT US",
     buttonHref: "/contact",
-  },
-];
+  }
 
 export default function PeopleCulturePage() {
   return (
@@ -36,7 +34,7 @@ export default function PeopleCulturePage() {
       <InitiativesSection />
 
       {/* 4. CTA SECTION */}
-      <CtaSection cta={cta} />
+      <CtaSection content={cta} />
     </article>
   );
 }

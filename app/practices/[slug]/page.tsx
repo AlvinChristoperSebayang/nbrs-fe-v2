@@ -37,15 +37,13 @@ export default async function PracticeDetailPage({
     PRACTICES_DATA.find((p) => p.slug === resolvedParams.slug) ||
     PRACTICES_DATA[0];
 
-  const cta: CtaContent[] = [
-    {
-      image: "/images/contact-bg.png",
-      title: "GET IN TOUCH",
-      description: `Interested in our ${item.title.toLowerCase()} projects or have any questions?`,
-      buttonText: "CONTACT US",
-      buttonHref: "/contact",
-    },
-  ];
+  const cta: CtaContent = {
+    image: "/images/contact-bg.png",
+    title: "GET IN TOUCH",
+    description: `Interested in our ${item.title.toLowerCase()} projects or have any questions?`,
+    buttonText: "CONTACT US",
+    buttonHref: "/contact",
+  };
 
   const tableRows = item.tableProjects.map((tp) => ({
     id: tp.id,
@@ -82,7 +80,7 @@ export default async function PracticeDetailPage({
       <SectorsSection sectors={SECTORS_DATA} />
 
       {/* 5. CTA SECTION */}
-      <CtaSection content={cta[0]} />
+      <CtaSection content={cta} />
     </article>
   );
 }

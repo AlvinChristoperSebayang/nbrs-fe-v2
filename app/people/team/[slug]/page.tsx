@@ -172,15 +172,13 @@ export default async function SingleTeamPage({
     notFound();
   }
 
-  const cta: CtaContent[] = [
-    {
-      image: member.image,
-      title: `CONNECT WITH ${member.name.toUpperCase()}`,
-      description: `Get in touch regarding ${member.practice} projects and design inquiries.`,
-      buttonText: "CONTACT NBRS",
-      buttonHref: "mailto:careers@nbrs.com.au",
-    },
-  ];
+  const cta: CtaContent = {
+    image: member.image,
+    title: `CONNECT WITH ${member.name.toUpperCase()}`,
+    description: `Get in touch regarding ${member.practice} projects and design inquiries.`,
+    buttonText: "CONTACT NBRS",
+    buttonHref: "mailto:careers@nbrs.com.au",
+  };
 
   return (
     <article className="bg-white text-black min-h-screen">
@@ -223,7 +221,7 @@ export default async function SingleTeamPage({
       )} */}
 
       {/* 4. CTA SECTION */}
-      <CtaSection cta={cta} />
+      <CtaSection content={cta} />
     </article>
   );
 }

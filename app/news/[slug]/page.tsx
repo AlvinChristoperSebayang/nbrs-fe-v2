@@ -33,14 +33,12 @@ export default async function NewsDetailPage({
   const article =
     NEWS_DATA.find((item) => item.slug === resolvedParams.slug) || NEWS_DATA[0];
 
-  const cta: CtaContent[] = [
-    {
-      image: "/images/contact-bg.png",
-      title: "GET IN TOUCH",
-      buttonText: "CONTACT US",
-      buttonHref: "/contact",
-    },
-  ];
+  const cta: CtaContent = {
+    image: "/images/contact-bg.png",
+    title: "GET IN TOUCH",
+    buttonText: "CONTACT US",
+    buttonHref: "/contact",
+  };
 
   return (
     <article className="bg-white text-black min-h-screen">
@@ -85,7 +83,7 @@ export default async function NewsDetailPage({
       </section>
 
       {/* 3. CTA SECTION */}
-      <CtaSection cta={cta} />
+      <CtaSection content={cta} />
     </article>
   );
 }

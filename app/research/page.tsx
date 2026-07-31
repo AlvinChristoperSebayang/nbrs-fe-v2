@@ -11,13 +11,13 @@ import type { CtaContent } from "@/lib/types";
 export const metadata: Metadata = { title: "Research" };
 export const dynamic = "force-dynamic";
 
-const cta: CtaContent[] = [{
+const cta: CtaContent = {
   image: "/images/contact-bg.png",
   title: "Let's Shape What's Next-Together",
   description: "Whether it's a place to gather, to heal, to learn or to live - we're ready to collaborate. Let's shape spaces that matter, together.",
   buttonText: "Let's Shape What's Next-Together",
   buttonHref: "/contact",
-}];
+};
 
 export default async function ResearchPage() {
   let listing: Awaited<ReturnType<typeof getResearchListing>> | null = null;
@@ -40,7 +40,7 @@ export default async function ResearchPage() {
           <TextResearchGrid />
         </Container>
       </section>
-      <CtaSection content={await getPageCta("latestResearch", cta[0]).catch(() => cta[0])} />
+      <CtaSection content={await getPageCta("latestResearch", cta).catch(() => cta)} />
     </article>
   );
 }
