@@ -5,6 +5,7 @@ import { AboutTimelineSection } from "@/components/about/AboutTimelineSection";
 import { AboutSection } from "@/components/home/AboutSection";
 import { GridEffect } from "@/components/ui/GridEffect";
 import { CtaSection } from "@/components/cta/CtaSection";
+import { getAboutPageRaw } from "@/lib/about";
 import type { NewsItem, CtaContent } from "@/lib/types";
 
 
@@ -13,7 +14,14 @@ export const metadata: Metadata = {
 };
 
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  try {
+    const aboutPage = await getAboutPageRaw();
+    console.log("[AboutPage] Craft CMS data:", JSON.stringify(aboutPage, null, 2));
+  } catch (error) {
+    console.warn("[AboutPage] Failed to load About page from Craft:", error);
+  }
+
   const latestNews: NewsItem[] = [
     {
       title: "SOCIAL ARCHITECTURE",

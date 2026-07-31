@@ -50,7 +50,7 @@ const peopleColumn: FooterGroup[] = [
       { label: "Design Approach", href: "/about" },
       { label: "Awards", href: "/about" },
       { label: "Research Envision", href: "/about" },
-      { label: "Sustainability", href: "/about" },
+      { label: "Sustainability", href: "/sustainability" },
       { label: "Social Responsibility", href: "/about" },
       { label: "News", href: "/blog" },
     ],

@@ -25,7 +25,11 @@ export async function craftFetch<T>(
 
   if (json.errors) {
     throw new Error(
-      json.errors.map((error: { message: string }) => error.message).join("\n")
+      json.errors
+        .map((error: { message: string; debugMessage?: string }) =>
+          error.debugMessage ?? error.message
+        )
+        .join("\n")
     );
   }
 
