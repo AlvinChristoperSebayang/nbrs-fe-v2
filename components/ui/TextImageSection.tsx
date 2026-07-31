@@ -31,7 +31,7 @@ export function TextImageSection({
           {buttonText && buttonHref && (
             <Link
               href={buttonHref}
-              className="group mt-2 inline-flex items-center gap-2 rounded-full border border-black px-6 py-3 text-sm uppercase text-black transition hover:bg-black hover:text-white"
+              className="group mt-2 inline-flex items-center gap-2 rounded-[5px] border border-black px-6 py-3 text-sm uppercase text-black transition hover:bg-black hover:text-white"
             >
               {buttonText}
               <svg

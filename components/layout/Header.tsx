@@ -19,61 +19,64 @@ export type NavItem = {
 export const NAV_STRUCTURE: NavItem[] = [
   {
     id: "purpose",
-    label: "Purpose",
+    label: "PURPOSE",
     href: "/about",
     subItems: [
       { label: "About NBRS", href: "/about" },
-      { label: "Sustainability", href: "/social-sustainability" },
+      { label: "Sustainability", href: "/sustainability" },
+      { label: "Social Sustainability", href: "/social-sustainability" },
+      { label: "RAP", href: "/rap" },
+      { label: "Awards", href: "/awards" },
       { label: "Insights", href: "/research" },
-      { label: "Social responsibility", href: "/design-approach" },
+      { label: "Design Approach", href: "/design-approach" },
     ],
   },
   {
     id: "people",
-    label: "People",
+    label: "PEOPLE",
     href: "/people",
     subItems: [
-      { label: "Our leaders", href: "/people/team" },
+      { label: "Our Leaders", href: "/people/team" },
       { label: "Culture", href: "/people/culture" },
       { label: "Careers", href: "/people/careers" },
-      { label: "Envision student partnerships", href: "/people/envision-student-program" },
+      { label: "Envision Student Partnerships", href: "/people/envision-student-program" },
     ],
   },
   {
     id: "sectors",
-    label: "Sectors",
+    label: "SECTORS",
     href: "/sectors",
     subItems: [
       { label: "Education", href: "/sectors/education" },
       { label: "Heritage", href: "/sectors/heritage" },
       { label: "Wellness", href: "/sectors/wellness" },
       { label: "Community", href: "/sectors/community" },
-      { label: "Secure spaces", href: "/sectors/secure-spaces" },
+      { label: "Secure Spaces", href: "/sectors/secure-spaces" },
     ],
   },
   {
-    id: "practices",
-    label: "Practices",
+    id: "expertise",
+    label: "EXPERTISE",
     href: "/practices",
     subItems: [
       { label: "Architecture", href: "/practices/architecture" },
-      { label: "Landscape architecture", href: "/practices/landscape-architecture" },
-      { label: "Interior design", href: "/practices/interior-design" },
+      { label: "Landscape Architecture", href: "/practices/landscape-architecture" },
+      { label: "Interior Design", href: "/practices/interior-design" },
     ],
   },
   {
     id: "projects",
-    label: "Projects",
+    label: "PROJECTS",
     href: "/projects",
   },
   {
     id: "news",
-    label: "News",
+    label: "NEWS",
     href: "/news",
   },
   {
     id: "contact",
-    label: "Contact us",
+    label: "CONTACT US",
     href: "/contact",
   },
 ];
@@ -82,7 +85,7 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
-  const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null);
+  const [activeCategory, setActiveCategory] = useState<string>("people");
   const lastScrollY = useRef(0);
 
   useEffect(() => {
@@ -114,65 +117,84 @@ export function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const isDark = scrolled || open;
+  const isDarkHeader = scrolled && !open;
 
-  const toggleSubmenu = (id: string) => {
-    setActiveSubmenu((prev) => (prev === id ? null : id));
-  };
+  const currentActiveItem = NAV_STRUCTURE.find(
+    (item) => item.id === activeCategory
+  );
 
   return (
     <>
+      {/* MAIN HEADER BAR */}
       <header
-        className={`fixed top-0 left-0 z-50 h-fit w-full will-change-[translate] transition-[translate,background-color] duration-300 ease-out dark:border-white/[.145] ${
-          isDark ? "scrolled" : ""
+        className={`fixed top-0 left-0 z-50 h-fit w-full transition-[translate,background-color] duration-300 ease-out ${
+          isDarkHeader ? "scrolled" : ""
         } ${hidden && !open ? "-translate-y-full" : "translate-y-0"}`}
       >
-        <Container className="py-4">
+        <Container className="py-5">
           <nav className="flex items-center justify-between">
             <Link
               href="/"
               onClick={() => setOpen(false)}
-              className="relative z-50 font-semibold text-black dark:text-zinc-50"
+              className="relative z-50 focus:outline-none"
             >
               <img
-                src={isDark ? "/images/logo/logo-black.svg" : "/images/logo/logo-white.svg"}
-                alt="NBRS Architecture Logo"
-                width={90}
-                height={33}
-                className="mr-2 inline-block"
+                src={isDarkHeader ? "/images/logo/logo-black.svg" : "/images/logo/logo-white.svg"}
+                alt="NBRS Logo"
+                width={100}
+                height={36}
+                className="inline-block transition-opacity duration-300"
               />
             </Link>
 
+            {/* Smooth Animated Hamburger / Close Morph Button */}
             <button
               type="button"
               aria-label={open ? "Close menu" : "Open menu"}
               aria-expanded={open}
               onClick={() => setOpen((prev) => !prev)}
-              className={`relative z-50 flex h-9 w-9 cursor-pointer flex-col items-center justify-center gap-1.5 rounded-full border p-1 ${
-                open ? "border-black" : "border-transparent"
+              className={`relative z-50 flex h-10 w-10 cursor-pointer flex-col items-center justify-center gap-[6px] rounded-full p-2 transition-transform duration-500 ease-[cubic-bezier(0.65,0,0.35,1)] active:scale-90 ${
+                open ? "rotate-180" : "rotate-0 hover:scale-105"
               }`}
             >
+              {/* Top Line */}
               <span
-                className={`h-0.5 w-6 transition-transform duration-300 ${
-                  open ? "translate-y-2 rotate-45" : ""
-                } ${isDark ? "bg-black" : "bg-white"}`}
+                className={`h-[2px] w-6 rounded-full transition-all duration-500 ease-[cubic-bezier(0.65,0,0.35,1)] origin-center ${
+                  open
+                    ? "translate-y-[8px] rotate-45 bg-white"
+                    : isDarkHeader
+                    ? "bg-black"
+                    : "bg-white"
+                }`}
               />
+
+              {/* Middle Line */}
               <span
-                className={`h-0.5 w-6 transition-opacity duration-300 ${
-                  open ? "opacity-0" : ""
-                } ${isDark ? "bg-black" : "bg-white"}`}
+                className={`h-[2px] rounded-full transition-all duration-400 ease-in-out origin-right ${
+                  open
+                    ? "w-0 opacity-0 scale-x-0 bg-white"
+                    : isDarkHeader
+                    ? "w-5 opacity-100 scale-x-100 bg-black"
+                    : "w-5 opacity-100 scale-x-100 bg-white"
+                }`}
               />
+
+              {/* Bottom Line */}
               <span
-                className={`h-0.5 w-6 transition-transform duration-300 ${
-                  open ? "-translate-y-2 -rotate-45" : ""
-                } ${isDark ? "bg-black" : "bg-white"}`}
+                className={`h-[2px] w-6 rounded-full transition-all duration-500 ease-[cubic-bezier(0.65,0,0.35,1)] origin-center ${
+                  open
+                    ? "-translate-y-[8px] -rotate-45 bg-white"
+                    : isDarkHeader
+                    ? "bg-black"
+                    : "bg-white"
+                }`}
               />
             </button>
           </nav>
         </Container>
       </header>
 
-      {/* Full-screen Overlay Menu */}
+      {/* FULL-SCREEN OVERLAY MENU */}
       <div
         aria-hidden={!open}
         style={{
@@ -180,102 +202,80 @@ export function Header() {
             ? "circle(150% at calc(100% - 2.5rem) 2.5rem)"
             : "circle(0% at calc(100% - 2.5rem) 2.5rem)",
         }}
-        className={`fixed inset-0 z-40 flex flex-col justify-center bg-white overflow-y-auto transition-[clip-path] duration-700 ease-[cubic-bezier(0.65,0,0.35,1)] py-20 ${
+        className={`fixed inset-0 z-40 bg-[#131722] text-white transition-[clip-path] duration-700 ease-[cubic-bezier(0.65,0,0.35,1)] overflow-y-auto ${
           open ? "pointer-events-auto" : "pointer-events-none"
         }`}
       >
-        <Container>
-          <ul className="flex flex-col gap-3 max-w-4xl mx-auto">
-            {NAV_STRUCTURE.map((item, index) => {
-              const hasSubmenu = item.subItems && item.subItems.length > 0;
-              const isSubmenuOpen = activeSubmenu === item.id;
+        <Container className="h-full flex flex-col justify-start pt-24 pb-12">
+          {/* Menu Content Grid: 2 Columns Side-by-Side */}
+          <div className="grid grid-cols-12 gap-3 sm:gap-8 md:gap-12 items-start pt-17">
+            {/* Left Column: Main Categories (Menu font 26px on mobile) */}
+            <div className="col-span-6 flex flex-col gap-13 sm:gap-14">
+              {NAV_STRUCTURE.map((item, index) => {
+                const isActive = activeCategory === item.id;
+                const hasSubItems = Boolean(item.subItems && item.subItems.length > 0);
 
-              return (
-                <li
-                  key={item.id}
-                  className={`overflow-hidden transition-all duration-500 ease-out border-b border-black/10 pb-2 ${
-                    open ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
-                  }`}
-                  style={{
-                    transitionDelay: open ? `${120 + index * 70}ms` : "0ms",
-                  }}
-                >
-                  <div className="flex items-center justify-between group">
+                return (
+                  <div
+                    key={item.id}
+                    onMouseEnter={() => setActiveCategory(item.id)}
+                    onClick={() => {
+                      setActiveCategory(item.id);
+                      if (!hasSubItems) setOpen(false);
+                    }}
+                    className={`cursor-pointer group flex flex-col transition-all duration-500 ease-out ${
+                      open ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+                    }`}
+                    style={{
+                      transitionDelay: open ? `${120 + index * 50}ms` : "0ms",
+                    }}
+                  >
                     <Link
                       href={item.href}
-                      onClick={() => setOpen(false)}
-                      className="flex items-baseline gap-4 sm:gap-6 py-2 flex-grow"
-                    >
-                      <span className="font-heading text-xs sm:text-sm text-black/40">
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
-                      <span className="font-heading text-3xl sm:text-5xl lg:text-6xl uppercase text-black font-bold tracking-wide transition-transform duration-300 group-hover:translate-x-3">
-                        {item.label}
-                      </span>
-                    </Link>
-
-                    {/* Submenu Expand Button */}
-                    {hasSubmenu && (
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          toggleSubmenu(item.id);
-                        }}
-                        className="p-2 text-black hover:text-rose-500 transition-colors cursor-pointer"
-                        aria-label={`Toggle ${item.label} submenu`}
-                      >
-                        <svg
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className={`transition-transform duration-300 ease-out ${
-                            isSubmenuOpen ? "rotate-180 text-rose-500" : ""
-                          }`}
-                        >
-                          <path d="M6 9l6 6 6-6" />
-                        </svg>
-                      </button>
-                    )}
-                  </div>
-
-                  {/* Expandable Submenu Items Grid */}
-                  {hasSubmenu && (
-                    <div
-                      className={`grid transition-[grid-template-rows,opacity] duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${
-                        isSubmenuOpen
-                          ? "grid-rows-[1fr] opacity-100 pt-3 pb-3"
-                          : "grid-rows-[0fr] opacity-0"
+                      onClick={(e) => {
+                        if (hasSubItems) {
+                          e.preventDefault();
+                          setActiveCategory(item.id);
+                        } else {
+                          setOpen(false);
+                        }
+                      }}
+                      className={`font-heading text-[26px] sm:text-3xl lg:text-[38px] uppercase tracking-wide leading-tight transition-all duration-300 ${
+                        isActive
+                          ? "text-white font-bold opacity-100"
+                          : "text-white/35 font-semibold hover:text-white/70"
                       }`}
                     >
-                      <div className="overflow-hidden">
-                        <div className="pl-8 sm:pl-14 grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
-                          {item.subItems!.map((subItem) => (
-                            <Link
-                              key={subItem.label}
-                              href={subItem.href}
-                              onClick={() => setOpen(false)}
-                              className="group/sub flex items-center gap-2 py-1.5 font-sans text-base sm:text-lg text-zinc-700 hover:text-black font-medium transition-colors"
-                            >
-                              <span className="h-1.5 w-1.5 rounded-full bg-rose-300 transition-transform duration-300 group-hover/sub:scale-150" />
-                              <span className="transition-transform duration-300 group-hover/sub:translate-x-1.5">
-                                {subItem.label}
-                              </span>
-                            </Link>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </li>
-              );
-            })}
-          </ul>
+                      {item.label}
+                    </Link>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Right Column: Submenu Links with Staggered Entrance Animation */}
+            <div className="col-span-6 flex flex-col gap-4 pt-1 sm:pt-2 pl-2 sm:pl-8 lg:pl-12 justify-start">
+              {currentActiveItem?.subItems && (
+                <div key={activeCategory} className="flex flex-col gap-3.5">
+                  {currentActiveItem.subItems.map((sub, subIndex) => (
+                    <Link
+                      key={sub.label}
+                      href={sub.href}
+                      onClick={() => setOpen(false)}
+                      className={`font-sans text-[14px] sm:text-base lg:text-lg text-white/90 hover:text-white transition-all duration-500 ease-out py-0.5 inline-block hover:translate-x-1 leading-relaxed ${
+                        open ? "translate-y-0 opacity-100" : "translate-y-5 opacity-0"
+                      }`}
+                      style={{
+                        transitionDelay: open ? `${150 + subIndex * 50}ms` : "0ms",
+                      }}
+                    >
+                      {sub.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
         </Container>
       </div>
     </>

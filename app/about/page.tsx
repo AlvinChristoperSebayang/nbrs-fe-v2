@@ -33,8 +33,8 @@ export default async function AboutPage() {
         title={about.approachHeading}
         items={about.approachItems}
         // Unlike Homepage, an empty CTA Element intentionally hides this link.
-        viewAllLabel={about.viewAll?.label ?? ""}
-        viewAllUrl={about.viewAll?.href ?? ""}
+        // viewAllLabel={about.viewAll?.label ?? ""}
+        // viewAllUrl={about.viewAll?.href ?? ""}
         backgroundColor="#EDEDED"
       />
       <AboutPracticeSection

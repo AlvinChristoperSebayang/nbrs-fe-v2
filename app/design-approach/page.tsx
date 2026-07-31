@@ -15,7 +15,10 @@ export default async function DesignApproachPage() {
   return (
     <article>
       <Hero image={content.hero.image} title={content.hero.title} description={content.hero.description} button={content.hero.button} />
-      <GridEffect items={content.pillars.items} title={content.pillars.title} description={content.pillars.description} viewAllLabel="" viewAllUrl="" backgroundColor="#DEE1F2" />
+      <div>
+        <div className="bg-[#DEE1F2] h-1.5 md:h-0"></div>
+        <GridEffect items={content.pillars.items} title={content.pillars.title} description={content.pillars.description} viewAllLabel="" viewAllUrl="" backgroundColor="#DEE1F2" />
+      </div>
       <TextGrid heading={content.communities.heading} description={content.communities.description} topImages={content.communities.topImages} galleryImages={content.communities.galleryImages} />
       <QuoteSection image={content.quote.image} quote={content.quote.quote} author={content.quote.author} role={content.quote.role} />
       <TextImageSection heading={content.project.heading} description={content.project.description} image={content.project.image} buttonText={content.project.buttonText} buttonHref={content.project.buttonHref} />

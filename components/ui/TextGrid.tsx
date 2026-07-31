@@ -28,7 +28,7 @@ export function TextGrid({
                 {heading}
               </h2>
               <div className="mt-4 h-1 w-full bg-black lg:h-1.5" />
-              <p className="mt-6  text-sm text-black sm:text-base">
+              <p className="mt-2  text-base text-black">
                 {description}
               </p>
             </div>

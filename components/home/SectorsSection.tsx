@@ -5,9 +5,9 @@ import type { Sector } from "@/lib/types";
 
 export function SectorsSection({ sectors }: { sectors: Sector[] }) {
   return (
-    <section className="bg-white py-16 lg:py-24">
+    <section className="bg-white py-8 lg:py-24">
       <Container>
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-[30px] lg:gap-y-[35px]">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3 lg:gap-x-[30px] lg:gap-y-[35px]">
           <div data-aos="fade-up" className="flex flex-col justify-center">
             <h2 className="font-heading text-4xl leading-[1.05] uppercase text-black sm:text-[40px] lg:text-[70px] border-b-4 border-black">
               Designing spaces bespoke to{" "}

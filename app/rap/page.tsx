@@ -10,28 +10,52 @@ export const metadata: Metadata = {
 };
 
 export default function RapPage() {
-   const cta: CtaContent[] = [
-      {
-        image: "/images/contact-bg.png",
-        title: "Download full reflect RAP",
-        description: "For insight into the implementation of each action",
-        buttonText: "Download Reflect Rap",
-        buttonHref: "/contact",
-      },
-    ];
+  const cta: CtaContent = {
+    image: "/images/contact-bg.png",
+    title: "Download full reflect RAP",
+    description: "For insight into the implementation of each action",
+    buttonText: "Download Reflect Rap",
+    buttonHref: "/contact",
+  };
+
   return (
-    <article>
+    <article className="min-h-screen bg-white text-black">
+      {/* HERO SECTION WITH DESKTOP FLOATING OVERLAY */}
       <Hero
         image="/images/hero/hero-rap.png"
-        title="Reflect Reconciliation Action Plan"
-      />
-      <RapMetaSection
-        title="Reconciliation Action Plan"
-        publicationDate="2026"
-        author="RAP Working Group (Andrew Duffin, Samantha Polkinghorne, Melanie Karaca, Mengling Fu)"
-        endorsedBy="Reconciliation Australia"
-        readTime="5 mins"
-      />
+        title={
+          <h1 className="font-heading max-w-2xl text-3xl uppercase leading-[1.05] text-white sm:text-5xl lg:text-[68px]">
+            REFLECT<br />
+            RECONCILIATION<br />
+            ACTION PLAN
+          </h1>
+        }
+      >
+        {/* DESKTOP CONTAINER FLOATING CARD */}
+      </Hero>
+      <div className="container mx-auto hidden lg:block mt-[-68px] relative z-20">
+        <RapMetaSection
+          title="Reconciliation Action Plan"
+          publicationDate="2026"
+          author="RAP Working Group (Andrew Duffin, Samantha Polkinghorne, Melanie Karaca, Mengling Fu)"
+          endorsedBy="Reconciliation Australia"
+          readTime="5 mins"
+        />
+      </div>
+
+      {/* MOBILE FULL-WIDTH UNCONTAINER META SECTION (Hidden on Desktop) */}
+      <div className="block lg:hidden">
+        <RapMetaSection
+          title="Reconciliation Action Plan"
+          publicationDate="2026"
+          author="RAP Working Group (Andrew Duffin, Samantha Polkinghorne, Melanie Karaca, Mengling Fu)"
+          endorsedBy="Reconciliation Australia"
+          readTime="5 mins"
+          isMobileUncontainer
+        />
+      </div>
+
+      {/* INSIGHT SECTION */}
       <RapInsightSection
         image="/images/rap/insight.png"
         paragraphs={[
@@ -43,7 +67,9 @@ export default function RapPage() {
           "The RAP is NBRS's commitment to a reconciliation journey. NBRS recognises the important role our industry plays in shaping the built environment and influencing social and cultural outcomes. We aim to embed reconciliation and wellbeing of place and Country into our design processes.",
         ]}
       />
-      <CtaSection cta={cta} />
+
+      {/* CTA SECTION */}
+      <CtaSection content={cta} />
     </article>
   );
 }

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 
 export type FeatureGlassSectionProps = {
@@ -6,6 +7,8 @@ export type FeatureGlassSectionProps = {
   image: string;
   imageAlt?: string;
   reverse?: boolean;
+  buttonText?: string;
+  buttonHref?: string;
 };
 
 export function FeatureGlassSection({
@@ -14,16 +17,18 @@ export function FeatureGlassSection({
   image,
   imageAlt = "",
   reverse = false,
+  buttonText,
+  buttonHref,
 }: FeatureGlassSectionProps) {
   return (
-    <section className="bg-white py-12 lg:py-16 text-black lg:pb-[143px]">
+    <section className="bg-white py-12 lg:py-0 text-black lg:pb-[94px]">
       <Container>
         <div className="relative flex flex-col lg:flex-row items-center">
           {/* Overlapping Glass Card */}
           <div
             data-aos="fade-up"
             data-aos-delay="100"
-            className={`z-10 w-full lg:w-[50%] bg-white/75 backdrop-blur-md border border-[#FDFFEA] p-0 lg:p-10 max-lg:mb-6 ${
+            className={`z-10 w-full lg:w-[50%] bg-white/80 backdrop-blur-md border border-[#FDFFEA] p-6 lg:p-10 max-lg:mb-6 shadow-sm ${
               reverse
                 ? "lg:absolute lg:right-0 lg:top-1/2 lg:-translate-y-1/2"
                 : "lg:absolute lg:left-0 lg:top-1/2 lg:-translate-y-1/2"
@@ -37,6 +42,34 @@ export function FeatureGlassSection({
                 <p key={index}>{paragraph}</p>
               ))}
             </div>
+
+            {/* Optional Action Button */}
+            {buttonText && buttonHref && (
+              <div className="mt-6">
+                <Link
+                  href={buttonHref}
+                  className="group inline-flex items-center gap-2 rounded-[5px] border border-black px-5 py-2.5 text-sm font-medium text-black transition-colors hover:bg-black hover:text-white"
+                >
+                  <span>{buttonText}</span>
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="transition-transform group-hover:translate-x-1"
+                  >
+                    <path
+                      d="M1 8H15M15 8L8 1M15 8L8 15"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </Link>
+              </div>
+            )}
           </div>
 
           {/* Feature Image */}

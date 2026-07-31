@@ -8,7 +8,7 @@ export function QuoteSection({
   author,
   role,
   quoteIconColor = "#B5B5B5",
-  boxBgClass = "bg-[#EDEEF5]",
+  boxBgClass = "bg-[#fff]/80 backdrop-blur-md",
 }: {
   image: ImageSource;
   quote: string;
@@ -18,7 +18,7 @@ export function QuoteSection({
   boxBgClass?: string;
 }) {
   return (
-    <section className="bg-white py-12 lg:py-20 text-black">
+    <section className="bg-white py-0 lg:py-20 text-black overflow-hidden">
       <Container className="uncontainer-mobile overflow-hidden max-md:px-0">
         <div className="relative flex flex-col lg:block">
           <div data-aos="fade-up" className="w-full overflow-hidden lg:w-[65%]">

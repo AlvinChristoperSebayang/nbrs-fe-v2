@@ -61,7 +61,7 @@ export function GridEffect({
         </div>
 
         <div className="relative w-full">
-          <div data-aos="fade-up" className="mb-6 lg:hidden flex lg:flex-row flex-col lg:items-center items-start justify-between relative z-10 px-4 pt-12">
+          <div data-aos="fade-up" className="mb-6 lg:hidden flex lg:flex-row flex-col lg:items-center items-start justify-between relative z-10 px-0 pt-12">
             <span className="font-heading text-[28px] lg:text-[22px] uppercase text-white">
               {title}
             </span>

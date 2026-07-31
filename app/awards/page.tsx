@@ -33,12 +33,16 @@ export default async function AwardsPage() {
         }}
       />
 
-      <div className="">
+      <div>
         <AboutSection
           image_url="/images/about-us-about.png"
           background_color="#DEE1F2"
-          heading="People‑centred design for good"
-          description="We create environments that foster wellbeing, belonging and transformation. Design that responds directly to human needs."
+          heading="BEST IN PRACTICE – AIA AWARD 2022"
+          description="This recognition reflects NBRS’ commitment to creating life-changing environments that elevate public value and human experience."
+          button={{
+            text: "Learn more",
+            href: "/news",
+          }}
         />
       </div>
 

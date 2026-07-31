@@ -52,7 +52,7 @@ const peopleColumn: FooterGroup[] = [
       { label: "Research Envision", href: "/research" },
       { label: "Sustainability", href: "/about" },
       { label: "Social Responsibility", href: "/social-sustainability" },
-      { label: "News", href: "/blog" },
+      { label: "News", href: "/news" },
     ],
   },
   {

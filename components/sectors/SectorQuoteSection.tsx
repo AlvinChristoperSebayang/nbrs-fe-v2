@@ -28,7 +28,7 @@ export function SectorQuoteSection({
           <div
             data-aos="fade-up"
             data-aos-delay="150"
-            className="flex flex-col justify-between bg-[#E3E3E3] p-6 sm:p-8 lg:p-12 lg:absolute lg:top-1/2 lg:right-0 lg:w-[50%] lg:-translate-y-1/2 max-md:rounded-none lg:rounded-sm shadow-sm"
+            className="flex flex-col justify-between bg-[#E3E3E3]/90 backdrop-blur-md p-6 sm:p-8 lg:p-12 lg:absolute lg:top-1/2 lg:right-0 lg:w-[50%] lg:-translate-y-1/2 max-md:rounded-none lg:rounded-sm shadow-sm"
           >
             {/* Top White Quote Mark */}
             <span className="font-serif text-5xl leading-none lg:text-6xl mb-2">

@@ -18,6 +18,7 @@ export type HeroProps = {
   contentClassName?: string;
   overlayClassName?: string;
   showDivider?: boolean;
+  children?: React.ReactNode;
 };
 
 export function Hero({
@@ -32,30 +33,33 @@ export function Hero({
   contentClassName = "",
   overlayClassName = "bg-black/40",
   showDivider = true,
+  children,
 }: HeroProps) {
   return (
-    <section className="relative max-md:h-[80vh] lg:h-[90vh] w-full overflow-hidden">
-      {/* Background Image */}
-      <ResponsiveImage
-        src={image}
-        alt=""
-        className="absolute inset-0 h-full w-full object-cover lg:min-h-screen"
-        priority
-      />
+    <section
+      className="relative w-full flex flex-col justify-between h-[610px] lg:h-[85vh]"
+    >
+      {/* Background Image Container */}
+      <div className="absolute inset-0 overflow-hidden">
+        <ResponsiveImage
+          src={image}
+          alt=""
+          className="h-full w-full object-cover"
+          priority
+        />
+        <div className={`absolute inset-0 ${overlayClassName}`} />
+      </div>
 
-      {/* Background Overlay */}
-      <div className={`absolute inset-0 ${overlayClassName}`} />
-
-      {/* Content Container */}
+      {/* Main Title & Content Container */}
       <Container
-        className={`relative flex h-full flex-col justify-center pb-12 lg:pb-16 ${containerClassName}`}
+        className={`relative z-10 flex h-full flex-col justify-center my-auto pt-16 pb-8 lg:pt-20 lg:pb-12 ${containerClassName}`}
       >
         <div className={`flex flex-col items-start max-w-[650px] ${contentClassName}`}>
           {/* Title */}
           {typeof title === "string" ? (
             <h1
               data-aos="fade-up"
-              className={`font-heading max-w-2xl text-4xl uppercase leading-[1.05] text-white sm:text-5xl lg:text-[70px] ${titleClassName}`}
+              className={`font-heading max-w-2xl text-3xl uppercase leading-[1.05] text-white sm:text-5xl lg:text-[70px] ${titleClassName}`}
             >
               {title}
             </h1>
@@ -97,7 +101,7 @@ export function Hero({
               href={button.href}
               data-aos="fade-up"
               data-aos-delay="300"
-              className="group mt-8 inline-flex items-center gap-2 rounded-[5px] bg-white/30 px-6 py-4 text-xs text-white backdrop-blur transition sm:text-base"
+              className="group mt-8 inline-flex items-center gap-2 rounded-[5px] bg-white/30 px-6 py-2 text-xs text-white transition sm:text-base"
             >
               {button.text}
               <svg
@@ -118,6 +122,15 @@ export function Hero({
           )}
         </div>
       </Container>
+
+      {/* Floating Overlay Children for Desktop */}
+      {children && (
+        <Container className="relative z-20 hidden lg:block lg:translate-y-1/2">
+          <div data-aos="fade-up" data-aos-delay="150">
+            {children}
+          </div>
+        </Container>
+      )}
     </section>
   );
 }

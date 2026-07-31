@@ -85,7 +85,7 @@ export function PracticesHoverSection({
                 key={item.id}
                 href={item.href}
                 onMouseEnter={() => setHoveredId(item.id)}
-                className={`group relative flex flex-col justify-end overflow-hidden rounded-[5px] aspect-[370/300] min-h-[300px] lg:min-h-[340px] bg-zinc-900 shadow-xl transition-all duration-500 ${
+                className={`group relative flex flex-col justify-end overflow-hidden rounded-[5px] aspect-[320/300] md:aspect-[370/300] min-h-[300px] lg:min-h-[340px] bg-zinc-900 shadow-xl transition-all duration-500 ${
                   isHovered
                     ? "scale-[1.02] shadow-2xl z-30"
                     : isOtherHovered

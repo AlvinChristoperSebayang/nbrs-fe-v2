@@ -1,5 +1,6 @@
 import { Container } from "@/components/ui/Container";
 import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
+import { AboutSection } from "@/components/home/AboutSection";
 import type { SocialInitiative } from "@/lib/social-sustainability";
 
 type SocialInitiativesSectionProps = { initiatives: SocialInitiative[] };
@@ -11,19 +12,13 @@ export function SocialInitiativesSection({ initiatives }: SocialInitiativesSecti
   return (
     <>
       {teKworo && (
-        <section className="border-t-[12px] border-[#F0C7BD] bg-[#07120F] py-12 text-white lg:py-0">
-          <Container className="grid items-stretch lg:grid-cols-[400px_minmax(0,770px)] lg:justify-center">
-            <div data-aos="fade-up" className="flex flex-col justify-center px-2 py-8 lg:px-0 lg:pr-14">
-              <h2 className="font-heading text-3xl uppercase leading-tight lg:text-[40px]">{teKworo.title}</h2>
-              <div className="mt-7 space-y-5 text-sm leading-relaxed text-white/90">
-                {teKworo.description.split(/\n\s*\n/).map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-              </div>
-            </div>
-            <div data-aos="fade-up" data-aos-delay="150" className="relative min-h-72 overflow-hidden lg:min-h-[600px]">
-              <ResponsiveImage src={teKworo.image} alt={teKworo.title} className="absolute inset-0 h-full w-full object-cover" />
-            </div>
-          </Container>
-        </section>
+        <AboutSection
+          background_color="#F0C7BD"
+          heading={teKworo.title}
+          description={teKworo.description}
+          image_url={teKworo.image}
+          image_alt={teKworo.title}
+        />
       )}
 
       <section className="space-y-16 bg-white py-16 lg:space-y-[143px] lg:py-[94px]">

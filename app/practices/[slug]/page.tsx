@@ -77,7 +77,9 @@ export default async function PracticeDetailPage({
       />
 
       {/* 4. SECTORS GRID SECTION */}
-      <SectorsSection sectors={SECTORS_DATA} />
+      <div className="py-8 md:py-0">
+        <SectorsSection sectors={SECTORS_DATA} />
+      </div>
 
       {/* 5. CTA SECTION */}
       <CtaSection content={cta} />
