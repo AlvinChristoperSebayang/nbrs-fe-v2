@@ -2,32 +2,25 @@ import type { Metadata } from "next";
 import { CareersHero } from "@/components/people/CareersHero";
 import { CareersAccordionSection } from "@/components/people/CareersAccordionSection";
 import { CtaSection } from "@/components/cta/CtaSection";
-import { CtaContent } from "@/lib/types";
+import { getCareersContent } from "@/lib/careers";
 
 export const metadata: Metadata = {
   title: "Careers | Our People",
 };
 
-const cta: CtaContent = {
-    image: "/images/hero/hero4.png",
-    title: "INTERESTED IN NBRS CAREERS?",
-    description: "Learn more about working at NBRS",
-    buttonText: "CAREERS@NBRS.COM.AU",
-    buttonHref: "mailto:careers@nbrs.com.au",
-  };
+export default async function CareersPage() {
+  const page = await getCareersContent();
 
-
-export default function CareersPage() {
   return (
     <article className="bg-white text-black min-h-screen">
       {/* 1. CUSTOM CAREERS HERO */}
-      <CareersHero />
+      {page.hero && <CareersHero title={page.hero.title} description={page.hero.description} imageSrc={page.hero.image} />}
 
       {/* 2. OVERVIEW & INTERACTIVE ACCORDIONS SECTION */}
-      <CareersAccordionSection showDefaultIntro={true} />
+      {page.accordion && <CareersAccordionSection {...page.accordion} />}
 
       {/* 3. CAREERS CTA SECTION */}
-      <CtaSection content={cta} />
+      {page.cta && <CtaSection content={page.cta} />}
     </article>
   );
 }

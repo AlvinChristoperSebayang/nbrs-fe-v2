@@ -46,8 +46,26 @@ export type CareersAccordionSectionProps = {
   title?: React.ReactNode;
   items?: AccordionItem[];
   introParagraphs?: React.ReactNode | null;
+  introText?: string | null;
   showDefaultIntro?: boolean;
 };
+
+function renderEmailLinks(value: string) {
+  const parts = value.split(/([A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,})/gi);
+  return parts.map((part, index) =>
+    /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(part) ? (
+      <a
+        key={`${part}-${index}`}
+        href={`mailto:${part}`}
+        className="font-medium text-black underline underline-offset-4 hover:text-rose-600 transition-colors"
+      >
+        {part}
+      </a>
+    ) : (
+      part
+    )
+  );
+}
 
 export function CareersAccordionSection({
   title = (
@@ -59,6 +77,7 @@ export function CareersAccordionSection({
   ),
   items = DEFAULT_ACCORDION_ITEMS,
   introParagraphs,
+  introText,
   showDefaultIntro = false,
 }: CareersAccordionSectionProps) {
   const [openId, setOpenId] = useState<string | null>(null);
@@ -73,7 +92,7 @@ export function CareersAccordionSection({
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
           {/* Left Column: Light Gray Watermark Title */}
           <div data-aos="fade-up" className="lg:col-span-4 lg:sticky lg:top-28">
-            <h2 className="hidden md:block font-heading text-4xl sm:text-5xl lg:text-[64px] font-bold uppercase text-zinc-200/90 leading-none tracking-wide border-b-4 border-zinc-200/40 pb-4">
+            <h2 className="hidden md:block font-heading whitespace-pre-line text-4xl sm:text-5xl lg:text-[64px] font-bold uppercase text-zinc-200/90 leading-none tracking-wide border-b-4 border-zinc-200/40 pb-4">
               {title}
             </h2>
           </div>
@@ -91,8 +110,16 @@ export function CareersAccordionSection({
               </div>
             )}
 
+            {introText && (
+              <div className="font-sans text-sm sm:text-base text-zinc-800 leading-relaxed flex flex-col gap-3 max-w-3xl pt-8 lg:pt-0">
+                {introText.split(/\n\s*\n/).filter(Boolean).map((paragraph, index) => (
+                  <p key={index}>{renderEmailLinks(paragraph)}</p>
+                ))}
+              </div>
+            )}
+
             {/* Default Careers Intro Paragraphs */}
-            {!introParagraphs && showDefaultIntro && (
+            {!introParagraphs && !introText && showDefaultIntro && (
               <div className="font-sans text-sm sm:text-base text-zinc-800 leading-relaxed flex flex-col gap-3 max-w-3xl pt-0">
                 <p>
                   At NBRS, we cultivate a safe and inclusive studio where diverse

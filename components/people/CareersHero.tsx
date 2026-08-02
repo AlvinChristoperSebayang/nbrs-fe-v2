@@ -1,4 +1,6 @@
 import { Container } from "@/components/ui/Container";
+import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
+import type { ImageSource } from "@/lib/types";
 
 export type CareersHeroProps = {
   title?: React.ReactNode;
@@ -6,7 +8,7 @@ export type CareersHeroProps = {
   location?: string;
   registration?: string;
   description?: React.ReactNode;
-  imageSrc?: string;
+  imageSrc?: ImageSource;
 };
 
 export function CareersHero({
@@ -27,7 +29,7 @@ export function CareersHero({
     <section className="relative bg-[#0B131F] text-white h-full lg:h-[650px] mb-0 lg:mb-32 overflow-visible">
       {/* Background Dimmed Image on Right Side */}
       <div className="absolute top-0 right-0 w-full lg:w-[948px] h-full lg:h-[650px] overflow-hidden pointer-events-none z-0 hidden lg:block">
-        <img
+        <ResponsiveImage
           src={imageSrc}
           alt=""
           className="h-full w-full object-cover filter brightness-[0.35] contrast-[1.1]"
@@ -43,7 +45,7 @@ export function CareersHero({
             className="lg:col-span-5 flex flex-col items-start gap-4 lg:gap-6 pt-24 pb-4 lg:pt-0 lg:pb-0"
           >
             <div className="inline-block border-b-4 border-white pb-4">
-              <h1 className="font-heading text-4xl sm:text-5xl lg:text-[64px] font-bold uppercase tracking-wide leading-none text-white">
+              <h1 className="font-heading whitespace-pre-line text-4xl sm:text-5xl lg:text-[64px] font-bold uppercase tracking-wide leading-none text-white">
                 {title}
               </h1>
             </div>
@@ -97,7 +99,7 @@ export function CareersHero({
             className="lg:col-span-7 flex justify-end w-full"
           >
             <div className="relative w-[calc(100%+1rem)] sm:w-[calc(100%+1.5rem)] lg:w-[770px] min-h-[440px] h-[440px] sm:h-[500px] lg:h-[570px] rounded-[3px] overflow-hidden z-30 transform lg:translate-y-28 border border-white/10 -mr-6 lg:mr-0">
-              <img
+              <ResponsiveImage
                 src={imageSrc}
                 alt="NBRS Featured Hero"
                 className="h-full w-full object-cover"
