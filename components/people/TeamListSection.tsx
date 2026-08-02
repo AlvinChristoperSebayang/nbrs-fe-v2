@@ -3,79 +3,22 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
+import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
+import type { ImageSource } from "@/lib/types";
 
 export type TeamMember = {
   id: string;
   name: string;
   role: string;
   registration?: string;
-  practice: "Architecture" | "Landscape Architecture" | "Interior Design" | "Heritage";
-  image: string;
+  practices: string[];
+  image: ImageSource;
   bgColor?: string;
 };
 
-export const TEAM_MEMBERS: TeamMember[] = [
-  {
-    id: "samantha-polkinghorne",
-    name: "Samantha Polkinghorne",
-    role: "Chair | Heritage Lead",
-    practice: "Heritage",
-    image: "/images/hero/hero3.png",
-    bgColor: "bg-[#EDE3F0]",
-  },
-  {
-    id: "james-ward",
-    name: "James Ward",
-    role: "Managing Director | FAICD",
-    practice: "Architecture",
-    image: "/images/hero/hero2.png",
-    bgColor: "bg-[#DEE1F2]",
-  },
-  {
-    id: "andrew-duffin",
-    name: "Andrew Duffin",
-    role: "Director | Design Lead",
-    registration: "Registration number: Architect NSW 5602",
-    practice: "Architecture",
-    image: "/images/hero/hero4.png",
-    bgColor: "bg-[#DEE1F2]",
-  },
-  {
-    id: "gillian-redman",
-    name: "Gillian Redman",
-    role: "Director | Landscape Lead",
-    practice: "Landscape Architecture",
-    image: "/images/hero/hero5.png",
-    bgColor: "bg-[#C9E5D2]",
-  },
-  {
-    id: "sarah-chapman",
-    name: "Sarah Chapman",
-    role: "Principal | Interior Lead",
-    practice: "Interior Design",
-    image: "/images/hero/hero1.png",
-    bgColor: "bg-[#FDD4B6]",
-  },
-  {
-    id: "marcus-brown",
-    name: "Marcus Brown",
-    role: "Principal | Heritage & Architecture",
-    registration: "Registration number: Architect NSW 7120",
-    practice: "Heritage",
-    image: "/images/home/latest-news.png",
-    bgColor: "bg-[#EDE3F0]",
-  },
-];
-
-const PRACTICES = [
-  "Architecture",
-  "Landscape Architecture",
-  "Interior Design",
-  "Heritage",
-] as const;
-
-export function TeamListSection() {
+export function TeamListSection({ members }: { members: TeamMember[] }) {
   const [selectedPractices, setSelectedPractices] = useState<string[]>([]);
+  const practices = Array.from(new Set(members.flatMap((member) => member.practices))).sort();
 
   const togglePractice = (practice: string) => {
     setSelectedPractices((prev) =>
@@ -87,8 +30,8 @@ export function TeamListSection() {
 
   const filteredMembers =
     selectedPractices.length > 0
-      ? TEAM_MEMBERS.filter((m) => selectedPractices.includes(m.practice))
-      : TEAM_MEMBERS;
+      ? members.filter((member) => member.practices.some((practice) => selectedPractices.includes(practice)))
+      : members;
 
   return (
     <section className="bg-white py-16 lg:py-24 text-black">
@@ -103,7 +46,7 @@ export function TeamListSection() {
               Practice
             </span>
 
-            {PRACTICES.map((practice) => {
+            {practices.map((practice) => {
               const isActive = selectedPractices.includes(practice);
               return (
                 <button
@@ -159,7 +102,7 @@ export function TeamListSection() {
               >
                 {/* Member Photo */}
                 <div className="relative aspect-[370/300] overflow-hidden bg-zinc-200">
-                  <img
+                  <ResponsiveImage
                     src={member.image}
                     alt={member.name}
                     className="h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"

@@ -2,35 +2,25 @@ import type { Metadata } from "next";
 import { Hero } from "@/components/ui/Hero";
 import { TeamListSection } from "@/components/people/TeamListSection";
 import { CtaSection } from "@/components/cta/CtaSection";
-import { CtaContent } from "@/lib/types";
+import { getOurPeopleContent } from "@/lib/our-people";
 
 export const metadata: Metadata = {
   title: "Meet Our Leaders | Our People",
 };
 
-const cta: CtaContent = {
-  image: "/images/contact-bg.png",
-  title: "GET IN TOUCH",
-  description: "Want to join our collective or collaborate on a project? Reach out to our leadership team.",
-  buttonText: "CONTACT US",
-  buttonHref: "/contact",
-};
+export default async function TeamPage() {
+  const page = await getOurPeopleContent();
 
-export default function TeamPage() {
   return (
     <article className="bg-white text-black min-h-screen">
       {/* 1. HERO SECTION */}
-      <Hero
-        image="/images/hero/hero1.png"
-        title="MEET OUR LEADERS"
-        description="Behind every NBRS project is a multidisciplinary team driven by real insight and a shared purpose: creating environments that shape lives for good."
-      />
+      {page.hero && <Hero image={page.hero.image} title={page.hero.title} description={page.hero.description} />}
 
       {/* 2. TEAM LIST SECTION WITH PRACTICE FILTER */}
-      <TeamListSection />
+      <TeamListSection members={page.people} />
 
       {/* 3. CTA SECTION */}
-      <CtaSection content={cta} />
+      {page.cta && <CtaSection content={page.cta} />}
     </article>
   );
 }
