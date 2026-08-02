@@ -1,0 +1,112 @@
+import { craftFetch } from "./craft";
+import { toImageSource, type RawResponsiveAsset } from "./media";
+import type { CtaContent, ImageSource } from "./types";
+import type { AccordionItem } from "@/components/people/CareersAccordionSection";
+import type { ArticleCardProps } from "@/components/ui/ArticleCard";
+
+type RawEnvision = {
+  envHeading: string | null;
+  envSubheading: string | null;
+  envHeroImage: RawResponsiveAsset[];
+  envPastResearch: Array<{ id: string; title: string | null; slug: string | null; thumbnail: RawResponsiveAsset[] }>;
+  envFaqsHeading: string | null;
+  envFaqsText: string | null;
+  envFaqs: Array<{ id: string; heading: string | null; text: string | null }>;
+  envisionShowCta: boolean | null;
+  ctaSection: {
+    ctaSectionBackgroundImage: RawResponsiveAsset[];
+    ctaSectionHeading: string | null;
+    ctaSectionDescription: string | null;
+    ctaSectionButtonLabel: string | null;
+    ctaSectionButtonUrl: string | null;
+  } | null;
+};
+
+export type EnvisionContent = {
+  hero: { title: string; description?: string; image: ImageSource } | null;
+  research: ArticleCardProps[];
+  faqs: { title: string; introText?: string; items: AccordionItem[] } | null;
+  cta: CtaContent | null;
+};
+
+const heroImage = `mobile: url @transform(width: 600, height: 800, mode: "crop", format: "webp", quality: 80, immediately: true) tablet: url @transform(width: 1440, height: 1000, mode: "crop", format: "webp", quality: 82, immediately: true) desktop: url @transform(width: 2400, height: 1200, mode: "crop", format: "webp", quality: 85, immediately: true)`;
+const cardImage = `mobile: url @transform(width: 600, height: 450, mode: "crop", format: "webp", quality: 80, immediately: true) tablet: url @transform(width: 900, height: 675, mode: "crop", format: "webp", quality: 82, immediately: true) desktop: url @transform(width: 1200, height: 900, mode: "crop", format: "webp", quality: 85, immediately: true)`;
+const ctaImage = `mobile: url @transform(width: 600, height: 900, mode: "crop", format: "webp", quality: 80, immediately: true) tablet: url @transform(width: 1440, height: 900, mode: "crop", format: "webp", quality: 82, immediately: true) desktop: url @transform(width: 2400, height: 1000, mode: "crop", format: "webp", quality: 85, immediately: true)`;
+
+const QUERY = /* GraphQL */ `
+  query EnvisionPage {
+    entries(section: ["envision"], limit: 1) {
+      ... on envision_Entry {
+        envHeading
+        envSubheading
+        envHeroImage { ${heroImage} }
+        envPastResearch {
+          ... on research_Entry {
+            id title slug thumbnail { ${cardImage} }
+          }
+        }
+        envFaqsHeading
+        envFaqsText
+        envFaqs { ... on faq_Entry { id heading text } }
+        envisionShowCta
+        ctaSection {
+          ctaSectionBackgroundImage { ${ctaImage} }
+          ctaSectionHeading
+          ctaSectionDescription
+          ctaSectionButtonLabel
+          ctaSectionButtonUrl
+        }
+      }
+    }
+  }
+`;
+
+function plainText(value: string | null | undefined): string {
+  return (value ?? "")
+    .replace(/<\/(?:p|div|h[1-6])>\s*/gi, "\n\n")
+    .replace(/<br\s*\/?>/gi, "\n")
+    .replace(/<[^>]+>/g, "")
+    .replace(/&nbsp;/gi, " ")
+    .replace(/&amp;/gi, "&")
+    .trim();
+}
+
+export async function getEnvisionContent(): Promise<EnvisionContent> {
+  // Isolated from the shared page cache so CMS changes to the active Envision intake are visible immediately.
+  const data = await craftFetch<{ entries: RawEnvision[] }>(QUERY, undefined, { cache: "no-store" });
+  const entry = data.entries[0];
+  if (!entry) return { hero: null, research: [], faqs: null, cta: null };
+
+  const hero = toImageSource(entry.envHeroImage[0]);
+  const research = entry.envPastResearch.flatMap((item, index) => {
+    const image = toImageSource(item.thumbnail[0]);
+    return item.title?.trim() && item.slug?.trim() && image
+      ? [{ id: item.id, slug: item.slug, title: item.title, image, href: `/research/${item.slug}`, hoverColor: ["#F0C7BD", "#FDD4B6", "#EDE3F0"][index % 3] }]
+      : [];
+  });
+  const faqItems = entry.envFaqs.flatMap((item) => {
+    const title = plainText(item.heading);
+    const content = plainText(item.text);
+    return title && content ? [{ id: item.id, title, content }] : [];
+  });
+  const ctaImageSource = toImageSource(entry.ctaSection?.ctaSectionBackgroundImage[0]);
+
+  return {
+    hero: hero && plainText(entry.envHeading)
+      ? { title: plainText(entry.envHeading), description: plainText(entry.envSubheading) || undefined, image: hero }
+      : null,
+    research,
+    faqs: plainText(entry.envFaqsHeading) && faqItems.length
+      ? { title: plainText(entry.envFaqsHeading), introText: plainText(entry.envFaqsText) || undefined, items: faqItems }
+      : null,
+    cta: entry.envisionShowCta && ctaImageSource && plainText(entry.ctaSection?.ctaSectionHeading)
+      ? {
+          image: ctaImageSource,
+          title: plainText(entry.ctaSection?.ctaSectionHeading),
+          description: plainText(entry.ctaSection?.ctaSectionDescription) || undefined,
+          buttonText: plainText(entry.ctaSection?.ctaSectionButtonLabel) || undefined,
+          buttonHref: entry.ctaSection?.ctaSectionButtonUrl?.trim() || undefined,
+        }
+      : null,
+  };
+}

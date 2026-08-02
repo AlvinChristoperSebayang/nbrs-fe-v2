@@ -2,12 +2,14 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
+import type { ImageSource } from "@/lib/types";
 
 export type ArticleCardProps = {
   id?: string;
   slug: string;
   title: string;
-  image: string;
+  image: ImageSource;
   hoverColor?: string;
   href?: string;
 };
@@ -54,7 +56,7 @@ export function ArticleCard({
     >
       {/* Card Image (Subtle Scale Zoom on Hover) */}
       <div className="relative aspect-[370/300] w-full overflow-hidden bg-zinc-100 min-h-[150px] max-h-[150px] md:min-h-[300px] md:max-h-[300px]">
-        <img
+        <ResponsiveImage
           src={item.image}
           alt={item.title}
           className="h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"

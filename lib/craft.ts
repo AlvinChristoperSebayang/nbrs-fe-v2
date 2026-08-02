@@ -7,6 +7,11 @@ type GraphQLResponse = {
   errors?: Array<{ message?: unknown }>;
 };
 
+type CraftFetchOptions = {
+  cache?: RequestCache;
+  revalidate?: number;
+};
+
 function isGraphQLResponse(value: unknown): value is GraphQLResponse {
   return typeof value === "object" && value !== null;
 }
@@ -37,13 +42,15 @@ function normalizeLocalAssetUrls(value: unknown): unknown {
 
 export async function craftFetch<T>(
   query: string,
-  variables?: Record<string, unknown>
+  variables?: Record<string, unknown>,
+  options?: CraftFetchOptions
 ): Promise<T> {
   const res = await fetch(CRAFT_GRAPHQL_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json", Accept: "application/json" },
     body: JSON.stringify({ query, variables }),
-    next: { revalidate: 60 },
+    cache: options?.cache,
+    next: options?.cache === "no-store" ? undefined : { revalidate: options?.revalidate ?? 60 },
   });
 
   if (!res.ok) {

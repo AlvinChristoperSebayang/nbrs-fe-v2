@@ -45,7 +45,7 @@ export function CareersHero({
             className="lg:col-span-5 flex flex-col items-start gap-4 lg:gap-6 pt-24 pb-4 lg:pt-0 lg:pb-0"
           >
             <div className="inline-block border-b-4 border-white pb-4">
-              <h1 className="font-heading whitespace-pre-line text-4xl sm:text-5xl lg:text-[64px] font-bold uppercase tracking-wide leading-none text-white">
+              <h1 className="font-heading whitespace-pre-line text-4xl sm:text-5xl lg:text-[65px] font-bold uppercase tracking-wide leading-none text-white">
                 {title}
               </h1>
             </div>
@@ -86,7 +86,7 @@ export function CareersHero({
             )}
 
             {description && (
-              <div className="font-sans text-base sm:text-lg text-white/90 leading-relaxed max-w-xl">
+              <div className="font-sans whitespace-pre-line text-base sm:text-lg text-white/90 leading-relaxed max-w-xl">
                 {description}
               </div>
             )}
