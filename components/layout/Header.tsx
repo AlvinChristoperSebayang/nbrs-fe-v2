@@ -34,7 +34,7 @@ export const NAV_STRUCTURE: NavItem[] = [
   {
     id: "people",
     label: "PEOPLE",
-    href: "/people",
+    href: "/designing-for-people",
     subItems: [
       { label: "Our Leaders", href: "/people/team" },
       { label: "Culture", href: "/people/culture" },

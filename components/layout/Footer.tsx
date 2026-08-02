@@ -58,10 +58,10 @@ const peopleColumn: FooterGroup[] = [
   {
     heading: "People",
     links: [
-      { label: "Our Leaders", href: "/about" },
-      { label: "Culture", href: "/about" },
-      { label: "Careers", href: "/about" },
-      { label: "Envision", href: "/about" },
+      { label: "Our Leaders", href: "/people/team" },
+      { label: "Culture", href: "/people/culture" },
+      { label: "Careers", href: "/people/careers" },
+      { label: "Envision", href: "/people/envision-student-program" },
     ],
   },
 ];
