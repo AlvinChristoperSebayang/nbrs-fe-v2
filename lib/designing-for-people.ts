@@ -1,6 +1,8 @@
 import { craftFetch } from "./craft";
 import { toImageSource, type RawResponsiveAsset } from "./media";
 import type { CtaContent, ImageSource } from "./types";
+import type { FastFact } from "@/components/people/FastFactsSection";
+import type { SubMenuCard } from "@/components/people/PeopleNavigationGrid";
 
 type RawTextBlock = {
   __typename: "blocks_text_BlockType";
@@ -8,12 +10,14 @@ type RawTextBlock = {
   text: string | null;
   image: RawResponsiveAsset[];
 };
+type RawNavigationBlock = { __typename: "blocks_peopleNavigation_BlockType"; peopleNavigationCards: Array<{ peopleNavigationCardTitle: string | null; peopleNavigationCardDescription: string | null; peopleNavigationCardAction: string | null; peopleNavigationCardUrl: string | null; peopleNavigationCardImage: RawResponsiveAsset[] }> };
+type RawFactsBlock = { __typename: "blocks_fastFacts_BlockType"; sectionHeading: string | null; fastFacts: Array<{ fastFactValue: string | null; fastFactLabel: string | null }> };
 
 type RawPage = {
   pageHeading: string | null;
   pageSubheading: string | null;
   pageHeroImage: RawResponsiveAsset[];
-  blocks: RawTextBlock[];
+  blocks: Array<RawTextBlock | RawNavigationBlock | RawFactsBlock>;
   ctaSection: {
     ctaSectionBackgroundImage: RawResponsiveAsset[];
     ctaSectionHeading: string | null;
@@ -39,6 +43,8 @@ export type DesigningForPeoplePageContent = {
     image: ImageSource;
   };
   cta: CtaContent;
+  navigationCards: SubMenuCard[];
+  fastFacts: { heading: string; items: FastFact[] };
 };
 
 const FALLBACK: DesigningForPeoplePageContent = {
@@ -59,6 +65,8 @@ const FALLBACK: DesigningForPeoplePageContent = {
     buttonText: "CONTACT US",
     buttonHref: "/contact",
   },
+  navigationCards: [],
+  fastFacts: { heading: "", items: [] },
 };
 
 const DESIGNING_FOR_PEOPLE_QUERY = /* GraphQL */ `
@@ -83,6 +91,8 @@ const DESIGNING_FOR_PEOPLE_QUERY = /* GraphQL */ `
               desktop: url @transform(width: 1200, height: 900, mode: "crop", format: "webp", quality: 85, immediately: true)
             }
           }
+          ... on blocks_peopleNavigation_BlockType { peopleNavigationCards { ... on peopleNavigationCard_Entry { peopleNavigationCardTitle peopleNavigationCardDescription peopleNavigationCardAction peopleNavigationCardUrl peopleNavigationCardImage { mobile: url @transform(width: 600, height: 450, mode: "crop", format: "webp", quality: 80, immediately: true) tablet: url @transform(width: 900, height: 675, mode: "crop", format: "webp", quality: 82, immediately: true) desktop: url @transform(width: 1200, height: 900, mode: "crop", format: "webp", quality: 85, immediately: true) } } } }
+          ... on blocks_fastFacts_BlockType { sectionHeading fastFacts { ... on fastFact_Entry { fastFactValue fastFactLabel } } }
         }
         ctaSection {
           ctaSectionBackgroundImage {
@@ -111,7 +121,9 @@ export async function getDesigningForPeoplePage(): Promise<DesigningForPeoplePag
 
     if (!entry) return FALLBACK;
 
-    const intro = entry.blocks.find((block) => block.__typename === "blocks_text_BlockType");
+    const intro = entry.blocks.find((block): block is RawTextBlock => block.__typename === "blocks_text_BlockType");
+    const navigation = entry.blocks.find((block): block is RawNavigationBlock => block.__typename === "blocks_peopleNavigation_BlockType");
+    const facts = entry.blocks.find((block): block is RawFactsBlock => block.__typename === "blocks_fastFacts_BlockType");
     const cta = entry.ctaSection;
 
     return {
@@ -133,6 +145,14 @@ export async function getDesigningForPeoplePage(): Promise<DesigningForPeoplePag
         buttonText: clean(cta?.ctaSectionButtonLabel) || FALLBACK.cta.buttonText,
         buttonHref: clean(cta?.ctaSectionButtonUrl) || FALLBACK.cta.buttonHref,
       },
+      navigationCards: (navigation?.peopleNavigationCards ?? []).flatMap((card, index) => {
+        const image = toImageSource(card.peopleNavigationCardImage[0]);
+        const title = clean(card.peopleNavigationCardTitle);
+        const href = clean(card.peopleNavigationCardUrl);
+        if (!image || !title || !href) return [];
+        return [{ id: `card-${index}`, title, description: clean(card.peopleNavigationCardDescription), actionText: clean(card.peopleNavigationCardAction), href, image }];
+      }),
+      fastFacts: { heading: clean(facts?.sectionHeading), items: (facts?.fastFacts ?? []).flatMap((fact) => { const number = clean(fact.fastFactValue); const label = clean(fact.fastFactLabel); return number && label ? [{ number, label }] : []; }) },
     };
   } catch {
     return FALLBACK;

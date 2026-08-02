@@ -1,72 +1,22 @@
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
+import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
+import type { ImageSource } from "@/lib/types";
 
 export type SubMenuCard = {
   id: string;
   title: string;
-  desktopTitle: string;
   description: string;
   actionText: string;
   href: string;
-  image: string;
-  topBarColor: string;
-  titleColor?: string;
+  image: ImageSource;
 };
+const ACCENTS = ["bg-[#F0C7BD]", "bg-[#EDE3F0]", "bg-[#FDD4B6]", "bg-[#F2E8D8]"];
 
-const PEOPLE_CARDS: SubMenuCard[] = [
-  {
-    id: "team",
-    title: "Team",
-    desktopTitle: "TEAM",
-    description:
-      "Leaders and specialists advancing NBRS projects, from heritage and education to landscape architecture and interior design.",
-    actionText: "View our team",
-    href: "/people/team",
-    image: "/images/hero/hero1.png",
-    topBarColor: "bg-[#F0C7BD]",
-    titleColor: "text-rose-200",
-  },
-  {
-    id: "culture",
-    title: "Culture",
-    desktopTitle: "CULTURE",
-    description:
-      "See how values of Care, Joy and Together turn into everyday studio life, learning and social impact.",
-    actionText: "Discover our culture",
-    href: "/people/culture",
-    image: "/images/hero/hero3.png",
-    topBarColor: "bg-[#EDE3F0]",
-    titleColor: "text-white",
-  },
-  {
-    id: "careers",
-    title: "Careers",
-    desktopTitle: "CAREERS",
-    description:
-      "Shape spaces that shape society. Explore current openings and the benefits of joining NBRS.",
-    actionText: "See roles",
-    href: "/people/careers",
-    image: "/images/hero/hero4.png",
-    topBarColor: "bg-[#FDD4B6]",
-    titleColor: "text-white",
-  },
-  {
-    id: "envision",
-    title: "Envision Student Program",
-    desktopTitle: "ENVISION STUDENT PROGRAM",
-    description:
-      "A mentoring pathway giving architecture and design students hands-on project experience and industry guidance.",
-    actionText: "Explore Envision",
-    href: "/people/envision-student-program",
-    image: "/images/hero/hero5.png",
-    topBarColor: "bg-[#F2E8D8]",
-    titleColor: "text-white",
-  },
-];
-
-export function PeopleNavigationGrid() {
-  const teamCard = PEOPLE_CARDS[0];
-  const gridCards = PEOPLE_CARDS.slice(1);
+export function PeopleNavigationGrid({ cards }: { cards: SubMenuCard[] }) {
+  const teamCard = cards[0];
+  const gridCards = cards.slice(1);
+  if (!teamCard) return null;
 
   return (
     <section className="bg-white py-12 lg:py-24 text-black">
@@ -79,7 +29,7 @@ export function PeopleNavigationGrid() {
           >
             {/* Top Colored Accent Bar Across Card */}
             <div
-              className={`w-full h-2 sm:h-2.5 ${teamCard.topBarColor} absolute top-0 left-0 right-0 z-20`}
+              className={`w-full h-2 sm:h-2.5 ${ACCENTS[0]} absolute top-0 left-0 right-0 z-20`}
             />
 
             {/* Left Text Box */}
@@ -90,9 +40,9 @@ export function PeopleNavigationGrid() {
                   {teamCard.title}
                 </span>
                 <span
-                  className={`font-heading hidden lg:block text-3xl sm:text-4xl lg:text-[44px] font-bold uppercase tracking-wide leading-none ${teamCard.titleColor}`}
+                  className="font-heading hidden lg:block text-3xl sm:text-4xl lg:text-[44px] font-bold uppercase tracking-wide leading-none text-rose-200"
                 >
-                  {teamCard.desktopTitle}
+                  {teamCard.title}
                 </span>
 
                 <p className="font-sans text-xl text-white/90 leading-relaxed max-w-xl mt-1 sm:mt-2">
@@ -120,7 +70,7 @@ export function PeopleNavigationGrid() {
 
             {/* Right Image Box (Desktop Only - Subtle Scale Zoom on Hover) */}
             <div className="hidden lg:block lg:col-span-4 relative min-h-[300px] overflow-hidden">
-              <img
+              <ResponsiveImage
                 src={teamCard.image}
                 alt={teamCard.title}
                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
@@ -139,11 +89,11 @@ export function PeopleNavigationGrid() {
               >
                 {/* Top Colored Accent Bar on Mobile */}
                 <div
-                  className={`w-full h-2.5 ${card.topBarColor} md:hidden absolute top-0 left-0 right-0 z-20`}
+                  className={`w-full h-2.5 ${ACCENTS[index + 1] ?? ACCENTS[0]} md:hidden absolute top-0 left-0 right-0 z-20`}
                 />
 
                 {/* Desktop Background Cover Image (Subtle Scale Zoom on Hover) */}
-                <img
+                <ResponsiveImage
                   src={card.image}
                   alt={card.title}
                   className="hidden md:block absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
@@ -185,7 +135,7 @@ export function PeopleNavigationGrid() {
                 {/* Desktop Bottom Header (Uppercase Title + Arrow side-by-side) */}
                 <div className="hidden md:flex relative z-10 h-full items-end justify-between gap-4 text-white w-full">
                   <h3 className="font-heading text-xl sm:text-2xl font-bold uppercase leading-tight tracking-wide text-white transition-colors duration-300 group-hover:text-rose-100">
-                    {card.desktopTitle}
+                    {card.title}
                   </h3>
                   <svg
                     width="24"

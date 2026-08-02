@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Hero } from "@/components/ui/Hero";
 import { AboutSection } from "@/components/home/AboutSection";
 import { PeopleNavigationGrid } from "@/components/people/PeopleNavigationGrid";
-import { FastFactsSection, type FastFact } from "@/components/people/FastFactsSection";
+import { FastFactsSection } from "@/components/people/FastFactsSection";
 import { getDesigningForPeoplePage } from "@/lib/designing-for-people";
 import { CtaSection } from "@/components/cta/CtaSection";
 
@@ -12,13 +12,6 @@ export const metadata: Metadata = {
 
 export default async function DesigningForPeoplePage() {
   const page = await getDesigningForPeoplePage();
-  const facts: FastFact[] = [
-    { number: "90", label: "Team members" },
-    { number: "3", label: "Practices" },
-    { number: "5", label: "Sectors" },
-    { number: "2", label: "Studios" },
-    { number: "57+", label: "Years" },
-  ];
 
   return (
     <article className="bg-white text-black min-h-screen">
@@ -35,8 +28,8 @@ export default async function DesigningForPeoplePage() {
         description={page.intro.description}
       />
 
-      <PeopleNavigationGrid />
-      <FastFactsSection facts={facts} />
+      <PeopleNavigationGrid cards={page.navigationCards} />
+      <FastFactsSection title={page.fastFacts.heading} facts={page.fastFacts.items} />
       <CtaSection content={page.cta} />
     </article>
   );
