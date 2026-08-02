@@ -10,7 +10,10 @@ type SocialSustainabilityEntry = {
   socialSusHeroImage: Asset[];
   whatWeDoV2: Array<{ title: string | null; description2: string | null; image: Asset[] }>;
   socialSusSupportingHeading: string | null;
-  socialSusSupportingLogos: Asset[];
+  socialSusSupportingOrganisations: Array<{
+    socialSupportingOrganisationName: string | null;
+    socialSupportingOrganisationLogo: Asset[];
+  }>;
 };
 
 export type SocialInitiative = { title: string; description: string; image: ImageSource };
@@ -37,7 +40,7 @@ const QUERY = /* GraphQL */ `
         socialSusHeroImage { url ${hero} }
         whatWeDoV2 { ... on whatWeDoContent_Entry { title description2 image { url ${landscape} } } }
         socialSusSupportingHeading
-        socialSusSupportingLogos { url }
+        socialSusSupportingOrganisations { ... on socialSupportingOrganisation_Entry { socialSupportingOrganisationName socialSupportingOrganisationLogo { url } } }
       }
     }
   }
@@ -76,10 +79,11 @@ export async function getSocialSustainabilityContent(): Promise<SocialSustainabi
     return { title: item.title.trim(), description: item.description2.trim(), image };
   }).filter((item): item is SocialInitiative => item !== null);
 
-  const supportingOrganisations = entry.socialSusSupportingLogos.map((asset, index) => {
-    const image = toImageSource(asset);
-    if (!image) return null;
-    return { name: SOCIAL_SUSTAINABILITY_FALLBACK.supportingOrganisations[index]?.name ?? `Supporting organisation ${index + 1}`, logo: image };
+  const supportingOrganisations = entry.socialSusSupportingOrganisations.map((organisation) => {
+    const image = toImageSource(organisation.socialSupportingOrganisationLogo[0]);
+    const name = organisation.socialSupportingOrganisationName?.trim();
+    if (!image || !name) return null;
+    return { name, logo: image };
   }).filter((item): item is SupportingOrganisation => item !== null);
 
   return {

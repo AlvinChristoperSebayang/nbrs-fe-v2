@@ -34,6 +34,8 @@ type HomepageResponse = {
       buttonText: string | null;
       buttonUrl: string | null;
     }>;
+    homepageAboutImage: RawAsset[];
+    homepageSectorsHeading: string | null;
     homepageFeaturedSectors: Array<{
       title: string;
       slug: string;
@@ -56,8 +58,10 @@ export type HomepageContent = {
     heading: string | null;
     description: string | null;
     button: { text: string; href: string } | null;
+    image: import("./types").ImageSource | null;
   } | null;
   sectors: Sector[];
+  sectorsHeading: string | null;
   latestNewsHeading: string | null;
   latestNews: NewsItem[];
   cta: CtaContent | null;
@@ -130,6 +134,8 @@ const HOMEPAGE_QUERY = /* GraphQL */ `
             buttonUrl
           }
         }
+        homepageAboutImage { mobile: url @transform(width: 600, height: 600, mode: "crop", format: "webp", quality: 80, immediately: true) tablet: url @transform(width: 900, height: 900, mode: "crop", format: "webp", quality: 82, immediately: true) desktop: url @transform(width: 1200, height: 1200, mode: "crop", format: "webp", quality: 85, immediately: true) }
+        homepageSectorsHeading
         homepageFeaturedSectors {
           ... on sector_Category {
             title
@@ -189,6 +195,7 @@ export async function getHomepageContent(): Promise<HomepageContent> {
     slides: [],
     about: null,
     sectors: [],
+    sectorsHeading: null,
     latestNewsHeading: null,
     latestNews: [],
     cta: null,
@@ -228,6 +235,7 @@ export async function getHomepageContent(): Promise<HomepageContent> {
                     href: path(homepage.whatWeDo[0].buttonUrl) || "/about",
                   }
                 : null,
+            image: toImageSource(homepage.homepageAboutImage?.[0]),
           }
         : null,
       sectors: (homepage.homepageFeaturedSectors ?? [])
@@ -239,6 +247,7 @@ export async function getHomepageContent(): Promise<HomepageContent> {
           description: sector.tagline ?? "",
           hoverColor: sector.accentColor ?? "#E0EFF4",
         })),
+      sectorsHeading: homepage.homepageSectorsHeading,
       latestNewsHeading: homepage.sectionHeading,
       latestNews,
       cta: homepageCta(homepage.ctaSection),

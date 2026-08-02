@@ -19,7 +19,7 @@ export default async function SectorsPage() {
         description={content.hero.description}
       />
 
-      <SectorsSection sectors={content.sectors} />
+      <SectorsSection sectors={content.sectors} heading={content.sectorsHeading} />
 
       <CtaSection content={content.cta} />
     </article>

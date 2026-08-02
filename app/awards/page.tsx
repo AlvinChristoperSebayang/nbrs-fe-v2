@@ -19,10 +19,7 @@ export default async function AwardsPage() {
         image={page.hero.image}
         title={page.hero.title}
         description={page.hero.description}
-        button={{
-          text: "Learn more",
-          href: "#recognising-awards",
-        }}
+        button={page.hero.button}
       />
 
       <div>

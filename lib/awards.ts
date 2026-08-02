@@ -28,6 +28,10 @@ type RawPage = {
   pageHeading: string | null;
   pageSubheading: string | null;
   pageHeroImage: RawResponsiveAsset[];
+  pageHeroCtaLabel: string | null;
+  pageHeroCtaUrl: string | null;
+  pageIntroCtaLabel: string | null;
+  pageIntroCtaUrl: string | null;
   blocks: RawBlock[];
   ctaSection: {
     ctaSectionBackgroundImage: RawResponsiveAsset[];
@@ -50,7 +54,7 @@ type AwardsResponse = {
 };
 
 export type AwardsPageContent = {
-  hero: { title: string; description: string; image: ImageSource };
+  hero: { title: string; description: string; image: ImageSource; button: { text: string; href: string } };
   intro: { heading: string; description: string; image: ImageSource; button: { text: string; href: string } };
   awards: { heading: string; description: string; items: AwardItem[] };
   cta: CtaContent;
@@ -70,6 +74,7 @@ const FALLBACK: AwardsPageContent = {
     title: "AWARD-WINNING DESIGN SHAPING COMMUNITIES",
     description: "Our work is recognised for elevating everyday experience through purposeful, people-centred design.",
     image: "/images/hero/hero4.png",
+    button: { text: "Learn more", href: "#recognising-awards" },
   },
   intro: {
     heading: "BEST IN PRACTICE – AIA AWARD 2022",
@@ -109,6 +114,10 @@ const AWARDS_QUERY = /* GraphQL */ `
           tablet: url @transform(width: 1440, height: 1000, mode: "crop", format: "webp", quality: 82, immediately: true)
           desktop: url @transform(width: 2400, height: 1200, mode: "crop", format: "webp", quality: 85, immediately: true)
         }
+        pageHeroCtaLabel
+        pageHeroCtaUrl
+        pageIntroCtaLabel
+        pageIntroCtaUrl
         blocks {
           __typename
           ... on blocks_text_BlockType {
@@ -223,12 +232,13 @@ export async function getAwardsPage(): Promise<AwardsPageContent> {
         title: clean(entry.pageHeading) || FALLBACK.hero.title,
         description: clean(entry.pageSubheading) || FALLBACK.hero.description,
         image: toImageSource(entry.pageHeroImage[0]) || FALLBACK.hero.image,
+        button: { text: clean(entry.pageHeroCtaLabel) || FALLBACK.hero.button.text, href: clean(entry.pageHeroCtaUrl) || FALLBACK.hero.button.href },
       },
       intro: {
         heading: clean(intro?.sectionHeading) || FALLBACK.intro.heading,
         description: clean(intro?.text) || FALLBACK.intro.description,
         image: toImageSource(intro?.image?.[0]) || FALLBACK.intro.image,
-        button: FALLBACK.intro.button,
+        button: { text: clean(entry.pageIntroCtaLabel) || FALLBACK.intro.button.text, href: clean(entry.pageIntroCtaUrl) || FALLBACK.intro.button.href },
       },
       awards: {
         heading: clean(awardsBlock?.sectionHeading) || FALLBACK.awards.heading,

@@ -10,14 +10,16 @@ type Entry = {
   sectorsHeroHeading: string | null;
   sectorsHeroDescription: string | null;
   sectorsHeroImage: Asset[];
+  sectorsGridHeading: string | null;
   sectorsFeatured: SectorCategory[];
   ctaSection: { ctaSectionBackgroundImage: Asset[]; ctaSectionHeading: string | null; ctaSectionDescription: string | null; ctaSectionButtonLabel: string | null; ctaSectionButtonUrl: string | null } | null;
 };
 
-export type SectorsPageContent = { hero: { title: string; description: string; image: ImageSource }; sectors: Sector[]; cta: CtaContent };
+export type SectorsPageContent = { hero: { title: string; description: string; image: ImageSource }; sectorsHeading: string; sectors: Sector[]; cta: CtaContent };
 
 const FALLBACK: SectorsPageContent = {
   hero: { title: "EXPLORING OUR SECTORS", description: "Identify how we can support your project through the breadth of our sector expertise.", image: "/images/hero/hero4.png" },
+  sectorsHeading: "Designing spaces bespoke to their needs",
   sectors: SECTORS_DATA.map(({ label, image, href, description, hoverColor }) => ({ label, image, href, description, hoverColor })),
   cta: { image: "/images/contact-bg.png", title: "LET’S SHAPE WHAT’S NEXT-TOGETHER", description: "Whether it’s a place to gather, to heal, to learn or to live - we’re ready to collaborate. Let’s shape spaces that matter, together.", buttonText: "LET’S SHAPE WHAT’S NEXT-TOGETHER", buttonHref: "/contact" },
 };
@@ -34,6 +36,7 @@ query SectorsPage {
       sectorsHeroHeading
       sectorsHeroDescription
       sectorsHeroImage { ${hero} }
+      sectorsGridHeading
       sectorsFeatured {
         ... on sector_Category {
           title slug tagline accentColor
@@ -66,6 +69,7 @@ export async function getSectorsPageContent(): Promise<SectorsPageContent> {
 
     return {
       hero: { title: entry.sectorsHeroHeading?.trim() || FALLBACK.hero.title, description: entry.sectorsHeroDescription?.trim() || FALLBACK.hero.description, image: toImageSource(entry.sectorsHeroImage?.[0]) || FALLBACK.hero.image },
+      sectorsHeading: entry.sectorsGridHeading?.trim() || FALLBACK.sectorsHeading,
       sectors: sectors?.length ? sectors : FALLBACK.sectors,
       cta: mapCta(entry, FALLBACK.cta),
     };

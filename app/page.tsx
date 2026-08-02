@@ -89,13 +89,13 @@ export default async function Home() {
     <>
       <HeroSlider slides={homepageSlides} />
       <AboutSection
-        image_url="/images/home-about.png"
+        image_url={homepage?.about?.image ?? "/images/home-about.png"}
         background_color="#C9E5D2"
         heading={homepage?.about?.heading ?? undefined}
         description={homepage?.about?.description ?? undefined}
         button={homepage?.about?.button ?? undefined}
       />
-      <SectorsSection sectors={homepageSectors} />
+      <SectorsSection sectors={homepageSectors} heading={homepage?.sectorsHeading ?? "Designing spaces bespoke to their needs"} />
       <GridEffect
         items={homepageNews}
         title={homepage?.latestNewsHeading ?? undefined}
