@@ -103,42 +103,46 @@ export const ABOUT_FALLBACK: AboutContent = {
   },
 };
 
+const crop = (width: number, height: number, quality = 80) =>
+  `url @transform(width: ${width}, height: ${height}, mode: "crop", format: "webp", quality: ${quality}, immediately: true)`;
+const hero = `mobile: ${crop(600, 800)} tablet: ${crop(1440, 1000, 82)} desktop: ${crop(2400, 1200, 85)}`;
+const landscape = `mobile: ${crop(600, 450)} tablet: ${crop(900, 675)} desktop: ${crop(1200, 900)}`;
+const cta = `mobile: ${crop(600, 900)} tablet: ${crop(1440, 900, 82)} desktop: ${crop(2400, 1000, 85)}`;
+
 const CTA_QUERY = /* GraphQL */ `
   query AboutPage {
-    entries(section: ["aboutUs3"], limit: 1) {
+    entries(section: ["aboutUs"], limit: 1) {
       ... on aboutUs3_Entry {
         aboutHeroHeading
         description2
-        aboutHeroImage { url }
+      aboutHeroImage { ${hero} }
         aboutIntroHeading
         aboutIntroText
-        aboutIntroImage { url }
-        heroTitle
-        whatWeDoV2 {
-          ... on block_Entry {
-            title
-            description2
-            image { url }
+      aboutIntroImage { ${landscape} }
+      heroTitle
+      whatWeDoV2 {
+        ... on whatWeDoContent_Entry {
+          title
+          description2
+          image { ${landscape} }
           }
         }
         ctaElement {
-          ... on cta_Entry {
-            label
-            url_1 { url }
-          }
+        label
+        url_1 { url }
+      }
+      aboutPracticeHeading
+      aboutPracticeText
+      aboutPracticeImages { ${landscape} }
+      aboutTimelineHeading
+      timeline {
+        ... on slide2_Entry {
+          year
+          text
         }
-        aboutPracticeHeading
-        aboutPracticeText
-        aboutPracticeImages { url }
-        aboutTimelineHeading
-        timeline {
-          ... on block_Entry {
-            year
-            text
-          }
-        }
-        ctaSection {
-          ctaSectionBackgroundImage { url }
+      }
+      ctaSection {
+        ctaSectionBackgroundImage { ${cta} }
           ctaSectionHeading
           ctaSectionDescription
           ctaSectionButtonLabel

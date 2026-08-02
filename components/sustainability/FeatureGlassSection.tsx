@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
+import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
+import type { ImageSource } from "@/lib/types";
 
 export type FeatureGlassSectionProps = {
   title: string;
   paragraphs: string[];
-  image: string;
+  image: ImageSource;
   imageAlt?: string;
   reverse?: boolean;
   buttonText?: string;
@@ -80,7 +82,7 @@ export function FeatureGlassSection({
               reverse ? "lg:mr-auto" : "lg:ml-auto"
             }`}
           >
-            <img
+            <ResponsiveImage
               src={image}
               alt={imageAlt || title}
               className="h-full w-full object-cover"

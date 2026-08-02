@@ -93,6 +93,7 @@ export default async function Home() {
         background_color="#C9E5D2"
         heading={homepage?.about?.heading ?? undefined}
         description={homepage?.about?.description ?? undefined}
+        button={homepage?.about?.button ?? undefined}
       />
       <SectorsSection sectors={homepageSectors} />
       <GridEffect

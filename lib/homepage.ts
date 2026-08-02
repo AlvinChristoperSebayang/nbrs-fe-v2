@@ -1,5 +1,4 @@
 import { craftFetch } from "./craft";
-import { mapCta } from "./cta";
 import type { HeroSlide } from "./hero";
 import { toImageSource } from "./media";
 import type { CtaContent, NewsItem, Sector } from "./types";
@@ -9,6 +8,14 @@ type RawNewsArticle = {
   slug: string;
   artHdrHeading: string | null;
   thumbnail: RawAsset[];
+};
+
+type RawHomepageCta = {
+  ctaSectionBackgroundImage: RawAsset[];
+  ctaSectionHeading: string | null;
+  ctaSectionDescription: string | null;
+  ctaSectionButtonLabel: string | null;
+  ctaSectionButtonUrl: string | null;
 };
 
 type HomepageResponse = {
@@ -38,13 +45,7 @@ type HomepageResponse = {
     sectionHeading: string | null;
     homepageNewsSource: string | null;
     homepageFeaturedNews: RawNewsArticle[];
-    ctaSection: {
-      ctaSectionBackgroundImage: RawAsset[];
-      ctaSectionHeading: string | null;
-      ctaSectionDescription: string | null;
-      ctaSectionButtonLabel: string | null;
-      ctaSectionButtonUrl: string | null;
-    } | null;
+    ctaSection: RawHomepageCta | null;
   }>;
   articles: RawNewsArticle[];
 };
@@ -54,12 +55,54 @@ export type HomepageContent = {
   about: {
     heading: string | null;
     description: string | null;
+    button: { text: string; href: string } | null;
   } | null;
   sectors: Sector[];
   latestNewsHeading: string | null;
   latestNews: NewsItem[];
   cta: CtaContent | null;
 };
+
+function path(value: string | null | undefined): string | null {
+  if (!value) return null;
+
+  try {
+    const url = new URL(value);
+    if (
+      url.hostname === "127.0.0.1" ||
+      url.hostname === "localhost" ||
+      /(^|\.)nbrs(-staging)?\.test$/.test(url.hostname) ||
+      /(^|\.)nbrs\.com\.au$/.test(url.hostname)
+    ) {
+      const pathname = url.pathname === "/who-we-are" ? "/about" : url.pathname;
+      return `${pathname}${url.search}${url.hash}`;
+    }
+  } catch {
+    return value;
+  }
+
+  return value;
+}
+
+function homepageCta(cta: RawHomepageCta | null): CtaContent | null {
+  const fallback: CtaContent = {
+    image: "/images/contact-bg.png",
+    title: "GET IN TOUCH",
+    buttonText: "Contact Us",
+    buttonHref: "/contact",
+  };
+  const image = toImageSource(cta?.ctaSectionBackgroundImage?.[0]);
+
+  if (!image) return null;
+
+  return {
+    image,
+    title: cta?.ctaSectionHeading?.trim() || fallback.title,
+    description: cta?.ctaSectionDescription?.trim() || fallback.description,
+    buttonText: cta?.ctaSectionButtonLabel?.trim() || fallback.buttonText,
+    buttonHref: path(cta?.ctaSectionButtonUrl) || fallback.buttonHref,
+  };
+}
 
 const HOMEPAGE_QUERY = /* GraphQL */ `
   query HomepageContent {
@@ -136,7 +179,7 @@ function mapNewsArticles(articles: RawNewsArticle[]): NewsItem[] {
     .filter((article) => article.artHdrHeading && toImageSource(article.thumbnail[0]))
     .map((article) => ({
       title: article.artHdrHeading as string,
-      href: `/blog/${article.slug}`,
+      href: `/news/${article.slug}`,
       image: toImageSource(article.thumbnail[0])!,
     }));
 }
@@ -178,6 +221,13 @@ export async function getHomepageContent(): Promise<HomepageContent> {
             description:
               plainText(homepage.whatWeDo[0].subheading) ??
               plainText(homepage.whatWeDo[0].text),
+            button:
+              homepage.whatWeDo[0].buttonText && homepage.whatWeDo[0].buttonUrl
+                ? {
+                    text: homepage.whatWeDo[0].buttonText,
+                    href: path(homepage.whatWeDo[0].buttonUrl) || "/about",
+                  }
+                : null,
           }
         : null,
       sectors: (homepage.homepageFeaturedSectors ?? [])
@@ -185,18 +235,13 @@ export async function getHomepageContent(): Promise<HomepageContent> {
         .map((sector) => ({
           label: sector.title,
           image: toImageSource(sector.thumbnail[0])!,
-          href: `/${sector.uri ?? `sector/${sector.slug}`}`,
+          href: `/sectors/${sector.slug}`,
           description: sector.tagline ?? "",
           hoverColor: sector.accentColor ?? "#E0EFF4",
         })),
       latestNewsHeading: homepage.sectionHeading,
       latestNews,
-      cta: homepage.ctaSection
-        ? mapCta({ ctaSection: homepage.ctaSection }, {
-            image: "",
-            title: "",
-          })
-        : null,
+      cta: homepageCta(homepage.ctaSection),
     };
   } catch (error) {
     console.warn("Failed to load Homepage content from Craft, using fallback:", error);

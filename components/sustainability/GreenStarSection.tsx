@@ -1,4 +1,6 @@
 import { Container } from "@/components/ui/Container";
+import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
+import type { ImageSource } from "@/lib/types";
 
 export function GreenStarSection({
   heading = "Green Star Accredited Professionals",
@@ -7,7 +9,7 @@ export function GreenStarSection({
 }: {
   heading?: string;
   description?: string;
-  image?: string;
+  image?: ImageSource;
 }) {
   return (
     <section className="bg-white pb-8 sm:pb-8 lg:pb-20 lg:pt-20 text-black overflow-hidden">
@@ -33,7 +35,7 @@ export function GreenStarSection({
             className="w-full flex justify-center lg:w-1/2 lg:justify-start lg:order-1"
           >
             {image ? (
-              <img
+              <ResponsiveImage
                 src={image}
                 alt={heading}
                 className="w-full max-w-[480px] sm:max-w-[540px] object-contain"
