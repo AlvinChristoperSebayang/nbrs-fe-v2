@@ -3,38 +3,28 @@ import { Hero } from "@/components/ui/Hero";
 import { CultureValuesSection } from "@/components/people/CultureValuesSection";
 import { InitiativesSection } from "@/components/people/InitiativesSection";
 import { CtaSection } from "@/components/cta/CtaSection";
-import { CtaContent } from "@/lib/types";
+import { getCultureContent } from "@/lib/culture";
 
 export const metadata: Metadata = {
   title: "Our Culture | Our People",
 };
 
-const cta: CtaContent = {
-    image: "/images/contact-bg.png",
-    title: "GET IN TOUCH",
-    description: "Want to experience our studio culture or collaborate with us? Reach out today.",
-    buttonText: "CONTACT US",
-    buttonHref: "/contact",
-  }
+export default async function PeopleCulturePage() {
+  const page = await getCultureContent();
 
-export default function PeopleCulturePage() {
   return (
     <article className="bg-white text-black min-h-screen">
       {/* 1. HERO SECTION */}
-      <Hero
-        image="/images/hero/hero3.png"
-        title="OUR CULTURE"
-        description="See how values of Care, Joy and Together turn into everyday studio life, learning and social impact across our studios."
-      />
+      {page.hero && <Hero image={page.hero.image} title={page.hero.title} description={page.hero.description} />}
 
       {/* 2. OUR VALUES SECTION */}
-      <CultureValuesSection />
+      {page.values && <CultureValuesSection {...page.values} />}
 
       {/* 3. NBRS INITIATIVES SECTION */}
-      <InitiativesSection />
+      {page.initiatives && <InitiativesSection {...page.initiatives} />}
 
       {/* 4. CTA SECTION */}
-      <CtaSection content={cta} />
+      {page.cta && <CtaSection content={page.cta} />}
     </article>
   );
 }

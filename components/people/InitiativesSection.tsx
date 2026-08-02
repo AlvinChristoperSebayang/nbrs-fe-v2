@@ -1,10 +1,12 @@
 import { Container } from "@/components/ui/Container";
+import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
+import type { ImageSource } from "@/lib/types";
 
 export type InitiativeItem = {
   id: string;
   title: string;
   description: string;
-  image: string;
+  image: ImageSource;
   reverse?: boolean;
 };
 
@@ -122,7 +124,7 @@ export function InitiativesSection({
                   item.reverse ? "lg:order-first" : "lg:order-last"
                 }`}
               >
-                <img
+                <ResponsiveImage
                   src={item.image}
                   alt={item.title}
                   className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
