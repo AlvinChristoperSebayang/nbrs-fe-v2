@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { AwardItem } from "@/lib/awards-data";
+import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
 
 export function AwardCard({ item }: { item: AwardItem }) {
   const [isHovered, setIsHovered] = useState(false);
@@ -15,7 +16,7 @@ export function AwardCard({ item }: { item: AwardItem }) {
     >
       {/* Top Image */}
       <div className="relative h-[300px] w-full overflow-hidden bg-zinc-100">
-        <img
+        <ResponsiveImage
           src={item.image}
           alt={item.awardTitle}
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"

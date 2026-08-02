@@ -1,3 +1,5 @@
+import type { ImageSource } from "./types";
+
 export type AwardItem = {
   id: string;
   year: string;
@@ -5,7 +7,7 @@ export type AwardItem = {
   projectCategoryColor?: string;
   awardTitle: string;
   commendation?: string;
-  image: string;
+  image: ImageSource;
 };
 
 export const DUMMY_AWARDS: AwardItem[] = [
