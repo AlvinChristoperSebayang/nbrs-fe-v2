@@ -122,7 +122,7 @@ export function TeamListSection({ members }: { members: TeamMember[] }) {
                     </p>
                     {member.registration && (
                       <p className="font-sans text-xs sm:text-sm text-zinc-700 mt-1">
-                        {member.registration}
+                        Registration Number: {member.registration}
                       </p>
                     )}
                   </div>

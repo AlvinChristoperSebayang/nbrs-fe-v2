@@ -9,6 +9,7 @@ type RawPerson = {
   slug: string;
   title: string;
   PplName: string | null;
+  pplRegistrationNumber: string | null;
   pplRole: string | null;
   pplProfileImage: Asset[];
   pplDiscipline: Array<{ title: string; slug: string }>;
@@ -56,7 +57,7 @@ const QUERY = /* GraphQL */ `
         }
         people {
           ... on people_Entry {
-            id slug title PplName pplRole
+            id slug title PplName pplRegistrationNumber pplRole
             pplProfileImage { ${cardImage} }
             pplDiscipline { ... on discipline_Category { title slug } }
           }
@@ -66,9 +67,9 @@ const QUERY = /* GraphQL */ `
   }
 `;
 
-function splitName(value: string | null, fallback: string): { name: string; registration?: string } {
+function splitName(value: string | null, fallback: string, directRegistration?: string | null): { name: string; registration?: string } {
   const [name, registration] = (value?.trim() || fallback).split("|").map((part) => part.trim());
-  return { name: name || fallback, registration: registration || undefined };
+  return { name: name || fallback, registration: directRegistration?.trim() || registration || undefined };
 }
 
 export async function getOurPeopleContent(): Promise<OurPeopleContent> {
@@ -79,7 +80,7 @@ export async function getOurPeopleContent(): Promise<OurPeopleContent> {
   const people = entry.people.flatMap((person) => {
     const photo = toImageSource(person.pplProfileImage[0]);
     if (!photo) return [];
-    const { name, registration } = splitName(person.PplName, person.title);
+    const { name, registration } = splitName(person.PplName, person.title, person.pplRegistrationNumber);
     return [{
       id: person.slug,
       name,

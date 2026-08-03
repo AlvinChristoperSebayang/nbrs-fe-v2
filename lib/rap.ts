@@ -14,6 +14,14 @@ type CraftBlock = {
   image?: CraftAsset[] | null;
 };
 
+type CraftCtaSection = {
+  ctaSectionHeading?: string | null;
+  ctaSectionDescription?: string | null;
+  ctaSectionButtonLabel?: string | null;
+  ctaSectionButtonUrl?: string | null;
+  ctaSectionBackgroundImage?: CraftAsset[] | null;
+};
+
 type RapQueryData = {
   entries?: Array<{
     title?: string | null;
@@ -26,6 +34,7 @@ type RapQueryData = {
     rapEndorsedBy?: string | null;
     rapReadTime?: string | null;
     rapDownloadBackground?: CraftAsset[] | null;
+    ctaSection?: CraftCtaSection | null;
     artContent?: CraftBlock[] | null;
   }>;
 };
@@ -41,6 +50,13 @@ export type RapPageData = {
   downloadBackground: ImageSource;
   bodyHtml: string;
   issuuUrl: string;
+  cta: {
+    heading: string;
+    description: string;
+    buttonLabel: string;
+    buttonUrl: string;
+    background: ImageSource;
+  };
 };
 
 const RAP_SLUG = "reflect-reconciliation-action-plan";
@@ -64,6 +80,13 @@ const FALLBACK_DATA: RapPageData = {
   downloadBackground: "/images/rap/reflect-download-background.jpg",
   bodyHtml: FALLBACK_BODY.map((paragraph) => `<p>${paragraph}</p>`).join("\n"),
   issuuUrl: "https://issuu.com/nbrsarchitecture/docs/nbrs_reflect_rap",
+  cta: {
+    heading: "Download full reflect RAP",
+    description: "For insight into the implementation of each action",
+    buttonLabel: "Download reflect RAP",
+    buttonUrl: "https://issuu.com/nbrsarchitecture/docs/nbrs_reflect_rap",
+    background: "/images/rap/reflect-download-background.jpg",
+  },
 };
 
 const RAP_QUERY = /* GraphQL */ `
@@ -80,6 +103,13 @@ const RAP_QUERY = /* GraphQL */ `
         rapEndorsedBy
         rapReadTime
         rapDownloadBackground { url width height title }
+        ctaSection {
+          ctaSectionHeading
+          ctaSectionDescription
+          ctaSectionButtonLabel
+          ctaSectionButtonUrl
+          ctaSectionBackgroundImage { url width height title }
+        }
         artContent {
           ... on text_Entry { text }
           ... on image_Entry { image { url width height title } }
@@ -115,6 +145,15 @@ export async function getRapPage(): Promise<RapPageData> {
       downloadBackground: toImageSource(firstAsset(entry.rapDownloadBackground)) || FALLBACK_DATA.downloadBackground,
       bodyHtml: normalizeBody(entry.artContent) || FALLBACK_DATA.bodyHtml,
       issuuUrl: entry.artIssuuUrl || FALLBACK_DATA.issuuUrl,
+      cta: {
+        heading: entry.ctaSection?.ctaSectionHeading || FALLBACK_DATA.cta.heading,
+        description: entry.ctaSection?.ctaSectionDescription || FALLBACK_DATA.cta.description,
+        buttonLabel: entry.ctaSection?.ctaSectionButtonLabel || FALLBACK_DATA.cta.buttonLabel,
+        buttonUrl: entry.ctaSection?.ctaSectionButtonUrl || entry.artIssuuUrl || FALLBACK_DATA.cta.buttonUrl,
+        background: toImageSource(firstAsset(entry.ctaSection?.ctaSectionBackgroundImage))
+          || toImageSource(firstAsset(entry.rapDownloadBackground))
+          || FALLBACK_DATA.cta.background,
+      },
     };
   } catch {
     return FALLBACK_DATA;

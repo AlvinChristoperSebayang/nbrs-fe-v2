@@ -90,7 +90,7 @@ export default async function ReflectRapPage() {
 
       <section className="relative overflow-hidden">
         <ResponsiveImage
-          src={page.downloadBackground}
+          src={page.cta.background}
           alt=""
           className="absolute inset-0 h-full w-full object-cover"
           priority
@@ -98,17 +98,19 @@ export default async function ReflectRapPage() {
         <div className="absolute inset-0 bg-[#a34218]/35" />
         <Container className="relative py-20 sm:py-28 lg:py-36">
           <div className="border border-white/75 bg-[#71351f]/45 px-6 py-14 text-center text-white sm:px-12 lg:py-24" data-aos="fade-up">
-            <h2 className="font-heading text-4xl uppercase leading-none sm:text-5xl lg:text-[64px]">Download full reflect RAP</h2>
-            <p className="mx-auto mt-5 max-w-xl text-base text-white/90 sm:text-lg">For insight into the implementation of each action</p>
+            <h2 className="font-heading text-4xl uppercase leading-none sm:text-5xl lg:text-[64px]">{page.cta.heading}</h2>
+            {page.cta.description && <p className="mx-auto mt-5 max-w-xl text-base text-white/90 sm:text-lg">{page.cta.description}</p>}
+            {page.cta.buttonLabel && page.cta.buttonUrl && (
             <a
-              href={page.issuuUrl}
+              href={page.cta.buttonUrl}
               target="_blank"
               rel="noreferrer"
               className="mt-8 inline-flex items-center gap-3 rounded-full bg-white px-7 py-4 text-sm uppercase text-[#b4521e] transition hover:bg-white/90 sm:px-10 sm:py-5 sm:text-base"
             >
-              Download reflect RAP
+              {page.cta.buttonLabel}
               <Arrow />
             </a>
+            )}
           </div>
         </Container>
       </section>
