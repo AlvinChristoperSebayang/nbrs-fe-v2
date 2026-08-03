@@ -11,9 +11,8 @@ type Asset = { mobile?: string; tablet?: string; desktop?: string };
 type Project = { id: string; title: string; slug: string; uri: string | null; proHdrHeading: string | null; thumbnail?: Asset[]; catStatus: Array<{ title: string }>; catDiscipline: Array<{ title: string }> };
 type FeatureBlock = { image: Asset[]; leftColumnHeading: string | null; leftColumnText: string | null; rightColumnHeading: string | null; rightColumnText: string | null };
 type QuoteBlock = { quote: string | null; person: Array<{ title: string; PplName: string | null; pplProfileImage: Asset[] }> };
-type Category = { id: string; title: string; slug: string; accentColor: string | null; seoPageTitle: string | null; seoMetaDescription: string | null; catHdrHeading: string | null; catHdrSubheading: string | null; sectorServicesIntro: string | null; sectorHeritageAdvisoryServices: string | null; sectorHeritageConservationServices: string | null; catHdrImage: Asset[]; catOvrHeading: string | null; catOvrText: string | null; catOverImageText: FeatureBlock[]; catFeaturedProjects: Project[]; catSelectedProjects: Project[]; catPclPerson: QuoteBlock[] };
-type ParentEntry = { ctaSection: { ctaSectionBackgroundImage: Asset[]; ctaSectionHeading: string | null; ctaSectionDescription: string | null; ctaSectionButtonLabel: string | null; ctaSectionButtonUrl: string | null } | null };
-type Response = { category: Category[]; parent: ParentEntry[] };
+type Category = { id: string; title: string; slug: string; accentColor: string | null; seoPageTitle: string | null; seoMetaDescription: string | null; catHdrHeading: string | null; catHdrSubheading: string | null; sectorServicesIntro: string | null; sectorHeritageAdvisoryServices: string | null; sectorHeritageConservationServices: string | null; catHdrImage: Asset[]; catOvrHeading: string | null; catOvrText: string | null; catOverImageText: FeatureBlock[]; catFeaturedProjects: Project[]; catSelectedProjects: Project[]; catPclPerson: QuoteBlock[]; ctaSection: { ctaSectionBackgroundImage: Asset[]; ctaSectionHeading: string | null; ctaSectionDescription: string | null; ctaSectionButtonLabel: string | null; ctaSectionButtonUrl: string | null } | null };
+type Response = { category: Category[] };
 
 export type SectorDetailContent = {
   title: string; description: string; image: ImageSource; principlesTitle: string; principlesDescription: string; principlesImages: ImageSource[]; features: FeatureItem[]; backgroundColor: string; heritageServices?: { intro: string; advisory: string[]; conservation: string[] }; keyProjects: KeyProjectItem[]; tableProjects: ProjectTableRow[]; quote?: { image: ImageSource; text: string; author: string }; cta: CtaContent; seoTitle: string; seoDescription: string;
@@ -37,10 +36,8 @@ query SectorDetail($slug: [String]!) {
       catFeaturedProjects { ... on projects_Entry { id title slug uri proHdrHeading thumbnail { ${cardImage} } } }
       catSelectedProjects { ... on projects_Entry { id title slug uri proHdrHeading catStatus { ... on status_Category { title } } catDiscipline { ... on discipline_Category { title } } } }
       catPclPerson { ... on block2_Entry { quote person { ... on people_Entry { title PplName pplProfileImage { ${portraitImage} } } } } }
+      ctaSection { ctaSectionBackgroundImage { ${ctaImage} } ctaSectionHeading ctaSectionDescription ctaSectionButtonLabel ctaSectionButtonUrl }
     }
-  }
-  parent: entries(section: ["sectors"], limit: 1) {
-    ... on sectors_Entry { ctaSection { ctaSectionBackgroundImage { ${ctaImage} } ctaSectionHeading ctaSectionDescription ctaSectionButtonLabel ctaSectionButtonUrl } }
   }
 }`;
 
@@ -124,7 +121,7 @@ export async function getSectorDetailContent(slug: string): Promise<SectorDetail
       keyProjects: keyProjects.length ? keyProjects : fallback.keyProjects,
       tableProjects: tableProjects.length ? tableProjects : fallback.tableProjects,
       quote: quoteBlock && person && quoteImage ? { image: quoteImage, text: quoteBlock.quote!.trim(), author: person.PplName?.trim() || person.title } : fallback.quote,
-      cta: mapCta(data.parent?.[0], FALLBACK_CTA),
+      cta: mapCta(category, FALLBACK_CTA),
       seoTitle: category.seoPageTitle?.trim() || category.title,
       seoDescription: category.seoMetaDescription?.trim() || category.catHdrSubheading?.trim() || fallback.heroSubtitle,
     };
