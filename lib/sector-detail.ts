@@ -10,8 +10,9 @@ import { SECTORS_DATA, SectorItem } from "./sectors-data";
 type Asset = { mobile?: string; tablet?: string; desktop?: string };
 type Project = { id: string; title: string; slug: string; uri: string | null; proHdrHeading: string | null; thumbnail?: Asset[]; catStatus: Array<{ title: string }>; catDiscipline: Array<{ title: string }> };
 type FeatureBlock = { image: Asset[]; leftColumnHeading: string | null; leftColumnText: string | null; rightColumnHeading: string | null; rightColumnText: string | null };
+type SectorFeature = { sectorFeatureHeading: string | null; sectorFeatureText: string | null; sectorFeatureImage: Asset[] };
 type QuoteBlock = { quote: string | null; person: Array<{ title: string; PplName: string | null; pplProfileImage: Asset[] }> };
-type Category = { id: string; title: string; slug: string; accentColor: string | null; seoPageTitle: string | null; seoMetaDescription: string | null; catHdrHeading: string | null; catHdrSubheading: string | null; sectorServicesIntro: string | null; sectorHeritageAdvisoryServices: string | null; sectorHeritageConservationServices: string | null; catHdrImage: Asset[]; catOvrHeading: string | null; catOvrText: string | null; catOverImageText: FeatureBlock[]; catFeaturedProjects: Project[]; catSelectedProjects: Project[]; catPclPerson: QuoteBlock[]; ctaSection: { ctaSectionBackgroundImage: Asset[]; ctaSectionHeading: string | null; ctaSectionDescription: string | null; ctaSectionButtonLabel: string | null; ctaSectionButtonUrl: string | null } | null };
+type Category = { id: string; title: string; slug: string; accentColor: string | null; seoPageTitle: string | null; seoMetaDescription: string | null; catHdrHeading: string | null; catHdrSubheading: string | null; sectorServicesIntro: string | null; sectorHeritageAdvisoryServices: string | null; sectorHeritageConservationServices: string | null; catHdrImage: Asset[]; catOvrHeading: string | null; catOvrText: string | null; catOverImageText: FeatureBlock[]; sectorFeatures: SectorFeature[]; catFeaturedProjects: Project[]; catSelectedProjects: Project[]; catPclPerson: QuoteBlock[]; ctaSection: { ctaSectionBackgroundImage: Asset[]; ctaSectionHeading: string | null; ctaSectionDescription: string | null; ctaSectionButtonLabel: string | null; ctaSectionButtonUrl: string | null } | null };
 type Response = { category: Category[] };
 
 export type SectorDetailContent = {
@@ -33,6 +34,7 @@ query SectorDetail($slug: [String]!) {
       catHdrImage { ${heroImage} }
       catOvrHeading catOvrText
       catOverImageText { ... on block3_Entry { image { ${landscapeImage} } leftColumnHeading leftColumnText rightColumnHeading rightColumnText } }
+      sectorFeatures { ... on sectorFeature_Entry { sectorFeatureHeading sectorFeatureText sectorFeatureImage { ${landscapeImage} } } }
       catFeaturedProjects { ... on projects_Entry { id title slug uri proHdrHeading thumbnail { ${cardImage} } } }
       catSelectedProjects { ... on projects_Entry { id title slug uri proHdrHeading catStatus { ... on status_Category { title } } catDiscipline { ... on discipline_Category { title } } } }
       catPclPerson { ... on block2_Entry { quote person { ... on people_Entry { title PplName pplProfileImage { ${portraitImage} } } } } }
@@ -83,13 +85,10 @@ export async function getSectorDetailContent(slug: string): Promise<SectorDetail
     const category = data.category?.[0];
     if (!category) return buildFallback(fallback);
 
-    const features = category.catOverImageText.flatMap((block, blockIndex) => {
-      const image = toImageSource(block.image[0]) ?? fallback.features[blockIndex]?.image;
-      if (!image) return [];
-      return [
-        { title: block.leftColumnHeading, description: block.leftColumnText },
-        { title: block.rightColumnHeading, description: block.rightColumnText },
-      ].filter((item): item is { title: string; description: string | null } => Boolean(item.title)).map((item) => ({ title: item.title.trim(), description: item.description?.trim() ?? "", image }));
+    const features = category.sectorFeatures.flatMap((feature) => {
+      const image = toImageSource(feature.sectorFeatureImage[0]);
+      const title = feature.sectorFeatureHeading?.trim();
+      return image && title ? [{ title, description: feature.sectorFeatureText?.trim() ?? "", image }] : [];
     });
 
     const galleryImages = [category.catHdrImage[0], ...category.catOverImageText.map((block) => block.image[0]), ...category.catFeaturedProjects.slice(0, 2).map((project) => project.thumbnail?.[0])]
