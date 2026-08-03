@@ -52,4 +52,6 @@ export type CtaContent = {
   description?: string;
   buttonText?: string;
   buttonHref?: string;
+  secondaryButtonText?: string;
+  secondaryButtonHref?: string;
 };

@@ -24,6 +24,8 @@ type RawPage = {
     ctaSectionDescription: string | null;
     ctaSectionButtonLabel: string | null;
     ctaSectionButtonUrl: string | null;
+    ctaSectionSecondaryButtonLabel: string | null;
+    ctaSectionSecondaryButtonUrl: string | null;
   } | null;
 };
 
@@ -104,6 +106,8 @@ const DESIGNING_FOR_PEOPLE_QUERY = /* GraphQL */ `
           ctaSectionDescription
           ctaSectionButtonLabel
           ctaSectionButtonUrl
+          ctaSectionSecondaryButtonLabel
+          ctaSectionSecondaryButtonUrl
         }
       }
     }
@@ -144,6 +148,8 @@ export async function getDesigningForPeoplePage(): Promise<DesigningForPeoplePag
         description: clean(cta?.ctaSectionDescription) || FALLBACK.cta.description,
         buttonText: clean(cta?.ctaSectionButtonLabel) || FALLBACK.cta.buttonText,
         buttonHref: clean(cta?.ctaSectionButtonUrl) || FALLBACK.cta.buttonHref,
+        secondaryButtonText: clean(cta?.ctaSectionSecondaryButtonLabel) || undefined,
+        secondaryButtonHref: clean(cta?.ctaSectionSecondaryButtonUrl) || undefined,
       },
       navigationCards: (navigation?.peopleNavigationCards ?? []).flatMap((card, index) => {
         const image = toImageSource(card.peopleNavigationCardImage[0]);

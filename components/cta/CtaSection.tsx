@@ -54,6 +54,28 @@ export function CtaSection({ content, cta }: CtaSectionProps) {
               </svg>
             </Link>
           )}
+
+          {data.secondaryButtonText && data.secondaryButtonHref && (
+            <Link
+              href={data.secondaryButtonHref}
+              className="group mt-3 inline-flex items-center gap-2 text-[14px] uppercase text-white transition-opacity hover:opacity-80"
+            >
+              {data.secondaryButtonText}
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M14 7.72388L0 7.72388M6.66725 14.7236L14 7.72388L6.66725 0.723633"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                />
+              </svg>
+            </Link>
+          )}
         </div>
       </Container>
     </section>
