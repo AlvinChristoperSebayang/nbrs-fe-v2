@@ -8,6 +8,7 @@ type RawAward = {
   awarded: string | null;
   year: string | null;
   awardURL: string | null;
+  awardImage: RawResponsiveAsset[];
 };
 
 type RawBlock =
@@ -138,6 +139,11 @@ const AWARDS_QUERY = /* GraphQL */ `
                 awarded
                 year
                 awardURL
+                awardImage {
+                  mobile: url @transform(width: 600, height: 450, mode: "crop", format: "webp", quality: 80, immediately: true)
+                  tablet: url @transform(width: 900, height: 675, mode: "crop", format: "webp", quality: 82, immediately: true)
+                  desktop: url @transform(width: 1200, height: 900, mode: "crop", format: "webp", quality: 85, immediately: true)
+                }
               }
             }
           }
@@ -210,7 +216,8 @@ function mapAwards(raw: RawAward[], projects: RawProject[]): AwardItem[] {
       projectCategoryColor: "#F0C7BD",
       awardTitle: split.title,
       commendation: split.commendation,
-      image: projectImage(projectName, projects, DUMMY_AWARDS[index]?.image || "/images/about/practice1.jpg"),
+      image: toImageSource(item.awardImage?.[0])
+        || projectImage(projectName, projects, DUMMY_AWARDS[index]?.image || "/images/about/practice1.jpg"),
     });
   });
   return items;
