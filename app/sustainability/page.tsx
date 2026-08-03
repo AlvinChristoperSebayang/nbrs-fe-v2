@@ -38,8 +38,8 @@ export default async function SustainabilityPage() {
           paragraphs={[feature.text]}
           image={feature.image}
           reverse={index % 2 === 0}
-          buttonText={feature.title === "Adaptive Reuse Initiatives" ? "View project" : undefined}
-          buttonHref={feature.title === "Adaptive Reuse Initiatives" ? "/projects/new-life-bondi-junction" : undefined}
+          buttonText={feature.href ? "View project" : undefined}
+          buttonHref={feature.href}
         />
       ))}
 

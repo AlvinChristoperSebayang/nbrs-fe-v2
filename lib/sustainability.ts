@@ -26,6 +26,7 @@ type SustainabilityResponse = {
           thumbnailGrid?: Array<{
             heading?: string | null;
             text?: string | null;
+            sustainabilityBlockUrl?: string | null;
             image?: SustainabilityAsset[];
           }>;
         }
@@ -52,6 +53,7 @@ export type SustainabilityFeature = {
   title: string;
   text: string;
   image: ImageSource;
+  href?: string;
 };
 
 export type SustainabilityProject = {
@@ -108,6 +110,7 @@ const query = /* GraphQL */ `
               ... on block_Entry {
                 heading
                 text
+                sustainabilityBlockUrl
                 image {
                   mobile: url @transform(width: 600, height: 750, mode: "crop", format: "webp", quality: 80, immediately: true)
                   tablet: url @transform(width: 900, height: 900, mode: "crop", format: "webp", quality: 80, immediately: true)
@@ -264,6 +267,7 @@ export async function getSustainabilityPage(): Promise<SustainabilityPageData> {
             title: feature.heading as string,
             text: plainText(feature.text),
             image: imageFrom(feature.image, fallback.features[0].image) ?? fallback.features[0].image,
+            href: feature.sustainabilityBlockUrl?.trim() || undefined,
           })),
       projects:
         (caseStudiesBlock?.__typename === "blocks_caseStudies_BlockType"
