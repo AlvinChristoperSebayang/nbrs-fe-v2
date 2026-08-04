@@ -1,17 +1,6 @@
 @import "tailwindcss";
 @import "aos/dist/aos.css";
 
-/*
- * AOS hides every [data-aos] target before its client initializer runs. Keep
- * the server-rendered page readable if that initializer is delayed or a local
- * development reload interrupts it. Once AOS starts it adds .aos-init and
- * owns the normal animation styles again.
- */
-[data-aos]:not(.aos-init) {
-  opacity: 1 !important;
-  transform: none !important;
-}
-
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -22,13 +11,6 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-roboto);
   --font-heading: var(--font-trade-gothic);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 @keyframes hero-fade-up {
@@ -43,7 +25,7 @@
 }
 
 body {
-  background: var(--background);
+  background: #ffffff;
   color: var(--foreground);
   font-family: var(--font-sans);
 }
