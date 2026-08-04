@@ -100,7 +100,7 @@ export function HeroSlider({ slides }: { slides: HeroSlide[] }) {
             })}
           </Swiper>
 
-          <div style={swiperVars} className="mt-4 flex items-center justify-end gap-4 swipe-controls">
+          <div style={swiperVars} className="mt-4 flex items-center justify-center md:justify-end gap-4 swipe-controls">
             <button
               id={prevId}
               type="button"

@@ -83,8 +83,12 @@ body {
   .hero-slider .slider-area{
     margin-left: 20px;
   }
- .hero-slider .swipe-controls{
-    margin-right: 35px;
+  .hero-slider .swipe-controls{
+    display: flex !important;
+    justify-content: center !important;
+    margin-left: -20px !important;
+    margin-right: 0 !important;
+    width: 100% !important;
   }
   .hero-slider .swiper-pagination-bullet{
     width:18px !important;

@@ -27,8 +27,10 @@ function getTitleLines(title: string): string[] {
   }
 
   const words = title.trim().split(/\s+/);
-  if (words.length <= 2) {
-    return [title];
+
+  // Condition: If title has 3 words or fewer (<= 3 words, e.g. "A SUSTAINABLE FUTURE"), keep on ONE single line
+  if (words.length <= 3) {
+    return [title.trim()];
   }
 
   const totalLength = title.trim().length;
@@ -80,9 +82,10 @@ export function renderTitleWithUnderline(title: React.ReactNode, showDivider: bo
     return title;
   }
 
+  // Single line condition (3 words or fewer)
   if (lines.length === 1) {
     return (
-      <span className="inline-block border-b-[4px] sm:border-b-[5px] lg:border-b-[6px] border-white pb-1 sm:pb-2 leading-[1.05]">
+      <span className="inline-block border-b-[4px] sm:border-b-[5px] lg:border-b-[6px] border-white pb-1 sm:pb-2 leading-[1.05] whitespace-nowrap">
         {lines[0]}
       </span>
     );
@@ -126,6 +129,8 @@ export function Hero({
   showDivider = true,
   children,
 }: HeroProps) {
+  const isShortTitle = typeof title === "string" && title.trim().split(/\s+/).length <= 3;
+
   return (
     <section className="relative w-full flex flex-col justify-between h-[610px] lg:h-[85vh]">
       {/* Background Image Container */}
@@ -148,7 +153,9 @@ export function Hero({
           {typeof title === "string" ? (
             <h1
               data-aos="fade-up"
-              className={`font-heading max-w-2xl text-[38px] uppercase leading-[1.05] text-white lg:text-[70px] ${titleClassName}`}
+              className={`font-heading text-[38px] uppercase leading-[1.05] text-white lg:text-[70px] ${
+                isShortTitle ? "max-w-none w-auto whitespace-nowrap" : "max-w-2xl"
+              } ${titleClassName}`}
             >
               {renderTitleWithUnderline(title, showDivider)}
             </h1>

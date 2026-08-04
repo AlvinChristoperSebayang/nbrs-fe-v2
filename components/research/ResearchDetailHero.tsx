@@ -18,6 +18,80 @@ const CATEGORY_BG_COLORS: Record<string, string> = {
   heritage: "#F0C7BD",
 };
 
+function getTitleLines(title: string): string[] {
+  if (title.includes("\n")) {
+    return title.split("\n").map((l) => l.trim()).filter(Boolean);
+  }
+
+  const words = title.trim().split(/\s+/);
+
+  // If 3 words or fewer, keep on 1 line
+  if (words.length <= 3) {
+    return [title.trim()];
+  }
+
+  const totalLength = title.trim().length;
+  const targetMid = totalLength / 2;
+
+  let currentLine = "";
+  const line1Words: string[] = [];
+  const line2Words: string[] = [];
+
+  for (let i = 0; i < words.length; i++) {
+    const word = words[i];
+    if (line1Words.length === 0) {
+      line1Words.push(word);
+      currentLine = word;
+    } else if (currentLine.length < targetMid && i < words.length - 1) {
+      line1Words.push(word);
+      currentLine += " " + word;
+    } else {
+      line2Words.push(word);
+    }
+  }
+
+  if (line2Words.length === 0) {
+    return [title];
+  }
+
+  return [line1Words.join(" "), line2Words.join(" ")];
+}
+
+export function renderResearchTitleWithUnderline(title: string) {
+  const lines = getTitleLines(title);
+
+  if (lines.length === 1) {
+    return (
+      <span className="inline-block border-b-[4px] sm:border-b-[5px] lg:border-b-[6px] border-black pb-1 sm:pb-2 leading-[1.05]">
+        {lines[0]}
+      </span>
+    );
+  }
+
+  return (
+    <span className="inline-flex flex-col items-start">
+      {lines.map((line, idx) => {
+        const isLast = idx === lines.length - 1;
+        if (isLast) {
+          return (
+            <span
+              key={idx}
+              className="inline-block border-b-[4px] sm:border-b-[5px] lg:border-b-[6px] border-black pb-1 sm:pb-2 leading-none mt-1"
+            >
+              {line}
+            </span>
+          );
+        }
+        return (
+          <span key={idx} className="block leading-[1.05]">
+            {line}
+          </span>
+        );
+      })}
+    </span>
+  );
+}
+
 export function ResearchDetailHero({
   title,
   description,
@@ -87,17 +161,10 @@ export function ResearchDetailHero({
           <h1
             data-aos="fade-up"
             data-aos-delay="100"
-            className="font-heading text-4xl sm:text-5xl lg:text-[70px] font-bold text-black uppercase leading-[1.05] tracking-tight"
+            className="font-heading text-4xl sm:text-5xl lg:text-[70px] font-bold text-black uppercase leading-[1.05] tracking-tight mb-6"
           >
-            {title}
+            {renderResearchTitleWithUnderline(title)}
           </h1>
-
-          {/* Underline Divider Line */}
-          <div
-            data-aos="fade-up"
-            data-aos-delay="150"
-            className="mt-6 mb-6 h-1.5 lg:h-2 w-48 sm:w-64 bg-black origin-left"
-          />
 
           {/* Description */}
           {description && (

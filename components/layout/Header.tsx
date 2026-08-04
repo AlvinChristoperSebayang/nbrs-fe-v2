@@ -55,8 +55,8 @@ export const NAV_STRUCTURE: NavItem[] = [
     ],
   },
   {
-    id: "expertise",
-    label: "EXPERTISE",
+    id: "practices",
+    label: "PRACTICES",
     href: "/practices",
     subItems: [
       { label: "Architecture", href: "/practices/architecture" },
@@ -227,9 +227,16 @@ export function Header() {
                   >
                     <Link
                       href={item.href}
-                      onClick={() => {
-                        setActiveCategory(item.id);
-                        setOpen(false);
+                      onClick={(e) => {
+                        const hasSubItems = item.subItems && item.subItems.length > 0;
+                        if (hasSubItems && activeCategory !== item.id) {
+                          // 1st click: open/expand submenu without navigating or closing menu
+                          e.preventDefault();
+                          setActiveCategory(item.id);
+                        } else {
+                          // 2nd click (or item without sub-items): navigate to parent href and close menu
+                          setOpen(false);
+                        }
                       }}
                       className={`font-heading text-[26px] sm:text-3xl lg:text-[38px] uppercase tracking-wide leading-tight transition-all duration-300 ${
                         isActive
