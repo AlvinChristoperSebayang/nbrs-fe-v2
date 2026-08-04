@@ -34,7 +34,7 @@ export const NAV_STRUCTURE: NavItem[] = [
   {
     id: "people",
     label: "PEOPLE",
-    href: "/designing-for-people",
+    href: "/people",
     subItems: [
       { label: "Our Leaders", href: "/people/team" },
       { label: "Culture", href: "/people/culture" },
@@ -85,7 +85,7 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
-  const [activeCategory, setActiveCategory] = useState<string>("people");
+  const [activeCategory, setActiveCategory] = useState<string>("purpose");
   const lastScrollY = useRef(0);
 
   useEffect(() => {
@@ -213,16 +213,11 @@ export function Header() {
             <div className="col-span-6 flex flex-col gap-13 sm:gap-14">
               {NAV_STRUCTURE.map((item, index) => {
                 const isActive = activeCategory === item.id;
-                const hasSubItems = Boolean(item.subItems && item.subItems.length > 0);
 
                 return (
                   <div
                     key={item.id}
                     onMouseEnter={() => setActiveCategory(item.id)}
-                    onClick={() => {
-                      setActiveCategory(item.id);
-                      if (!hasSubItems) setOpen(false);
-                    }}
                     className={`cursor-pointer group flex flex-col transition-all duration-500 ease-out ${
                       open ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
                     }`}
@@ -232,13 +227,9 @@ export function Header() {
                   >
                     <Link
                       href={item.href}
-                      onClick={(e) => {
-                        if (hasSubItems) {
-                          e.preventDefault();
-                          setActiveCategory(item.id);
-                        } else {
-                          setOpen(false);
-                        }
+                      onClick={() => {
+                        setActiveCategory(item.id);
+                        setOpen(false);
                       }}
                       className={`font-heading text-[26px] sm:text-3xl lg:text-[38px] uppercase tracking-wide leading-tight transition-all duration-300 ${
                         isActive

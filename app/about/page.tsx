@@ -32,9 +32,8 @@ export default async function AboutPage() {
       <GridEffect
         title={about.approachHeading}
         items={about.approachItems}
-        // Unlike Homepage, an empty CTA Element intentionally hides this link.
-        // viewAllLabel={about.viewAll?.label ?? ""}
-        // viewAllUrl={about.viewAll?.href ?? ""}
+        viewAllLabel=""
+        viewAllUrl=""
         backgroundColor="#EDEDED"
       />
       <AboutPracticeSection

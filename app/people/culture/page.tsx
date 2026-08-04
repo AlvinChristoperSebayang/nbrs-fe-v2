@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Hero } from "@/components/ui/Hero";
+import { CareersHero } from "@/components/people/CareersHero";
 import { CultureValuesSection } from "@/components/people/CultureValuesSection";
 import { InitiativesSection } from "@/components/people/InitiativesSection";
 import { CtaSection } from "@/components/cta/CtaSection";
@@ -14,8 +15,25 @@ export default async function PeopleCulturePage() {
 
   return (
     <article className="bg-white text-black min-h-screen">
-      {/* 1. HERO SECTION */}
-      {page.hero && <Hero image={page.hero.image} title={page.hero.title} description={page.hero.description} />}
+      {/* 1. HERO SECTION (Mobile: CareersHero, Desktop: Hero) */}
+      {page.hero && (
+        <>
+          <div className="block lg:hidden">
+            <CareersHero
+              imageSrc={page.hero.image}
+              title={page.hero.title}
+              description={page.hero.description}
+            />
+          </div>
+          <div className="hidden lg:block">
+            <Hero
+              image={page.hero.image}
+              title={page.hero.title}
+              description={page.hero.description}
+            />
+          </div>
+        </>
+      )}
 
       {/* 2. OUR VALUES SECTION */}
       {page.values && <CultureValuesSection {...page.values} />}

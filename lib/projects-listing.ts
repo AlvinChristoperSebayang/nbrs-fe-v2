@@ -18,8 +18,6 @@ export type ProjectListItem = {
   subheading: string | null;
   thumbnailUrl: ImageSource | null;
   sectors: ProjectCategory[];
-  // Labelled "Practice" on the frontend, but this is the `discipline`
-  // category group under the hood — see app/projects/result.md §5.
   practices: ProjectCategory[];
 };
 
@@ -221,7 +219,9 @@ export async function getProjectsListing({
     pageSubheading: page?.pageSubheading ?? null,
     pageHeroImageUrl: toImageSource(page?.seoImage?.[0]),
     sectors: data.sectors ?? [],
-    practices: data.practices ?? [],
+    practices: (data.practices ?? []).filter(
+      (p) => p.slug !== "heritage" && p.title?.toLowerCase() !== "heritage"
+    ),
     projects: (data.projects ?? []).map((entry) => ({
       id: entry.id,
       slug: entry.slug,

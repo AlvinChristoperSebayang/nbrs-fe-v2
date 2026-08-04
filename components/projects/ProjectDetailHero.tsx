@@ -28,7 +28,7 @@ export function ProjectDetailHero({
           <div className="flex flex-col w-fit">
             <h1
               data-aos="fade-up"
-              className="font-heading mt-16 text-[38px] uppercase tracking-tight sm:text-[38px] lg:text-[70px] lg:leading-[0.7] leading-[1]"
+              className="font-heading mt-16 text-[38px] uppercase tracking-tight sm:text-[38px] lg:text-[70px] leading-[1]"
             >
               {title}
             </h1>

@@ -32,7 +32,7 @@ export default async function ProjectPage(
     .join(", ");
 
   return (
-    <article>
+    <article className="bg-white text-black min-h-screen">
       <ProjectDetailHero
         title={project.heading}
         subheading={project.subheading}

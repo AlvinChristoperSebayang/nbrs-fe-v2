@@ -62,10 +62,12 @@ const FALLBACK: DesigningForPeoplePageContent = {
   },
   cta: {
     image: "/images/contact-bg.png",
-    title: "GET IN TOUCH",
-    description: "Want to join our collective or collaborate on a project? Reach out to our leadership team.",
-    buttonText: "CONTACT US",
+    title: "LOOKING TO PARTNER OR FOR A NEW CAREER CHAPTER?",
+    description: "Let's start a conversation",
+    buttonText: "CONTACT NBRS",
     buttonHref: "/contact",
+    secondaryButtonText: "LATEST INSIGHTS",
+    secondaryButtonHref: "/news",
   },
   navigationCards: [],
   fastFacts: { heading: "", items: [] },
@@ -115,7 +117,12 @@ const DESIGNING_FOR_PEOPLE_QUERY = /* GraphQL */ `
 `;
 
 function clean(value: string | null | undefined): string {
-  return value?.replace(/<[^>]+>/g, "").trim() ?? "";
+  if (!value) return "";
+  return value
+    .replace(/<[^>]+>/g, "")
+    .replace(/Let\?\?\?s/gi, "Let's")
+    .replace(/\?\?\?/g, "'")
+    .trim();
 }
 
 export async function getDesigningForPeoplePage(): Promise<DesigningForPeoplePageContent> {
@@ -148,8 +155,8 @@ export async function getDesigningForPeoplePage(): Promise<DesigningForPeoplePag
         description: clean(cta?.ctaSectionDescription) || FALLBACK.cta.description,
         buttonText: clean(cta?.ctaSectionButtonLabel) || FALLBACK.cta.buttonText,
         buttonHref: clean(cta?.ctaSectionButtonUrl) || FALLBACK.cta.buttonHref,
-        secondaryButtonText: clean(cta?.ctaSectionSecondaryButtonLabel) || undefined,
-        secondaryButtonHref: clean(cta?.ctaSectionSecondaryButtonUrl) || undefined,
+        secondaryButtonText: clean(cta?.ctaSectionSecondaryButtonLabel) || FALLBACK.cta.secondaryButtonText,
+        secondaryButtonHref: clean(cta?.ctaSectionSecondaryButtonUrl) || FALLBACK.cta.secondaryButtonHref,
       },
       navigationCards: (navigation?.peopleNavigationCards ?? []).flatMap((card, index) => {
         const image = toImageSource(card.peopleNavigationCardImage[0]);

@@ -43,7 +43,7 @@ export default async function ProjectsIndexPage(
 
   if (!listing) {
     return (
-      <>
+      <main className="bg-white text-black min-h-screen">
         <ProjectsHero />
         <Container className="py-16">
           <p className="max-w-xl text-zinc-600">
@@ -52,7 +52,7 @@ export default async function ProjectsIndexPage(
             <code>CRAFT_GRAPHQL_URL</code>, then refresh this page.
           </p>
         </Container>
-      </>
+      </main>
     );
   }
 
@@ -66,7 +66,20 @@ export default async function ProjectsIndexPage(
     pageHeroImageUrl,
   } = listing;
 
-  const hasMore = projects.length < total;
+  // Guarantee filtering works even if Craft API returns all entries in development/fallback
+  let displayProjects = projects;
+  if (selectedSectors.length > 0) {
+    displayProjects = displayProjects.filter((p) =>
+      p.sectors.some((s) => selectedSectors.includes(s.slug))
+    );
+  }
+  if (selectedPractices.length > 0) {
+    displayProjects = displayProjects.filter((p) =>
+      p.practices.some((pr) => selectedPractices.includes(pr.slug))
+    );
+  }
+
+  const hasMore = displayProjects.length < total;
 
   const loadMoreParams = new URLSearchParams();
   if (selectedSectors.length)
@@ -76,7 +89,7 @@ export default async function ProjectsIndexPage(
   loadMoreParams.set("page", String(page + 1));
 
   return (
-    <>
+    <main className="bg-white text-black min-h-screen">
       <ProjectsHero
         image={pageHeroImageUrl}
         title={pageHeading}
@@ -92,7 +105,7 @@ export default async function ProjectsIndexPage(
           />
 
           <div className="mt-12">
-            <ProjectsGrid projects={projects} />
+            <ProjectsGrid projects={displayProjects} />
           </div>
 
           {hasMore && (
@@ -108,6 +121,6 @@ export default async function ProjectsIndexPage(
           )}
         </PreserveScrollOnNavigate>
       </Container>
-    </>
+    </main>
   );
 }

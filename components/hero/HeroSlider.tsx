@@ -60,15 +60,13 @@ export function HeroSlider({ slides }: { slides: HeroSlide[] }) {
             style={{ animation: "hero-fade-up 0.7s ease-out both" }}
             className="font-heading text-5xl font-bold uppercase tracking-tight text-white sm:text-6xl lg:text-[132px]"
           >
-            {activeSlide.title}
+            <span className="inline-block border-b-[4px] sm:border-b-[6px] lg:border-b-[10px] border-white pb-1 sm:pb-2 lg:pb-3 leading-none">
+              {activeSlide.title}
+            </span>
           </h2>
-          <div
-            style={{ animation: "hero-fade-up 0.7s ease-out 0.1s both" }}
-            className="lg:h-3 h-2 w-full bg-white lg:w-[354px]"
-          />
           <p
             style={{ animation: "hero-fade-up 0.7s ease-out 0.2s both" }}
-            className="font-gothic font-trade-gothic text-lg uppercase tracking-[0%] text-white/90 sm:text-[40px]"
+            className="font-gothic font-trade-gothic text-lg uppercase tracking-[0%] text-white/90 sm:text-[40px] mt-2"
           >
             {activeSlide.headline}
           </p>

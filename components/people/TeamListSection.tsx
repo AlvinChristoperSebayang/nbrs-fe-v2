@@ -95,7 +95,7 @@ export function TeamListSection({ members }: { members: TeamMember[] }) {
         {/* Team Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10">
           {filteredMembers.map((member, index) => (
-            <div key={member.id} data-aos="fade-up" data-aos-delay={index * 90}>
+            <div key={member.id} data-aos="fade-up" data-aos-delay={(index % 3) * 60}>
               <Link
                 href={`/people/team/${member.id}`}
                 className="group flex flex-col overflow-hidden rounded-[5px] bg-white cursor-pointer"
@@ -111,7 +111,7 @@ export function TeamListSection({ members }: { members: TeamMember[] }) {
 
                 {/* Member Details Box */}
                 <div
-                  className={`relative flex flex-col justify-between gap-4 p-6 sm:p-7 min-h-[180px] bg-[#EDE3F0] text-black transition-colors duration-500 ease-out group-hover:brightness-[0.96]`}
+                  className="relative flex flex-col justify-between gap-4 p-6 sm:p-7 min-h-[200px] bg-[#DEE1F2] text-black transition-colors duration-500 ease-out group-hover:brightness-[0.96]"
                 >
                   <div className="flex flex-col gap-2 pr-6">
                     <h3 className="font-heading text-2xl sm:text-3xl font-bold leading-tight text-black">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
 import { Container } from "@/components/ui/Container";
@@ -11,7 +11,7 @@ export function GridEffect({
   title = "Features",
   description,
   viewAllLabel = "View all latest news",
-  viewAllUrl = "/blog",
+  viewAllUrl = "/news",
   backgroundColor = "#FFFFFF",
 }: {
   items: NewsItem[];
@@ -22,7 +22,45 @@ export function GridEffect({
   backgroundColor?: string;
 }) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const cardRefs = useRef<(HTMLAnchorElement | HTMLDivElement | null)[]>([]);
   const showViewAll = Boolean(viewAllLabel && viewAllUrl);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Only execute scroll-activation on mobile (< 1024px)
+      if (window.innerWidth >= 1024) return;
+
+      const targetY = 200; // Target threshold top 200px
+      let closestIndex = -1;
+      let minDistance = Infinity;
+
+      cardRefs.current.forEach((el, index) => {
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        // Check cards visible within the viewport
+        if (rect.top <= window.innerHeight * 0.85 && rect.bottom >= 50) {
+          const distance = Math.abs(rect.top - targetY);
+          if (distance < minDistance) {
+            minDistance = distance;
+            closestIndex = index;
+          }
+        }
+      });
+
+      if (closestIndex !== -1) {
+        setActiveIndex(closestIndex);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll, { passive: true });
+    handleScroll();
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+    };
+  }, [items]);
 
   return (
     <section className="lg:py-24" style={{ backgroundColor }}>
@@ -118,7 +156,7 @@ export function GridEffect({
                 <>
                   <div className="flex flex-col gap-2">
                     <h3
-                      className={`font-heading text-2xl uppercase leading-tight duration-300 sm:text-3xl lg:max-w-[231px]  ${
+                      className={`font-heading text-2xl uppercase leading-tight duration-300 sm:text-3xl lg:max-w-[231px] ${
                         isActive
                           ? "text-white lg:text-[36px]"
                           : "text-black lg:text-[18px]"
@@ -170,6 +208,9 @@ export function GridEffect({
                 return (
                   <Link
                     key={item.title}
+                    ref={(el) => {
+                      cardRefs.current[index] = el;
+                    }}
                     href={item.href!}
                     onMouseEnter={() => setActiveIndex(index)}
                     className={cardClassName}
@@ -182,6 +223,9 @@ export function GridEffect({
               return (
                 <div
                   key={item.title}
+                  ref={(el) => {
+                    cardRefs.current[index] = el;
+                  }}
                   onMouseEnter={() => setActiveIndex(index)}
                   className={cardClassName}
                 >

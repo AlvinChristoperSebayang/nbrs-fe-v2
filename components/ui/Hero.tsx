@@ -21,6 +21,97 @@ export type HeroProps = {
   children?: React.ReactNode;
 };
 
+function getTitleLines(title: string): string[] {
+  if (title.includes("\n")) {
+    return title.split("\n").map((l) => l.trim()).filter(Boolean);
+  }
+
+  const words = title.trim().split(/\s+/);
+  if (words.length <= 2) {
+    return [title];
+  }
+
+  const totalLength = title.trim().length;
+  const targetMid = totalLength / 2;
+
+  let currentLine = "";
+  const line1Words: string[] = [];
+  const line2Words: string[] = [];
+
+  for (let i = 0; i < words.length; i++) {
+    const word = words[i];
+    if (line1Words.length === 0) {
+      line1Words.push(word);
+      currentLine = word;
+    } else if (currentLine.length < targetMid && i < words.length - 1) {
+      line1Words.push(word);
+      currentLine += " " + word;
+    } else {
+      line2Words.push(word);
+    }
+  }
+
+  if (line2Words.length === 0) {
+    return [title];
+  }
+
+  return [line1Words.join(" "), line2Words.join(" ")];
+}
+
+export function renderTitleWithUnderline(title: React.ReactNode, showDivider: boolean = true) {
+  if (typeof title !== "string") {
+    return title;
+  }
+
+  const lines = getTitleLines(title);
+
+  if (!showDivider) {
+    if (lines.length > 1) {
+      return (
+        <span className="inline-flex flex-col items-start">
+          {lines.map((line, i) => (
+            <span key={i} className="block leading-[1.05]">
+              {line}
+            </span>
+          ))}
+        </span>
+      );
+    }
+    return title;
+  }
+
+  if (lines.length === 1) {
+    return (
+      <span className="inline-block border-b-[4px] sm:border-b-[5px] lg:border-b-[6px] border-white pb-1 sm:pb-2 leading-[1.05]">
+        {lines[0]}
+      </span>
+    );
+  }
+
+  return (
+    <span className="inline-flex flex-col items-start">
+      {lines.map((line, idx) => {
+        const isLast = idx === lines.length - 1;
+        if (isLast) {
+          return (
+            <span
+              key={idx}
+              className="inline-block border-b-[4px] sm:border-b-[5px] lg:border-b-[6px] border-white pb-1 sm:pb-2 leading-none mt-1"
+            >
+              {line}
+            </span>
+          );
+        }
+        return (
+          <span key={idx} className="block leading-[1.05]">
+            {line}
+          </span>
+        );
+      })}
+    </span>
+  );
+}
+
 export function Hero({
   image,
   title,
@@ -36,9 +127,7 @@ export function Hero({
   children,
 }: HeroProps) {
   return (
-    <section
-      className="relative w-full flex flex-col justify-between h-[610px] lg:h-[85vh]"
-    >
+    <section className="relative w-full flex flex-col justify-between h-[610px] lg:h-[85vh]">
       {/* Background Image Container */}
       <div className="absolute inset-0 overflow-hidden">
         <ResponsiveImage
@@ -55,27 +144,18 @@ export function Hero({
         className={`relative z-10 flex h-full flex-col justify-center my-auto pt-16 pb-8 lg:pt-20 lg:pb-12 ${containerClassName}`}
       >
         <div className={`flex flex-col items-start max-w-[650px] ${contentClassName}`}>
-          {/* Title */}
+          {/* Title with Underline on Last Line matching exact text width of that line */}
           {typeof title === "string" ? (
             <h1
               data-aos="fade-up"
-              className={`font-heading max-w-2xl text-3xl uppercase leading-[1.05] text-white sm:text-5xl lg:text-[70px] ${titleClassName}`}
+              className={`font-heading max-w-2xl text-[38px] uppercase leading-[1.05] text-white lg:text-[70px] ${titleClassName}`}
             >
-              {title}
+              {renderTitleWithUnderline(title, showDivider)}
             </h1>
           ) : (
             <div data-aos="fade-up" className={titleClassName}>
               {title}
             </div>
-          )}
-
-          {/* Divider Line */}
-          {showDivider && (
-            <div
-              data-aos="fade-up"
-              data-aos-delay="100"
-              className={`mt-4 lg:h-2 h-1 w-full origin-left bg-white ${dividerClassName}`}
-            />
           )}
 
           {/* Description */}
@@ -84,7 +164,7 @@ export function Hero({
               <p
                 data-aos="fade-up"
                 data-aos-delay="200"
-                className={`mt-6 text-sm text-white sm:text-base ${descriptionClassName}`}
+                className={`mt-6 text-white text-base ${descriptionClassName}`}
               >
                 {description}
               </p>

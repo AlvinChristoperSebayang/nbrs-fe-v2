@@ -30,7 +30,7 @@ export function FeatureGlassSection({
           <div
             data-aos="fade-up"
             data-aos-delay="100"
-            className={`z-10 w-full lg:w-[50%] bg-white/80 backdrop-blur-md border border-[#FDFFEA] p-6 lg:p-10 max-lg:mb-6 shadow-sm ${
+            className={`z-10 w-full lg:w-[50%] bg-white/80 backdrop-blur-xs border border-[#FDFFEA] p-6 lg:p-10 max-lg:mb-6 ${
               reverse
                 ? "lg:absolute lg:right-0 lg:top-1/2 lg:-translate-y-1/2"
                 : "lg:absolute lg:left-0 lg:top-1/2 lg:-translate-y-1/2"
