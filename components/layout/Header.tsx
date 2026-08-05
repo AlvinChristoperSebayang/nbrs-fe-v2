@@ -139,7 +139,7 @@ export function Header() {
               className="relative z-50 focus:outline-none"
             >
               <img
-                src={isDarkHeader ? "/images/logo/logo-black.svg" : "/images/logo/logo-white.svg"}
+                src={isDarkHeader ? "/images/logo/logo-black-2.svg" : "/images/logo/logo-white-2.svg"}
                 alt="NBRS Logo"
                 width={100}
                 height={36}
@@ -210,7 +210,7 @@ export function Header() {
           {/* Menu Content Grid: 2 Columns Side-by-Side */}
           <div className="grid grid-cols-12 gap-3 sm:gap-8 md:gap-12 items-start pt-17">
             {/* Left Column: Main Categories (Menu font 26px on mobile) */}
-            <div className="col-span-6 flex flex-col gap-13 sm:gap-14">
+            <div className="col-span-6 flex flex-col items-start gap-13 sm:gap-14">
               {NAV_STRUCTURE.map((item, index) => {
                 const isActive = activeCategory === item.id;
 
@@ -218,7 +218,7 @@ export function Header() {
                   <div
                     key={item.id}
                     onMouseEnter={() => setActiveCategory(item.id)}
-                    className={`cursor-pointer group flex flex-col transition-all duration-500 ease-out ${
+                    className={`w-fit cursor-pointer group flex flex-col transition-all duration-500 ease-out ${
                       open ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
                     }`}
                     style={{
