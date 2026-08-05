@@ -14,7 +14,7 @@ export const NEWS_DATA: NewsArticle[] = [
   {
     id: "news-1",
     slug: "happy-56th-birthday-nbrs",
-    title: "COMMUNITY: Happy 56th Birthday NBRS",
+    title: "COMMUNITY: Happy 56th Birthday NBRS!!",
     date: "October 14, 2025",
     category: "Community",
     image: "/images/home/latest-news.png",

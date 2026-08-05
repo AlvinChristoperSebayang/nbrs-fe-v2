@@ -1,6 +1,6 @@
 const CRAFT_GRAPHQL_URL =
   process.env.CRAFT_GRAPHQL_URL ??
-  "https://phpstack-1082258-6573734.cloudwaysapps.com/api/";
+  "http://nbrs-update.test/api/";
 
 type GraphQLResponse = {
   data?: unknown;
