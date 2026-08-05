@@ -52,14 +52,21 @@ export function CareersHero({
 
             {/* Additional Attributes: Jabatan, Location/Tempat, Registration */}
             {(role || location || registration) && (
-              <div className="flex flex-col gap-2 font-sans text-white/90">
+              <div className="flex flex-col gap-y-4 font-sans text-[#C9E5D2]">
                 {role && (
-                  <span className="text-xl sm:text-2xl font-bold uppercase tracking-wide text-rose-200">
+                  <span className="text-xl sm:text-xl font-bold tracking-wide">
                     {role}
                   </span>
                 )}
-                {location && (
-                  <div className="flex items-center gap-2 text-base sm:text-lg text-white/80 font-medium">
+             
+                {registration && (
+                  <span className="text-xs sm:text-xl mt-0.5">
+                    Registration: {registration}
+                  </span>
+                )}
+
+                   {location && (
+                  <div className="flex items-center gap-2 text-base sm:text-base text-white/80 font-medium">
                     <svg
                       width="18"
                       height="18"
@@ -69,18 +76,13 @@ export function CareersHero({
                       strokeWidth="2"
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      className="text-rose-300"
+                      className="text-white"
                     >
                       <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
                       <circle cx="12" cy="10" r="3" />
                     </svg>
                     <span>{location}</span>
                   </div>
-                )}
-                {registration && (
-                  <span className="text-xs sm:text-sm text-white/70 italic mt-0.5">
-                    {registration}
-                  </span>
                 )}
               </div>
             )}

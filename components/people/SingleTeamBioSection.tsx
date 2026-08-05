@@ -2,11 +2,11 @@ import { Container } from "@/components/ui/Container";
 
 export type SingleTeamBioProps = {
   name: string;
-  bio: string[];
+  bioHtml: string | null;
   quote?: string;
 };
 
-export function SingleTeamBioSection({ name, bio, quote }: SingleTeamBioProps) {
+export function SingleTeamBioSection({ name, bioHtml, quote }: SingleTeamBioProps) {
   const nameParts = name.split(" ");
   const firstName = nameParts[0] || name;
   const lastName = nameParts.slice(1).join(" ") || "";
@@ -36,11 +36,12 @@ export function SingleTeamBioSection({ name, bio, quote }: SingleTeamBioProps) {
             className="lg:col-span-8 flex flex-col gap-10 lg:gap-14"
           >
             {/* Top Bio Text Paragraphs */}
-            <div className="font-sans text-base sm:text-lg text-zinc-800 leading-relaxed flex flex-col gap-5 max-w-3xl">
-              {bio.map((paragraph, index) => (
-                <p key={index}>{paragraph}</p>
-              ))}
-            </div>
+            {bioHtml && (
+              <div
+                className="font-sans text-base sm:text-lg text-zinc-800 leading-relaxed max-w-3xl [&_a]:underline [&_a]:underline-offset-4 [&_p]:mb-5 [&_p:last-child]:mb-0"
+                dangerouslySetInnerHTML={{ __html: bioHtml }}
+              />
+            )}
 
             {/* Bottom Pull Quote Stage with Rose Quote Marks */}
             {quote && (
