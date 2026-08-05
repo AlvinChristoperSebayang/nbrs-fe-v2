@@ -1,6 +1,6 @@
 import { craftFetch } from "./craft";
 import { toImageSource } from "./media";
-import type { ImageSource } from "./types";
+import type { ImageSource, ResponsiveImage } from "./types";
 
 export const NEWS_PAGE_SIZE = 12;
 
@@ -19,7 +19,7 @@ export type NewsListingResult = {
   total: number;
 };
 
-type RawAsset = {
+type RawAsset = Partial<ResponsiveImage> & {
   url?: string;
   width: number | null;
   height: number | null;
@@ -48,7 +48,9 @@ const NEWS_LISTING_QUERY = /* GraphQL */ `
         pageHeading
         pageSubheading
         pageHeroImage {
-          url
+          mobile: url @transform(width: 768, immediately: true)
+          tablet: url @transform(width: 1440, immediately: true)
+          desktop: url @transform(width: 1920, immediately: true)
           width
           height
           title
@@ -66,7 +68,9 @@ const NEWS_LISTING_QUERY = /* GraphQL */ `
         slug
         artHdrHeading
         thumbnail {
-          url
+          mobile: url @transform(width: 600, immediately: true)
+          tablet: url @transform(width: 900, immediately: true)
+          desktop: url @transform(width: 1200, immediately: true)
           width
           height
           title

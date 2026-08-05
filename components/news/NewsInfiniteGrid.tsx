@@ -90,7 +90,7 @@ export function NewsInfiniteGrid({
       <div ref={sentinelRef} className="h-px" aria-hidden="true" />
 
       <div className="mt-8 min-h-8 text-center" aria-live="polite">
-        {isLoading && <p className="text-sm text-zinc-600">Memuat berita berikutnya…</p>}
+        {isLoading && <p className="text-sm text-zinc-600">Load more data ....</p>}
       </div>
     </>
   );
