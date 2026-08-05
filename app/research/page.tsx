@@ -37,7 +37,7 @@ export default async function ResearchPage() {
       <section className="bg-white py-16 lg:py-24">
         <Container className="flex flex-col gap-16 lg:gap-24">
           <ResearchSection heading={listing?.pageHeading} subheading={listing?.pageSubheading} sectors={listing?.sectors} practices={listing?.practices} items={listing?.articles} />
-          <TextResearchGrid />
+          <TextResearchGrid items={listing?.secondaryResearch} />
         </Container>
       </section>
       <CtaSection content={await getPageCta("latestResearch", cta).catch(() => cta)} />

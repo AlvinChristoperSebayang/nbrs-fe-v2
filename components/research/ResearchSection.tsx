@@ -1,11 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import {
-  DUMMY_RESEARCH_ITEMS,
-  PRACTICE_OPTIONS,
-  SECTOR_OPTIONS,
-} from "@/lib/research-data";
 import type { ResearchCategory, ResearchListItem } from "@/lib/research-listing";
 import type { ImageSource } from "@/lib/types";
 import { ResearchCard } from "./ResearchCard";
@@ -40,10 +35,10 @@ export function ResearchSection({ heading, subheading, sectors, practices, items
   const [selectedSectors, setSelectedSectors] = useState<string[]>([]);
   const [selectedPractices, setSelectedPractices] = useState<string[]>([]);
 
-  const visibleSectors = sectors ?? SECTOR_OPTIONS.map((sector) => ({ id: sector.id, title: sector.label, slug: sector.slug, accentColor: sector.hoverColor ?? null }));
-  const visiblePractices = practices ?? PRACTICE_OPTIONS.map((practice) => ({ id: practice.id, title: practice.label, slug: practice.slug, accentColor: practice.hoverColor ?? null }));
-  const visibleItems: VisibleResearchItem[] = items
-    ? items.map((item) => ({
+  const visibleSectors = sectors ?? [];
+  const visiblePractices = practices ?? [];
+  const visibleItems: VisibleResearchItem[] = (items ?? [])
+    .map((item) => ({
         id: item.id,
         slug: item.slug,
         title: item.title,
@@ -51,15 +46,6 @@ export function ResearchSection({ heading, subheading, sectors, practices, items
         hoverColor: item.sectors[0]?.accentColor ?? "#E7E7E7",
         sectorSlugs: item.sectors.map((sector) => sector.slug),
         practiceSlugs: item.practices.map((practice) => practice.slug),
-      }))
-    : DUMMY_RESEARCH_ITEMS.map((item) => ({
-        id: item.id,
-        slug: item.slug,
-        title: item.title,
-        image: item.image,
-        hoverColor: item.hoverColor,
-        sectorSlugs: [item.sectorSlug],
-        practiceSlugs: [item.practiceSlug],
       }));
 
   const filteredItems = visibleItems.filter((item) => {
@@ -82,26 +68,26 @@ export function ResearchSection({ heading, subheading, sectors, practices, items
         <p className="text-base leading-normal text-zinc-800">{subheading || "In-depth investigations into emerging industry themes, exploring the intersection of design, performance and community impact."}</p>
       </div>
       <hr className="border-t border-zinc-200" />
-      <div data-aos="fade-up" data-aos-delay="100" className="flex flex-col gap-3">
+      {visibleSectors.length > 0 && <div data-aos="fade-up" data-aos-delay="100" className="flex flex-col gap-3">
         <p className="text-base font-bold text-black">Filter by Sector</p>
         <div className="flex flex-wrap items-center gap-3">
           {visibleSectors.map((sector) => {
             const isActive = selectedSectors.includes(sector.slug);
             return <button key={sector.id} type="button" onClick={() => toggleSector(sector.slug)} className={`inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm transition ${isActive ? "bg-black text-white" : "bg-[#F5F5F5] text-black hover:bg-zinc-200"}`}><span>{sector.title}</span><ArrowIcon /></button>;
           })}
-          {selectedSectors.length > 0 && <button type="button" onClick={() => setSelectedSectors([])} className="inline-flex items-center rounded-full border border-[#DBDBDB] px-6 py-2.5 text-sm text-black transition hover:border-black">Reset Filters</button>}
+          <button type="button" onClick={() => setSelectedSectors([])} className="inline-flex items-center rounded-full border border-[#DBDBDB] px-6 py-2.5 text-sm text-black transition hover:border-black">Reset Filters</button>
         </div>
-      </div>
-      <div data-aos="fade-up" data-aos-delay="150" className="flex flex-col gap-3">
+      </div>}
+      {visiblePractices.length > 0 && <div data-aos="fade-up" data-aos-delay="150" className="flex flex-col gap-3">
         <p className="text-base font-bold text-black">Filter by Practice</p>
         <div className="flex flex-wrap items-center gap-3">
           {visiblePractices.map((practice) => {
             const isActive = selectedPractices.includes(practice.slug);
             return <button key={practice.id} type="button" onClick={() => togglePractice(practice.slug)} className={`inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm transition ${isActive ? "bg-black text-white" : "bg-[#F5F5F5] text-black hover:bg-zinc-200"}`}><span>{practice.title}</span><ArrowIcon /></button>;
           })}
-          {selectedPractices.length > 0 && <button type="button" onClick={() => setSelectedPractices([])} className="inline-flex items-center rounded-full border border-[#DBDBDB] px-6 py-2.5 text-sm text-black transition hover:border-black">Reset Filters</button>}
+          <button type="button" onClick={() => setSelectedPractices([])} className="inline-flex items-center rounded-full border border-[#DBDBDB] px-6 py-2.5 text-sm text-black transition hover:border-black">Reset Filters</button>
         </div>
-      </div>
+      </div>}
       <div data-aos="fade-up" data-aos-delay="200" className="mt-6">
         {filteredItems.length > 0 ? <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-3">{filteredItems.map((item) => <ResearchCard key={item.id} item={item} />)}</div> : <div className="py-16 text-center"><p className="text-lg text-zinc-600">No research items match the selected filters.</p><button type="button" onClick={resetAllFilters} className="mt-4 inline-flex items-center rounded-full border border-black px-6 py-2.5 text-sm text-black transition hover:bg-black hover:text-white">Reset All Filters</button></div>}
       </div>

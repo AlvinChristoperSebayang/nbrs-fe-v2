@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import type { TextResearchItem } from "@/lib/research-data";
+import type { SecondaryResearchItem } from "@/lib/research-listing";
 
-export function TextResearchCard({ item }: { item: TextResearchItem }) {
+export function TextResearchCard({ item }: { item: SecondaryResearchItem }) {
   return (
     <Link
       href={`/research/${item.slug}`}

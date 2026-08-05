@@ -39,13 +39,13 @@ export function mapCta(raw: RawCta | undefined, fallback: CtaContent): CtaConten
   const cta = raw?.ctaSection;
 
   const image = toImageSource(cta?.ctaSectionBackgroundImage[0]);
-  if (!image || !cta?.ctaSectionHeading) {
+  if (!cta) {
     return fallback;
   }
 
   return {
-    image,
-    title: cta.ctaSectionHeading,
+    image: image ?? fallback.image,
+    title: cta.ctaSectionHeading?.trim() || fallback.title,
     description: cta.ctaSectionDescription?.trim() || undefined,
     buttonText: cta.ctaSectionButtonLabel?.trim() || undefined,
     buttonHref: cta.ctaSectionButtonUrl?.trim() || undefined,
