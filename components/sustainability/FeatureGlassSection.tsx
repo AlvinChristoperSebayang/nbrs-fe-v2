@@ -23,14 +23,14 @@ export function FeatureGlassSection({
   buttonHref,
 }: FeatureGlassSectionProps) {
   return (
-    <section className="bg-white py-12 lg:py-0 text-black lg:pb-[94px]">
+    <section className="bg-white pb-12 lg:py-0 text-black lg:pb-[94px]">
       <Container>
         <div className="relative flex flex-col lg:flex-row items-center">
           {/* Overlapping Glass Card */}
           <div
             data-aos="fade-up"
             data-aos-delay="100"
-            className={`z-10 w-full lg:w-[50%] bg-white/80 backdrop-blur-xs border border-[#FDFFEA] p-6 lg:p-10 max-lg:mb-6 ${
+            className={`z-10 w-full lg:w-[50%] bg-white/80 backdrop-blur-xs border border-[#FDFFEA] lg:p-6 lg:p-10 max-lg:mb-6 ${
               reverse
                 ? "lg:absolute lg:right-0 lg:top-1/2 lg:-translate-y-1/2"
                 : "lg:absolute lg:left-0 lg:top-1/2 lg:-translate-y-1/2"

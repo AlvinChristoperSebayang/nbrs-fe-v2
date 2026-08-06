@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Container } from "@/components/ui/Container";
 
 export type SubMenuItem = {
@@ -82,11 +83,18 @@ export const NAV_STRUCTURE: NavItem[] = [
 ];
 
 export function Header() {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [activeCategory, setActiveCategory] = useState<string>("purpose");
   const lastScrollY = useRef(0);
+
+  const isResearchDetail = Boolean(
+    pathname &&
+    pathname.startsWith("/research/") &&
+    pathname.replace(/\/$/, "") !== "/research"
+  );
 
   useEffect(() => {
     let ticking = false;
@@ -117,7 +125,8 @@ export function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const isDarkHeader = scrolled && !open;
+  const isScrolledHeader = scrolled && !open;
+  const useDarkElements = (scrolled || isResearchDetail) && !open;
 
   const currentActiveItem = NAV_STRUCTURE.find(
     (item) => item.id === activeCategory
@@ -128,7 +137,7 @@ export function Header() {
       {/* MAIN HEADER BAR */}
       <header
         className={`fixed top-0 left-0 z-50 h-fit w-full transition-[translate,background-color] duration-300 ease-out ${
-          isDarkHeader ? "scrolled" : ""
+          isScrolledHeader ? "scrolled" : ""
         } ${hidden && !open ? "-translate-y-full" : "translate-y-0"}`}
       >
         <Container className="py-5">
@@ -139,7 +148,7 @@ export function Header() {
               className="relative z-50 focus:outline-none"
             >
               <img
-                src={isDarkHeader ? "/images/logo/logo-black-2.svg" : "/images/logo/logo-white-2.svg"}
+                src={useDarkElements ? "/images/logo/logo-black-2.svg" : "/images/logo/logo-white-2.svg"}
                 alt="NBRS Logo"
                 width={100}
                 height={36}
@@ -162,7 +171,7 @@ export function Header() {
                 className={`h-[2px] w-6 rounded-full transition-all duration-500 ease-[cubic-bezier(0.65,0,0.35,1)] origin-center ${
                   open
                     ? "translate-y-[8px] rotate-45 bg-white"
-                    : isDarkHeader
+                    : useDarkElements
                     ? "bg-black"
                     : "bg-white"
                 }`}
@@ -173,7 +182,7 @@ export function Header() {
                 className={`h-[2px] rounded-full transition-all duration-400 ease-in-out origin-right ${
                   open
                     ? "w-0 opacity-0 scale-x-0 bg-white"
-                    : isDarkHeader
+                    : useDarkElements
                     ? "w-5 opacity-100 scale-x-100 bg-black"
                     : "w-5 opacity-100 scale-x-100 bg-white"
                 }`}
@@ -184,7 +193,7 @@ export function Header() {
                 className={`h-[2px] w-6 rounded-full transition-all duration-500 ease-[cubic-bezier(0.65,0,0.35,1)] origin-center ${
                   open
                     ? "-translate-y-[8px] -rotate-45 bg-white"
-                    : isDarkHeader
+                    : useDarkElements
                     ? "bg-black"
                     : "bg-white"
                 }`}

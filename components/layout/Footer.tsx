@@ -119,11 +119,11 @@ function FooterLinkGroup({
         type="button"
         onClick={() => setOpen((prev) => !prev)}
         aria-expanded={open}
-        className="flex items-center gap-3 font-heading text-[26px] leading-[27px] font-normal uppercase tracking-normal text-white lg:pointer-events-none lg:text-2xl lg:leading-tight"
+        className="flex items-center gap-3 font-heading text-[26px] leading-[27px] font-normal uppercase tracking-normal text-white lg:pointer-events-none lg:text-2xl lg:leading-tight cursor-pointer lg:cursor-default"
       >
         <span>{heading}</span>
         <span
-          className={`shrink-0 transition-transform duration-300 lg:hidden ${
+          className={`shrink-0 transition-transform duration-500 ease-in-out lg:hidden ${
             open ? "rotate-180" : ""
           }`}
         >
@@ -152,20 +152,30 @@ function FooterLinkGroup({
           </svg>
         </span>
       </button>
-      <ul
-        className={`mt-4 flex-col gap-3 lg:!flex ${open ? "flex" : "hidden"}`}
+
+      {/* Smooth Grid Accordion Expansion */}
+      <div
+        className={`grid transition-all duration-500 ease-in-out lg:!grid lg:!grid-rows-[1fr] lg:!opacity-100 lg:!mt-4 ${
+          open
+            ? "grid-rows-[1fr] opacity-100 mt-4"
+            : "grid-rows-[0fr] opacity-0 mt-0"
+        }`}
       >
-        {links.map((link) => (
-          <li key={link.label}>
-            <Link
-              href={link.href}
-              className="text-sm lg:text-lg text-white/70 transition hover:text-white"
-            >
-              {link.label}
-            </Link>
-          </li>
-        ))}
-      </ul>
+        <div className="overflow-hidden">
+          <ul className="flex flex-col gap-3">
+            {links.map((link) => (
+              <li key={link.label}>
+                <Link
+                  href={link.href}
+                  className="text-sm lg:text-lg text-white/70 transition-colors duration-200 hover:text-white"
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </div>
   );
 }

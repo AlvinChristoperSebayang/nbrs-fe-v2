@@ -19,8 +19,8 @@ export function QuoteSection({
 }) {
   return (
     <section className="bg-white py-0 lg:py-20 text-black overflow-hidden">
-      <Container className="uncontainer-mobile overflow-hidden max-md:px-0">
-        <div className="relative flex flex-col lg:block">
+      <Container className="max-sm:uncontainer-mobile max-sm:px-0 sm:px-6 md:px-8 lg:px-0">
+        <div className="relative flex flex-col items-center lg:block">
           <div data-aos="fade-up" className="w-full overflow-hidden lg:w-[65%]">
             <ResponsiveImage
               src={image}
@@ -32,7 +32,7 @@ export function QuoteSection({
           <div
             data-aos="fade-up"
             data-aos-delay="150"
-            className={`flex flex-col justify-between ${boxBgClass} p-8 sm:mx-6 sm:p-10 lg:absolute lg:top-1/2 lg:right-0 lg:mx-0 lg:w-[50%] lg:-translate-y-1/2 lg:p-12 shadow-sm max-lg:border-none border border-white/80`}
+            className={`flex flex-col justify-between ${boxBgClass} w-full p-8 sm:p-10 lg:absolute lg:top-1/2 lg:right-0 lg:mx-0 lg:w-[50%] lg:-translate-y-1/2 lg:p-12 shadow-sm max-lg:border-none border border-white/80`}
           >
             <span
               className="font-serif text-5xl leading-none lg:text-6xl mb-2 text-white lg:text-[var(--quote-icon-color)]"

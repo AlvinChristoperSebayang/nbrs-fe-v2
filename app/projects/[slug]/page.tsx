@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { getProjectDetail } from "@/lib/project-detail";
+import { getProjectDetail, getKeyProjectsForDetail } from "@/lib/project-detail";
 import { Container } from "@/components/ui/Container";
 import { ProjectDetailHero } from "@/components/projects/ProjectDetailHero";
 import { ProjectOverviewSection } from "@/components/projects/ProjectOverviewSection";
@@ -66,15 +66,19 @@ export default async function ProjectPage(
     },
   ];
 
+  const relatedList = await getKeyProjectsForDetail(project);
+
   const keyProjects: KeyProjectItem[] =
-    project.relatedProjects && project.relatedProjects.length > 0
-      ? project.relatedProjects.map((p, idx) => ({
+    relatedList.length > 0
+      ? relatedList.map((p, idx) => ({
           id: `related-${idx}`,
           title: p.title || p.heading || "Key Project",
           image: p.thumbnailUrl || `/images/hero/hero${(idx % 5) + 1}.png`,
           href: p.uri ? `/${p.uri.replace(/^\//, "")}` : `/projects/${p.slug}`,
         }))
       : fallbackKeyProjects;
+
+  console.log("key Project", keyProjects)
 
   return (
     <article className="bg-white text-black min-h-screen">

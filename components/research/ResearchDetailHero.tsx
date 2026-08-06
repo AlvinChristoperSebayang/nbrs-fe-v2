@@ -1,21 +1,15 @@
 import { Container } from "@/components/ui/Container";
+import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
+import type { ImageSource } from "@/lib/types";
 
 export type ResearchDetailHeroProps = {
   title: string;
   description?: string;
   category?: string;
-  bgImage?: string;
+  image?: ImageSource;
+  bgImage?: ImageSource;
   bgColor?: string;
-};
-
-// Category Background Colors according to project design system
-const CATEGORY_BG_COLORS: Record<string, string> = {
-  community: "#F2E8D8",
-  wellness: "#DEE1F2",
-  education: "#EDE3F0",
-  "secure spaces": "#FDD4B6",
-  "secure-spaces": "#FDD4B6",
-  heritage: "#F0C7BD",
+  overlayClassName?: string;
 };
 
 function getTitleLines(title: string): string[] {
@@ -57,12 +51,12 @@ function getTitleLines(title: string): string[] {
   return [line1Words.join(" "), line2Words.join(" ")];
 }
 
-export function renderResearchTitleWithUnderline(title: string) {
+export function renderResearchTitleWithUnderline(title: string, borderColor: string = "border-black") {
   const lines = getTitleLines(title);
 
   if (lines.length === 1) {
     return (
-      <span className="inline-block border-b-[4px] sm:border-b-[5px] lg:border-b-[6px] border-black pb-1 sm:pb-2 leading-[1.05]">
+      <span className={`inline-block border-b-[4px] sm:border-b-[5px] lg:border-b-[6px] ${borderColor} pb-1 sm:pb-2 leading-[1.05]`}>
         {lines[0]}
       </span>
     );
@@ -76,7 +70,7 @@ export function renderResearchTitleWithUnderline(title: string) {
           return (
             <span
               key={idx}
-              className="inline-block border-b-[4px] sm:border-b-[5px] lg:border-b-[6px] border-black pb-1 sm:pb-2 leading-none mt-1"
+              className={`inline-block border-b-[4px] sm:border-b-[5px] lg:border-b-[6px] ${borderColor} pb-1 sm:pb-2 leading-none mt-1`}
             >
               {line}
             </span>
@@ -96,50 +90,26 @@ export function ResearchDetailHero({
   title,
   description,
   category = "COMMUNITY",
+  image,
   bgImage,
-  bgColor,
+  overlayClassName = "bg-white/30",
 }: ResearchDetailHeroProps) {
-  const normalizedCategory = category.toLowerCase().trim();
-  const activeBgColor =
-    bgColor || CATEGORY_BG_COLORS[normalizedCategory] || "#F2E8D8";
+  const heroImage = image || bgImage || "/images/hero/hero-research.png";
 
   return (
-    <section
-      className="relative max-md:h-[80vh] lg:h-[90vh] w-full flex items-center overflow-hidden transition-colors duration-500"
-      style={{ backgroundColor: activeBgColor }}
-    >
-      {/* Background Graphic / Waves SVG Overlay */}
-      {bgImage ? (
-        <div
-          className="absolute inset-0 bg-cover bg-center opacity-40 mix-blend-multiply pointer-events-none"
-          style={{ backgroundImage: `url(${bgImage})` }}
+    <section className="relative h-[610px] lg:h-[85vh] w-full flex items-center overflow-hidden">
+      {/* Background Image Container matching standard Hero component */}
+      <div className="absolute inset-0 overflow-hidden">
+        <ResponsiveImage
+          src={heroImage}
+          alt=""
+          className="h-full w-full object-cover"
+          priority
         />
-      ) : (
-        <svg
-          className="absolute right-0 bottom-0 top-0 h-full w-auto opacity-30 pointer-events-none stroke-white"
-          viewBox="0 0 1000 600"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M-200 600C100 400 300 500 500 300C700 100 900 200 1200 0"
-            stroke="white"
-            strokeWidth="4"
-          />
-          <path
-            d="M-150 650C150 450 350 550 550 350C750 150 950 250 1250 50"
-            stroke="white"
-            strokeWidth="3"
-          />
-          <path
-            d="M-100 700C200 500 400 600 600 400C800 200 1000 300 1300 100"
-            stroke="white"
-            strokeWidth="2"
-          />
-        </svg>
-      )}
+        <div className={`absolute inset-0 ${overlayClassName}`} />
+      </div>
 
-      <Container className="relative z-10 flex h-full flex-col justify-center pb-12 lg:pb-16">
+      <Container className="relative z-10 flex h-full flex-col justify-center">
         <div className="flex flex-col items-start max-w-4xl">
           {/* Dynamic Category Pill Badge */}
           <div
@@ -149,7 +119,7 @@ export function ResearchDetailHero({
             <span className="text-black text-sm sm:text-base font-bold tracking-wider uppercase font-sans">
               RESEARCH
             </span>
-            <span className="text-black text-sm sm:text-base font-medium opacity-60">
+            <span className="text-black/60 text-sm sm:text-base font-medium">
               |
             </span>
             <span className="text-black text-sm sm:text-base font-light tracking-wider uppercase font-sans">
@@ -163,7 +133,7 @@ export function ResearchDetailHero({
             data-aos-delay="100"
             className="font-heading text-4xl sm:text-5xl lg:text-[70px] font-bold text-black uppercase leading-[1.05] tracking-tight mb-6"
           >
-            {renderResearchTitleWithUnderline(title)}
+            {renderResearchTitleWithUnderline(title, "border-black")}
           </h1>
 
           {/* Description */}

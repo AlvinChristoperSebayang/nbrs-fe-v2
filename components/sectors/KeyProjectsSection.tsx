@@ -8,6 +8,7 @@ export type KeyProjectItem = {
   title: string;
   image: ImageSource;
   href: string;
+  category?: string;
 };
 
 export function KeyProjectsSection({

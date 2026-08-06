@@ -99,7 +99,7 @@ export function GridEffect({
         </div>
 
         <div className="relative w-full">
-          <div data-aos="fade-up" className="mb-6 lg:hidden flex lg:flex-row flex-col lg:items-center items-start justify-between relative z-10 px-0 pt-12">
+          <div data-aos="fade-up" className="mb-6 lg:hidden flex lg:flex-row flex-col lg:items-center items-start justify-between relative z-10 px-0 sm:px-6 md:px-8 pt-12">
             <span className="font-heading text-[28px] lg:text-[22px] uppercase text-white">
               {title}
             </span>
@@ -141,12 +141,12 @@ export function GridEffect({
             )}
           </div>
 
-          <div data-aos="fade-up" data-aos-delay="150" className="grid grid-cols-1 lg:grid-cols-3 items-stretch sm:inset-x-0 pb-20 gap-10 lg:gap-20 lg:py-40 lg:px-4 relative z-10">
+          <div data-aos="fade-up" data-aos-delay="150" className="grid grid-cols-1 lg:grid-cols-3 items-stretch sm:inset-x-0 pb-20 gap-10 sm:px-6 md:px-8 lg:gap-20 lg:py-40 lg:px-4 relative z-10">
             {items.map((item, index) => {
               const isActive = index === activeIndex;
               const hasHref = Boolean(item.href);
 
-              const cardClassName = `group flex h-64 flex-col justify-between gap-8 overflow-hidden p-5 transition-colors duration-300 lg:h-80 ${
+              const cardClassName = `group flex h-64 flex-col justify-between gap-8 overflow-hidden p-5 sm:p-6 md:p-8 transition-colors duration-300 lg:h-80 lg:p-5 ${
                 isActive
                   ? "bg-black/50 backdrop-blur-[5px] border-b-[5px] border-white"
                   : "bg-white/70 backdrop-blur-[0px] border-b-[5px] border-transparent"
@@ -156,7 +156,7 @@ export function GridEffect({
                 <>
                   <div className="flex flex-col gap-2">
                     <h3
-                      className={`font-heading text-2xl uppercase leading-tight duration-300 sm:text-3xl lg:max-w-[231px] ${
+                      className={`font-heading text-2xl uppercase leading-tight duration-300 sm:text-3xl sm:max-w-none lg:max-w-[231px] ${
                         isActive
                           ? "text-white lg:text-[36px]"
                           : "text-black lg:text-[18px]"
@@ -167,7 +167,7 @@ export function GridEffect({
 
                     {item.description && (
                       <p
-                        className={`line-clamp-2 max-w-[231px] text-sm text-white/90 transition-opacity duration-300 ${
+                        className={`line-clamp-2 max-w-[231px] sm:max-w-none lg:max-w-[231px] text-sm text-white/90 transition-opacity duration-300 ${
                           isActive ? "opacity-100" : "opacity-0"
                         }`}
                       >

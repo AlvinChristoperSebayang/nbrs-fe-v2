@@ -18,7 +18,7 @@ export function RelatedResearchSection({
   return (
     <section className="relative w-full overflow-hidden bg-white py-16 lg:py-24 text-black">
       {/* Top Left Gray Accent Block */}
-      <div className="absolute left-0 top-0 w-full lg:w-[45%] h-56 lg:h-64 bg-[#E2E2E2] z-0 pointer-events-none" />
+      <div className="absolute left-0 top-0 w-full lg:w-[45%] h-56 lg:h-64 md:bg-[#E2E2E2] z-0 pointer-events-none" />
 
       <Container className="relative z-10">
         {/* Title */}

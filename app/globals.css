@@ -95,7 +95,7 @@ body {
   }
 }
 @layer utilities {
-  @media (max-width: 768px) {
+  @media (max-width: 767px) {
     .uncontainer-mobile {
       @apply w-[calc(100%+40px)] -ml-5
     }

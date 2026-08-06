@@ -36,6 +36,8 @@ export type ProjectRelatedProject = {
   heading: string | null;
   subheading: string | null;
   thumbnailUrl: ImageSource | null;
+  sectorLabel?: string | null;
+  practiceLabel?: string | null;
 };
 
 export type ProjectDetail = {
@@ -136,6 +138,8 @@ type RawRelatedProject = {
   proHdrHeading: string | null;
   proHdrSubheading: string | null;
   thumbnail: RawAsset[];
+  catSector?: RawCategory[];
+  catDiscipline?: RawCategory[];
 };
 
 type RawProjectEntry = {
@@ -393,14 +397,18 @@ export async function getProjectDetail(
     team: entry.proTeam ?? [],
     conclusionText: entry.proConText,
     conclusionPeople: entry.proConPeople ?? [],
-    relatedProjects: (entry.proRelated ?? []).map((project) => ({
-      title: project.title,
-      slug: project.slug,
-      uri: project.uri,
-      heading: project.proHdrHeading,
-      subheading: project.proHdrSubheading,
-      thumbnailUrl: toImageSource(project.thumbnail?.[0]),
-    })),
+    relatedProjects: (entry.proRelated ?? [])
+      .filter((project) => Boolean(project && (project.slug || project.title)))
+      .map((project) => ({
+        title: project.title ?? project.proHdrHeading ?? "Project",
+        slug: project.slug,
+        uri: project.uri ?? null,
+        heading: project.proHdrHeading ?? null,
+        subheading: project.proHdrSubheading ?? null,
+        thumbnailUrl: toImageSource(project.thumbnail?.[0]),
+        sectorLabel: (project.catSector ?? []).map((s) => s.title).join(", ") || null,
+        practiceLabel: (project.catDiscipline ?? []).map((d) => d.title).join(", ") || null,
+      })),
     sectors: toProjectCategories(entry.catSector),
     practices: toProjectCategories(entry.catDiscipline),
     status: toProjectCategories(entry.catStatus),
@@ -411,4 +419,210 @@ export async function getProjectDetail(
     seoMetaDescription: entry.seoMetaDescription,
     seoImageUrl: toImageSource(entry.seoImage?.[0]),
   };
+}
+
+type KeyProjectsFallbackResponse = {
+  bySector?: RawRelatedProject[];
+  byDiscipline?: RawRelatedProject[];
+  latest?: RawRelatedProject[];
+};
+
+const KEY_PROJECTS_FALLBACK_QUERY = /* GraphQL */ `
+  query KeyProjectsFallback(
+    $excludeId: [QueryArgument]
+    $sectorFilter: [CategoryRelationCriteriaInput]
+    $disciplineFilter: [CategoryRelationCriteriaInput]
+  ) {
+    bySector: entries(
+      section: "projects"
+      limit: 3
+      orderBy: "postDate DESC"
+      relatedToCategories: $sectorFilter
+      id: $excludeId
+    ) {
+      ... on projects_Entry {
+        id
+        title
+        slug
+        uri
+        proHdrHeading
+        proHdrSubheading
+        thumbnail {
+          url: url @transform(width: 1200, format: "webp", quality: 80, immediately: true)
+          width
+          height
+          title
+        }
+        catSector {
+          ... on sector_Category {
+            id
+            title
+            slug
+            accentColor
+          }
+        }
+        catDiscipline {
+          ... on discipline_Category {
+            id
+            title
+            slug
+            accentColor
+          }
+        }
+      }
+    }
+
+    byDiscipline: entries(
+      section: "projects"
+      limit: 3
+      orderBy: "postDate DESC"
+      relatedToCategories: $disciplineFilter
+      id: $excludeId
+    ) {
+      ... on projects_Entry {
+        id
+        title
+        slug
+        uri
+        proHdrHeading
+        proHdrSubheading
+        thumbnail {
+          url: url @transform(width: 1200, format: "webp", quality: 80, immediately: true)
+          width
+          height
+          title
+        }
+        catSector {
+          ... on sector_Category {
+            id
+            title
+            slug
+            accentColor
+          }
+        }
+        catDiscipline {
+          ... on discipline_Category {
+            id
+            title
+            slug
+            accentColor
+          }
+        }
+      }
+    }
+
+    latest: entries(
+      section: "projects"
+      limit: 3
+      orderBy: "postDate DESC"
+      id: $excludeId
+    ) {
+      ... on projects_Entry {
+        id
+        title
+        slug
+        uri
+        proHdrHeading
+        proHdrSubheading
+        thumbnail {
+          url: url @transform(width: 1200, format: "webp", quality: 80, immediately: true)
+          width
+          height
+          title
+        }
+        catSector {
+          ... on sector_Category {
+            id
+            title
+            slug
+            accentColor
+          }
+        }
+        catDiscipline {
+          ... on discipline_Category {
+            id
+            title
+            slug
+            accentColor
+          }
+        }
+      }
+    }
+  }
+`;
+
+export async function getKeyProjectsForDetail(
+  project: ProjectDetail
+): Promise<ProjectRelatedProject[]> {
+  // 1. Manual / Curated inputs from proRelated
+  const curated = (project.relatedProjects ?? []).filter(
+    (p) => Boolean(p && (p.slug || p.title))
+  );
+
+  if (curated.length >= 3) {
+    return curated.slice(0, 3);
+  }
+
+  // 2. Fallback query (Sector -> Discipline -> Latest)
+  try {
+    const sectorSlugs = project.sectors.map((s) => s.slug).filter(Boolean);
+    const disciplineSlugs = project.practices.map((p) => p.slug).filter(Boolean);
+
+    const sectorFilter =
+      sectorSlugs.length > 0
+        ? [{ group: "sector", slug: sectorSlugs }]
+        : null;
+    const disciplineFilter =
+      disciplineSlugs.length > 0
+        ? [{ group: "discipline", slug: disciplineSlugs }]
+        : null;
+    const excludeId = project.id ? ["not", project.id] : undefined;
+
+    const data = await craftFetch<KeyProjectsFallbackResponse>(
+      KEY_PROJECTS_FALLBACK_QUERY,
+      {
+        excludeId,
+        sectorFilter,
+        disciplineFilter,
+      }
+    );
+
+    const mapItem = (raw: RawRelatedProject): ProjectRelatedProject => ({
+      title: raw.title ?? raw.proHdrHeading ?? "Project",
+      slug: raw.slug,
+      uri: raw.uri ?? null,
+      heading: raw.proHdrHeading ?? null,
+      subheading: raw.proHdrSubheading ?? null,
+      thumbnailUrl: toImageSource(raw.thumbnail?.[0]),
+      sectorLabel: (raw.catSector ?? []).map((s) => s.title).join(", ") || null,
+      practiceLabel: (raw.catDiscipline ?? []).map((d) => d.title).join(", ") || null,
+    });
+
+    const sectorItems = (data.bySector ?? []).map(mapItem).filter((p) => Boolean(p.slug));
+    const disciplineItems = (data.byDiscipline ?? []).map(mapItem).filter((p) => Boolean(p.slug));
+    const latestItems = (data.latest ?? []).map(mapItem).filter((p) => Boolean(p.slug));
+
+    const result: ProjectRelatedProject[] = [...curated];
+
+    const addUnique = (items: ProjectRelatedProject[]) => {
+      for (const item of items) {
+        if (result.length >= 3) break;
+        if (!result.some((r) => r.slug === item.slug)) {
+          result.push(item);
+        }
+      }
+    };
+
+    // Priority 1: Sector
+    addUnique(sectorItems);
+    // Priority 2: Discipline / Practice
+    addUnique(disciplineItems);
+    // Priority 3: Latest
+    addUnique(latestItems);
+
+    return result.slice(0, 3);
+  } catch (error) {
+    console.error("[getKeyProjectsForDetail] Fallback query failed:", error);
+    return curated;
+  }
 }
