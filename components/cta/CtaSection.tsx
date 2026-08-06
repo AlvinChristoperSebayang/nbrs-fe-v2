@@ -41,6 +41,7 @@ export function CtaSection({ content, cta, titleUppercase = true }: CtaSectionPr
           <div className="flex flex-col items-center justify-center gap-4 mt-6">
             {data.buttonText && data.buttonHref && (
               <Link
+                target="_blank"
                 href={data.buttonHref}
                 className="group inline-flex items-center justify-center gap-2 rounded-full bg-white px-8 py-3.5 sm:px-10 sm:py-4 text-sm sm:text-base font-semibold text-[#B4521E] transition hover:bg-white/90 uppercase"
               >

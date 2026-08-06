@@ -1,10 +1,12 @@
 import { Container } from "@/components/ui/Container";
+import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
+import type { ImageSource } from "@/lib/types";
 
 export type ResearchDetailHeroProps = {
   title: string;
   description?: string;
   category?: string;
-  bgImage?: string;
+  bgImage?: ImageSource | null;
   bgColor?: string;
 };
 
@@ -102,42 +104,17 @@ export function ResearchDetailHero({
   const normalizedCategory = category.toLowerCase().trim();
   const activeBgColor =
     bgColor || CATEGORY_BG_COLORS[normalizedCategory] || "#F2E8D8";
+  const activeBgImage = bgImage ?? "/images/research-banner-pattern.png";
 
   return (
     <section
       className="relative max-md:h-[80vh] lg:h-[90vh] w-full flex items-center overflow-hidden transition-colors duration-500"
       style={{ backgroundColor: activeBgColor }}
     >
-      {/* Background Graphic / Waves SVG Overlay */}
-      {bgImage ? (
-        <div
-          className="absolute inset-0 bg-cover bg-center opacity-40 mix-blend-multiply pointer-events-none"
-          style={{ backgroundImage: `url(${bgImage})` }}
-        />
-      ) : (
-        <svg
-          className="absolute right-0 bottom-0 top-0 h-full w-auto opacity-30 pointer-events-none stroke-white"
-          viewBox="0 0 1000 600"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M-200 600C100 400 300 500 500 300C700 100 900 200 1200 0"
-            stroke="white"
-            strokeWidth="4"
-          />
-          <path
-            d="M-150 650C150 450 350 550 550 350C750 150 950 250 1250 50"
-            stroke="white"
-            strokeWidth="3"
-          />
-          <path
-            d="M-100 700C200 500 400 600 600 400C800 200 1000 300 1300 100"
-            stroke="white"
-            strokeWidth="2"
-          />
-        </svg>
-      )}
+      {/* CMS-provided transparent artwork over the dynamic Sector accent colour. */}
+      <div className="pointer-events-none absolute inset-0">
+        <ResponsiveImage src={activeBgImage} alt="" priority className="h-full w-full object-cover" />
+      </div>
 
       <Container className="relative z-10 flex h-full flex-col justify-center pb-12 lg:pb-16">
         <div className="flex flex-col items-start max-w-4xl">

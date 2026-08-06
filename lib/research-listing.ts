@@ -83,6 +83,7 @@ const RESEARCH_LISTING_QUERY = /* GraphQL */ `
             title
             artHdrHeading
             thumbnail {
+              url
               mobile: url @transform(width: 600, immediately: true)
               tablet: url @transform(width: 900, immediately: true)
               desktop: url @transform(width: 1200, immediately: true)
