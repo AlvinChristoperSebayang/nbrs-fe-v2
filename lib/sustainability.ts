@@ -45,6 +45,8 @@ type SustainabilityResponse = {
       ctaSectionDescription?: string | null;
       ctaSectionButtonLabel?: string | null;
       ctaSectionButtonUrl?: string | null;
+      ctaSectionSecondaryButtonLabel?: string | null;
+      ctaSectionSecondaryButtonUrl?: string | null;
     } | null;
   }>;
 };
@@ -146,6 +148,8 @@ const query = /* GraphQL */ `
           ctaSectionDescription
           ctaSectionButtonLabel
           ctaSectionButtonUrl
+          ctaSectionSecondaryButtonLabel
+          ctaSectionSecondaryButtonUrl
         }
       }
     }
@@ -204,12 +208,14 @@ function fallbackPage(): SustainabilityPageData {
     ],
     projects: [],
     cta: {
-      image: fallbackHero,
-      title: "A Sustainable Future",
+      image: "/social-sustainability.png",
+      title: "DESIGNING FOR GENERATIONS TO COME",
       description:
-        "A regenerative, insight-driven approach foregrounds climate-responsive design and long term value.",
-      buttonText: "See Our Sectors",
-      buttonHref: "/projects",
+        "NBRS continues to evolve its practice through research, partnerships and a deepening commitment to ecological design.",
+      buttonText: "DISCOVER NBRS RESEARCH",
+      buttonHref: "/research",
+      secondaryButtonText: "START A CONVERSATION",
+      secondaryButtonHref: "/contact",
     },
   };
 }
@@ -288,6 +294,10 @@ export async function getSustainabilityPage(): Promise<SustainabilityPageData> {
         description: cta?.ctaSectionDescription || fallback.cta.description,
         buttonText: cta?.ctaSectionButtonLabel || fallback.cta.buttonText,
         buttonHref: cta?.ctaSectionButtonUrl || fallback.cta.buttonHref,
+        secondaryButtonText:
+          cta?.ctaSectionSecondaryButtonLabel || fallback.cta.secondaryButtonText,
+        secondaryButtonHref:
+          cta?.ctaSectionSecondaryButtonUrl || fallback.cta.secondaryButtonHref,
       },
     };
   } catch {

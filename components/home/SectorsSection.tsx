@@ -26,12 +26,12 @@ export function SectorsSection({ sectors, heading = "Designing spaces bespoke to
                 className={`absolute  top-[-100%] group-hover:top-0  duration-300 z-10 opacity-100  w-full h-full`}
                 style={{ backgroundColor: sector.hoverColor }}
               >
-                <div className="relative h-full w-full flex flex-col items-start justify-between gap-4 p-5">
+                <div className="relative h-full w-full flex flex-col items-start justify-between gap-4 p-8">
                   <div className="flex flex-col gap-2 text-left">
-                    <span className="font-heading text-lg lg:text-[34px] uppercase text-black">
+                    <span className="font-heading text-[26px] lg:text-[30px] uppercase text-black">
                       {sector.label}
                     </span>
-                    <span className="font-heading text-sm lg:text-[18px] uppercase text-black">
+                    <span className="font-heading text-base uppercase text-black">
                       {sector.description}
                     </span>
                   </div>

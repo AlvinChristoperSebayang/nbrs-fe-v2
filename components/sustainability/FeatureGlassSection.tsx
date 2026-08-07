@@ -23,7 +23,7 @@ export function FeatureGlassSection({
   buttonHref,
 }: FeatureGlassSectionProps) {
   return (
-    <section className="bg-white py-12 lg:py-0 text-black lg:pb-[94px]">
+    <section className="bg-white pb-12 lg:py-0 text-black lg:pb-[94px]">
       <Container>
         <div className="relative flex flex-col lg:flex-row items-center">
           {/* Overlapping Glass Card */}

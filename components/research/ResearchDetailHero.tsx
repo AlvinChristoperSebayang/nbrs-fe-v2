@@ -10,7 +10,6 @@ export type ResearchDetailHeroProps = {
   bgColor?: string;
 };
 
-// Category Background Colors according to project design system
 const CATEGORY_BG_COLORS: Record<string, string> = {
   community: "#F2E8D8",
   wellness: "#DEE1F2",
@@ -22,41 +21,28 @@ const CATEGORY_BG_COLORS: Record<string, string> = {
 
 function getTitleLines(title: string): string[] {
   if (title.includes("\n")) {
-    return title.split("\n").map((l) => l.trim()).filter(Boolean);
+    return title.split("\n").map((line) => line.trim()).filter(Boolean);
   }
 
   const words = title.trim().split(/\s+/);
+  if (words.length <= 3) return [title.trim()];
 
-  // If 3 words or fewer, keep on 1 line
-  if (words.length <= 3) {
-    return [title.trim()];
-  }
-
-  const totalLength = title.trim().length;
-  const targetMid = totalLength / 2;
-
+  const targetMid = title.trim().length / 2;
   let currentLine = "";
-  const line1Words: string[] = [];
-  const line2Words: string[] = [];
+  const firstLine: string[] = [];
+  const secondLine: string[] = [];
 
-  for (let i = 0; i < words.length; i++) {
-    const word = words[i];
-    if (line1Words.length === 0) {
-      line1Words.push(word);
-      currentLine = word;
-    } else if (currentLine.length < targetMid && i < words.length - 1) {
-      line1Words.push(word);
-      currentLine += " " + word;
+  for (let index = 0; index < words.length; index += 1) {
+    const word = words[index];
+    if (firstLine.length === 0 || (currentLine.length < targetMid && index < words.length - 1)) {
+      firstLine.push(word);
+      currentLine = firstLine.join(" ");
     } else {
-      line2Words.push(word);
+      secondLine.push(word);
     }
   }
 
-  if (line2Words.length === 0) {
-    return [title];
-  }
-
-  return [line1Words.join(" "), line2Words.join(" ")];
+  return secondLine.length > 0 ? [firstLine.join(" "), secondLine.join(" ")] : [title.trim()];
 }
 
 export function renderResearchTitleWithUnderline(title: string) {
@@ -64,7 +50,7 @@ export function renderResearchTitleWithUnderline(title: string) {
 
   if (lines.length === 1) {
     return (
-      <span className="inline-block border-b-[4px] sm:border-b-[5px] lg:border-b-[6px] border-black pb-1 sm:pb-2 leading-[1.05]">
+      <span className="inline-block border-b-[4px] border-black pb-1 leading-[1.05] sm:border-b-[5px] sm:pb-2 lg:border-b-[6px]">
         {lines[0]}
       </span>
     );
@@ -72,24 +58,20 @@ export function renderResearchTitleWithUnderline(title: string) {
 
   return (
     <span className="inline-flex flex-col items-start">
-      {lines.map((line, idx) => {
-        const isLast = idx === lines.length - 1;
-        if (isLast) {
-          return (
-            <span
-              key={idx}
-              className="inline-block border-b-[4px] sm:border-b-[5px] lg:border-b-[6px] border-black pb-1 sm:pb-2 leading-none mt-1"
-            >
-              {line}
-            </span>
-          );
-        }
-        return (
-          <span key={idx} className="block leading-[1.05]">
+      {lines.map((line, index) =>
+        index === lines.length - 1 ? (
+          <span
+            key={line}
+            className="mt-1 inline-block border-b-[4px] border-black pb-1 leading-none sm:border-b-[5px] sm:pb-2 lg:border-b-[6px]"
+          >
             {line}
           </span>
-        );
-      })}
+        ) : (
+          <span key={line} className="block leading-[1.05]">
+            {line}
+          </span>
+        ),
+      )}
     </span>
   );
 }
@@ -102,53 +84,42 @@ export function ResearchDetailHero({
   bgColor,
 }: ResearchDetailHeroProps) {
   const normalizedCategory = category.toLowerCase().trim();
-  const activeBgColor =
-    bgColor || CATEGORY_BG_COLORS[normalizedCategory] || "#F2E8D8";
+  const activeBgColor = bgColor || CATEGORY_BG_COLORS[normalizedCategory] || "#F2E8D8";
   const activeBgImage = bgImage ?? "/images/research-banner-pattern.png";
 
   return (
     <section
-      className="relative max-md:h-[80vh] lg:h-[90vh] w-full flex items-center overflow-hidden transition-colors duration-500"
+      className="relative flex h-[610px] w-full items-center overflow-hidden transition-colors duration-500 lg:h-[85vh]"
       style={{ backgroundColor: activeBgColor }}
     >
-      {/* CMS-provided transparent artwork over the dynamic Sector accent colour. */}
       <div className="pointer-events-none absolute inset-0">
         <ResponsiveImage src={activeBgImage} alt="" priority className="h-full w-full object-cover" />
       </div>
 
       <Container className="relative z-10 flex h-full flex-col justify-center pb-12 lg:pb-16">
-        <div className="flex flex-col items-start max-w-4xl">
-          {/* Dynamic Category Pill Badge */}
+        <div className="flex max-w-4xl flex-col items-start">
           <div
             data-aos="fade-up"
-            className="rounded-[5px] border border-black px-5 py-2 inline-flex items-center gap-2 mb-6 sm:mb-8 bg-transparent"
+            className="mb-6 inline-flex items-center gap-2 rounded-[5px] border border-black bg-transparent px-5 py-2 sm:mb-8"
           >
-            <span className="text-black text-sm sm:text-base font-bold tracking-wider uppercase font-sans">
-              RESEARCH
-            </span>
-            <span className="text-black text-sm sm:text-base font-medium opacity-60">
-              |
-            </span>
-            <span className="text-black text-sm sm:text-base font-light tracking-wider uppercase font-sans">
-              {category}
-            </span>
+            <span className="font-sans text-sm font-bold tracking-wider text-black uppercase sm:text-base">RESEARCH</span>
+            <span className="text-sm font-medium text-black opacity-60 sm:text-base">|</span>
+            <span className="font-sans text-sm font-light tracking-wider text-black uppercase sm:text-base">{category}</span>
           </div>
 
-          {/* Title */}
           <h1
             data-aos="fade-up"
             data-aos-delay="100"
-            className="font-heading text-4xl sm:text-5xl lg:text-[70px] font-bold text-black uppercase leading-[1.05] tracking-tight mb-6"
+            className="mb-6 font-heading text-4xl leading-[1.05] font-bold tracking-tight text-black uppercase sm:text-5xl lg:text-[70px]"
           >
             {renderResearchTitleWithUnderline(title)}
           </h1>
 
-          {/* Description */}
           {description && (
             <p
               data-aos="fade-up"
               data-aos-delay="200"
-              className="font-sans text-base sm:text-lg text-black font-normal leading-relaxed max-w-2xl"
+              className="max-w-2xl font-sans text-base leading-relaxed font-normal text-black sm:text-lg"
             >
               {description}
             </p>

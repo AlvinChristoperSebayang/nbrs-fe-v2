@@ -1,17 +1,16 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { CtaSection } from "@/components/cta/CtaSection";
 import { AtAGlanceSection } from "@/components/research/AtAGlanceSection";
 import { RelatedResearchSection } from "@/components/research/RelatedResearchSection";
 import { ResearchDetailHero } from "@/components/research/ResearchDetailHero";
-import { CtaSection } from "@/components/cta/CtaSection";
-import { NewsArticleContent } from "@/components/news/NewsArticleContent";
 import { Container } from "@/components/ui/Container";
 import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
 import { getResearchDetail } from "@/lib/research-detail";
 
 export const revalidate = 60;
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps<"/research/[slug]">): Promise<Metadata> {
   const { slug } = await params;
   const research = await getResearchDetail(slug);
 
@@ -32,7 +31,7 @@ function MetadataItem({ label, value }: { label: string; value: string | null })
   );
 }
 
-export default async function ResearchDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function ResearchDetailPage({ params }: PageProps<"/research/[slug]">) {
   const { slug } = await params;
   const research = await getResearchDetail(slug);
   if (!research) notFound();
@@ -49,7 +48,7 @@ export default async function ResearchDetailPage({ params }: { params: Promise<{
         bgImage={research.hero}
       />
 
-      <section className="relative z-20 mt-0 overflow-hidden lg:-mt-10">
+      <section className="relative z-20 overflow-hidden lg:-mt-10">
         <div className="container uncontainer-mobile mx-auto">
           <div className="flex flex-col gap-6 rounded-sm bg-[#E5E5E5] p-6 shadow-sm sm:p-8 lg:p-10">
             <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
@@ -69,7 +68,6 @@ export default async function ResearchDetailPage({ params }: { params: Promise<{
               <MetadataItem label="Sponsored by:" value={research.sponsoredBy} />
               <MetadataItem label="Read time:" value={research.readTime} />
             </div>
-
           </div>
         </div>
       </section>
@@ -78,19 +76,22 @@ export default async function ResearchDetailPage({ params }: { params: Promise<{
         <section className="bg-white pt-12 pb-6 lg:pt-20 lg:pb-5">
           <Container>
             <div className="flex flex-col-reverse items-start gap-12 lg:flex-row lg:gap-16">
-              <div className="flex w-full flex-col gap-10 lg:gap-12 lg:w-1/2">
+              <div className="flex w-full flex-col gap-10 lg:w-1/2 lg:gap-12">
                 {research.insightHtml && (
                   <div data-aos="fade-up" className="flex flex-col gap-4">
-                    <h2 className="font-heading text-3xl font-bold leading-none text-black uppercase sm:text-4xl">Insight</h2>
-                    <div className="font-sans text-base leading-relaxed text-zinc-900 [&_a]:underline [&_a]:underline-offset-4 [&_p]:mb-5 [&_p:last-child]:mb-0" dangerouslySetInnerHTML={{ __html: research.insightHtml }} />
+                    <h2 className="font-heading text-3xl leading-none font-bold text-black uppercase sm:text-4xl">Insight</h2>
+                    <div
+                      className="font-sans text-base leading-relaxed text-zinc-900 [&_a]:underline [&_a]:underline-offset-4 [&_p]:mb-5 [&_p:last-child]:mb-0"
+                      dangerouslySetInnerHTML={{ __html: research.insightHtml }}
+                    />
                   </div>
                 )}
 
                 {research.keyTakeawaysHtml && (
                   <div data-aos="fade-up" data-aos-delay="100" className="flex flex-col gap-6 pt-4">
-                    <h2 className="font-heading text-3xl font-bold leading-none text-black uppercase sm:text-4xl">Key take-aways</h2>
+                    <h2 className="font-heading text-3xl leading-none font-bold text-black uppercase sm:text-4xl">Key take-aways</h2>
                     <div
-                      className="font-sans text-base leading-relaxed text-zinc-900 [&_a]:underline [&_a]:underline-offset-4 [&_h3]:mb-1 [&_h3]:font-heading [&_h3]:text-xl [&_h3]:font-bold [&_h3]:text-black [&_h3]:uppercase [&_h3:not(:first-child)]:mt-6 [&_li]:ml-5 [&_li]:mb-2 [&_ol]:list-decimal [&_p]:mb-4 [&_p:last-child]:mb-0 [&_strong]:font-bold [&_ul]:list-disc"
+                      className="font-sans text-base leading-relaxed text-zinc-900 [&_a]:underline [&_a]:underline-offset-4 [&_h3]:mb-1 [&_h3]:font-heading [&_h3]:text-xl [&_h3]:font-bold [&_h3]:text-black [&_h3]:uppercase [&_h3:not(:first-child)]:mt-6 [&_li]:mb-2 [&_li]:ml-5 [&_ol]:list-decimal [&_p]:mb-4 [&_p:last-child]:mb-0 [&_strong]:font-bold [&_ul]:list-disc"
                       dangerouslySetInnerHTML={{ __html: research.keyTakeawaysHtml }}
                     />
                   </div>
@@ -98,7 +99,7 @@ export default async function ResearchDetailPage({ params }: { params: Promise<{
               </div>
 
               {research.featureImage && (
-                <div data-aos="fade-up" data-aos-delay="200" className="flex w-full justify-start lg:justify-end lg:w-1/2">
+                <div data-aos="fade-up" data-aos-delay="200" className="flex w-full justify-start lg:w-1/2 lg:justify-end">
                   <div className="aspect-[570/587] w-full max-w-[570px] overflow-hidden rounded-xs bg-zinc-100 shadow-md">
                     <ResponsiveImage src={research.featureImage} alt={research.title} className="h-full w-full object-cover" />
                   </div>
@@ -109,27 +110,19 @@ export default async function ResearchDetailPage({ params }: { params: Promise<{
         </section>
       )}
 
-      {/* {research.bodyContent.length > 0 && (
-        <section className="bg-white pb-12 lg:pb-20">
-          <Container>
-            <NewsArticleContent blocks={research.bodyContent} />
-          </Container>
-        </section>
-      )} */}
-
       <AtAGlanceSection items={research.atAGlance} />
 
       {research.resultsImplicationsHtml && (
         <section className="bg-white pt-12 pb-6 text-black lg:pt-20 lg:pb-24">
           <Container>
             <div className="flex flex-col gap-4 lg:max-w-[492px]">
-              <h2 data-aos="fade-up" className="font-heading text-3xl font-bold leading-none text-black uppercase sm:text-4xl">
+              <h2 data-aos="fade-up" className="font-heading text-3xl leading-none font-bold text-black uppercase sm:text-4xl">
                 Results and implications
               </h2>
               <div
                 data-aos="fade-up"
                 data-aos-delay="100"
-                className="font-sans text-base leading-relaxed text-zinc-900 [&_a]:underline [&_a]:underline-offset-4 [&_li]:ml-5 [&_li]:mb-2 [&_ol]:list-decimal [&_p]:mb-5 [&_p:last-child]:mb-0 [&_strong]:font-bold [&_ul]:list-disc"
+                className="font-sans text-base leading-relaxed text-zinc-900 [&_a]:underline [&_a]:underline-offset-4 [&_li]:mb-2 [&_li]:ml-5 [&_ol]:list-decimal [&_p]:mb-5 [&_p:last-child]:mb-0 [&_strong]:font-bold [&_ul]:list-disc"
                 dangerouslySetInnerHTML={{ __html: research.resultsImplicationsHtml }}
               />
             </div>
