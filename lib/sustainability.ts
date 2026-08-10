@@ -101,9 +101,9 @@ const query = /* GraphQL */ `
             sectionHeading
             text
             image {
-              mobile: url @transform(width: 600, height: 450, mode: "crop", format: "webp", quality: 80, immediately: true)
-              tablet: url @transform(width: 900, height: 675, mode: "crop", format: "webp", quality: 80, immediately: true)
-              desktop: url @transform(width: 1200, height: 900, mode: "crop", format: "webp", quality: 80, immediately: true)
+              mobile: url @transform(width: 600, format: "webp", quality: 80, immediately: true)
+              tablet: url @transform(width: 900, format: "webp", quality: 80, immediately: true)
+              desktop: url @transform(width: 1200, format: "webp", quality: 80, immediately: true)
               title
             }
           }
@@ -114,9 +114,9 @@ const query = /* GraphQL */ `
                 text
                 sustainabilityBlockUrl
                 image {
-                  mobile: url @transform(width: 600, height: 750, mode: "crop", format: "webp", quality: 80, immediately: true)
-                  tablet: url @transform(width: 900, height: 900, mode: "crop", format: "webp", quality: 80, immediately: true)
-                  desktop: url @transform(width: 1200, height: 900, mode: "crop", format: "webp", quality: 80, immediately: true)
+                  mobile: url @transform(width: 600, format: "webp", quality: 80, immediately: true)
+                  tablet: url @transform(width: 900, format: "webp", quality: 80, immediately: true)
+                  desktop: url @transform(width: 1200, format: "webp", quality: 80, immediately: true)
                   title
                 }
               }
@@ -176,6 +176,14 @@ function plainText(value: string | null | undefined, heading?: string | null): s
 
 function imageFrom(assets?: SustainabilityAsset[], fallback?: ImageSource): ImageSource | null {
   return toImageSource(assets?.[0]) ?? fallback ?? null;
+}
+
+function normalizeSustainabilityHref(value: string | null | undefined): string | undefined {
+  const href = value?.trim();
+  if (!href) return undefined;
+
+  // Preserve existing CMS URLs while making the known legacy typo route-safe.
+  return href.replace(/^\/?projecs(?=\/|$)/, "/projects");
 }
 
 function fallbackPage(): SustainabilityPageData {
@@ -273,7 +281,7 @@ export async function getSustainabilityPage(): Promise<SustainabilityPageData> {
             title: feature.heading as string,
             text: plainText(feature.text),
             image: imageFrom(feature.image, fallback.features[0].image) ?? fallback.features[0].image,
-            href: feature.sustainabilityBlockUrl?.trim() || undefined,
+            href: normalizeSustainabilityHref(feature.sustainabilityBlockUrl),
           })),
       projects:
         (caseStudiesBlock?.__typename === "blocks_caseStudies_BlockType"
@@ -300,7 +308,10 @@ export async function getSustainabilityPage(): Promise<SustainabilityPageData> {
           cta?.ctaSectionSecondaryButtonUrl || fallback.cta.secondaryButtonHref,
       },
     };
-  } catch {
+  } catch (error) {
+    if (process.env.NODE_ENV === "development") {
+      console.error("[getSustainabilityPage] Craft query failed; using fallback data:", error);
+    }
     return fallbackPage();
   }
 }

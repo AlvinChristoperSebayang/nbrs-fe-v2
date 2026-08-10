@@ -78,7 +78,7 @@ export function FeatureGlassSection({
           <div
             data-aos="fade-up"
             data-aos-delay="250"
-            className={`w-full lg:w-[68%] aspect-[16/10] overflow-hidden bg-zinc-100 ${
+            className={`w-full lg:w-[68%] aspect-[3/2] lg:aspect-[77/41] overflow-hidden bg-zinc-100 ${
               reverse ? "lg:mr-auto" : "lg:ml-auto"
             }`}
           >
