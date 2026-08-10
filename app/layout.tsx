@@ -3,6 +3,7 @@ import { roboto, tradeGothic } from "@/lib/fonts";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { AosInit } from "@/components/layout/AosInit";
+import { getFooter } from "@/lib/footer";
 import "./globals.css";
 import "./header.css";
 
@@ -14,11 +15,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const footer = await getFooter();
+
   return (
     <html
       lang="en"
@@ -29,7 +32,7 @@ export default function RootLayout({
         <AosInit />
         <Header />
         {children}
-        <Footer />
+        <Footer content={footer} />
       </body>
     </html>
   );

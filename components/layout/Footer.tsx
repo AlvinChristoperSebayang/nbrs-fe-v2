@@ -3,74 +3,38 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
-
-type FooterLink = {
-  label: string;
-  href: string;
-};
+import type { FooterContent, FooterLink } from "@/lib/footer";
 
 type FooterGroup = {
   heading: string;
   links: FooterLink[];
 };
 
-const purposeAndPeopleColumn: FooterGroup[] = [
-  {
-    heading: "Purpose",
-    links: [
-      { label: "About NBRS", href: "/about" },
-      { label: "Design Approach", href: "/design-approach" },
-      { label: "Awards", href: "/awards" },
-      { label: "Research Envision", href: "/research" },
-      { label: "Sustainability", href: "/sustainability" },
-      { label: "Social Responsibility", href: "/social-sustainability" },
-      { label: "News", href: "/news" },
-    ],
-  },
-  {
-    heading: "People",
-    links: [
-      { label: "Our Leaders", href: "/people/team" },
-      { label: "Culture", href: "/people/culture" },
-      { label: "Careers", href: "/people/careers" },
-      { label: "Envision", href: "/people/envision-student-program" },
-    ],
-  },
-];
+const footerGroupDefinitions = [
+  { section: "purpose", heading: "Purpose" },
+  { section: "people", heading: "People" },
+  { section: "sectors", heading: "Sectors" },
+  { section: "practices", heading: "Practices" },
+  { section: "legal", heading: "Legal" },
+] as const;
 
-const sectorsAndPracticesColumn: FooterGroup[] = [
-  {
-    heading: "Sectors",
-    links: [
-      { label: "Education", href: "/sectors/education" },
-      { label: "Wellness", href: "/sectors/wellness" },
-      { label: "Community", href: "/sectors/community" },
-      { label: "Secure Spaces", href: "/sectors/secure-spaces" },
-      { label: "Heritage", href: "/sectors/heritage" },
-    ],
-  },
-  {
-    heading: "Practices",
-    links: [
-      { label: "Architecture", href: "/practices/architecture" },
-      { label: "Landscape Architecture", href: "/practices/landscape-architecture" },
-      { label: "Interior Design", href: "/practices/interior-design" },
-    ],
-  },
-  {
-    heading: "Legal",
-    links: [
-      { label: "Terms & Conditions", href: "/terms" },
-      { label: "Privacy Policy", href: "/privacy" },
-      { label: "Sitemap", href: "#" },
-    ],
-  },
-];
+function groupsFor(
+  content: FooterContent,
+  sections: ReadonlyArray<(typeof footerGroupDefinitions)[number]["section"]>,
+): FooterGroup[] {
+  return sections.flatMap((section) => {
+    const definition = footerGroupDefinitions.find((group) => group.section === section);
+    const links = content.navigation
+      .filter((link) => link.section === section)
+      .map(({ label, href }) => ({ label, href }));
 
-const socialLinks = [
+    return definition && links.length ? [{ heading: definition.heading, links }] : [];
+  });
+}
+
+const socialIcons = [
   {
     label: "LinkedIn",
-    href: "https://www.linkedin.com",
     icon: (
       <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path fillRule="evenodd" clipRule="evenodd" d="M3.53078 0H22.3616C24.3116 0 25.8924 1.58078 25.8924 3.53078V22.3616C25.8924 24.3116 24.3116 25.8924 22.3616 25.8924H3.53078C1.58078 25.8924 0 24.3116 0 22.3616V3.53078C0 1.58078 1.58078 0 3.53078 0ZM8.66766 20.8772C8.77006 20.7745 8.82739 20.6353 8.827 20.4903V10.7394C8.827 10.4377 8.58288 10.193 8.2812 10.1922H5.9553C5.65305 10.1922 5.40803 10.4372 5.40803 10.7394V20.4903C5.40764 20.6355 5.46517 20.775 5.56789 20.8777C5.67061 20.9804 5.81004 21.0379 5.9553 21.0375H8.2812C8.42621 21.0375 8.56526 20.9798 8.66766 20.8772ZM7.11738 9.26797C5.89863 9.26797 4.91064 8.27998 4.91064 7.06123C4.91064 5.84248 5.89863 4.85449 7.11738 4.85449C8.33613 4.85449 9.32412 5.84248 9.32412 7.06123C9.32412 8.27998 8.33613 9.26797 7.11738 9.26797ZM20.8371 20.8847C20.9316 20.7902 20.9844 20.662 20.9841 20.5285L20.9811 15.8149L20.9811 15.7747C20.9813 13.7157 20.9816 10.0303 17.009 10.0303C15.2039 10.0303 14.358 10.6894 13.7871 11.547V10.6967C13.7871 10.4188 13.5619 10.1936 13.284 10.1936H10.8684C10.7351 10.1936 10.6072 10.2466 10.5131 10.341C10.419 10.4354 10.3663 10.5634 10.3667 10.6967V20.5343C10.3663 20.6676 10.419 20.7956 10.5131 20.89C10.6072 20.9844 10.7351 21.0375 10.8684 21.0375H13.284C13.559 21.0335 13.7798 20.8094 13.7798 20.5343V15.2588C13.8416 14.5497 14.1549 12.9711 15.6923 12.9711C17.5308 12.9711 17.4944 14.9507 17.4791 15.7849C17.4779 15.8512 17.4768 15.9103 17.4768 15.9605V20.5285C17.4764 20.662 17.5293 20.7902 17.6237 20.8847C17.7182 20.9791 17.8464 21.032 17.9799 21.0316H20.4809C20.6145 21.032 20.7427 20.9791 20.8371 20.8847Z" fill="white"/>
@@ -79,7 +43,6 @@ const socialLinks = [
   },
   {
     label: "Instagram",
-    href: "https://www.instagram.com",
     icon: (
       <svg width="25" height="26" viewBox="0 0 25 26" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g clipPath="url(#clip0_6338_807)">
@@ -97,7 +60,6 @@ const socialLinks = [
   },
   {
     label: "YouTube",
-    href: "https://www.youtube.com",
     icon: (
       <svg width="26" height="19" viewBox="0 0 26 19" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M25.741 3.9457C25.741 3.9457 25.4871 2.15313 24.7051 1.36602C23.7148 0.330078 22.6078 0.325 22.1 0.264062C18.4641 -1.45286e-07 13.0051 0 13.0051 0H12.9949C12.9949 0 7.53594 -1.45286e-07 3.9 0.264062C3.39219 0.325 2.28516 0.330078 1.29492 1.36602C0.512891 2.15313 0.264062 3.9457 0.264062 3.9457C0.264062 3.9457 0 6.05313 0 8.15547V10.1258C0 12.2281 0.258984 14.3355 0.258984 14.3355C0.258984 14.3355 0.512891 16.1281 1.28984 16.9152C2.28008 17.9512 3.58008 17.9156 4.15898 18.0273C6.24102 18.2254 13 18.2863 13 18.2863C13 18.2863 18.4641 18.2762 22.1 18.0172C22.6078 17.9563 23.7148 17.9512 24.7051 16.9152C25.4871 16.1281 25.741 14.3355 25.741 14.3355C25.741 14.3355 26 12.2332 26 10.1258V8.15547C26 6.05313 25.741 3.9457 25.741 3.9457ZM10.3137 12.5176V5.21016L17.3367 8.87656L10.3137 12.5176Z" fill="white"/>
@@ -180,7 +142,17 @@ function FooterLinkGroup({
   );
 }
 
-export function Footer() {
+export function Footer({ content }: { content: FooterContent }) {
+  const purposeAndPeopleColumn = groupsFor(content, ["purpose", "people"]);
+  const sectorsAndPracticesColumn = groupsFor(content, ["sectors", "practices", "legal"]);
+  const socialLinks = content.socialLinks.flatMap((link) => {
+    const socialIcon = socialIcons.find(
+      (social) => social.label.toLowerCase() === link.label.toLowerCase(),
+    );
+
+    return socialIcon ? [{ ...link, icon: socialIcon.icon }] : [];
+  });
+
   return (
     <footer className="bg-[#181D33] py-20 lg:pt-[85px] lg:pb-[60px]">
       <Container>
@@ -193,45 +165,46 @@ export function Footer() {
               width={110}
               height={40}
             />
-            <div>
+            {content.businessDetailsHtml && (
+              <div>
               <h3 className="text-sm lg:text-lg tracking-wide text-white">
                 Business Details
               </h3>
-              <p className="mt-4 text-sm lg:text-lg font-semibold text-white">
-                Nominated Architect:
-              </p>
-              <p className="mt-1 text-sm text-white/70">
-                Andrew Duffin
-                <br />
-                NSW 5602 | QLD 5465 | VIC00024
-              </p>
-              <p className="mt-3 text-sm text-white/70">ABN 16 002 247 565</p>
-            </div>
-
-            <div>
-              <h3 className="font-heading text-sm lg:text-2xl uppercase tracking-wide text-white">
-                Contact Us
-              </h3>
-              <p className="mt-4 text-sm lg:text-lg text-white/70">
-                NBRS operates on a 
-                <br />
-                9-day fortnight schedule.
-              </p>
-              <div className="mt-4 flex items-center gap-4">
-                {socialLinks.map((social) => (
-                  <a
-                    key={social.label}
-                    href={social.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label={social.label}
-                    className="text-white/80 transition hover:text-white"
-                  >
-                    {social.icon}
-                  </a>
-                ))}
+                <div
+                  className="mt-4 text-sm text-white/70 [&_p]:m-0 [&_p:first-child]:font-semibold [&_p:first-child]:text-white [&_p+p]:mt-1 [&_p+p+p]:mt-3"
+                  dangerouslySetInnerHTML={{ __html: content.businessDetailsHtml }}
+                />
               </div>
-            </div>
+            )}
+
+            {(content.contactMessage || socialLinks.length > 0) && (
+              <div>
+                <h3 className="font-heading text-sm lg:text-2xl uppercase tracking-wide text-white">
+                  Contact Us
+                </h3>
+                {content.contactMessage && (
+                  <p className="mt-4 whitespace-pre-line text-sm lg:text-lg text-white/70">
+                    {content.contactMessage}
+                  </p>
+                )}
+                {socialLinks.length > 0 && (
+                  <div className="mt-4 flex items-center gap-4">
+                    {socialLinks.map((social) => (
+                      <a
+                        key={social.label}
+                        href={social.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label={social.label}
+                        className="text-white/80 transition hover:text-white"
+                      >
+                        {social.icon}
+                      </a>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
           </div>
 
           {/* Column 2 (Mobile: 1st & 2nd -> PURPOSE, PEOPLE / Desktop: 3rd Column -> Right) */}
@@ -260,17 +233,14 @@ export function Footer() {
             ))}
           </div>
         </div>
-        <p
-          data-aos="fade-up"
-          data-aos-delay="300"
-          className="mt-16 w-full text-sm italic text-[#FFD6CD]"
-        >
-          We acknowledge the Aboriginal and Torres Strait Islander peoples as
-          the Traditional Custodians of this land and waters. We pay our
-          respects to Aboriginal and Torres Strait Islander Elders, past and
-          present, and acknowledge the diversity and strength of Aboriginal
-          and Torres Strait Islander peoples and communities today.
-        </p>
+        {content.acknowledgementHtml && (
+          <div
+            data-aos="fade-up"
+            data-aos-delay="300"
+            className="mt-16 w-full text-sm italic text-[#FFD6CD] [&_p]:m-0"
+            dangerouslySetInnerHTML={{ __html: content.acknowledgementHtml }}
+          />
+        )}
       </Container>
     </footer>
   );

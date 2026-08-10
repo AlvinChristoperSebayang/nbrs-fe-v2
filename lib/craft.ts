@@ -10,6 +10,7 @@ type GraphQLResponse = {
 type CraftFetchOptions = {
   cache?: RequestCache;
   revalidate?: number;
+  tags?: string[];
 };
 
 function isGraphQLResponse(value: unknown): value is GraphQLResponse {
@@ -50,7 +51,13 @@ export async function craftFetch<T>(
     headers: { "Content-Type": "application/json", Accept: "application/json" },
     body: JSON.stringify({ query, variables }),
     cache: options?.cache,
-    next: options?.cache === "no-store" ? undefined : { revalidate: options?.revalidate ?? 60 },
+    next:
+      options?.cache === "no-store"
+        ? undefined
+        : {
+            revalidate: options?.revalidate ?? 60,
+            tags: options?.tags,
+          },
   });
 
   if (!res.ok) {
