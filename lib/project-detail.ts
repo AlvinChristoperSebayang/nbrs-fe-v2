@@ -40,6 +40,32 @@ export type ProjectRelatedProject = {
   practiceLabel?: string | null;
 };
 
+export type ProjectV2Block =
+  | {
+      type: "intro";
+      heading: string | null;
+      textHtml: string | null;
+      image: ImageSource | null;
+    }
+  | {
+      type: "copy";
+      heading: string | null;
+      textHtml: string | null;
+      alignment: "left" | "right";
+    }
+  | {
+      type: "media";
+      image: ImageSource | null;
+      treatment: "contained" | "fullBleed";
+    }
+  | {
+      type: "feature";
+      heading: string | null;
+      textHtml: string | null;
+      image: ImageSource | null;
+      imagePosition: "left" | "right";
+    };
+
 export type ProjectDetail = {
   id: string;
   title: string;
@@ -51,6 +77,8 @@ export type ProjectDetail = {
   thumbnailUrl: ImageSource | null;
   popupGalleryUrls: ImageSource[];
   splash: ProjectSplashSlide[];
+  useV2Body: boolean;
+  v2Content: ProjectV2Block[];
   impactText: string | null;
   impactMediaUrls: ImageSource[];
   impactNumber: string | null;
@@ -118,6 +146,16 @@ type RawGallerySlide = {
   text: string | null;
 };
 
+type RawProjectV2Block = {
+  __typename: string;
+  proV2Heading?: string | null;
+  proV2Text?: string | null;
+  proV2Image?: RawAsset[];
+  proV2CopyAlignment?: string | null;
+  proV2MediaTreatment?: string | null;
+  proV2ImagePosition?: string | null;
+};
+
 type RawAward = {
   award: string | null;
   awarded: string | null;
@@ -153,6 +191,8 @@ type RawProjectEntry = {
   thumbnail: RawAsset[];
   proHdrPopupGallery: RawAsset[];
   proHdrSplash: RawSplashSlide[];
+  proV2Enabled: boolean | null;
+  proV2Content: RawProjectV2Block[];
   proImpText: string | null;
   proImpMedia: RawAsset[];
   proImpNumber: string | null;
@@ -226,6 +266,51 @@ const PROJECT_DETAIL_QUERY = /* GraphQL */ `
               title
             }
             portraitImageCropping
+          }
+        }
+        proV2Enabled
+        proV2Content {
+          __typename
+          ... on projectV2Intro_Entry {
+            proV2Heading
+            proV2Text
+            proV2Image {
+              mobile: url @transform(width: 600, height: 450, mode: "crop", format: "webp", quality: 80, immediately: true)
+              tablet: url @transform(width: 1200, height: 675, mode: "crop", format: "webp", quality: 82, immediately: true)
+              desktop: url @transform(width: 2400, height: 1350, mode: "crop", format: "webp", quality: 85, immediately: true)
+              width
+              height
+              title
+            }
+          }
+          ... on projectV2Copy_Entry {
+            proV2Heading
+            proV2Text
+            proV2CopyAlignment
+          }
+          ... on projectV2Media_Entry {
+            proV2MediaTreatment
+            proV2Image {
+              mobile: url @transform(width: 600, height: 450, mode: "crop", format: "webp", quality: 80, immediately: true)
+              tablet: url @transform(width: 1440, height: 810, mode: "crop", format: "webp", quality: 82, immediately: true)
+              desktop: url @transform(width: 2400, height: 1350, mode: "crop", format: "webp", quality: 85, immediately: true)
+              width
+              height
+              title
+            }
+          }
+          ... on projectV2Feature_Entry {
+            proV2Heading
+            proV2Text
+            proV2Image {
+              mobile: url @transform(width: 600, height: 316, mode: "crop", format: "webp", quality: 80, immediately: true)
+              tablet: url @transform(width: 900, height: 474, mode: "crop", format: "webp", quality: 82, immediately: true)
+              desktop: url @transform(width: 1200, height: 632, mode: "crop", format: "webp", quality: 85, immediately: true)
+              width
+              height
+              title
+            }
+            proV2ImagePosition
           }
         }
         proImpText
@@ -372,6 +457,40 @@ export async function getProjectDetail(
   const entry = data.entry?.[0];
   if (!entry) return null;
 
+  const v2Content = (entry.proV2Content ?? []).flatMap(
+    (block): ProjectV2Block[] => {
+      const image = toImageSource(block.proV2Image?.[0]);
+
+      switch (block.__typename) {
+        case "projectV2Intro_Entry":
+          return [{ type: "intro", heading: block.proV2Heading ?? null, textHtml: block.proV2Text ?? null, image }];
+        case "projectV2Copy_Entry":
+          return [{
+            type: "copy",
+            heading: block.proV2Heading ?? null,
+            textHtml: block.proV2Text ?? null,
+            alignment: block.proV2CopyAlignment === "right" ? "right" : "left",
+          }];
+        case "projectV2Media_Entry":
+          return [{
+            type: "media",
+            image,
+            treatment: block.proV2MediaTreatment === "fullBleed" ? "fullBleed" : "contained",
+          }];
+        case "projectV2Feature_Entry":
+          return [{
+            type: "feature",
+            heading: block.proV2Heading ?? null,
+            textHtml: block.proV2Text ?? null,
+            image,
+            imagePosition: block.proV2ImagePosition === "left" ? "left" : "right",
+          }];
+        default:
+          return [];
+      }
+    }
+  );
+
   return {
     id: entry.id,
     title: entry.title,
@@ -388,6 +507,8 @@ export async function getProjectDetail(
       portraitImageUrl: toImageSource(slide.optionalPortraitImage?.[0]),
       portraitImageCropping: slide.portraitImageCropping,
     })),
+    useV2Body: entry.proV2Enabled === true,
+    v2Content,
     impactText: entry.proImpText,
     impactMediaUrls: (entry.proImpMedia ?? []).map(toImageSource).filter((image): image is ImageSource => Boolean(image)),
     impactNumber: entry.proImpNumber,

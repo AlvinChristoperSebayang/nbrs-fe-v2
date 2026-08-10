@@ -2,9 +2,8 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getProjectDetail, getKeyProjectsForDetail } from "@/lib/project-detail";
 import { ProjectDetailHero } from "@/components/projects/ProjectDetailHero";
-import { ProjectOverviewSection } from "@/components/projects/ProjectOverviewSection";
-import { ProjectStorySection } from "@/components/projects/ProjectStorySection";
-import { ProjectFeaturesAlternatingSection } from "@/components/projects/ProjectFeaturesAlternatingSection";
+import { ProjectDetailLegacyBody } from "@/components/projects/ProjectDetailLegacyBody";
+import { ProjectDetailV2Body } from "@/components/projects/ProjectDetailV2Body";
 import { KeyProjectsSection, type KeyProjectItem } from "@/components/sectors/KeyProjectsSection";
 
 export const dynamic = "force-dynamic";
@@ -66,6 +65,7 @@ export default async function ProjectPage(
           href: p.uri ? `/${p.uri.replace(/^\//, "")}` : `/projects/${p.slug}`,
         }))
       : fallbackKeyProjects;
+  const heroImage = project.splash.find((slide) => slide.imageUrl)?.imageUrl ?? project.thumbnailUrl;
 
   return (
     <article className="bg-white text-black min-h-screen">
@@ -74,25 +74,20 @@ export default async function ProjectPage(
         subheading={project.subheading}
         sectorLabel={sectorLabel}
         practiceLabel={practiceLabel}
-        image={project.thumbnailUrl}
+        image={heroImage}
         location={locationLabel}
         client={clientLabel}
         collaborators={collaboratorsLabel}
       />
 
-      {/* OVERVIEW SECTION (Sliced from Figma) */}
-      <ProjectOverviewSection
-        headline={project.subheading}
-        description={project.impactText}
-        image={project.thumbnailUrl}
-        alt={project.heading}
-      />
-
-      {/* STORY & GALLERY SECTION (Sliced from Figma) */}
-      <ProjectStorySection />
-
-      {/* ALTERNATING FEATURES SECTION (4 Dummy Data Items, No Header Title) */}
-      <ProjectFeaturesAlternatingSection />
+      {project.useV2Body ? (
+        <ProjectDetailV2Body blocks={project.v2Content} />
+      ) : (
+        <ProjectDetailLegacyBody
+          storyHtml={project.storyText}
+          popupGallery={project.popupGalleryUrls}
+        />
+      )}
 
       {/* KEY PROJECTS SECTION */}
       <KeyProjectsSection title="KEY PROJECTS" projects={keyProjects} />
