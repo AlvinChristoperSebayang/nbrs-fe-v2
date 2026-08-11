@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { Hero } from "@/components/ui/Hero";
 import { PracticeIntroSection } from "@/components/practices/PracticeIntroSection";
 import { ProjectListTableSection } from "@/components/sectors/ProjectListTableSection";
 import { SectorsSection } from "@/components/home/SectorsSection";
 import { CtaSection } from "@/components/cta/CtaSection";
-import { SECTORS_DATA } from "@/lib/sectors-data";
-import { CtaContent } from "@/lib/types";
+import { getPracticeDetailContent } from "@/lib/practice-detail";
 import { PRACTICES_DATA } from "@/lib/practices-data";
 
 export function generateStaticParams() {
@@ -19,11 +19,12 @@ export async function generateMetadata({
 }: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const resolvedParams = await params;
-  const item = PRACTICES_DATA.find((p) => p.slug === resolvedParams.slug);
+  const practice = await getPracticeDetailContent((await params).slug);
+  if (!practice) return { title: "Practice Detail" };
 
   return {
-    title: item ? item.title : "Practice Detail",
+    title: practice.seoTitle,
+    description: practice.seoDescription,
   };
 }
 
@@ -32,57 +33,39 @@ export default async function PracticeDetailPage({
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  const resolvedParams = await params;
-  const item =
-    PRACTICES_DATA.find((p) => p.slug === resolvedParams.slug) ||
-    PRACTICES_DATA[0];
-
-  const cta: CtaContent = {
-    image: "/images/contact-bg.png",
-    title: "GET IN TOUCH",
-    description: `Interested in our ${item.title.toLowerCase()} projects or have any questions?`,
-    buttonText: "CONTACT US",
-    buttonHref: "/contact",
-  };
-
-  const tableRows = item.tableProjects.map((tp) => ({
-    id: tp.id,
-    project: tp.title,
-    practices: tp.sector,
-    status: tp.status,
-    href: tp.href,
-  }));
+  const practice = await getPracticeDetailContent((await params).slug);
+  if (!practice) notFound();
 
   return (
     <article className="bg-white text-black min-h-screen">
       {/* 1. HERO SECTION */}
       <Hero
-        image={item.heroImage}
-        title={item.title}
-        description={item.description}
+        image={practice.image}
+        title={practice.title}
+        description={practice.description}
       />
 
       {/* 2. INTRO FEATURE STAGE (Exact Specs: 770px Image + Overlapping 585px Glass Card) */}
       <PracticeIntroSection
-        image={item.introImage}
-        quote={item.introQuote}
-        alt={item.title}
+        image={practice.introImage}
+        quote={practice.introText}
+        alt={practice.title}
       />
 
       {/* 3. LATEST PROJECTS TABLE SECTION */}
       <ProjectListTableSection
         title="LATEST PROJECTS"
         sectorHeaderLabel="Sectors"
-        rows={tableRows}
+        rows={practice.tableProjects}
       />
 
       {/* 4. SECTORS GRID SECTION */}
       <div className="py-8 md:py-0">
-        <SectorsSection sectors={SECTORS_DATA} />
+        <SectorsSection sectors={practice.sectors} />
       </div>
 
       {/* 5. CTA SECTION */}
-      <CtaSection content={cta} />
+      <CtaSection content={practice.cta} />
     </article>
   );
 }

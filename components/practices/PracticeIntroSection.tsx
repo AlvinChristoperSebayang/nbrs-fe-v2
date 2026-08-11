@@ -1,11 +1,13 @@
 import { Container } from "@/components/ui/Container";
+import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
+import type { ImageSource } from "@/lib/types";
 
 export function PracticeIntroSection({
   image,
   quote,
   alt = "Practice intro image",
 }: {
-  image: string;
+  image: ImageSource;
   quote: string;
   alt?: string;
 }) {
@@ -18,7 +20,7 @@ export function PracticeIntroSection({
         >
           {/* Main Left Image (770px x 410px) */}
           <div className="w-full lg:w-[770px] h-[300px] sm:h-[380px] lg:h-[410px] relative lg:absolute lg:left-0 lg:top-0 overflow-hidden">
-            <img
+            <ResponsiveImage
               src={image}
               alt={alt}
               className="h-full w-full object-cover"
