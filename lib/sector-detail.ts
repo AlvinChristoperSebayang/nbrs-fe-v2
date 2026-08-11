@@ -91,8 +91,10 @@ export async function getSectorDetailContent(slug: string): Promise<SectorDetail
       return image && title ? [{ title, description: feature.sectorFeatureText?.trim() ?? "", image }] : [];
     });
 
-    const galleryImages = [category.catHdrImage[0], ...category.catOverImageText.map((block) => block.image[0]), ...category.catFeaturedProjects.slice(0, 2).map((project) => project.thumbnail?.[0])]
-      .map((asset) => toImageSource(asset)).filter((image): image is ImageSource => Boolean(image));
+    const principlesImages = category.catOverImageText
+    .map((block) => toImageSource(block.image[0]))
+    .filter((image): image is ImageSource => Boolean(image));
+
     const keyProjects = category.catFeaturedProjects.slice(0, 3).map((project, index) => ({ id: project.id, title: project.proHdrHeading?.trim() || project.title, image: toImageSource(project.thumbnail?.[0]) ?? fallback.keyProjects[index]?.image ?? fallback.image, href: projectHref(project) }));
     const tableProjects = category.catSelectedProjects.map((project) => ({ id: project.id, project: project.proHdrHeading?.trim() || project.title, practices: project.catDiscipline.map((discipline) => discipline.title).join(", ") || "—", status: project.catStatus[0]?.title ?? "—", href: projectHref(project) }));
     const quoteBlock = category.catPclPerson.find((block) => block.quote && block.person[0]?.pplProfileImage[0]);
@@ -113,7 +115,7 @@ export async function getSectorDetailContent(slug: string): Promise<SectorDetail
       image: toImageSource(category.catHdrImage[0]) ?? fallback.heroImage,
       principlesTitle: `${category.catOvrHeading?.trim() || "PRINCIPLES"}: ${category.title}`,
       principlesDescription: cleanHtml(category.catOvrText) || fallback.principlesDescription,
-      principlesImages: galleryImages.length >= 5 ? galleryImages.slice(0, 5) : fallback.principlesImages,
+      principlesImages: principlesImages.length > 0 ? principlesImages : fallback.principlesImages,
       features: features.length ? features : fallback.features,
       backgroundColor: category.accentColor?.trim() || fallback.hoverColor,
       heritageServices,

@@ -50,7 +50,7 @@ export default async function SingleSectorPage({
       <KeyProjectsSection projects={sector.keyProjects} />
       {sector.quote && <SectorQuoteSection image={sector.quote.image} quote={sector.quote.text} author={sector.quote.author} />}
       <ProjectListTableSection title="" rows={sector.tableProjects} />
-      <CtaSection content={sector.cta} />
+      <CtaSection content={sector.cta} titleUppercase={false} />
     </article>
   );
 }
