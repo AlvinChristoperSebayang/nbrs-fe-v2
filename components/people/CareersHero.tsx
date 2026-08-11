@@ -11,14 +11,92 @@ export type CareersHeroProps = {
   imageSrc?: ImageSource;
 };
 
+function getCareersTitleLines(title: string): string[] {
+  if (title.includes("\n")) {
+    return title.split("\n").map((l) => l.trim()).filter(Boolean);
+  }
+
+  const words = title.trim().split(/\s+/);
+  if (words.length <= 1) {
+    return [title.trim()];
+  }
+
+  if (words.length === 2) {
+    return [words[0], words[1]];
+  }
+
+  const totalLength = title.trim().length;
+  const targetMid = totalLength / 2;
+
+  let currentLine = "";
+  const line1Words: string[] = [];
+  const line2Words: string[] = [];
+
+  for (let i = 0; i < words.length; i++) {
+    const word = words[i];
+    if (line1Words.length === 0) {
+      line1Words.push(word);
+      currentLine = word;
+    } else if (currentLine.length < targetMid && i < words.length - 1) {
+      line1Words.push(word);
+      currentLine += " " + word;
+    } else {
+      line2Words.push(word);
+    }
+  }
+
+  if (line2Words.length === 0) {
+    return [title];
+  }
+
+  return [line1Words.join(" "), line2Words.join(" ")];
+}
+
+export function renderCareersTitle(title: React.ReactNode) {
+  if (typeof title !== "string") {
+    return (
+      <span className="inline-block border-b-4 border-white pb-2 leading-none">
+        {title}
+      </span>
+    );
+  }
+
+  const lines = getCareersTitleLines(title);
+
+  if (lines.length === 1) {
+    return (
+      <span className="inline-block border-b-4 border-white pb-2 leading-none">
+        {lines[0]}
+      </span>
+    );
+  }
+
+  return (
+    <span className="inline-flex flex-col items-start">
+      {lines.map((line, idx) => {
+        const isLast = idx === lines.length - 1;
+        if (isLast) {
+          return (
+            <span
+              key={idx}
+              className="inline-block border-b-4 border-white pb-2 leading-none mt-1"
+            >
+              {line}
+            </span>
+          );
+        }
+        return (
+          <span key={idx} className="block leading-[1.05]">
+            {line}
+          </span>
+        );
+      })}
+    </span>
+  );
+}
+
 export function CareersHero({
-  title = (
-    <>
-      CAREERS
-      <br />
-      AT NBRS
-    </>
-  ),
+  title = "CAREERS\nAT NBRS",
   role,
   location,
   registration,
@@ -44,11 +122,9 @@ export function CareersHero({
             data-aos="fade-up"
             className="lg:col-span-5 flex flex-col items-start gap-4 lg:gap-6 pt-24 pb-4 lg:pt-0 lg:pb-0"
           >
-            <div className="inline-block border-b-4 border-white pb-4">
-              <h1 className="font-heading whitespace-pre-line text-4xl sm:text-5xl lg:text-[65px] font-bold uppercase tracking-wide leading-none text-white">
-                {title}
-              </h1>
-            </div>
+            <h1 className="font-heading whitespace-pre-line text-4xl sm:text-5xl lg:text-[65px] font-bold uppercase tracking-wide leading-none text-white">
+              {renderCareersTitle(title)}
+            </h1>
 
             {/* Additional Attributes: Jabatan, Location/Tempat, Registration */}
             {(role || location || registration) && (
@@ -59,13 +135,11 @@ export function CareersHero({
                   </span>
                 )}
              
-                {registration && (
-                  <span className="text-xs sm:text-xl mt-0.5">
-                    Registration: {registration}
-                  </span>
-                )}
+                <span className="text-xs sm:text-xl mt-0.5">
+                  {registration && `Registration: ${registration}`}
+                </span>
 
-                   {location && (
+                {location && (
                   <div className="flex items-center gap-2 text-base sm:text-base text-white/80 font-medium">
                     <svg
                       width="18"
@@ -98,9 +172,9 @@ export function CareersHero({
           <div
             data-aos="fade-up"
             data-aos-delay="150"
-            className="lg:col-span-7 flex justify-end w-full"
+            className="lg:col-span-7 flex justify-start w-full"
           >
-            <div className="relative w-[calc(100%+1rem)] sm:w-[calc(100%+1.5rem)] lg:w-[770px] min-h-[440px] h-[440px] sm:h-[500px] lg:h-[570px] rounded-[3px] overflow-hidden z-30 transform lg:translate-y-28 border border-white/10 -mr-6 lg:mr-0">
+            <div className="relative w-[calc(100%+1rem)] sm:w-[calc(100%+1.5rem)] lg:w-[770px] min-h-[440px] h-[440px] sm:h-[500px] lg:h-[570px] overflow-hidden z-30 transform lg:translate-y-28 border border-white/10 -mr-6 lg:mr-0">
               <ResponsiveImage
                 src={imageSrc}
                 alt="NBRS Featured Hero"

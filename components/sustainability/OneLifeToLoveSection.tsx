@@ -25,7 +25,7 @@ export function OneLifeToLoveSection() {
           </div>
 
           {/* Right Image */}
-          <div className="w-full lg:w-[68%] lg:ml-auto aspect-[16/10] overflow-hidden rounded-sm bg-zinc-100">
+          <div className="w-full lg:w-[68%] lg:ml-auto aspect-[16/10] overflow-hidden bg-zinc-100">
             <img
               src="/images/about/creative-partnership.jpg"
               alt="One Life to Love Campus Design"

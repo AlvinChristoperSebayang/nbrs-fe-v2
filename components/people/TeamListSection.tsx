@@ -53,7 +53,7 @@ export function TeamListSection({ members }: { members: TeamMember[] }) {
                   key={practice}
                   type="button"
                   onClick={() => togglePractice(practice)}
-                  className={`inline-flex items-center gap-2.5 rounded-full px-5 py-2 text-sm sm:text-base font-sans transition-colors duration-300 ease-out cursor-pointer ${
+                  className={`inline-flex items-center gap-2.5 rounded-full px-5 py-1.75 text-sm font-sans transition-colors duration-300 ease-out cursor-pointer ${
                     isActive
                       ? "bg-black text-white border border-black"
                       : "bg-white text-black border border-black/80 hover:bg-black hover:text-white"
@@ -85,7 +85,7 @@ export function TeamListSection({ members }: { members: TeamMember[] }) {
             <button
               type="button"
               onClick={() => setSelectedPractices([])}
-              className="inline-flex items-center justify-center rounded-full border border-black px-5 py-2 text-sm sm:text-base font-sans text-black hover:bg-black hover:text-white transition-colors duration-300 ease-out cursor-pointer self-start md:self-auto"
+              className="inline-flex items-center justify-center rounded-full border border-black px-6 py-1.75 text-sm font-sans text-black hover:bg-black hover:text-white transition-colors duration-300 ease-out cursor-pointer self-start md:self-auto"
             >
               Reset Filters ({selectedPractices.length})
             </button>
@@ -98,7 +98,7 @@ export function TeamListSection({ members }: { members: TeamMember[] }) {
             <div key={member.id} data-aos="fade-up" data-aos-delay={(index % 3) * 60}>
               <Link
                 href={`/people/team/${member.id}`}
-                className="group flex flex-col overflow-hidden rounded-[5px] bg-white cursor-pointer"
+                className="group flex flex-col overflow-hidden bg-white cursor-pointer"
               >
                 {/* Member Photo */}
                 <div className="relative aspect-[370/300] overflow-hidden bg-zinc-200">

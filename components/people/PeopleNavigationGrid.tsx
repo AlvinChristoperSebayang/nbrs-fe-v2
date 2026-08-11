@@ -25,7 +25,7 @@ export function PeopleNavigationGrid({ cards }: { cards: SubMenuCard[] }) {
         <div data-aos="fade-up">
           <Link
             href={teamCard.href}
-            className="group relative grid grid-cols-1 lg:grid-cols-12 overflow-hidden rounded-[5px] bg-black text-white cursor-pointer"
+            className="group relative grid grid-cols-1 lg:grid-cols-12 overflow-hidden bg-black text-white cursor-pointer"
           >
             {/* Top Colored Accent Bar Across Card */}
             <div
@@ -85,7 +85,7 @@ export function PeopleNavigationGrid({ cards }: { cards: SubMenuCard[] }) {
             <div key={card.id} data-aos="fade-up" data-aos-delay={index * 100}>
               <Link
                 href={card.href}
-                className="group relative flex flex-col justify-between overflow-hidden rounded-[5px] bg-black text-white p-6 sm:p-7 pt-8 min-h-[250px] md:aspect-[370/290] cursor-pointer"
+                className="group relative flex flex-col justify-between overflow-hidden bg-black text-white p-6 sm:p-7 pt-8 min-h-[250px] md:aspect-[370/290] cursor-pointer"
               >
                 {/* Top Colored Accent Bar on Mobile */}
                 <div

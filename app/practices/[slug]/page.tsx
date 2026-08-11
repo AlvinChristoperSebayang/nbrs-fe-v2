@@ -74,6 +74,7 @@ export default async function PracticeDetailPage({
         title="LATEST PROJECTS"
         sectorHeaderLabel="Sectors"
         rows={tableRows}
+        showMobileProjectLabel={false}
       />
 
       {/* 4. SECTORS GRID SECTION */}

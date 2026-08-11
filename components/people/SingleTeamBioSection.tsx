@@ -12,28 +12,32 @@ export function SingleTeamBioSection({ name, bioHtml, quote }: SingleTeamBioProp
   const lastName = nameParts.slice(1).join(" ") || "";
 
   return (
-    <section className="bg-white py-16 lg:py-24 text-black">
+    <section className="bg-white pt-6 pb-16 lg:pt-10 lg:pb-24 text-black">
       <Container>
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           {/* Left Column: Light Gray Watermark Name & Divider */}
-          <div data-aos="fade-up" className="lg:col-span-4 lg:sticky lg:top-28 hidden md:block">
-            <h2 className="font-heading text-5xl sm:text-6xl lg:text-[70px] font-bold uppercase text-zinc-200/90 leading-none tracking-wide">
-              {firstName}
-              {lastName && (
-                <>
-                  <br />
-                  {lastName}
-                </>
+          <div data-aos="fade-up" className="lg:col-span-5 lg:sticky lg:top-28 hidden md:block lg:pr-6">
+            <h2 className="font-heading text-4xl sm:text-5xl lg:text-[60px] font-bold uppercase text-zinc-200/90 leading-none tracking-wide">
+              {lastName ? (
+                <span className="inline-flex flex-col items-start">
+                  <span className="block">{firstName}</span>
+                  <span className="inline-block border-b-4 border-zinc-200/90 pb-2 mt-1">
+                    {lastName}
+                  </span>
+                </span>
+              ) : (
+                <span className="inline-block border-b-4 border-zinc-200/90 pb-2">
+                  {firstName}
+                </span>
               )}
             </h2>
-            <div className="w-48 sm:w-64 lg:w-80 h-1.5 bg-zinc-200/90 mt-4" />
           </div>
 
           {/* Right Column: Bio Paragraphs & Rose Quote Section */}
           <div
             data-aos="fade-up"
             data-aos-delay="150"
-            className="lg:col-span-8 flex flex-col gap-10 lg:gap-14"
+            className="lg:col-span-7 flex flex-col gap-10 lg:gap-14"
           >
             {/* Top Bio Text Paragraphs */}
             {bioHtml && (

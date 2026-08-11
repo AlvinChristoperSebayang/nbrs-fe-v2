@@ -74,7 +74,7 @@ export function PracticesHoverSection({
       <Container className="relative z-10">
         <div
           data-aos="fade-up"
-          className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch"
+          className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-stretch w-full"
         >
           {items.map((item) => {
             const isHovered = hoveredId === item.id;
@@ -85,9 +85,9 @@ export function PracticesHoverSection({
                 key={item.id}
                 href={item.href}
                 onMouseEnter={() => setHoveredId(item.id)}
-                className={`group relative flex flex-col justify-end overflow-hidden rounded-[5px] aspect-[320/300] md:aspect-[370/300] min-h-[300px] lg:min-h-[340px] bg-zinc-900 shadow-xl transition-all duration-500 ${
+                className={`group relative flex flex-col justify-end overflow-hidden rounded-[5px] w-full lg:flex-1 lg:min-w-0 aspect-[16/10] sm:aspect-[21/9] lg:aspect-[370/320] xl:aspect-[370/300] min-h-[260px] lg:min-h-[340px] bg-zinc-900 shadow-md transition-all duration-500 ${
                   isHovered
-                    ? "scale-[1.02] shadow-2xl z-30"
+                    ? "lg:scale-[1.02] shadow-xl z-30"
                     : isOtherHovered
                     ? "scale-100 z-10"
                     : "scale-100 z-10"
@@ -105,19 +105,19 @@ export function PracticesHoverSection({
                 />
 
                 {/* Dark Gradient Overlay at Bottom for Readable Text */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent transition-opacity duration-300 pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent transition-opacity duration-300 pointer-events-none" />
 
                 {/* Card Bottom Content */}
-                <div className="relative z-20 p-6 sm:p-8 flex flex-col justify-end gap-2 text-white pointer-events-none">
-                  <div className="flex items-end justify-between gap-4">
+                <div className="relative z-20 p-5 sm:p-6 lg:p-6 xl:p-8 flex flex-col justify-end text-white pointer-events-none">
+                  <div className="flex items-end justify-between gap-3">
                     <div className="flex flex-col gap-1.5 transition-transform duration-300">
-                      <h3 className="font-heading text-2xl sm:text-3xl lg:text-4xl font-bold uppercase leading-tight text-white tracking-wide">
+                      <h3 className="font-heading text-xl sm:text-2xl lg:text-2xl xl:text-3xl 2xl:text-4xl font-bold uppercase leading-[1.1] text-white tracking-wide">
                         {item.title}
                       </h3>
 
                       {/* Description (Shown on Hover / Smooth Expand) */}
                       <p
-                        className={`font-sans text-sm sm:text-base text-white/90 leading-snug transition-all duration-500 max-w-[260px] ${
+                        className={`font-sans text-sm sm:text-base text-white/90 leading-snug transition-all duration-500 max-w-[280px] ${
                           isHovered
                             ? "max-h-20 opacity-100 mt-1"
                             : "max-h-0 opacity-0 overflow-hidden"
@@ -128,17 +128,15 @@ export function PracticesHoverSection({
                     </div>
 
                     {/* Arrow Icon */}
-                    <div className="shrink-0 mb-1">
+                    <div className="shrink-0 pb-1">
                       <svg
-                        width="24"
-                        height="24"
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
                         strokeWidth="2.5"
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        className="text-white transition-transform duration-300 group-hover:translate-x-1.5"
+                        className="w-8 h-8 sm:w-8 sm:h-8 text-white transition-transform duration-300 group-hover:translate-x-2"
                       >
                         <path d="M5 12h14M12 5l7 7-7 7" />
                       </svg>

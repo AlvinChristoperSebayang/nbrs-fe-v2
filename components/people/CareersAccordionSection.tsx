@@ -148,7 +148,7 @@ export function CareersAccordionSection({
                 return (
                   <div
                     key={item.id}
-                    className="overflow-hidden rounded-[3px] border-2 border-zinc-200 bg-white shadow-sm transition-all duration-300"
+                    className="overflow-hidden border-2 border-zinc-200 bg-white transition-all duration-300"
                   >
                     {/* Accordion Header */}
                     <button

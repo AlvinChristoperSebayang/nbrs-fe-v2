@@ -13,10 +13,12 @@ export function ProjectListTableSection({
   title = "LATEST PROJECTS",
   sectorHeaderLabel = "Sectors",
   rows,
+  showMobileProjectLabel = true,
 }: {
   title?: string;
   sectorHeaderLabel?: string;
   rows: ProjectTableRow[];
+  showMobileProjectLabel?: boolean;
 }) {
   if (!rows || rows.length === 0) return null;
 
@@ -46,32 +48,39 @@ export function ProjectListTableSection({
         </div>
 
         {/* Table Rows Container */}
-        <div className="flex flex-col bg-white rounded-sm shadow-sm overflow-hidden divide-y divide-gray-200">
+        <div className="flex flex-col gap-4 md:gap-0 md:bg-white md:overflow-hidden md:divide-y md:divide-gray-200">
           {rows.map((row, index) => (
             <Link
               key={row.id || row.project}
               href={row.href}
               data-aos="fade-up"
               data-aos-delay={index * 80}
-              className="group grid grid-cols-1 md:grid-cols-12 gap-2 md:gap-4 p-5 md:p-6 items-center hover:bg-zinc-50 transition-colors cursor-pointer"
+              className="group bg-white md:bg-transparent p-6 flex md:grid md:grid-cols-12 items-center justify-between gap-4 md:gap-4 hover:bg-zinc-50 transition-colors cursor-pointer"
             >
-              {/* Project Title */}
-              <div className="md:col-span-4 font-sans text-base font-medium text-black">
-                {row.project}
+              {/* Project Title (Mobile & Desktop) */}
+              <div className="md:col-span-4 flex flex-col justify-center">
+                {showMobileProjectLabel && (
+                  <span className="font-bold text-xs uppercase tracking-wider text-black md:hidden mb-2">
+                    PROJECT
+                  </span>
+                )}
+                <span className="font-sans text-base font-medium text-black leading-snug">
+                  {row.project}
+                </span>
               </div>
 
-              {/* Practices / Sectors */}
-              <div className="md:col-span-5 font-sans text-base font-normal text-zinc-700">
+              {/* Practices / Sectors (Desktop only) */}
+              <div className="hidden md:block md:col-span-5 font-sans text-base font-normal text-zinc-700">
                 {row.practices}
               </div>
 
               {/* Status & Arrow */}
-              <div className="md:col-span-3 flex items-center justify-between font-sans text-base font-normal text-black max-md:mt-2">
-                <span>{row.status}</span>
+              <div className="shrink-0 md:col-span-3 flex items-center justify-end md:justify-between font-sans text-base font-normal text-black">
+                <span className="hidden md:inline">{row.status}</span>
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
-                  className="w-6 h-6 text-black transition-transform duration-300 group-hover:translate-x-1.5"
+                  className="w-7 h-7 md:w-6 md:h-6 text-black transition-transform duration-300 group-hover:translate-x-1.5"
                   aria-hidden="true"
                 >
                   <path

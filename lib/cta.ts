@@ -9,6 +9,8 @@ type RawCta = {
     ctaSectionDescription: string | null;
     ctaSectionButtonLabel: string | null;
     ctaSectionButtonUrl: string | null;
+    ctaSectionSecondaryButtonLabel?: string | null;
+    ctaSectionSecondaryButtonUrl?: string | null;
   } | null;
 };
 
@@ -21,6 +23,8 @@ const CTA_FIELDS = /* GraphQL */ `
     ctaSectionDescription
     ctaSectionButtonLabel
     ctaSectionButtonUrl
+    ctaSectionSecondaryButtonLabel
+    ctaSectionSecondaryButtonUrl
   }
 `;
 
@@ -46,9 +50,11 @@ export function mapCta(raw: RawCta | undefined, fallback: CtaContent): CtaConten
   return {
     image: image ?? fallback.image,
     title: cta.ctaSectionHeading?.trim() || fallback.title,
-    description: cta.ctaSectionDescription?.trim() || undefined,
-    buttonText: cta.ctaSectionButtonLabel?.trim() || undefined,
-    buttonHref: cta.ctaSectionButtonUrl?.trim() || undefined,
+    description: cta.ctaSectionDescription?.trim() || fallback.description,
+    buttonText: cta.ctaSectionButtonLabel?.trim() || fallback.buttonText,
+    buttonHref: cta.ctaSectionButtonUrl?.trim() || fallback.buttonHref,
+    secondaryButtonText: cta.ctaSectionSecondaryButtonLabel?.trim() || fallback.secondaryButtonText,
+    secondaryButtonHref: cta.ctaSectionSecondaryButtonUrl?.trim() || fallback.secondaryButtonHref,
   };
 }
 

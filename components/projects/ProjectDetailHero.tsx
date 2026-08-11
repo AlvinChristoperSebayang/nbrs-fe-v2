@@ -23,12 +23,12 @@ export function ProjectDetailHero({
 }) {
   return (
     <section>
-      <div className="bg-black text-white lg:pt-[160px]">
-        <Container className="pt-8 pb-40 sm:pb-48 lg:pb-56">
+      <div className="bg-black text-white pt-16 sm:pt-0 lg:pt-[160px]">
+        <Container className="pt-4 sm:pt-8 pb-20 sm:pb-48 lg:pb-56">
           <div className="flex flex-col w-fit">
             <h1
               data-aos="fade-up"
-              className="font-heading mt-16 text-[38px] uppercase tracking-tight sm:text-[38px] lg:text-[70px] leading-[1]"
+              className="font-heading mt-6 sm:mt-16 text-[38px] uppercase tracking-tight sm:text-[38px] lg:text-[70px] leading-[1]"
             >
               {title}
             </h1>
@@ -77,26 +77,26 @@ export function ProjectDetailHero({
         )}
 
         {(location || client || collaborators) && (
-          <div className="mt-8 flex items-start justify-between max-md:gap-5 lg:flex-row flex-col ">
+          <div className="mt-8 flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between lg:gap-0">
             {location && (
-              <div data-aos="fade-up" data-aos-delay="100" className="sm:pr-6">
-                <p className="font-heading lg:text-[30px] text-[16px] uppercase">Location:</p>
-                <p className="mt-1 text-black lg:text-[22px] text-[16px]">{location}</p>
+              <div data-aos="fade-up" data-aos-delay="100" className="lg:pr-6">
+                <p className="font-heading text-[16px] lg:text-[30px] uppercase">Location:</p>
+                <p className="mt-1 text-black text-[16px] lg:text-[22px]">{location}</p>
               </div>
             )}
-            <div className="w-[1px] h-[81px] bg-[#A7A7A7] lg:flex hidden"/>
+            <div className="hidden h-[81px] w-[1px] bg-[#A7A7A7] lg:block" />
             {client && (
-              <div data-aos="fade-up" data-aos-delay="200" className="sm:px-6">
-                <p className="font-heading lg:text-[30px] text-[16px] uppercase">Client:</p>
-                <p className="mt-1 text-black lg:text-[22px] text-[16px]">{client}</p>
+              <div data-aos="fade-up" data-aos-delay="200" className="lg:px-6">
+                <p className="font-heading text-[16px] lg:text-[30px] uppercase">Client:</p>
+                <p className="mt-1 text-black text-[16px] lg:text-[22px]">{client}</p>
               </div>
             )}
-            <div className="w-[1px] h-[81px] bg-[#A7A7A7] lg:flex hidden"/>
+            <div className="hidden h-[81px] w-[1px] bg-[#A7A7A7] lg:block" />
 
             {collaborators && (
-              <div data-aos="fade-up" data-aos-delay="300" className="sm:pl-6">
-                <p className="font-heading lg:text-[30px] text-[16px] uppercase">Collaborators:</p>
-                <p className="mt-1 text-black lg:text-[22px] text-[16px]">{collaborators}</p>
+              <div data-aos="fade-up" data-aos-delay="300" className="lg:pl-6">
+                <p className="font-heading text-[16px] lg:text-[30px] uppercase">Collaborators:</p>
+                <p className="mt-1 text-black text-[16px] lg:text-[22px]">{collaborators}</p>
               </div>
             )}
           </div>

@@ -13,10 +13,11 @@ export const dynamic = "force-dynamic";
 
 const cta: CtaContent = {
   image: "/images/contact-bg.png",
-  title: "Let's Shape What's Next-Together",
-  description: "Whether it's a place to gather, to heal, to learn or to live - we're ready to collaborate. Let's shape spaces that matter, together.",
-  buttonText: "Let's Shape What's Next-Together",
+  title: "HAVE A QUESTION OR A RESEARCH BRIEF?",
+  buttonText: "START A CONVERSATION",
   buttonHref: "/contact",
+  secondaryButtonText: "SEE NBRS APPROACH",
+  secondaryButtonHref: "/design-approach",
 };
 
 export default async function ResearchPage() {

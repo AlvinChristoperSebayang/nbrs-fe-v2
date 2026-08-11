@@ -70,9 +70,9 @@ export function DesignApproachProjectSection({
           <div
             data-aos="fade-up"
             data-aos-delay="100"
-            className="z-10 w-[50%] bg-white/80 backdrop-blur-md border border-[#FDFFEA] p-10 absolute left-0 top-1/2 -translate-y-1/2 shadow-sm"
+            className="z-10 w-[50%] bg-white/80 backdrop-blur-md border border-[#FDFFEA] p-10 absolute left-0 top-1/2 -translate-y-1/2"
           >
-            <h2 className="font-heading text-3xl lg:text-4xl uppercase font-bold text-black leading-tight mb-4">
+            <h2 className="font-heading text-3xl lg:text-[32px] uppercase font-bold text-black leading-tight mb-4">
               {heading}
             </h2>
             <p className="text-base text-zinc-900 leading-relaxed font-sans mb-6">
@@ -81,7 +81,7 @@ export function DesignApproachProjectSection({
             {buttonText && buttonHref && (
               <Link
                 href={buttonHref}
-                className="group inline-flex items-center gap-2 rounded-[5px] border border-black bg-white px-6 py-2.5 text-sm font-sans font-medium text-black transition hover:bg-black hover:text-white"
+                className="group inline-flex items-center gap-2 rounded-[5px] border border-black bg-white px-6 py-2.5 text-base font-sans font-medium text-black transition hover:bg-black hover:text-white"
               >
                 <span>{buttonText}</span>
                 <svg

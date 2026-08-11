@@ -45,7 +45,7 @@ export function ProjectDetailV2Body({ blocks }: { blocks: ProjectV2Block[] }) {
           if (block.type === "copy") {
             return (
               <Container key={index} className={block.alignment === "right" ? "flex justify-end" : "flex justify-start"}>
-                <div className="max-w-[570px]">
+                <div className="max-w-[838px]">
                   {block.heading && <h2 className="font-heading text-3xl leading-[1.1] lg:text-[36px]">{block.heading}</h2>}
                   <RichText html={block.textHtml} className={block.heading ? "mt-6" : ""} />
                 </div>
@@ -65,8 +65,21 @@ export function ProjectDetailV2Body({ blocks }: { blocks: ProjectV2Block[] }) {
 
           const text = (
             <div className="flex flex-col justify-center">
-              {block.heading && <h2 className="font-heading text-3xl uppercase leading-[1.1] lg:text-[32px]">{block.heading}</h2>}
-              <RichText html={block.textHtml} className={block.heading ? "mt-5" : ""} />
+              {block.heading && (
+                <div className="relative pb-3 mb-2">
+                  <h2 className="font-heading text-3xl uppercase leading-[1.1] lg:text-[32px]">
+                    {block.heading}
+                  </h2>
+                  <div
+                    className={`hidden lg:block absolute bottom-0 h-[3px] bg-stone-300 z-20 pointer-events-none ${
+                      block.imagePosition === "left"
+                        ? "left-[-120px] right-0"
+                        : "left-0 right-[-120px]"
+                    }`}
+                  />
+                </div>
+              )}
+              <RichText html={block.textHtml} className={block.heading ? "mt-4" : ""} />
             </div>
           );
           const image = block.image ? <ResponsiveImage src={block.image} alt={block.heading ?? ""} className="aspect-[570/300] h-full w-full object-cover" /> : null;
@@ -74,17 +87,14 @@ export function ProjectDetailV2Body({ blocks }: { blocks: ProjectV2Block[] }) {
           return (
             <Container key={index}>
               <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-16">
-                {block.imagePosition === "left" ? (
-                  <>
+                {image && (
+                  <div className={`order-1 ${block.imagePosition === "left" ? "lg:order-1" : "lg:order-2"}`}>
                     {image}
-                    {text}
-                  </>
-                ) : (
-                  <>
-                    {text}
-                    {image}
-                  </>
+                  </div>
                 )}
+                <div className={`order-2 ${block.imagePosition === "left" ? "lg:order-2" : "lg:order-1"}`}>
+                  {text}
+                </div>
               </div>
             </Container>
           );

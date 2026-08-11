@@ -30,26 +30,50 @@ export default async function ReflectRapPage() {
         titleClassName="max-w-[900px] text-[38px] sm:text-[58px] lg:text-[70px] leading-[0.95]"
       />
 
-      <div className="relative z-20 mt-0 lg:-mt-16 uncontainer md:container md:mx-auto">
+      <div className="hidden lg:block relative z-20 mt-0 lg:-mt-16 container mx-auto">
         <section className="bg-[#efefed] px-6 py-8 sm:px-10 lg:px-14 lg:py-11" aria-label="Publication details">
-          <p className="font-heading text-2xl uppercase leading-none sm:text-3xl">Reconciliation Action Plan</p>
-          <div className="mt-6 h-px bg-black/25" />
-          <dl className="mt-7 grid gap-7 text-sm sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+          <p className="text-xl font-normal text-black sm:text-2xl">Reconciliation Action Plan</p>
+          <div className="mt-4 h-px bg-black/20" />
+          <dl className="mt-6 grid gap-7 text-sm sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
             <div>
-              <dt className="uppercase text-black/55">Publication Date</dt>
-              <dd className="mt-1 text-base">{page.publicationDate}</dd>
+              <dt className="font-bold text-black">Publication Date:</dt>
+              <dd className="mt-1 text-sm text-black">{page.publicationDate}</dd>
             </div>
             <div>
-              <dt className="uppercase text-black/55">Author</dt>
-              <dd className="mt-1 max-w-[270px] text-base">{page.author}</dd>
+              <dt className="font-bold text-black">Author:</dt>
+              <dd className="mt-1 max-w-[280px] text-sm text-black">{page.author}</dd>
             </div>
             <div>
-              <dt className="uppercase text-black/55">Endorsed by</dt>
-              <dd className="mt-1 text-base">{page.endorsedBy}</dd>
+              <dt className="font-bold text-black">Endorsed by:</dt>
+              <dd className="mt-1 text-sm text-black">{page.endorsedBy}</dd>
             </div>
             <div>
-              <dt className="uppercase text-black/55">Read time</dt>
-              <dd className="mt-1 text-base">{page.readTime}</dd>
+              <dt className="font-bold text-black">Read time:</dt>
+              <dd className="mt-1 text-sm text-black">{page.readTime}</dd>
+            </div>
+          </dl>
+        </section>
+      </div>
+      <div className="block lg:hidden relative z-20 mt-0 lg:-mt-16 uncontainer md:container md:mx-auto">
+        <section className="bg-[#efefed] px-6 py-8 sm:px-10 lg:px-14 lg:py-11" aria-label="Publication details">
+          <p className="text-xl font-normal text-black sm:text-2xl">Reconciliation Action Plan</p>
+          <div className="mt-4 h-px bg-black/20" />
+          <dl className="mt-6 grid gap-7 text-sm sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+            <div>
+              <dt className="font-bold text-black">Publication Date:</dt>
+              <dd className="mt-1 text-sm text-black">{page.publicationDate}</dd>
+            </div>
+            <div>
+              <dt className="font-bold text-black">Author:</dt>
+              <dd className="mt-1 max-w-[280px] text-sm text-black">{page.author}</dd>
+            </div>
+            <div>
+              <dt className="font-bold text-black">Endorsed by:</dt>
+              <dd className="mt-1 text-sm text-black">{page.endorsedBy}</dd>
+            </div>
+            <div>
+              <dt className="font-bold text-black">Read time:</dt>
+              <dd className="mt-1 text-sm text-black">{page.readTime}</dd>
             </div>
           </dl>
         </section>
@@ -92,7 +116,7 @@ export default async function ReflectRapPage() {
               href={page.cta.buttonUrl}
               target="_blank"
               rel="noreferrer"
-              className="mt-8 inline-flex items-center gap-3 rounded-full bg-white px-7 py-4 text-sm uppercase text-[#b4521e] transition hover:bg-white/90 sm:px-10 sm:py-5 sm:text-base"
+              className="mt-8 inline-flex items-center gap-3 rounded-full bg-white px-7 py-4 text-base uppercase text-[#D18148] transition hover:bg-white/90 sm:px-10 sm:py-5 sm:text-[20px]"
             >
               {page.cta.buttonLabel}
               <Arrow />

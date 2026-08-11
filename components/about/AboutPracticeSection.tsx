@@ -35,7 +35,7 @@ export function AboutPracticeSection({
           <div
             data-aos="fade-up"
             data-aos-delay="100"
-            className="relative w-full overflow-hidden lg:col-span-1 aspect-[320/300] md:aspect-[370/300]"
+            className="relative w-full overflow-hidden rounded-[5px] lg:col-span-1 aspect-[320/300] md:aspect-[370/300]"
           >
             <ResponsiveImage
               src={mainImage}
@@ -51,7 +51,7 @@ export function AboutPracticeSection({
               key={index}
               data-aos="fade-up"
               data-aos-delay={index * 100}
-              className="relative w-full overflow-hidden aspect-[320/300] md:aspect-[370/300]"
+              className="relative w-full overflow-hidden rounded-[5px] aspect-[320/300] md:aspect-[370/300]"
             >
               <ResponsiveImage
                 src={src}

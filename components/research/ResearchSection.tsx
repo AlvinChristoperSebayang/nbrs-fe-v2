@@ -73,9 +73,9 @@ export function ResearchSection({ heading, subheading, sectors, practices, items
         <div className="flex flex-wrap items-center gap-3">
           {visibleSectors.map((sector) => {
             const isActive = selectedSectors.includes(sector.slug);
-            return <button key={sector.id} type="button" onClick={() => toggleSector(sector.slug)} className={`inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm transition ${isActive ? "bg-black text-white" : "bg-[#F5F5F5] text-black hover:bg-zinc-200"}`}><span>{sector.title}</span><ArrowIcon /></button>;
+            return <button key={sector.id} type="button" onClick={() => toggleSector(sector.slug)} className={`inline-flex items-center gap-2 rounded-full px-5 py-1.75 text-sm transition ${isActive ? "bg-black text-white" : "bg-[#F5F5F5] text-black hover:bg-zinc-200"}`}><span>{sector.title}</span><ArrowIcon /></button>;
           })}
-          <button type="button" onClick={() => setSelectedSectors([])} className="inline-flex items-center rounded-full border border-[#DBDBDB] px-6 py-2.5 text-sm text-black transition hover:border-black">Reset Filters</button>
+          <button type="button" onClick={() => setSelectedSectors([])} className="inline-flex items-center rounded-full border border-[#DBDBDB] px-6 py-1.75 text-sm text-black transition hover:border-black">Reset Filters</button>
         </div>
       </div>}
       {visiblePractices.length > 0 && <div data-aos="fade-up" data-aos-delay="150" className="flex flex-col gap-3">
@@ -83,13 +83,13 @@ export function ResearchSection({ heading, subheading, sectors, practices, items
         <div className="flex flex-wrap items-center gap-3">
           {visiblePractices.map((practice) => {
             const isActive = selectedPractices.includes(practice.slug);
-            return <button key={practice.id} type="button" onClick={() => togglePractice(practice.slug)} className={`inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm transition ${isActive ? "bg-black text-white" : "bg-[#F5F5F5] text-black hover:bg-zinc-200"}`}><span>{practice.title}</span><ArrowIcon /></button>;
+            return <button key={practice.id} type="button" onClick={() => togglePractice(practice.slug)} className={`inline-flex items-center gap-2 rounded-full px-5 py-1.75 text-sm transition ${isActive ? "bg-black text-white" : "bg-[#F5F5F5] text-black hover:bg-zinc-200"}`}><span>{practice.title}</span><ArrowIcon /></button>;
           })}
-          <button type="button" onClick={() => setSelectedPractices([])} className="inline-flex items-center rounded-full border border-[#DBDBDB] px-6 py-2.5 text-sm text-black transition hover:border-black">Reset Filters</button>
+          <button type="button" onClick={() => setSelectedPractices([])} className="inline-flex items-center rounded-full border border-[#DBDBDB] px-6 py-1.75 text-sm text-black transition hover:border-black">Reset Filters</button>
         </div>
       </div>}
       <div data-aos="fade-up" data-aos-delay="200" className="mt-6">
-        {filteredItems.length > 0 ? <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-3">{filteredItems.map((item) => <ResearchCard key={item.id} item={item} />)}</div> : <div className="py-16 text-center"><p className="text-lg text-zinc-600">No research items match the selected filters.</p><button type="button" onClick={resetAllFilters} className="mt-4 inline-flex items-center rounded-full border border-black px-6 py-2.5 text-sm text-black transition hover:bg-black hover:text-white">Reset All Filters</button></div>}
+        {filteredItems.length > 0 ? <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-3">{filteredItems.map((item) => <ResearchCard key={item.id} item={item} />)}</div> : <div className="py-16 text-center"><p className="text-lg text-zinc-600">No research items match the selected filters.</p><button type="button" onClick={resetAllFilters} className="mt-4 inline-flex items-center rounded-full border border-black px-6 py-1.75 text-sm text-black transition hover:bg-black hover:text-white">Reset All Filters</button></div>}
       </div>
     </div>
   );

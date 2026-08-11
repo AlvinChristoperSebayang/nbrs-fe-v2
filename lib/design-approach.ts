@@ -27,7 +27,7 @@ export type DesignApproachContent = {
 };
 
 export const DESIGN_APPROACH_FALLBACK: DesignApproachContent = {
-  hero: { title: "From Insight to Transformative Design", description: "Every project begins with curiosity and ends with environments that enhance the way people live.", image: "/images/hero/hero-design-approach.png", button: { text: "See Our Sectors", href: "/projects" } },
+  hero: { title: "From Insight to\nTransformative Design", description: "Every project begins with curiosity and ends with environments that enhance the way people live.", image: "/images/hero/hero-design-approach.png", button: { text: "See Our Sectors", href: "/projects" } },
   pillars: { title: "Three Pillars of Design", description: "Every NBRS project - whether a school, civic centre, hospital or secure space - follows a consistent methodology that adapts to context but never loses its foundation. We call it our Three Pillars:", items: [
     { title: "Site & Program", description: "Listening, research and immersion.", image: "/images/design-approach/pillar1.jpg" },
     { title: "Cultural Heritage", description: "Honouring place, country and culture.", image: "/images/design-approach/pillar2.jpg" },
@@ -72,7 +72,13 @@ export async function getDesignApproachContent(): Promise<DesignApproachContent>
     const images = entry.gallery.map((item) => toImageSource(item.image[0])).filter((image): image is ImageSource => Boolean(image));
     const link = entry.links[0];
     return {
-      hero: { title: entry.designApproachHeroHeading?.trim() || DESIGN_APPROACH_FALLBACK.hero.title, description: entry.designApproachHeroDescription?.trim() || DESIGN_APPROACH_FALLBACK.hero.description, image: toImageSource(entry.designApproachHeroImage[0]) || DESIGN_APPROACH_FALLBACK.hero.image, button: { text: entry.designApproachHeroCtaLabel?.trim() || DESIGN_APPROACH_FALLBACK.hero.button.text, href: entry.designApproachHeroCtaUrl?.trim() || DESIGN_APPROACH_FALLBACK.hero.button.href } },
+      hero: {
+        title: (entry.designApproachHeroHeading?.trim() || DESIGN_APPROACH_FALLBACK.hero.title)
+          .replace("From Insight to Transformative Design", "From Insight to\nTransformative Design"),
+        description: entry.designApproachHeroDescription?.trim() || DESIGN_APPROACH_FALLBACK.hero.description,
+        image: toImageSource(entry.designApproachHeroImage[0]) || DESIGN_APPROACH_FALLBACK.hero.image,
+        button: { text: entry.designApproachHeroCtaLabel?.trim() || DESIGN_APPROACH_FALLBACK.hero.button.text, href: entry.designApproachHeroCtaUrl?.trim() || DESIGN_APPROACH_FALLBACK.hero.button.href },
+      },
       pillars: { title: entry.designApproachPillarsHeading?.trim() || DESIGN_APPROACH_FALLBACK.pillars.title, description: entry.designApproachPillarsDescription?.trim() || DESIGN_APPROACH_FALLBACK.pillars.description, items: items.length ? items : DESIGN_APPROACH_FALLBACK.pillars.items },
       communities: { heading: entry.designApproachCommunitiesHeading?.trim() || DESIGN_APPROACH_FALLBACK.communities.heading, description: entry.designApproachCommunitiesDescription?.trim() || DESIGN_APPROACH_FALLBACK.communities.description, topImages: images.length >= 5 ? images.slice(0, 2) : DESIGN_APPROACH_FALLBACK.communities.topImages, galleryImages: images.length >= 5 ? images.slice(2, 5) : DESIGN_APPROACH_FALLBACK.communities.galleryImages },
       quote: { image: toImageSource(entry.thumbnailImage[0]) || DESIGN_APPROACH_FALLBACK.quote.image, quote: entry.quote?.trim() || DESIGN_APPROACH_FALLBACK.quote.quote, author: entry.citation?.trim() || DESIGN_APPROACH_FALLBACK.quote.author, role: entry.jobRole?.trim() || DESIGN_APPROACH_FALLBACK.quote.role },

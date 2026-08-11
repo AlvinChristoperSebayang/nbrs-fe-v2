@@ -71,7 +71,7 @@ export function GridEffect({
               {title}
             </span>
             {description && (
-              <p className="max-w-xl text-sm text-black">{description}</p>
+              <p className="max-w-3xl text-base text-black">{description}</p>
             )}
           </div>
           {showViewAll && (

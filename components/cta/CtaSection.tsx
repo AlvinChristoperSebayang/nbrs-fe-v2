@@ -41,9 +41,9 @@ export function CtaSection({ content, cta, titleUppercase = true }: CtaSectionPr
           <div className="flex flex-col items-center justify-center gap-4 mt-6">
             {data.buttonText && data.buttonHref && (
               <Link
-                target="_blank"
+                target={data.buttonHref.startsWith("http") ? "_blank" : undefined}
                 href={data.buttonHref}
-                className="group inline-flex items-center justify-center gap-2 rounded-full bg-white px-8 py-3.5 sm:px-10 sm:py-4 text-sm sm:text-base font-semibold text-[#B4521E] transition hover:bg-white/90 uppercase"
+                className="group inline-flex items-center justify-center gap-2 rounded-full bg-white px-8 py-3.5 sm:px-10 sm:py-4 text-base sm:text-[20px] font-semibold text-[#D18148] transition hover:bg-white/90 uppercase"
               >
                 <span>{data.buttonText}</span>
                 <svg
@@ -56,7 +56,7 @@ export function CtaSection({ content, cta, titleUppercase = true }: CtaSectionPr
                 >
                   <path
                     d="M14 7.72388L0 7.72388M6.66725 14.7236L14 7.72388L6.66725 0.723633"
-                    stroke="#B4521E"
+                    stroke="#D18148"
                     strokeWidth="2"
                   />
                 </svg>
@@ -66,7 +66,7 @@ export function CtaSection({ content, cta, titleUppercase = true }: CtaSectionPr
             {data.secondaryButtonText && data.secondaryButtonHref && (
               <Link
                 href={data.secondaryButtonHref}
-                className="group inline-flex items-center justify-center gap-2 text-xs sm:text-sm uppercase tracking-wider text-white/90 transition-opacity hover:opacity-100 font-medium mt-1"
+                className="group inline-flex items-center justify-center gap-2 text-xs sm:text-[20px] uppercase tracking-wider text-white/90 transition-opacity hover:opacity-100 font-medium mt-1"
               >
                 <span>{data.secondaryButtonText}</span>
                 <svg

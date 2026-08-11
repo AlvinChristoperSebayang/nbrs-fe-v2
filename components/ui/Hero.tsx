@@ -65,6 +65,34 @@ export function renderTitleWithUnderline(title: React.ReactNode, showDivider: bo
     return title;
   }
 
+  if (title.trim().toUpperCase() === "LANDSCAPE ARCHITECTURE") {
+    if (!showDivider) {
+      return (
+        <>
+          <span className="sm:hidden inline-flex flex-col items-start">
+            <span className="block leading-[1.05]">LANDSCAPE</span>
+            <span className="block leading-[1.05]">ARCHITECTURE</span>
+          </span>
+          <span className="hidden sm:inline">LANDSCAPE ARCHITECTURE</span>
+        </>
+      );
+    }
+
+    return (
+      <>
+        <span className="sm:hidden inline-flex flex-col items-start">
+          <span className="block leading-[1.05]">LANDSCAPE</span>
+          <span className="inline-block max-w-full border-b-[4px] border-white pb-1 leading-none mt-1">
+            ARCHITECTURE
+          </span>
+        </span>
+        <span className="hidden sm:inline-block border-b-[4px] sm:border-b-[5px] lg:border-b-[6px] border-white pb-1 sm:pb-2 leading-[1.05]">
+          LANDSCAPE ARCHITECTURE
+        </span>
+      </>
+    );
+  }
+
   const lines = getTitleLines(title);
 
   if (!showDivider) {
@@ -85,7 +113,7 @@ export function renderTitleWithUnderline(title: React.ReactNode, showDivider: bo
   // Single line condition (3 words or fewer)
   if (lines.length === 1) {
     return (
-      <span className="inline-block border-b-[4px] sm:border-b-[5px] lg:border-b-[6px] border-white pb-1 sm:pb-2 leading-[1.05] whitespace-nowrap">
+      <span className="inline-block border-b-[4px] sm:border-b-[5px] lg:border-b-[6px] border-white pb-1 sm:pb-2 leading-[1.05]">
         {lines[0]}
       </span>
     );
@@ -99,7 +127,7 @@ export function renderTitleWithUnderline(title: React.ReactNode, showDivider: bo
           return (
             <span
               key={idx}
-              className="inline-block border-b-[4px] sm:border-b-[5px] lg:border-b-[6px] border-white pb-1 sm:pb-2 leading-none mt-1"
+              className="inline-block max-w-full border-b-[4px] sm:border-b-[5px] lg:border-b-[6px] border-white pb-1 sm:pb-2 leading-none mt-1"
             >
               {line}
             </span>
@@ -130,6 +158,7 @@ export function Hero({
   children,
 }: HeroProps) {
   const isShortTitle = typeof title === "string" && title.trim().split(/\s+/).length <= 3;
+  const hasExplicitLines = typeof title === "string" && title.includes("\n");
 
   return (
     <section className="relative w-full flex flex-col justify-between h-[610px] lg:h-[85vh]">
@@ -148,13 +177,17 @@ export function Hero({
       <Container
         className={`relative z-10 flex h-full flex-col justify-center my-auto pt-16 pb-8 lg:pt-20 lg:pb-12 ${containerClassName}`}
       >
-        <div className={`flex flex-col items-start max-w-[650px] ${contentClassName}`}>
+        <div className={`flex flex-col items-start ${hasExplicitLines ? "max-w-[850px]" : "max-w-[650px]"} ${contentClassName}`}>
           {/* Title with Underline on Last Line matching exact text width of that line */}
           {typeof title === "string" ? (
             <h1
               data-aos="fade-up"
-              className={`font-heading text-[38px] uppercase leading-[1.05] text-white lg:text-[70px] ${
-                isShortTitle ? "max-w-none w-auto whitespace-nowrap" : "max-w-2xl"
+              className={`font-heading text-[36px] sm:text-[38px] uppercase leading-[1.05] text-white lg:text-[70px] ${
+                isShortTitle
+                  ? "max-w-none w-auto whitespace-nowrap"
+                  : hasExplicitLines
+                  ? "max-w-2xl lg:max-w-4xl"
+                  : "max-w-2xl"
               } ${titleClassName}`}
             >
               {renderTitleWithUnderline(title, showDivider)}

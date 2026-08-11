@@ -25,10 +25,9 @@ export function SectorPrinciplesSection({
               <span className="block font-heading text-4xl lg:text-[60px] uppercase font-bold text-black leading-none">
                 {prefix}
               </span>
-              <span className="block font-heading text-4xl lg:text-[60px] uppercase font-bold text-black leading-none mt-1 mb-3">
+              <span className="inline-block font-heading text-4xl lg:text-[60px] uppercase font-bold text-black leading-none mt-1 mb-4 border-b-4 border-black pb-1">
                 {mainTitle}
               </span>
-              <div className="h-1 w-full bg-black mb-4" />
             </div>
             <p className="font-sans text-sm sm:text-base text-zinc-900 leading-relaxed">
               {description}
@@ -41,7 +40,7 @@ export function SectorPrinciplesSection({
               key={index}
               data-aos="fade-up"
               data-aos-delay={100 + index * 100}
-              className="group relative block aspect-[5/4] w-full overflow-hidden rounded-[5px] bg-zinc-100"
+              className="group relative block aspect-[5/4] w-full overflow-hidden bg-zinc-100"
             >
               <ResponsiveImage
                 src={imgUrl}

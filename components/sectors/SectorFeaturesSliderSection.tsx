@@ -68,10 +68,10 @@ export function SectorFeaturesSliderSection({
 
           {/* Centered Frosted Glass Card */}
           <div className="absolute inset-0 flex items-center justify-center p-4">
-            <div className="relative w-[88%] max-w-[340px] bg-black/65 backdrop-blur-md px-8 py-10 rounded-sm text-center border border-white/20 shadow-2xl flex flex-col items-center justify-center">
+            <div className="relative w-[88%] max-w-[340px] bg-black/65 backdrop-blur-md px-8 py-10 text-center border border-white/20 flex flex-col items-center justify-center">
               {/* Category Top Accent Line */}
               <div
-                className="absolute top-0 left-0 right-0 h-1.5 rounded-t-sm"
+                className="absolute top-0 left-0 right-0 h-1.5"
                 style={{ backgroundColor: backgroundColor !== "#FFFFFF" ? backgroundColor : "#EDE3F0" }}
               />
 

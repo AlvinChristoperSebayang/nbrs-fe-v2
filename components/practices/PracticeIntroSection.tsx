@@ -29,7 +29,7 @@ export function PracticeIntroSection({
           <div
             data-aos="fade-up"
             data-aos-delay="150"
-            className="w-full lg:w-[585px] relative lg:absolute lg:left-[586px] lg:top-[125px] z-10 bg-white/80 backdrop-blur-[5px] p-0 sm:p-8 lg:p-10 flex items-center border border-white/60 max-lg:mb-4 rounded-sm"
+            className="w-full lg:w-[585px] relative lg:absolute lg:left-[586px] lg:top-[125px] z-10 bg-white/80 backdrop-blur-[5px] p-0 sm:p-8 lg:p-10 flex items-center border border-white/60 max-lg:mb-4"
           >
             <p className="font-sans text-base text-black font-normal leading-relaxed max-w-[453px]">
               {quote}

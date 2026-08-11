@@ -84,32 +84,31 @@ function FooterLinkGroup({
         className="flex items-center gap-3 font-heading text-[26px] leading-[27px] font-normal uppercase tracking-normal text-white lg:pointer-events-none lg:text-2xl lg:leading-tight cursor-pointer lg:cursor-default"
       >
         <span>{heading}</span>
-        <span
-          className={`shrink-0 transition-transform duration-500 ease-in-out lg:hidden ${
-            open ? "rotate-180" : ""
-          }`}
-        >
+        <span className="shrink-0 lg:hidden text-white ml-0.5">
           <svg
-            width="31"
-            height="30"
-            viewBox="0 0 31 30"
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
             aria-hidden="true"
           >
-            <rect
-              x="30.0938"
-              y="30"
-              width="30.0937"
-              height="30"
-              rx="15"
-              transform="rotate(-180 30.0938 30)"
-              fill="white"
-            />
+            {/* Horizontal Line (-) */}
             <path
-              d="M15.0467 21.25L15.0467 8.75M8.77735 14.7029L15.0467 21.25L21.3164 14.7029"
-              stroke="#181D33"
+              d="M3 8H13"
+              stroke="white"
               strokeWidth="2"
+              strokeLinecap="round"
+            />
+            {/* Vertical Line (|) -> rotates & fades out when open */}
+            <path
+              d="M8 3V13"
+              stroke="white"
+              strokeWidth="2"
+              strokeLinecap="round"
+              className={`origin-[8px_8px] transition-all duration-300 ${
+                open ? "rotate-90 opacity-0" : "rotate-0 opacity-100"
+              }`}
             />
           </svg>
         </span>

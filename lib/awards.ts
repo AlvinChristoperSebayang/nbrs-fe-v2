@@ -40,6 +40,8 @@ type RawPage = {
     ctaSectionDescription: string | null;
     ctaSectionButtonLabel: string | null;
     ctaSectionButtonUrl: string | null;
+    ctaSectionSecondaryButtonLabel?: string | null;
+    ctaSectionSecondaryButtonUrl?: string | null;
   } | null;
 };
 
@@ -63,11 +65,12 @@ export type AwardsPageContent = {
 
 const FALLBACK_CTA: CtaContent = {
   image: "/images/contact-bg.png",
-  title: "Let's Shape What's Next-Together",
-  description:
-    "Whether it's a place to gather, to heal, to learn or to live - we're ready to collaborate. Let's shape spaces that matter, together.",
-  buttonText: "Let's Shape What's Next-Together",
-  buttonHref: "/contact",
+  title: "BEYOND RECOGNITION, THERE’S RESPONSIBILITY",
+  description: "Every accolade is a reflection of deeper intent. Explore the thinking behind the work.",
+  buttonText: "DISCOVER THE DESIGN APPROACH",
+  buttonHref: "/design-approach",
+  secondaryButtonText: "SEE RESEARCH & INSIGHTS",
+  secondaryButtonHref: "/research",
 };
 
 const FALLBACK: AwardsPageContent = {
@@ -158,6 +161,8 @@ const AWARDS_QUERY = /* GraphQL */ `
           ctaSectionDescription
           ctaSectionButtonLabel
           ctaSectionButtonUrl
+          ctaSectionSecondaryButtonLabel
+          ctaSectionSecondaryButtonUrl
         }
       }
     }
@@ -258,6 +263,8 @@ export async function getAwardsPage(): Promise<AwardsPageContent> {
         description: clean(cta?.ctaSectionDescription) || FALLBACK_CTA.description,
         buttonText: clean(cta?.ctaSectionButtonLabel) || FALLBACK_CTA.buttonText,
         buttonHref: clean(cta?.ctaSectionButtonUrl) || FALLBACK_CTA.buttonHref,
+        secondaryButtonText: clean(cta?.ctaSectionSecondaryButtonLabel) || FALLBACK_CTA.secondaryButtonText,
+        secondaryButtonHref: clean(cta?.ctaSectionSecondaryButtonUrl) || FALLBACK_CTA.secondaryButtonHref,
       },
     };
   } catch {

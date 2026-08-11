@@ -12,11 +12,24 @@ type ResearchCardItem = {
   hoverColor: string;
 };
 
+function toTitleCase(str: string): string {
+  if (!str) return str;
+  if (str === str.toUpperCase() && /[A-Z]/.test(str)) {
+    return str
+      .toLowerCase()
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  }
+  return str;
+}
+
 function renderFormattedTitle(title: string) {
-  const colonIndex = title.indexOf(":");
+  const formatted = toTitleCase(title);
+  const colonIndex = formatted.indexOf(":");
   if (colonIndex !== -1) {
-    const prefix = title.slice(0, colonIndex + 1);
-    const suffix = title.slice(colonIndex + 1).trim();
+    const prefix = formatted.slice(0, colonIndex + 1);
+    const suffix = formatted.slice(colonIndex + 1).trim();
     return (
       <div className="font-sans text-xl leading-snug md:max-w-56">
         <span className="block font-bold">{prefix}</span>
@@ -27,7 +40,7 @@ function renderFormattedTitle(title: string) {
 
   return (
     <div className="font-sans text-xl font-bold leading-snug">
-      {title}
+      {formatted}
     </div>
   );
 }

@@ -91,7 +91,7 @@ export function ProjectFeaturesAlternatingSection({
 
               {/* Image Column */}
               <div
-                className={`lg:col-span-6 shadow-md aspect-[570/300] relative bg-zinc-100 overflow-hidden ${
+                className={`lg:col-span-6 aspect-[570/300] relative bg-zinc-100 overflow-hidden ${
                   item.reverse ? "lg:order-first" : "lg:order-last"
                 }`}
               >

@@ -49,7 +49,7 @@ function ChipRow({
               type="button"
               onClick={() => onToggle(option.slug)}
               aria-pressed={isActive}
-              className={`inline-flex items-center gap-2 rounded-full border px-5 py-2.5 text-sm transition cursor-pointer ${
+              className={`inline-flex items-center gap-2 rounded-full border px-5 py-1.75 text-sm transition cursor-pointer ${
                 isActive
                   ? "border-black bg-black text-white"
                   : "border-black/20 text-black hover:border-black"
@@ -141,7 +141,7 @@ export function ProjectsFilters({
           <button
             type="button"
             onClick={resetFilters}
-            className="inline-flex shrink-0 items-center justify-center rounded-full border border-black px-5 py-2.5 text-sm font-sans text-black hover:bg-black hover:text-white transition-colors duration-300 ease-out cursor-pointer self-start sm:self-auto"
+            className="inline-flex shrink-0 items-center justify-center rounded-full border border-black px-6 py-1.75 text-sm font-sans text-black hover:bg-black hover:text-white transition-colors duration-300 ease-out cursor-pointer self-start sm:self-auto"
           >
             Reset Filters ({selectedSectors.length + selectedPractices.length})
           </button>

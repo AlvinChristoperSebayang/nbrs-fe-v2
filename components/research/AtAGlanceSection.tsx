@@ -31,8 +31,7 @@ export function AtAGlanceSection({
               data-aos="fade-up"
               data-aos-delay={index * 100}
               className="group relative flex h-full min-h-[224px] flex-col items-center
-  overflow-hidden rounded-sm bg-black px-6 pt-10 pb-8 text-center
-  shadow-md
+  overflow-hidden bg-black px-6 pt-10 pb-8 text-center
   transform-gpu
   transition-[transform,box-shadow]
   duration-500

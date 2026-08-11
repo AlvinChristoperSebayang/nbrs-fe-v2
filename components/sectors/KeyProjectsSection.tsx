@@ -39,7 +39,7 @@ export function KeyProjectsSection({
               className="group flex flex-col w-full cursor-pointer"
             >
               {/* Project Cover Image */}
-              <div className="aspect-[370/300] w-full overflow-hidden bg-zinc-100 mb-4 rounded-sm">
+              <div className="aspect-[370/300] w-full overflow-hidden bg-zinc-100 mb-4">
                 <ResponsiveImage
                   src={project.image}
                   alt={project.title}

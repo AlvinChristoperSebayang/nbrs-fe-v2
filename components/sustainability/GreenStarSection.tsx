@@ -43,7 +43,7 @@ export function GreenStarSection({
             ) : (
               <div className="relative w-full max-w-[480px] h-[240px] sm:h-[280px] flex items-center justify-center my-2 sm:my-4">
                 {/* Top Card: Accredited Professional */}
-                <div className="absolute top-0 left-0 sm:left-2 z-10 w-[260px] sm:w-[320px] bg-white rounded-xl p-5 sm:p-6 shadow-[0_10px_30px_rgba(0,0,0,0.12)] border border-gray-100 transition-transform hover:-translate-y-1">
+                <div className="absolute top-0 left-0 sm:left-2 z-10 w-[260px] sm:w-[320px] bg-white p-5 sm:p-6 border border-gray-100 transition-transform hover:-translate-y-1">
                   <div className="flex items-center gap-3.5">
                     {/* Green Star 4-Leaf Icon */}
                     <svg className="w-10 h-10 shrink-0" viewBox="0 0 100 100" fill="none">
@@ -65,7 +65,7 @@ export function GreenStarSection({
                 </div>
 
                 {/* Bottom Card: Associate */}
-                <div className="absolute bottom-0 right-0 sm:right-2 z-20 w-[260px] sm:w-[320px] bg-white rounded-xl p-5 sm:p-6 shadow-[0_12px_35px_rgba(0,0,0,0.14)] border border-gray-100 transition-transform hover:-translate-y-1">
+                <div className="absolute bottom-0 right-0 sm:right-2 z-20 w-[260px] sm:w-[320px] bg-white p-5 sm:p-6 border border-gray-100 transition-transform hover:-translate-y-1">
                   <div className="flex items-center gap-3.5">
                     {/* Green Star 4-Leaf Icon */}
                     <svg className="w-10 h-10 shrink-0" viewBox="0 0 100 100" fill="none">
