@@ -181,11 +181,18 @@ export function Footer({ content }: { content: FooterContent }) {
                 <h3 className="font-heading text-sm lg:text-2xl uppercase tracking-wide text-white">
                   Contact Us
                 </h3>
-                {content.contactMessage && (
+                {content.contactMessage && content.contactLink ? (
+                  <a
+                    href={content.contactLink}
+                    className="mt-4 inline-block whitespace-pre-line text-sm lg:text-lg text-white/70 transition-colors hover:text-white"
+                  >
+                    {content.contactMessage}
+                  </a>
+                ) : content.contactMessage ? (
                   <p className="mt-4 whitespace-pre-line text-sm lg:text-lg text-white/70">
                     {content.contactMessage}
                   </p>
-                )}
+                ) : null}
                 {socialLinks.length > 0 && (
                   <div className="mt-4 flex items-center gap-4">
                     {socialLinks.map((social) => (
