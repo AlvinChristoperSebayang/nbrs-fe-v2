@@ -88,22 +88,33 @@ export async function getNewsListing({
   limit?: number;
   offset?: number;
 } = {}): Promise<NewsListingResult> {
-  const data = await craftFetch<NewsListingResponse>(NEWS_LISTING_QUERY, {
-    limit,
-    offset,
-  });
-  const page = data.page?.[0];
+  try {
+    const data = await craftFetch<NewsListingResponse>(NEWS_LISTING_QUERY, {
+      limit,
+      offset,
+    });
+    const page = data.page?.[0];
 
-  return {
-    pageHeading: page?.pageHeading ?? null,
-    pageSubheading: page?.pageSubheading ?? null,
-    pageHeroImage: toImageSource(page?.pageHeroImage?.[0]),
-    articles: (data.articles ?? []).map((article) => ({
-      id: article.id,
-      slug: article.slug,
-      title: article.artHdrHeading ?? article.slug,
-      image: toImageSource(article.thumbnail?.[0]) ?? "/images/placeholder-project.png",
-    })),
-    total: data.total ?? 0,
-  };
+    return {
+      pageHeading: page?.pageHeading ?? null,
+      pageSubheading: page?.pageSubheading ?? null,
+      pageHeroImage: toImageSource(page?.pageHeroImage?.[0]),
+      articles: (data.articles ?? []).map((article) => ({
+        id: article.id,
+        slug: article.slug,
+        title: article.artHdrHeading ?? article.slug,
+        image: toImageSource(article.thumbnail?.[0]) ?? "/images/placeholder-project.png",
+      })),
+      total: data.total ?? 0,
+    };
+  } catch (error) {
+    console.error("Failed to fetch news listing from Craft:", error);
+    return {
+      pageHeading: "NEWS & INSIGHTS",
+      pageSubheading: null,
+      pageHeroImage: null,
+      articles: [],
+      total: 0,
+    };
+  }
 }

@@ -73,41 +73,46 @@ function splitName(value: string | null, fallback: string, directRegistration?: 
 }
 
 export async function getOurPeopleContent(): Promise<OurPeopleContent> {
-  const data = await craftFetch<{ entries: Entry[] }>(QUERY);
-  const entry = data.entries[0];
-  if (!entry) return { hero: null, people: [], cta: null };
+  try {
+    const data = await craftFetch<{ entries: Entry[] }>(QUERY);
+    const entry = data.entries?.[0];
+    if (!entry) return { hero: null, people: [], cta: null };
 
-  const people = entry.people.flatMap((person) => {
-    const photo = toImageSource(person.pplProfileImage[0]);
-    if (!photo) return [];
-    const { name, registration } = splitName(person.PplName, person.title, person.pplRegistrationNumber);
-    return [{
-      id: person.slug,
-      name,
-      role: person.pplRole?.trim() || "",
-      registration,
-      practices: person.pplDiscipline.map((discipline) => discipline.title).filter(Boolean),
-      image: photo,
-    }];
-  });
+    const people = entry.people.flatMap((person) => {
+      const photo = toImageSource(person.pplProfileImage[0]);
+      if (!photo) return [];
+      const { name, registration } = splitName(person.PplName, person.title, person.pplRegistrationNumber);
+      return [{
+        id: person.slug,
+        name,
+        role: person.pplRole?.trim() || "",
+        registration,
+        practices: person.pplDiscipline.map((discipline) => discipline.title).filter(Boolean),
+        image: photo,
+      }];
+    });
 
-  const heroImage = toImageSource(entry.pageHeroImage[0]);
-  const ctaImageSource = toImageSource(entry.ctaSection?.ctaSectionBackgroundImage[0]);
-  const cta = entry.ourPeopleShowCta && ctaImageSource && entry.ctaSection?.ctaSectionHeading
-    ? {
-        image: ctaImageSource,
-        title: entry.ctaSection.ctaSectionHeading,
-        description: entry.ctaSection.ctaSectionDescription?.trim() || undefined,
-        buttonText: entry.ctaSection.ctaSectionButtonLabel?.trim() || undefined,
-        buttonHref: entry.ctaSection.ctaSectionButtonUrl?.trim() || undefined,
-      }
-    : null;
+    const heroImage = toImageSource(entry.pageHeroImage[0]);
+    const ctaImageSource = toImageSource(entry.ctaSection?.ctaSectionBackgroundImage[0]);
+    const cta = entry.ourPeopleShowCta && ctaImageSource && entry.ctaSection?.ctaSectionHeading
+      ? {
+          image: ctaImageSource,
+          title: entry.ctaSection.ctaSectionHeading,
+          description: entry.ctaSection.ctaSectionDescription?.trim() || undefined,
+          buttonText: entry.ctaSection.ctaSectionButtonLabel?.trim() || undefined,
+          buttonHref: entry.ctaSection.ctaSectionButtonUrl?.trim() || undefined,
+        }
+      : null;
 
-  return {
-    hero: heroImage && entry.pageHeading?.trim() && entry.pageSubheading?.trim()
-      ? { title: entry.pageHeading, description: entry.pageSubheading, image: heroImage }
-      : null,
-    people,
-    cta,
-  };
+    return {
+      hero: heroImage && entry.pageHeading?.trim() && entry.pageSubheading?.trim()
+        ? { title: entry.pageHeading, description: entry.pageSubheading, image: heroImage }
+        : null,
+      people,
+      cta,
+    };
+  } catch (error) {
+    console.error("Failed to load Our People content from Craft:", error);
+    return { hero: null, people: [], cta: null };
+  }
 }

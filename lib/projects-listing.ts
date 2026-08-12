@@ -207,32 +207,45 @@ export async function getProjectsListing({
     practiceSlugs
   );
 
-  const data = await craftFetch<ProjectsListingResponse>(
-    PROJECTS_LISTING_QUERY,
-    { limit, offset, relatedToCategories }
-  );
+  try {
+    const data = await craftFetch<ProjectsListingResponse>(
+      PROJECTS_LISTING_QUERY,
+      { limit, offset, relatedToCategories }
+    );
 
-  const page = data.page?.[0];
+    const page = data.page?.[0];
 
-  return {
-    pageHeading: page?.pageHeading ?? null,
-    pageSubheading: page?.pageSubheading ?? null,
-    pageHeroImageUrl: toImageSource(page?.seoImage?.[0]),
-    sectors: data.sectors ?? [],
-    practices: (data.practices ?? []).filter(
-      (p) => p.slug !== "heritage" && p.title?.toLowerCase() !== "heritage"
-    ),
-    projects: (data.projects ?? []).map((entry) => ({
-      id: entry.id,
-      slug: entry.slug,
-      uri: entry.uri,
-      postDate: entry.postDate,
-      heading: entry.proHdrHeading,
-      subheading: entry.proHdrSubheading,
-      thumbnailUrl: toImageSource(entry.thumbnail?.[0]),
-      sectors: entry.catSector ?? [],
-      practices: entry.catDiscipline ?? [],
-    })),
-    total: data.total ?? 0,
-  };
+    return {
+      pageHeading: page?.pageHeading ?? null,
+      pageSubheading: page?.pageSubheading ?? null,
+      pageHeroImageUrl: toImageSource(page?.seoImage?.[0]),
+      sectors: data.sectors ?? [],
+      practices: (data.practices ?? []).filter(
+        (p) => p.slug !== "heritage" && p.title?.toLowerCase() !== "heritage"
+      ),
+      projects: (data.projects ?? []).map((entry) => ({
+        id: entry.id,
+        slug: entry.slug,
+        uri: entry.uri,
+        postDate: entry.postDate,
+        heading: entry.proHdrHeading,
+        subheading: entry.proHdrSubheading,
+        thumbnailUrl: toImageSource(entry.thumbnail?.[0]),
+        sectors: entry.catSector ?? [],
+        practices: entry.catDiscipline ?? [],
+      })),
+      total: data.total ?? 0,
+    };
+  } catch (error) {
+    console.error("Failed to fetch projects listing from Craft:", error);
+    return {
+      pageHeading: "PROJECTS",
+      pageSubheading: null,
+      pageHeroImageUrl: null,
+      sectors: [],
+      practices: [],
+      projects: [],
+      total: 0,
+    };
+  }
 }

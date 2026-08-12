@@ -1,3 +1,7 @@
+if (typeof process !== "undefined" && !process.env.NODE_TLS_REJECT_UNAUTHORIZED) {
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+}
+
 const CRAFT_GRAPHQL_URL =
   process.env.CRAFT_GRAPHQL_URL ??
   "https://phpstack-1082258-6573734.cloudwaysapps.com/api/";

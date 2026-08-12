@@ -74,34 +74,39 @@ function plainText(value: string | null | undefined): string {
 }
 
 export async function getCareersContent(): Promise<CareersContent> {
-  const data = await craftFetch<{ entries: RawCareersPage[] }>(QUERY);
-  const entry = data.entries[0];
-  if (!entry) return { hero: null, accordion: null, cta: null };
+  try {
+    const data = await craftFetch<{ entries: RawCareersPage[] }>(QUERY);
+    const entry = data.entries?.[0];
+    if (!entry) return { hero: null, accordion: null, cta: null };
 
-  const heroImageSource = toImageSource(entry.pageHeroImage[0]);
-  const faq = entry.blocks.find((block) => block.__typename === "blocks_faqs_BlockType");
-  const items = (faq?.envFaqs ?? []).flatMap((item) => {
-    const title = plainText(item.heading);
-    const content = plainText(item.text);
-    return title && content ? [{ id: item.id, title, content }] : [];
-  });
-  const ctaImageSource = toImageSource(entry.ctaSection?.ctaSectionBackgroundImage[0]);
+    const heroImageSource = toImageSource(entry.pageHeroImage[0]);
+    const faq = entry.blocks.find((block) => block.__typename === "blocks_faqs_BlockType");
+    const items = (faq?.envFaqs ?? []).flatMap((item) => {
+      const title = plainText(item.heading);
+      const content = plainText(item.text);
+      return title && content ? [{ id: item.id, title, content }] : [];
+    });
+    const ctaImageSource = toImageSource(entry.ctaSection?.ctaSectionBackgroundImage[0]);
 
-  return {
-    hero: heroImageSource && plainText(entry.pageHeading)
-      ? { title: plainText(entry.pageHeading), description: plainText(entry.pageSubheading) || undefined, image: heroImageSource }
-      : null,
-    accordion: faq && plainText(faq.envFaqsHeading) && items.length
-      ? { title: plainText(faq.envFaqsHeading), introText: plainText(faq.envFaqsText) || undefined, items }
-      : null,
-    cta: ctaImageSource && plainText(entry.ctaSection?.ctaSectionHeading)
-      ? {
-          image: ctaImageSource,
-          title: plainText(entry.ctaSection?.ctaSectionHeading),
-          description: plainText(entry.ctaSection?.ctaSectionDescription) || undefined,
-          buttonText: plainText(entry.ctaSection?.ctaSectionButtonLabel) || undefined,
-          buttonHref: entry.ctaSection?.ctaSectionButtonUrl?.trim() || undefined,
-        }
-      : null,
-  };
+    return {
+      hero: heroImageSource && plainText(entry.pageHeading)
+        ? { title: plainText(entry.pageHeading), description: plainText(entry.pageSubheading) || undefined, image: heroImageSource }
+        : null,
+      accordion: faq && plainText(faq.envFaqsHeading) && items.length
+        ? { title: plainText(faq.envFaqsHeading), introText: plainText(faq.envFaqsText) || undefined, items }
+        : null,
+      cta: ctaImageSource && plainText(entry.ctaSection?.ctaSectionHeading)
+        ? {
+            image: ctaImageSource,
+            title: plainText(entry.ctaSection?.ctaSectionHeading),
+            description: plainText(entry.ctaSection?.ctaSectionDescription) || undefined,
+            buttonText: plainText(entry.ctaSection?.ctaSectionButtonLabel) || undefined,
+            buttonHref: entry.ctaSection?.ctaSectionButtonUrl?.trim() || undefined,
+          }
+        : null,
+    };
+  } catch (error) {
+    console.error("Failed to fetch careers content from Craft:", error);
+    return { hero: null, accordion: null, cta: null };
+  }
 }
