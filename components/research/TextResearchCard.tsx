@@ -23,7 +23,7 @@ export function TextResearchCard({ item }: { item: SecondaryResearchItem }) {
     >
       {/* Top Title Section */}
       <div className="flex h-[94px] w-full items-start bg-[#E7E7E7] p-5 transition-colors duration-300 group-hover:bg-black">
-        <span className="font-sans text-base font-normal text-black transition-colors duration-300 group-hover:text-white leading-snug">
+        <span className="font-sans text-base font-normal text-black transition-colors duration-300 group-hover:text-white leading-snug md:max-w-[167px]">
           {toTitleCase(item.title)}
         </span>
       </div>

@@ -26,6 +26,7 @@ export default async function PeoplePage() {
         background_color="#C9E5D2"
         heading={page.intro.heading}
         description={page.intro.description}
+        heading_size="text-[28px] sm:text-[50px]"
       />
 
       <PeopleNavigationGrid cards={page.navigationCards} />

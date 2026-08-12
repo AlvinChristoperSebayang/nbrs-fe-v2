@@ -204,12 +204,13 @@ export function Hero({
               <p
                 data-aos="fade-up"
                 data-aos-delay="200"
+                suppressHydrationWarning
                 className={`mt-6 text-white text-base ${descriptionClassName}`}
               >
                 {description}
               </p>
             ) : (
-              <div data-aos="fade-up" data-aos-delay="200" className={descriptionClassName}>
+              <div data-aos="fade-up" data-aos-delay="200" suppressHydrationWarning className={descriptionClassName}>
                 {description}
               </div>
             )

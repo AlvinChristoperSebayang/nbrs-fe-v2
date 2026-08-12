@@ -100,7 +100,7 @@ export default async function ResearchDetailPage({ params }: PageProps<"/researc
 
               {research.featureImage && (
                 <div data-aos="fade-up" data-aos-delay="200" className="flex w-full justify-start lg:w-1/2 lg:justify-end">
-                  <div className="aspect-[570/587] w-full max-w-[570px] overflow-hidden rounded-xs bg-zinc-100 shadow-md">
+                  <div className="aspect-[570/587] w-full max-w-[570px] overflow-hidden rounded-xs bg-zinc-100">
                     <ResponsiveImage src={research.featureImage} alt={research.title} className="h-full w-full object-cover" />
                   </div>
                 </div>

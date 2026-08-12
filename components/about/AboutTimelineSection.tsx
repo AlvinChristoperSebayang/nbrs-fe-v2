@@ -68,7 +68,7 @@ export function AboutTimelineSection({
           <div className="scrollbar-hide flex overflow-x-auto gap-2 lg:gap-4 pb-4">
             {items.map((item, index) => (
               <div
-                key={item.year}
+                key={`${item.year}-${index}`}
                 data-aos="fade-up"
                 data-aos-delay={index * 100}
                 style={{

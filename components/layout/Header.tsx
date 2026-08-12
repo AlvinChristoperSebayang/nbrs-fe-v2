@@ -236,11 +236,17 @@ export function Header() {
                   >
                     <Link
                       href={item.href}
+                      data-no-loading={
+                        item.subItems && item.subItems.length > 0 && activeCategory !== item.id
+                          ? "true"
+                          : undefined
+                      }
                       onClick={(e) => {
                         const hasSubItems = item.subItems && item.subItems.length > 0;
                         if (hasSubItems && activeCategory !== item.id) {
                           // 1st click: open/expand submenu without navigating or closing menu
                           e.preventDefault();
+                          e.stopPropagation();
                           setActiveCategory(item.id);
                         } else {
                           // 2nd click (or item without sub-items): navigate to parent href and close menu

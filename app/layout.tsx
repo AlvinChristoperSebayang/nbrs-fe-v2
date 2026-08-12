@@ -9,11 +9,24 @@ import { getFooter } from "@/lib/footer";
 import "./globals.css";
 import "./header.css";
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://nbrs.com.au";
+
 export const metadata: Metadata = {
-  title: "NBRS",
-  description: "NBRS - Your trusted partner in real estate",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "NBRS Architecture | Multidisciplinary Design",
+    template: "%s | NBRS",
+  },
+  description:
+    "NBRS is a multidisciplinary design practice uniting architecture, landscape, interior design, and heritage to create life-changing environments.",
   icons: {
     icon: "/images/favicon.png",
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_AU",
+    url: SITE_URL,
+    siteName: "NBRS Architecture",
   },
 };
 

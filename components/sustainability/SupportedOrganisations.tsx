@@ -91,7 +91,7 @@ export function SupportedOrganisations({
                 key={org.name}
                 data-aos="fade-up"
                 data-aos-delay={index * 100}
-                className="bg-white h-[130px] p-8 flex items-center justify-center"
+                className="bg-white h-[120px] p-6 flex items-center justify-center rounded-[8px] shadow-sm"
               >
                 <ResponsiveImage src={org.logo} alt={org.name} className="max-h-full max-w-full object-contain" />
               </div>

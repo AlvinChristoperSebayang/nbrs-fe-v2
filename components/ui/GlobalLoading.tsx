@@ -20,10 +20,13 @@ export function GlobalLoading() {
     if (!FEATURE_FLAGS.ENABLE_GLOBAL_LOADING) return;
 
     const handleAnchorClick = (e: MouseEvent) => {
+      if (e.defaultPrevented) return;
+
       const target = e.target as HTMLElement | null;
       const anchor = target?.closest("a");
 
       if (!anchor) return;
+      if (anchor.getAttribute("data-no-loading") === "true") return;
 
       const href = anchor.getAttribute("href");
       const targetAttr = anchor.getAttribute("target");
