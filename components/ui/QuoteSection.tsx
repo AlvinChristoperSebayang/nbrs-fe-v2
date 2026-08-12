@@ -19,21 +19,24 @@ export function QuoteSection({
 }) {
   return (
     <section className="bg-white py-0 lg:py-20 text-black overflow-hidden">
-      <Container className="max-sm:uncontainer-mobile max-sm:px-0 lg:pr-0">
-        <div className="relative flex flex-col items-center lg:block">
-          <div data-aos="fade-up" className="w-full overflow-hidden lg:w-[65%]">
+      <Container className="max-sm:uncontainer-mobile max-sm:px-0 sm:px-6 md:px-8 lg:px-0">
+        <div className="relative flex flex-col items-center lg:mx-auto lg:block lg:max-w-[1170px]">
+          {/* Image */}
+          <div data-aos="fade-up" className="w-full overflow-hidden lg:w-[60%] xl:w-[785px]">
             <ResponsiveImage
               src={image}
               alt={author}
-              className="h-72 w-full object-cover sm:h-96 lg:h-[485px]"
+              className="h-[350px] w-full object-cover lg:h-[495px] rounded-sm"
             />
           </div>
 
+          {/* Quote Box Overlay using exact Figma dimensions (width: 630px, min-height: 309px, left: 50%) */}
           <div
             data-aos="fade-up"
             data-aos-delay="150"
-            className={`flex flex-col justify-between ${boxBgClass} w-full px-8 py-12 lg:pl-[37px] lg:pr-[13px] lg:py-[45px] lg:absolute lg:top-1/2 lg:right-0 lg:mx-0 lg:w-[50%] lg:-translate-y-1/2 max-lg:border-none border border-white/80`}
+            className="flex flex-col justify-between bg-[#D9D9D9] lg:bg-white/75 lg:backdrop-blur-xs w-full p-8 sm:p-10 lg:absolute lg:top-1/2 lg:-translate-y-1/2 lg:left-[45%] xl:left-[585px] lg:w-[630px] lg:max-w-none lg:min-h-[309px] lg:p-10 shadow-sm max-lg:border-none border border-white/80"
           >
+            {/* Top Quote Icon */}
             <span
               className="font-serif text-5xl leading-none lg:text-6xl mb-2 text-white lg:text-[var(--quote-icon-color)]"
               style={{ "--quote-icon-color": quoteIconColor } as React.CSSProperties}
@@ -51,15 +54,18 @@ export function QuoteSection({
               </svg>
             </span>
 
-            <p className="font-sans text-xl italic text-black sm:text-2xl lg:text-[26px] font-normal my-3 leading-[120%]">
+            {/* Quote Text - Exact Typography from Figma (Roboto, 400, Italic, 24px, 100% line-height, 0% letter-spacing) */}
+            <p className="font-sans text-[20px] sm:text-[24px] font-normal italic leading-[1.25] tracking-normal text-black my-3">
               {quote}
             </p>
 
-            <p className="font-sans text-base text-black lg:text-[24px] mt-2 font-normal">
+            {/* Author */}
+            <p className="font-sans text-base text-black lg:text-xl mt-2 font-normal">
               - {author}
               {role ? `, ${role}` : ""}
             </p>
 
+            {/* Bottom Right Quote Icon */}
             <span
               className="self-end font-serif text-5xl leading-none lg:text-6xl mt-2 text-white lg:text-[var(--quote-icon-color)]"
               style={{ "--quote-icon-color": quoteIconColor } as React.CSSProperties}
