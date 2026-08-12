@@ -23,7 +23,9 @@ const crop = (width: number, height: number, quality = 80) => `url @transform(wi
 const heroImage = `mobile: ${crop(600, 800)} tablet: ${crop(1440, 1000, 82)} desktop: ${crop(2400, 1200, 85)}`;
 const landscapeImage = `mobile: ${crop(600, 480)} tablet: ${crop(1200, 760, 82)} desktop: ${crop(1800, 1100, 85)}`;
 const cardImage = `mobile: ${crop(600, 480)} tablet: ${crop(900, 720, 82)} desktop: ${crop(1200, 960, 85)}`;
-const portraitImage = `mobile: ${crop(600, 760)} tablet: ${crop(900, 960, 82)} desktop: ${crop(1200, 1200, 85)}`;
+// The quote artwork is landscape (1570 × 990). Keep that aspect ratio so the
+// image is not cropped once by Craft and again by `object-cover` in the UI.
+const quoteImage = `mobile: ${crop(600, 378)} tablet: ${crop(900, 567, 82)} desktop: ${crop(1200, 756, 85)}`;
 const ctaImage = `mobile: ${crop(600, 900)} tablet: ${crop(1440, 900, 82)} desktop: ${crop(2400, 1000, 85)}`;
 
 const QUERY = /* GraphQL */ `
@@ -37,7 +39,7 @@ query SectorDetail($slug: [String]!) {
       sectorFeatures { ... on sectorFeature_Entry { sectorFeatureHeading sectorFeatureText sectorFeatureImage { ${landscapeImage} } } }
       catFeaturedProjects { ... on projects_Entry { id title slug uri proHdrHeading thumbnail { ${cardImage} } } }
       catSelectedProjects { ... on projects_Entry { id title slug uri proHdrHeading catStatus { ... on status_Category { title } } catDiscipline { ... on discipline_Category { title } } } }
-      catPclPerson { ... on block2_Entry { quote person { ... on people_Entry { title PplName pplProfileImage { ${portraitImage} } } } } }
+      catPclPerson { ... on block2_Entry { quote person { ... on people_Entry { title PplName pplProfileImage { ${quoteImage} } } } } }
       ctaSection { ctaSectionBackgroundImage { ${ctaImage} } ctaSectionHeading ctaSectionDescription ctaSectionButtonLabel ctaSectionButtonUrl }
     }
   }

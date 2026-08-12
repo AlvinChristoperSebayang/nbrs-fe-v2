@@ -2,29 +2,25 @@ import type { Metadata } from "next";
 import { Hero } from "@/components/ui/Hero";
 import { Container } from "@/components/ui/Container";
 import { CtaSection } from "@/components/cta/CtaSection";
-import type { CtaContent } from "@/lib/types";
+import { getPrivacyPageContent } from "@/lib/privacy";
 
-export const metadata: Metadata = {
-  title: "Privacy Policy | NBRS Architecture",
-  description: "Learn about NBRS Architecture's commitment to protecting your personal data and privacy.",
-};
+export const revalidate = 60;
 
-const cta: CtaContent = {
-  image: "/images/contact-bg.png",
-  title: "HAVE QUESTIONS ABOUT YOUR PRIVACY?",
-  description: "Reach out to our privacy officer or leadership team for any data protection inquiries.",
-  buttonText: "CONTACT NBRS",
-  buttonHref: "/contact",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await getPrivacyPageContent();
+  return { title: page.seoTitle, description: page.seoDescription };
+}
 
-export default function PrivacyPolicyPage() {
+export default async function PrivacyPolicyPage() {
+  const page = await getPrivacyPageContent();
+
   return (
     <article className="bg-white text-black min-h-screen">
       {/* 1. HERO SECTION */}
       <Hero
-        image="/images/hero/about-hero.png"
-        title="PRIVACY POLICY"
-        description="Our commitment to protecting your personal information and privacy."
+        image={page.hero}
+        title={page.title}
+        description={page.description}
       />
 
       {/* 2. CONTENT SECTION */}
@@ -34,10 +30,10 @@ export default function PrivacyPolicyPage() {
             {/* Left Sticky Sidebar (Desktop) */}
             <div data-aos="fade-up" className="hidden lg:block lg:col-span-4 lg:sticky lg:top-28">
               <h2 className="font-heading text-3xl lg:text-[40px] uppercase font-bold leading-none text-black border-b-4 border-black pb-4">
-                Privacy Policy
+                {page.title}
               </h2>
               <p className="font-sans text-sm text-zinc-500 mt-4">
-                Last updated: August 2026
+                Last updated: {page.lastUpdated}
               </p>
             </div>
 
@@ -45,89 +41,15 @@ export default function PrivacyPolicyPage() {
             <div
               data-aos="fade-up"
               data-aos-delay="150"
-              className="lg:col-span-8 flex flex-col gap-8 font-sans text-base text-zinc-800 leading-relaxed"
-            >
-              <div>
-                <h3 className="font-heading text-2xl font-bold text-black uppercase mb-3">
-                  1. Introduction & Overview
-                </h3>
-                <p>
-                  NBRS Architecture (&ldquo;NBRS&rdquo;, &ldquo;we&rdquo;, &ldquo;us&rdquo;, or &ldquo;our&rdquo;) is committed to safeguarding the privacy and personal data of visitors to our website, clients, partners, and job applicants. This Privacy Policy outlines how we collect, use, disclose, and store your personal information in accordance with applicable privacy laws and regulations.
-                </p>
-              </div>
-
-              <div>
-                <h3 className="font-heading text-2xl font-bold text-black uppercase mb-3">
-                  2. Collection of Personal Information
-                </h3>
-                <p>
-                  We collect personal information that you voluntarily provide to us when contacting us via our website forms, subscribing to updates, applying for employment, or engaging with our architectural design and research services. Information collected may include:
-                </p>
-                <ul className="list-disc pl-6 mt-3 space-y-2 text-zinc-700">
-                  <li>Full name, job title, and professional organisation details.</li>
-                  <li>Contact details including email address, phone number, and mailing address.</li>
-                  <li>Resume, portfolio, and employment history for career applications.</li>
-                  <li>Technical data such as IP address, browser type, and device information gathered via website cookies.</li>
-                </ul>
-              </div>
-
-              <div>
-                <h3 className="font-heading text-2xl font-bold text-black uppercase mb-3">
-                  3. Use of Personal Information
-                </h3>
-                <p>
-                  Your personal information is collected and processed strictly for legitimate business operations, including:
-                </p>
-                <ul className="list-disc pl-6 mt-3 space-y-2 text-zinc-700">
-                  <li>Responding to inquiries and managing client service requests.</li>
-                  <li>Evaluating career applications and conducting recruitment processes.</li>
-                  <li>Delivering industry insights, news, and project updates when requested.</li>
-                  <li>Improving our website performance, user experience, and digital security.</li>
-                </ul>
-              </div>
-
-              <div>
-                <h3 className="font-heading text-2xl font-bold text-black uppercase mb-3">
-                  4. Disclosure & Data Sharing
-                </h3>
-                <p>
-                  NBRS does not sell, rent, or trade your personal information to third parties. We may disclose your information to trusted third-party service providers who assist us in operating our website, managing IT infrastructure, or conducting business operations, strictly under binding confidentiality agreements.
-                </p>
-              </div>
-
-              <div>
-                <h3 className="font-heading text-2xl font-bold text-black uppercase mb-3">
-                  5. Data Storage & Security
-                </h3>
-                <p>
-                  We employ robust technical and organizational security measures to protect your personal data from unauthorized access, misuse, loss, or alteration. All electronic records are stored securely on encrypted servers with restricted access permissions.
-                </p>
-              </div>
-
-              <div>
-                <h3 className="font-heading text-2xl font-bold text-black uppercase mb-3">
-                  6. Your Rights & Access
-                </h3>
-                <p>
-                  You have the right to request access to the personal information we hold about you, request corrections to inaccurate data, or request the deletion of your personal records, subject to legal retention obligations.
-                </p>
-              </div>
-
-              <div>
-                <h3 className="font-heading text-2xl font-bold text-black uppercase mb-3">
-                  7. Contacting Our Privacy Team
-                </h3>
-                <p>
-                  If you have any questions, concerns, or requests regarding this Privacy Policy or how your personal information is managed, please contact NBRS Architecture via email at <span className="font-semibold text-black">privacy@nbrs.com.au</span> or through our contact page.
-                </p>
-              </div>
-            </div>
+              className="lg:col-span-8 font-sans text-base leading-relaxed text-zinc-800 [&_a]:font-semibold [&_a]:text-black [&_a]:underline [&_a]:underline-offset-4 [&_h3]:mb-3 [&_h3]:font-heading [&_h3]:text-2xl [&_h3]:font-bold [&_h3]:uppercase [&_h3]:text-black [&_h3:not(:first-child)]:mt-8 [&_li]:mb-2 [&_ol]:mt-3 [&_ol]:list-decimal [&_ol]:space-y-2 [&_ol]:pl-6 [&_p]:mb-3 [&_p:last-child]:mb-0 [&_strong]:font-semibold [&_strong]:text-black [&_ul]:mt-3 [&_ul]:list-disc [&_ul]:space-y-2 [&_ul]:pl-6 [&_ul]:text-zinc-700"
+              dangerouslySetInnerHTML={{ __html: page.contentHtml }}
+            />
           </div>
         </Container>
       </section>
 
       {/* 3. CTA SECTION */}
-      <CtaSection content={cta} />
+      <CtaSection content={page.cta} />
     </article>
   );
 }
