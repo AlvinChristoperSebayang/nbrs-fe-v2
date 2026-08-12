@@ -23,7 +23,9 @@ const crop = (width: number, height: number, quality = 80) => `url @transform(wi
 const heroImage = `mobile: ${crop(600, 800)} tablet: ${crop(1440, 1000, 82)} desktop: ${crop(2400, 1200, 85)}`;
 const landscapeImage = `mobile: ${crop(600, 480)} tablet: ${crop(1200, 760, 82)} desktop: ${crop(1800, 1100, 85)}`;
 const cardImage = `mobile: ${crop(600, 480)} tablet: ${crop(900, 720, 82)} desktop: ${crop(1200, 960, 85)}`;
-const portraitImage = `mobile: ${crop(600, 760)} tablet: ${crop(900, 960, 82)} desktop: ${crop(1200, 1200, 85)}`;
+// The quote artwork is landscape (1570 × 990). Keep that aspect ratio so the
+// image is not cropped once by Craft and again by `object-cover` in the UI.
+const quoteImage = `mobile: ${crop(600, 378)} tablet: ${crop(900, 567, 82)} desktop: ${crop(1200, 756, 85)}`;
 const ctaImage = `mobile: ${crop(600, 900)} tablet: ${crop(1440, 900, 82)} desktop: ${crop(2400, 1000, 85)}`;
 
 const QUERY = /* GraphQL */ `
@@ -37,7 +39,7 @@ query SectorDetail($slug: [String]!) {
       sectorFeatures { ... on sectorFeature_Entry { sectorFeatureHeading sectorFeatureText sectorFeatureImage { ${landscapeImage} } } }
       catFeaturedProjects { ... on projects_Entry { id title slug uri proHdrHeading thumbnail { ${cardImage} } } }
       catSelectedProjects { ... on projects_Entry { id title slug uri proHdrHeading catStatus { ... on status_Category { title } } catDiscipline { ... on discipline_Category { title } } } }
-      catPclPerson { ... on block2_Entry { quote person { ... on people_Entry { title PplName pplProfileImage { ${portraitImage} } } } } }
+      catPclPerson { ... on block2_Entry { quote person { ... on people_Entry { title PplName pplProfileImage { ${quoteImage} } } } } }
       ctaSection { ctaSectionBackgroundImage { ${ctaImage} } ctaSectionHeading ctaSectionDescription ctaSectionButtonLabel ctaSectionButtonUrl }
     }
   }
@@ -91,8 +93,10 @@ export async function getSectorDetailContent(slug: string): Promise<SectorDetail
       return image && title ? [{ title, description: feature.sectorFeatureText?.trim() ?? "", image }] : [];
     });
 
-    const galleryImages = [category.catHdrImage[0], ...category.catOverImageText.map((block) => block.image[0]), ...category.catFeaturedProjects.slice(0, 2).map((project) => project.thumbnail?.[0])]
-      .map((asset) => toImageSource(asset)).filter((image): image is ImageSource => Boolean(image));
+    const principlesImages = category.catOverImageText
+    .map((block) => toImageSource(block.image[0]))
+    .filter((image): image is ImageSource => Boolean(image));
+
     const keyProjects = category.catFeaturedProjects.slice(0, 3).map((project, index) => ({ id: project.id, title: project.proHdrHeading?.trim() || project.title, image: toImageSource(project.thumbnail?.[0]) ?? fallback.keyProjects[index]?.image ?? fallback.image, href: projectHref(project) }));
     const tableProjects = category.catSelectedProjects.map((project) => ({ id: project.id, project: project.proHdrHeading?.trim() || project.title, practices: project.catDiscipline.map((discipline) => discipline.title).join(", ") || "—", status: project.catStatus[0]?.title ?? "—", href: projectHref(project) }));
     const quoteBlock = category.catPclPerson.find((block) => block.quote && block.person[0]?.pplProfileImage[0]);
@@ -113,7 +117,7 @@ export async function getSectorDetailContent(slug: string): Promise<SectorDetail
       image: toImageSource(category.catHdrImage[0]) ?? fallback.heroImage,
       principlesTitle: `${category.catOvrHeading?.trim() || "PRINCIPLES"}: ${category.title}`,
       principlesDescription: cleanHtml(category.catOvrText) || fallback.principlesDescription,
-      principlesImages: galleryImages.length >= 5 ? galleryImages.slice(0, 5) : fallback.principlesImages,
+      principlesImages: principlesImages.length > 0 ? principlesImages : fallback.principlesImages,
       features: features.length ? features : fallback.features,
       backgroundColor: category.accentColor?.trim() || fallback.hoverColor,
       heritageServices,

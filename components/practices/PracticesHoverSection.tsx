@@ -3,13 +3,15 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
+import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
+import type { ImageSource } from "@/lib/types";
 
 export type PracticeCardItem = {
   id: string;
   title: string;
   description: string;
-  image: string;
-  bgImage: string;
+  image: ImageSource;
+  bgImage: ImageSource;
   href: string;
 };
 
@@ -60,7 +62,7 @@ export function PracticesHoverSection({
             hoveredId === item.id ? "opacity-100" : "opacity-0"
           }`}
         >
-          <img
+          <ResponsiveImage
             src={item.bgImage}
             alt=""
             className="h-full w-full object-cover"
@@ -94,7 +96,7 @@ export function PracticesHoverSection({
                 }`}
               >
                 {/* Card Cover Image */}
-                <img
+                <ResponsiveImage
                   src={item.image}
                   alt={item.title}
                   className={`absolute inset-0 h-full w-full object-cover transition-all duration-700 group-hover:scale-105 ${
