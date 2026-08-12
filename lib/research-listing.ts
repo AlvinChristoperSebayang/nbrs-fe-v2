@@ -132,7 +132,14 @@ export async function getResearchListing(): Promise<ResearchListingResult> {
     pageSubheading: page?.pageSubheading ?? null,
     pageHeroImageUrl: toImageSource(page?.pageHeroImage?.[0]) ?? toImageSource(page?.seoImage?.[0]),
     sectors: data.sectors ?? [],
-    practices: data.practices ?? [],
+    // Heritage is currently treated as a Sector in the public filter UI.
+    // Keep the CMS relation on each research item intact; hide only the
+    // legacy Practice option until the taxonomy migration is complete.
+    practices: (data.practices ?? []).filter(
+      (practice) =>
+        practice.slug !== "heritage" &&
+        practice.title?.toLowerCase() !== "heritage",
+    ),
     articles,
     secondaryResearch: (page?.secondaryResearch ?? []).map((article) => ({
       id: article.id,
