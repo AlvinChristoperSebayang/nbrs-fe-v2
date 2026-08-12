@@ -51,17 +51,19 @@ export async function craftFetch<T>(
   variables?: Record<string, unknown>,
   options?: CraftFetchOptions
 ): Promise<T> {
+  const isDev = process.env.NODE_ENV === "development";
+
   const res = await fetch(CRAFT_GRAPHQL_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json", Accept: "application/json" },
     body: JSON.stringify({ query, variables }),
-    cache: options?.cache,
+    cache: isDev ? "no-store" : options?.cache,
     next:
-      options?.cache === "no-store"
+      isDev || options?.cache === "no-store"
         ? undefined
         : {
             revalidate: options?.revalidate ?? 60,
-            tags: options?.tags,
+            tags: options?.tags ?? ["craft"],
           },
   });
 
