@@ -97,6 +97,18 @@ export function ContactForm({ title, serviceOptions, sectorOptions, referralSour
     event.preventDefault();
     const form = event.currentTarget;
     const formData = new FormData(form);
+    const missingGroups = [
+      selectedServices.length === 0 ? "Service type" : null,
+      selectedSectors.length === 0 ? "Sector" : null,
+      selectedSources.length === 0 ? "How did you hear about us?" : null,
+    ].filter((label): label is string => label !== null);
+
+    if (missingGroups.length > 0) {
+      setSubmissionState("error");
+      setSubmissionMessage(`Please select at least one option for: ${missingGroups.join(", ")}.`);
+      return;
+    }
+
     setSubmissionState("submitting");
     setSubmissionMessage("");
 
@@ -162,18 +174,18 @@ export function ContactForm({ title, serviceOptions, sectorOptions, referralSour
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
             <div>
               <label htmlFor="contact-company" className="sr-only">Company</label>
-              <input id="contact-company" name="company" type="text" placeholder="Company" className="w-full h-11 px-4 rounded-sm border border-zinc-300 font-sans text-sm text-black placeholder:text-stone-500 focus:outline-none focus:border-black transition-colors" />
+              <input id="contact-company" name="company" type="text" required placeholder="Company" className="w-full h-11 px-4 rounded-sm border border-zinc-300 font-sans text-sm text-black placeholder:text-stone-500 focus:outline-none focus:border-black transition-colors" />
             </div>
             <div>
               <label htmlFor="contact-role" className="sr-only">Role or position</label>
-              <input id="contact-role" name="role" type="text" placeholder="Role/Position" className="w-full h-11 px-4 rounded-sm border border-zinc-300 font-sans text-sm text-black placeholder:text-stone-500 focus:outline-none focus:border-black transition-colors" />
+              <input id="contact-role" name="role" type="text" required placeholder="Role/Position" className="w-full h-11 px-4 rounded-sm border border-zinc-300 font-sans text-sm text-black placeholder:text-stone-500 focus:outline-none focus:border-black transition-colors" />
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
             <div className="flex gap-2">
               <label htmlFor="contact-phone-country-code" className="sr-only">Country code</label>
-              <select id="contact-phone-country-code" name="phoneCountryCode" defaultValue="+61" className="h-11 px-3 rounded-sm border border-zinc-300 font-sans text-sm text-stone-700 bg-white focus:outline-none focus:border-black transition-colors shrink-0">
+              <select id="contact-phone-country-code" name="phoneCountryCode" required defaultValue="+61" className="h-11 px-3 rounded-sm border border-zinc-300 font-sans text-sm text-stone-700 bg-white focus:outline-none focus:border-black transition-colors shrink-0">
                 <option value="+61">+61</option>
                 <option value="+62">+62</option>
                 <option value="+1">+1</option>
@@ -181,7 +193,7 @@ export function ContactForm({ title, serviceOptions, sectorOptions, referralSour
                 <option value="+65">+65</option>
               </select>
               <label htmlFor="contact-phone" className="sr-only">Phone number</label>
-              <input id="contact-phone" name="phone" type="tel" placeholder="Phone number" className="w-full h-11 px-4 rounded-sm border border-zinc-300 font-sans text-sm text-black placeholder:text-stone-500 focus:outline-none focus:border-black transition-colors" />
+              <input id="contact-phone" name="phone" type="tel" required placeholder="Phone number" className="w-full h-11 px-4 rounded-sm border border-zinc-300 font-sans text-sm text-black placeholder:text-stone-500 focus:outline-none focus:border-black transition-colors" />
             </div>
             <div>
               <label htmlFor="contact-email" className="sr-only">Email address</label>
