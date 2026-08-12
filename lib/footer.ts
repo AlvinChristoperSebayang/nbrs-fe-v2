@@ -18,6 +18,7 @@ export type FooterContent = {
   businessDetailsHtml?: string;
   acknowledgementHtml?: string;
   contactMessage?: string;
+  contactLink?: string;
   navigation: Array<FooterLink & { section: FooterSection }>;
   socialLinks: FooterSocialLink[];
 };
@@ -26,6 +27,7 @@ type RawFooter = {
   footerBusinessDetails?: string | null;
   acknowledgementOfCountry?: string | null;
   footerContactMessage?: string | null;
+  footerContactLink?: string | null;
   footerNavigation?: Array<{
     footerNavSection?: string | null;
     footerNavLabel?: string | null;
@@ -48,6 +50,7 @@ const FOOTER_QUERY = /* GraphQL */ `
         footerBusinessDetails
         acknowledgementOfCountry
         footerContactMessage
+        footerContactLink
         footerSocialMediaLinks {
           ... on menulink_Entry {
             itemTitle
@@ -123,6 +126,7 @@ export function mapFooter(raw: RawFooter | undefined): FooterContent | undefined
     businessDetailsHtml: text(raw.footerBusinessDetails),
     acknowledgementHtml: text(raw.acknowledgementOfCountry),
     contactMessage: text(raw.footerContactMessage),
+    contactLink: text(raw.footerContactLink),
     navigation: (raw.footerNavigation ?? []).flatMap((link) => {
       const label = text(link.footerNavLabel);
       const href = text(link.footerNavUrl);

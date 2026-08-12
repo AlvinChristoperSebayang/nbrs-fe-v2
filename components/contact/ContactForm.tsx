@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { type FormEvent, useEffect, useRef, useState } from "react";
 
 type ContactFormProps = {
   title: string;
@@ -81,9 +81,73 @@ export function ContactForm({ title, serviceOptions, sectorOptions, referralSour
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const [selectedSectors, setSelectedSectors] = useState<string[]>([]);
   const [selectedSources, setSelectedSources] = useState<string[]>([]);
+  const [submissionState, setSubmissionState] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [submissionMessage, setSubmissionMessage] = useState("");
+  const formStartedAt = useRef(0);
+
+  useEffect(() => {
+    formStartedAt.current = Date.now();
+  }, []);
 
   const toggle = (value: string, setSelected: React.Dispatch<React.SetStateAction<string[]>>) => {
     setSelected((current) => current.includes(value) ? current.filter((item) => item !== value) : [...current, value]);
+  };
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const missingGroups = [
+      selectedServices.length === 0 ? "Service type" : null,
+      selectedSectors.length === 0 ? "Sector" : null,
+      selectedSources.length === 0 ? "How did you hear about us?" : null,
+    ].filter((label): label is string => label !== null);
+
+    if (missingGroups.length > 0) {
+      setSubmissionState("error");
+      setSubmissionMessage(`Please select at least one option for: ${missingGroups.join(", ")}.`);
+      return;
+    }
+
+    setSubmissionState("submitting");
+    setSubmissionMessage("");
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          firstName: formData.get("firstName"),
+          lastName: formData.get("lastName"),
+          company: formData.get("company"),
+          role: formData.get("role"),
+          phoneCountryCode: formData.get("phoneCountryCode"),
+          phone: formData.get("phone"),
+          email: formData.get("email"),
+          serviceTypes: formData.getAll("serviceTypes[]"),
+          sectors: formData.getAll("sectors[]"),
+          message: formData.get("message"),
+          hearAbout: formData.getAll("hearAbout[]"),
+          website: formData.get("website"),
+          formStartedAt: formStartedAt.current,
+        }),
+      });
+      const result = await response.json().catch(() => null);
+      if (!response.ok || !result?.success) {
+        throw new Error(result?.message || "We could not send your enquiry. Please try again.");
+      }
+
+      form.reset();
+      setSelectedServices([]);
+      setSelectedSectors([]);
+      setSelectedSources([]);
+      formStartedAt.current = Date.now();
+      setSubmissionState("success");
+      setSubmissionMessage("Thank you. Your enquiry has been sent.");
+    } catch (error) {
+      setSubmissionState("error");
+      setSubmissionMessage(error instanceof Error ? error.message : "We could not send your enquiry. Please try again.");
+    }
   };
 
   return (
@@ -91,7 +155,11 @@ export function ContactForm({ title, serviceOptions, sectorOptions, referralSour
       <div className="bg-white rounded-[5px] shadow-[0px_0px_25px_rgba(0,0,0,0.12)] border border-zinc-100 p-6 sm:p-10 lg:p-12">
         <h1 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold uppercase text-black tracking-wide mb-8">{title}</h1>
 
-        <form onSubmit={(event) => event.preventDefault()} className="flex flex-col gap-6 sm:gap-8">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-6 sm:gap-8">
+          <div className="absolute -left-[10000px] h-px w-px overflow-hidden" aria-hidden="true">
+            <label htmlFor="contact-website">Website</label>
+            <input id="contact-website" name="website" type="text" tabIndex={-1} autoComplete="off" />
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
             <div>
               <label htmlFor="contact-first-name" className="sr-only">First name</label>
@@ -106,18 +174,18 @@ export function ContactForm({ title, serviceOptions, sectorOptions, referralSour
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
             <div>
               <label htmlFor="contact-company" className="sr-only">Company</label>
-              <input id="contact-company" name="company" type="text" placeholder="Company" className="w-full h-11 px-4 rounded-sm border border-zinc-300 font-sans text-sm text-black placeholder:text-stone-500 focus:outline-none focus:border-black transition-colors" />
+              <input id="contact-company" name="company" type="text" required placeholder="Company" className="w-full h-11 px-4 rounded-sm border border-zinc-300 font-sans text-sm text-black placeholder:text-stone-500 focus:outline-none focus:border-black transition-colors" />
             </div>
             <div>
               <label htmlFor="contact-role" className="sr-only">Role or position</label>
-              <input id="contact-role" name="role" type="text" placeholder="Role/Position" className="w-full h-11 px-4 rounded-sm border border-zinc-300 font-sans text-sm text-black placeholder:text-stone-500 focus:outline-none focus:border-black transition-colors" />
+              <input id="contact-role" name="role" type="text" required placeholder="Role/Position" className="w-full h-11 px-4 rounded-sm border border-zinc-300 font-sans text-sm text-black placeholder:text-stone-500 focus:outline-none focus:border-black transition-colors" />
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
             <div className="flex gap-2">
               <label htmlFor="contact-phone-country-code" className="sr-only">Country code</label>
-              <select id="contact-phone-country-code" name="phoneCountryCode" defaultValue="+61" className="h-11 px-3 rounded-sm border border-zinc-300 font-sans text-sm text-stone-700 bg-white focus:outline-none focus:border-black transition-colors shrink-0">
+              <select id="contact-phone-country-code" name="phoneCountryCode" required defaultValue="+61" className="h-11 px-3 rounded-sm border border-zinc-300 font-sans text-sm text-stone-700 bg-white focus:outline-none focus:border-black transition-colors shrink-0">
                 <option value="+61">+61</option>
                 <option value="+62">+62</option>
                 <option value="+1">+1</option>
@@ -125,7 +193,7 @@ export function ContactForm({ title, serviceOptions, sectorOptions, referralSour
                 <option value="+65">+65</option>
               </select>
               <label htmlFor="contact-phone" className="sr-only">Phone number</label>
-              <input id="contact-phone" name="phone" type="tel" placeholder="Phone number" className="w-full h-11 px-4 rounded-sm border border-zinc-300 font-sans text-sm text-black placeholder:text-stone-500 focus:outline-none focus:border-black transition-colors" />
+              <input id="contact-phone" name="phone" type="tel" required placeholder="Phone number" className="w-full h-11 px-4 rounded-sm border border-zinc-300 font-sans text-sm text-black placeholder:text-stone-500 focus:outline-none focus:border-black transition-colors" />
             </div>
             <div>
               <label htmlFor="contact-email" className="sr-only">Email address</label>
@@ -148,13 +216,19 @@ export function ContactForm({ title, serviceOptions, sectorOptions, referralSour
           </div>
 
           <div className="pt-4">
-            <button type="submit" disabled title="Form submission will be enabled in the next stage." className="inline-flex items-center justify-between gap-6 bg-black text-white px-8 py-3.5 rounded-sm font-sans text-sm font-semibold opacity-55 cursor-not-allowed">
-              <span>Submit</span>
+            <button type="submit" disabled={submissionState === "submitting"} className="inline-flex items-center justify-between gap-6 bg-black text-white px-8 py-3.5 rounded-sm font-sans text-sm font-semibold transition-opacity disabled:cursor-wait disabled:opacity-60">
+              <span>{submissionState === "submitting" ? "Sending…" : "Submit"}</span>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
             </button>
           </div>
+
+          {submissionState !== "idle" && (
+            <p aria-live="polite" className={submissionState === "success" ? "font-sans text-sm text-emerald-700" : submissionState === "error" ? "font-sans text-sm text-red-700" : "sr-only"}>
+              {submissionMessage}
+            </p>
+          )}
 
           {privacyNotice && <div className="font-sans text-xs text-stone-500 leading-relaxed pt-2 [&_a]:underline [&_a]:text-stone-700 hover:[&_a]:text-black" dangerouslySetInnerHTML={{ __html: privacyNotice }} />}
         </form>
