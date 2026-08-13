@@ -43,7 +43,7 @@ export type AboutContent = {
 
 export const ABOUT_FALLBACK: AboutContent = {
   hero: {
-    title: "Designing Environments That Shape Lives",
+    title: "Designing Environments\nThat Shape Lives",
     description:
       "Working collaboratively with clients and communities to create enduring, human-centred places.",
     image: "/images/hero/hero-about.jpg",
@@ -172,7 +172,9 @@ export async function getAboutContent(): Promise<AboutContent> {
 
     return {
       hero: {
-        title: about.aboutHeroHeading?.trim() || ABOUT_FALLBACK.hero.title,
+        title: (about.aboutHeroHeading?.trim() || ABOUT_FALLBACK.hero.title).includes("\n")
+          ? (about.aboutHeroHeading?.trim() || ABOUT_FALLBACK.hero.title)
+          : (about.aboutHeroHeading?.trim() || ABOUT_FALLBACK.hero.title).replace(/\s+(That|that)\s+/, "\n$1 "),
         description: about.description2?.trim() || ABOUT_FALLBACK.hero.description,
         image: toImageSource(about.aboutHeroImage?.[0]) || ABOUT_FALLBACK.hero.image,
       },

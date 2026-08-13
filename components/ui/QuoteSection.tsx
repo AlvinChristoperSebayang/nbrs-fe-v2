@@ -19,10 +19,10 @@ export function QuoteSection({
 }) {
   return (
     <section className="bg-white py-0 lg:py-20 text-black overflow-hidden">
-      <Container className="max-sm:uncontainer-mobile max-sm:px-0 sm:px-6 md:px-8 lg:px-0">
-        <div className="relative flex flex-col items-center lg:mx-auto lg:block lg:max-w-[1170px]">
+      <Container>
+        <div className="relative flex flex-col items-center lg:block">
           {/* Image */}
-          <div data-aos="fade-up" className="w-full overflow-hidden lg:w-[60%] xl:w-[785px]">
+          <div data-aos="fade-up" className="w-full overflow-hidden lg:w-[65%] xl:w-[68%]">
             <ResponsiveImage
               src={image}
               alt={author}
@@ -30,11 +30,11 @@ export function QuoteSection({
             />
           </div>
 
-          {/* Quote Box Overlay using exact Figma dimensions (width: 630px, min-height: 309px, left: 50%) */}
+          {/* Quote Box Overlay using exact Figma dimensions */}
           <div
             data-aos="fade-up"
             data-aos-delay="150"
-            className="flex flex-col justify-between bg-[#D9D9D9] lg:bg-white/75 lg:backdrop-blur-xs w-full p-8 sm:p-10 lg:absolute lg:top-1/2 lg:-translate-y-1/2 lg:left-[45%] xl:left-[585px] lg:w-[630px] lg:max-w-none lg:min-h-[309px] lg:p-10 shadow-sm max-lg:border-none border border-white/80"
+            className="flex flex-col justify-between bg-[#D9D9D9] lg:bg-white/75 lg:backdrop-blur-xs w-full p-8 sm:p-10 lg:absolute lg:top-1/2 lg:-translate-y-1/2 lg:left-[45%] xl:left-[48%] 2xl:left-[50%] lg:w-[55%] xl:w-[580px] 2xl:w-[630px] lg:min-h-[309px] lg:p-10 shadow-sm max-lg:border-none border border-white/80"
           >
             {/* Top Quote Icon */}
             <span

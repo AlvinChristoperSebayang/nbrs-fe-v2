@@ -55,8 +55,10 @@ export function HeroSlider({ slides }: { slides: HeroSlide[] }) {
       <Container className="relative z-30 flex flex-col gap-10 pt-40 pb-10 lg:flex-row lg:items-center lg:justify-end lg:gap-10 lg:py-30">
         <div
           key={activeIndex}
-          className={`relative z-20 flex flex-col justify-center gap-3 lg:absolute lg:top-1/2 lg:left-[45px] xl:left-[60px] 2xl:left-[100px] lg:-translate-y-1/2 lg:w-auto w-[80%] pointer-events-none ${
-            isLastSlide ? "-bottom-[60px] left-[28px] lg:bottom-auto" : ""
+          className={`relative z-20 flex flex-col justify-center gap-3 lg:absolute lg:top-1/2 lg:-translate-y-1/2 lg:w-auto w-[80%] pointer-events-none ${
+            isLastSlide
+              ? "-bottom-[60px] left-[28px] lg:bottom-auto lg:left-[8.4375rem] xl:left-[55px] 2xl:left-[135px]"
+              : "left-0 lg:left-[8.4375rem] xl:left-[55px] 2xl:left-[135px]"
           }`}
         >
           <h2
@@ -64,7 +66,7 @@ export function HeroSlider({ slides }: { slides: HeroSlide[] }) {
             className={`font-heading font-bold uppercase text-white ${
               isLastSlide
                 ? "text-[130px] lg:text-[264px] leading-[0.85] tracking-tighter"
-                : "text-5xl sm:text-6xl lg:text-[132px] leading-none tracking-tight"
+                : "text-[50px] lg:text-[132px] leading-none tracking-tight"
             }`}
           >
             <span
@@ -90,7 +92,7 @@ export function HeroSlider({ slides }: { slides: HeroSlide[] }) {
           )}
         </div>
 
-        <div className="relative z-10 w-full lg:w-[69%] slider-area">
+        <div className="relative z-10 w-[calc(100%+1.25rem)] sm:w-[calc(100%+1.5rem)] -mr-5 sm:-mr-6 lg:mr-0 lg:w-[69%] max-w-none lg:max-w-full overflow-hidden slider-area">
           <Swiper
             modules={[Autoplay, EffectFade, Navigation, Pagination, A11y]}
             effect="fade"
@@ -101,7 +103,7 @@ export function HeroSlider({ slides }: { slides: HeroSlide[] }) {
             navigation={{ prevEl: `#${prevId}`, nextEl: `#${nextId}` }}
             pagination={{ el: `#${paginationId}`, clickable: true }}
             onSlideChange={handleSlideChange}
-            className="h-64 w-full overflow-hidden shadow-2xl ring-1 ring-white sm:h-96 lg:h-130 xl:h-160"
+            className="h-64 w-full max-w-full overflow-hidden shadow-2xl ring-1 ring-white sm:h-96 lg:h-130 xl:h-160"
           >
             {slides.map((slide) => {
               const src = imageSource(slide.image);

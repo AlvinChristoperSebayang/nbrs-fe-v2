@@ -31,6 +31,8 @@ export type CultureContent = {
 };
 
 const heroImage = `mobile: url @transform(width: 600, height: 800, mode: "crop", format: "webp", quality: 80, immediately: true) tablet: url @transform(width: 1440, height: 1000, mode: "crop", format: "webp", quality: 82, immediately: true) desktop: url @transform(width: 2400, height: 1200, mode: "crop", format: "webp", quality: 85, immediately: true)`;
+const contentImage = `mobile: url @transform(width: 600, height: 450, mode: "crop", format: "webp", quality: 80, immediately: true) tablet: url @transform(width: 900, height: 675, mode: "crop", format: "webp", quality: 82, immediately: true) desktop: url @transform(width: 1200, height: 900, mode: "crop", format: "webp", quality: 85, immediately: true)`;
+const valuesDiagramImage = `mobile: url @transform(width: 600, mode: "fit", format: "webp", quality: 85, immediately: true) tablet: url @transform(width: 900, mode: "fit", format: "webp", quality: 85, immediately: true) desktop: url @transform(width: 1200, mode: "fit", format: "webp", quality: 85, immediately: true)`;
 const ctaImage = `mobile: url @transform(width: 600, height: 900, mode: "crop", format: "webp", quality: 80, immediately: true) tablet: url @transform(width: 1440, height: 900, mode: "crop", format: "webp", quality: 82, immediately: true) desktop: url @transform(width: 2400, height: 1000, mode: "crop", format: "webp", quality: 85, immediately: true)`;
 
 const valuesImage = `
@@ -49,7 +51,7 @@ const QUERY = /* GraphQL */ `
         pageHeroImage { ${heroImage} }
         cultureValuesHeading
         cultureValuesDescription
-        cultureValuesImage { ${valuesImage} }
+        cultureValuesImage { ${valuesDiagramImage} }
         cultureInitiativesHeading
         cultureInitiatives {
           ... on cultureInitiative_Entry {

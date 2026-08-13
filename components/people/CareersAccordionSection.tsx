@@ -67,14 +67,51 @@ function renderEmailLinks(value: string) {
   );
 }
 
+function renderBodyTitle(title: React.ReactNode) {
+  if (typeof title !== "string") {
+    return title;
+  }
+
+  const lines = title.includes("\n")
+    ? title.split("\n").map((l) => l.trim()).filter(Boolean)
+    : title.trim().split(/\s+/).length >= 3
+    ? [title.trim().split(/\s+/).slice(0, -2).join(" "), title.trim().split(/\s+/).slice(-2).join(" ")]
+    : [title.trim()];
+
+  if (lines.length <= 1) {
+    return (
+      <span className="inline-block border-b-4 border-zinc-200/50 pb-2 leading-none">
+        {lines[0]}
+      </span>
+    );
+  }
+
+  return (
+    <span className="inline-flex flex-col items-start">
+      {lines.map((line, idx) => {
+        const isLast = idx === lines.length - 1;
+        if (isLast) {
+          return (
+            <span
+              key={idx}
+              className="inline-block border-b-4 border-zinc-200/50 pb-2 leading-none mt-1"
+            >
+              {line}
+            </span>
+          );
+        }
+        return (
+          <span key={idx} className="block leading-[1.05]">
+            {line}
+          </span>
+        );
+      })}
+    </span>
+  );
+}
+
 export function CareersAccordionSection({
-  title = (
-    <>
-      CAREERS
-      <br />
-      AT NBRS
-    </>
-  ),
+  title = "CAREERS\nAT NBRS",
   items = DEFAULT_ACCORDION_ITEMS,
   introParagraphs,
   introText,
@@ -89,11 +126,11 @@ export function CareersAccordionSection({
   return (
     <section className="bg-white pb-16 lg:pb-24 text-black">
       <Container>
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           {/* Left Column: Light Gray Watermark Title */}
           <div data-aos="fade-up" className="lg:col-span-4 lg:sticky lg:top-28">
-            <h2 className="hidden md:block font-heading whitespace-pre-line text-4xl sm:text-5xl lg:text-[64px] font-bold uppercase text-zinc-200/90 leading-none tracking-wide border-b-4 border-zinc-200/40 pb-4">
-              {title}
+            <h2 className="hidden md:block font-heading whitespace-pre-line text-4xl sm:text-5xl lg:text-[64px] font-bold uppercase text-zinc-200/90 leading-none tracking-wide">
+              {renderBodyTitle(title)}
             </h2>
           </div>
 

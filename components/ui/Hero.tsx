@@ -177,7 +177,7 @@ export function Hero({
       <Container
         className={`relative z-10 flex h-full flex-col justify-center my-auto pt-16 pb-8 lg:pt-20 lg:pb-12 ${containerClassName}`}
       >
-        <div className={`flex flex-col items-start ${hasExplicitLines ? "max-w-[850px]" : "max-w-[650px]"} ${contentClassName}`}>
+        <div className={`flex flex-col items-start ${hasExplicitLines ? "max-w-[850px] lg:max-w-none" : "max-w-[650px] lg:max-w-none"} ${contentClassName}`}>
           {/* Title with Underline on Last Line matching exact text width of that line */}
           {typeof title === "string" ? (
             <h1
@@ -185,9 +185,7 @@ export function Hero({
               className={`font-heading text-[36px] sm:text-[38px] uppercase leading-[1.05] text-white lg:text-[70px] ${
                 isShortTitle
                   ? "max-w-none w-auto whitespace-nowrap"
-                  : hasExplicitLines
-                  ? "max-w-2xl lg:max-w-4xl"
-                  : "max-w-2xl"
+                  : "max-w-2xl lg:max-w-none"
               } ${titleClassName}`}
             >
               {renderTitleWithUnderline(title, showDivider)}
@@ -205,12 +203,12 @@ export function Hero({
                 data-aos="fade-up"
                 data-aos-delay="200"
                 suppressHydrationWarning
-                className={`mt-6 text-white text-base ${descriptionClassName}`}
+                className={`mt-6 text-white text-base max-w-xl ${descriptionClassName}`}
               >
                 {description}
               </p>
             ) : (
-              <div data-aos="fade-up" data-aos-delay="200" suppressHydrationWarning className={descriptionClassName}>
+              <div data-aos="fade-up" data-aos-delay="200" suppressHydrationWarning className={`max-w-xl ${descriptionClassName}`}>
                 {description}
               </div>
             )

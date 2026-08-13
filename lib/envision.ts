@@ -91,9 +91,20 @@ export async function getEnvisionContent(): Promise<EnvisionContent> {
   });
   const ctaImageSource = toImageSource(entry.ctaSection?.ctaSectionBackgroundImage[0]);
 
+  const rawHeading = plainText(entry.envHeading);
+  const formattedTitle = rawHeading.includes("\n")
+    ? rawHeading
+    : rawHeading.toUpperCase().includes("ENVISION")
+    ? rawHeading.split(/\s+/).join("\n")
+    : rawHeading;
+
   return {
-    hero: hero && plainText(entry.envHeading)
-      ? { title: plainText(entry.envHeading), description: plainText(entry.envSubheading) || undefined, image: hero }
+    hero: hero && rawHeading
+      ? {
+          title: formattedTitle,
+          description: plainText(entry.envSubheading) ? plainText(entry.envSubheading).replace(/\?\?\?/g, "’") : undefined,
+          image: hero,
+        }
       : null,
     research,
     faqs: plainText(entry.envFaqsHeading) && faqItems.length
