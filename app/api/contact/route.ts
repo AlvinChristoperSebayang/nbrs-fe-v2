@@ -88,7 +88,7 @@ export async function POST(request: Request) {
 
   try {
     const craftResponse = await fetch(
-      process.env.CRAFT_CONTACT_SUBMISSION_URL || "http://nbrs-update.test/contact-submissions/submit",
+      process.env.CRAFT_CONTACT_SUBMISSION_URL || "https://phpstack-1082258-6573734.cloudwaysapps.com/contact-submissions/submit",
       {
         method: "POST",
         headers: {

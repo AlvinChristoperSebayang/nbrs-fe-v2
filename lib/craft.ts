@@ -1,6 +1,9 @@
-if (typeof process !== "undefined" && !process.env.NODE_TLS_REJECT_UNAUTHORIZED) {
-  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-}
+// if (
+//   process.env.NODE_ENV === "development" &&
+//   !process.env.NODE_TLS_REJECT_UNAUTHORIZED
+// ) {
+//   process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+// }
 
 const CRAFT_GRAPHQL_URL =
   process.env.CRAFT_GRAPHQL_URL ??
