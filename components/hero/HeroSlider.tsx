@@ -36,9 +36,10 @@ export function HeroSlider({ slides }: { slides: HeroSlide[] }) {
     setActiveIndex(swiper.realIndex);
   };
 
+  const isLastSlide = activeIndex === slides.length - 1;
+
   return (
     <section className="relative overflow-hidden hero-slider">
-      {/* Background: same image as the inset, cross-fading between slides instead of snapping */}
       {slides.map((slide, index) => (
         <ResponsiveImage
           key={slide.title}
@@ -54,22 +55,39 @@ export function HeroSlider({ slides }: { slides: HeroSlide[] }) {
       <Container className="relative z-30 flex flex-col gap-10 pt-40 pb-10 lg:flex-row lg:items-center lg:justify-end lg:gap-10 lg:py-30">
         <div
           key={activeIndex}
-          className="relative z-[11] flex flex-col justify-center gap-3 lg:absolute lg:top-1/2 lg:left-[55px] 2xl:left-[120px] lg:-translate-y-1/2 lg:w-full w-[80%]"
+          className={`relative z-20 flex flex-col justify-center gap-3 lg:absolute lg:top-1/2 lg:left-[45px] xl:left-[60px] 2xl:left-[100px] lg:-translate-y-1/2 lg:w-auto w-[80%] pointer-events-none ${
+            isLastSlide ? "-bottom-[60px] left-[28px] lg:bottom-auto" : ""
+          }`}
         >
           <h2
             style={{ animation: "hero-fade-up 0.7s ease-out both" }}
-            className="font-heading text-5xl font-bold uppercase tracking-tight text-white sm:text-6xl lg:text-[132px]"
+            className={`font-heading font-bold uppercase text-white ${
+              isLastSlide
+                ? "text-[130px] lg:text-[264px] leading-[0.85] tracking-tighter"
+                : "text-5xl sm:text-6xl lg:text-[132px] leading-none tracking-tight"
+            }`}
           >
-            <span className="inline-block border-b-[4px] sm:border-b-[6px] lg:border-b-[10px] border-white pb-1 sm:pb-2 lg:pb-3 leading-none">
+            <span
+              className={
+                isLastSlide
+                  ? "inline-block relative"
+                  : "inline-block border-b-[4px] sm:border-b-[6px] lg:border-b-[10px] border-white pb-1 sm:pb-2 lg:pb-3 leading-none"
+              }
+            >
               {activeSlide.title}
+              {isLastSlide && (
+                <span className="inline-block w-[0.22em] h-[0.22em] rounded-full bg-[#A0A0A0] ml-2 lg:ml-3 align-top mt-[0.06em]" />
+              )}
             </span>
           </h2>
-          <p
-            style={{ animation: "hero-fade-up 0.7s ease-out 0.2s both" }}
-            className="font-gothic font-trade-gothic text-lg uppercase tracking-[0%] text-white/90 sm:text-[40px] mt-2"
-          >
-            {activeSlide.headline}
-          </p>
+          {!isLastSlide && activeSlide.headline && (
+            <p
+              style={{ animation: "hero-fade-up 0.7s ease-out 0.2s both" }}
+              className="font-gothic font-trade-gothic text-lg uppercase tracking-[0%] text-white/90 sm:text-[40px] mt-2"
+            >
+              {activeSlide.headline}
+            </p>
+          )}
         </div>
 
         <div className="relative z-10 w-full lg:w-[69%] slider-area">
