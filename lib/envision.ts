@@ -72,8 +72,7 @@ function plainText(value: string | null | undefined): string {
 }
 
 export async function getEnvisionContent(): Promise<EnvisionContent> {
-  // Isolated from the shared page cache so CMS changes to the active Envision intake are visible immediately.
-  const data = await craftFetch<{ entries: RawEnvision[] }>(QUERY, undefined, { cache: "no-store" });
+  const data = await craftFetch<{ entries: RawEnvision[] }>(QUERY);
   const entry = data.entries[0];
   if (!entry) return { hero: null, research: [], faqs: null, cta: null };
 

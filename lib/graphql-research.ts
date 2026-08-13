@@ -1,3 +1,5 @@
+import { craftFetch } from "./craft";
+
 export const RESEARCH_LISTING_QUERY = `
 query ResearchListing(
   $limit: Int = 9
@@ -176,9 +178,6 @@ export async function fetchResearchListing({
   selectedSectors?: string[];
   selectedPractices?: string[];
 }): Promise<GraphQLResearchResponseData | null> {
-  const endpoint =
-    process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT || "http://nbrs-update.test/api";
-
   const relatedToCategories: CategoryFilterCriteria[] = [];
 
   if (selectedSectors.length > 0) {
@@ -206,31 +205,15 @@ export async function fetchResearchListing({
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 4000);
 
-    const res = await fetch(endpoint, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify({
-        query: RESEARCH_LISTING_QUERY,
+    try {
+      return await craftFetch<GraphQLResearchResponseData>(
+        RESEARCH_LISTING_QUERY,
         variables,
-      }),
-      signal: controller.signal,
-      cache: "no-store",
-    });
-
-    clearTimeout(timeoutId);
-
-    if (!res.ok) {
-      return null;
+        { signal: controller.signal },
+      );
+    } finally {
+      clearTimeout(timeoutId);
     }
-
-    const json = await res.json();
-    if (json.errors) {
-      console.warn("GraphQL Errors:", json.errors);
-    }
-    return json.data || null;
   } catch (error) {
     console.warn("GraphQL fetch failed, using fallback:", error);
     return null;

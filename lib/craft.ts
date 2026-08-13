@@ -19,6 +19,7 @@ type CraftFetchOptions = {
   cache?: RequestCache;
   revalidate?: number;
   tags?: string[];
+  signal?: AbortSignal;
 };
 
 function isGraphQLResponse(value: unknown): value is GraphQLResponse {
@@ -54,20 +55,28 @@ export async function craftFetch<T>(
   variables?: Record<string, unknown>,
   options?: CraftFetchOptions
 ): Promise<T> {
-  const isDev = process.env.NODE_ENV === "development";
+
+  const cacheMode = process.env.CMS_CACHE_MODE ?? "revalidate";
+  const bypassCache =
+    cacheMode === "no-store" || options?.cache === "no-store";
 
   const res = await fetch(CRAFT_GRAPHQL_URL, {
     method: "POST",
-    headers: { "Content-Type": "application/json", Accept: "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
     body: JSON.stringify({ query, variables }),
-    cache: isDev ? "no-store" : options?.cache,
-    next:
-      isDev || options?.cache === "no-store"
-        ? undefined
-        : {
+    signal: options?.signal,
+    cache: bypassCache ? "no-store" : "force-cache",
+    ...(bypassCache
+      ? {}
+      : {
+          next: {
             revalidate: options?.revalidate ?? 60,
             tags: options?.tags ?? ["craft"],
           },
+        }),
   });
 
   if (!res.ok) {
