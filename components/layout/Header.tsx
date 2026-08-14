@@ -25,7 +25,7 @@ export const NAV_STRUCTURE: NavItem[] = [
     subItems: [
       { label: "About NBRS", href: "/about" },
       { label: "Sustainability", href: "/sustainability" },
-      { label: "Social Responsibility", href: "/social-sustainability" },
+      { label: "Social Responsibility", href: "/social-responsibility" },
       // { label: "RAP", href: "/rap" },
       { label: "Awards", href: "/awards" },
       { label: "Insights", href: "/research" },

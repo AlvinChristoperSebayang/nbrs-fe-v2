@@ -1,7 +1,7 @@
 import { Container } from "@/components/ui/Container";
 import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
 import { AboutSection } from "@/components/home/AboutSection";
-import type { SocialInitiative } from "@/lib/social-sustainability";
+import type { SocialInitiative } from "@/lib/social-responsibility";
 
 type SocialInitiativesSectionProps = { initiatives: SocialInitiative[] };
 
@@ -90,7 +90,7 @@ export function SocialInitiativesSection({ initiatives }: SocialInitiativesSecti
                       imageLeft ? "right-0" : "left-0"
                     }`}
                   >
-                    <h2 className="font-heading text-[40px] uppercase leading-tight font-bold text-black">
+                    <h2 className="font-heading text-[32px] uppercase leading-tight font-bold text-black">
                       {initiative.title}
                     </h2>
                     <InitiativeDescription

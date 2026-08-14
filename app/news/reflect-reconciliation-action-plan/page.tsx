@@ -84,7 +84,7 @@ export default async function ReflectRapPage() {
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-20">
             <div className="lg:col-span-7" data-aos="fade-up">
               <h2 className="font-heading text-[28px] uppercase leading-none md:text-[40px]">Insight</h2>
-              <div className="mt-8 max-w-[640px] space-y-5 font-sans text-base leading-[1.55] text-black/90">
+              <div className="mt-8 max-w-[640px] space-y-5 font-sans text-base leading-[1.55] text-black/90 [&_a]:pb-4 [&_li]:pb-4 [&_p]:pb-4">
                 <div dangerouslySetInnerHTML={{ __html: page.bodyHtml }} />
               </div>
             </div>

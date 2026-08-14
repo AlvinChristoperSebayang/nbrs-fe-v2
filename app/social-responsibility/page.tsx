@@ -5,7 +5,7 @@ import { Hero } from "@/components/ui/Hero";
 import {
   getSocialSustainabilityContent,
   SOCIAL_SUSTAINABILITY_FALLBACK,
-} from "@/lib/social-sustainability";
+} from "@/lib/social-responsibility";
 
 export const metadata: Metadata = { title: "Social RESponsibility" };
 

@@ -26,7 +26,7 @@ export function ProjectDetailV2Body({ blocks }: { blocks: ProjectV2Block[] }) {
                 <Container>
                   <div className="max-w-[786px]">
                     {block.heading && (
-                      <h2 className="font-heading text-3xl uppercase leading-[1.1] lg:text-[40px]">
+                      <h2 className="font-heading text-2xl uppercase leading-[1.1] lg:text-[40px]">
                         {block.heading}
                       </h2>
                     )}
@@ -46,7 +46,7 @@ export function ProjectDetailV2Body({ blocks }: { blocks: ProjectV2Block[] }) {
             return (
               <Container key={index} className={block.alignment === "right" ? "flex justify-end" : "flex justify-start"}>
                 <div className="max-w-[838px]">
-                  {block.heading && <h2 className="font-heading text-3xl leading-[1.1] lg:text-[36px]">{block.heading}</h2>}
+                  {block.heading && <h2 className="font-heading text-2xl md:text-3xl leading-[1.1] lg:text-[36px]">{block.heading}</h2>}
                   <RichText html={block.textHtml} className={block.heading ? "mt-6" : ""} />
                 </div>
               </Container>

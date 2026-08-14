@@ -142,13 +142,13 @@ export function CareersAccordionSection({
           >
             {/* Custom Intro Paragraphs */}
             {introParagraphs && (
-              <div className="font-sans text-sm sm:text-base text-zinc-800 leading-relaxed flex flex-col gap-3 max-w-3xl pt-8 lg:pt-0">
+              <div className="font-sans text-sm sm:text-base text-black leading-relaxed flex flex-col gap-3 max-w-3xl pt-8 lg:pt-0">
                 {introParagraphs}
               </div>
             )}
 
             {introText && (
-              <div className="font-sans text-sm sm:text-base text-zinc-800 leading-relaxed flex flex-col gap-3 max-w-3xl pt-8 lg:pt-0">
+              <div className="font-sans text-sm sm:text-base text-black leading-relaxed flex flex-col gap-3 max-w-3xl pt-8 lg:pt-0">
                 {introText.split(/\n\s*\n/).filter(Boolean).map((paragraph, index) => (
                   <p key={index}>{renderEmailLinks(paragraph)}</p>
                 ))}

@@ -12,7 +12,8 @@ export function SectorPrinciplesSection({
   images: ImageSource[];
 }) {
   const colonIndex = title.indexOf(":");
-  const prefix = colonIndex !== -1 ? title.slice(0, colonIndex + 1) : "PRINCIPLES:";
+  // const prefix = colonIndex !== -1 ? title.slice(0, colonIndex + 1) : "PRINCIPLES:";
+  const prefix = "PRINCIPLES:";
   const mainTitle = colonIndex !== -1 ? title.slice(colonIndex + 1).trim() : title;
 
   return (

@@ -81,7 +81,7 @@ const fallbackFooter: FooterContent = {
     ["purpose", "Awards", "/awards"],
     ["purpose", "Research Envision", "/research"],
     ["purpose", "Sustainability", "/sustainability"],
-    ["purpose", "Social Responsibility", "/social-sustainability"],
+    ["purpose", "Social Responsibility", "/social-responsibility"],
     ["purpose", "News", "/news"],
     ["people", "Our Leaders", "/people/team"],
     ["people", "Culture", "/people/culture"],
