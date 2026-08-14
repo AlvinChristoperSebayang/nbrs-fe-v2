@@ -7,7 +7,7 @@ import {
   SOCIAL_SUSTAINABILITY_FALLBACK,
 } from "@/lib/social-sustainability";
 
-export const metadata: Metadata = { title: "Social Sustainability" };
+export const metadata: Metadata = { title: "Social RESponsibility" };
 
 export default async function SocialSustainabilityPage() {
   const content = await getSocialSustainabilityContent().catch(

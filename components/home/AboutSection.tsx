@@ -23,6 +23,11 @@ export function AboutSection({
   };
   heading_size?: string;
 }) {
+  const normalisedDescription = description.replace(/\\n/g, "\n").replace(/\r\n?/g, "\n");
+  const descriptionClassName =
+    "max-w-md text-white [&_a]:underline [&_a]:underline-offset-4 [&_li]:ml-5 [&_ol]:list-decimal [&_ol]:space-y-2 [&_p]:mb-4 [&_p:last-child]:mb-0 [&_ul]:list-disc [&_ul]:space-y-2";
+  const isRichText = /<\/?[a-z][\s\S]*>/i.test(normalisedDescription);
+
   return (
     <section className="section-about flex flex-col lg:flex-row lg:pb-[100px] pb-8 bg-[#FFFFFF]">
       <div className="w-full h-full bg-[#070F0F]">
@@ -35,9 +40,20 @@ export function AboutSection({
             >
               {heading}
             </h2>
-            <p data-aos="fade-up" data-aos-delay="150" className="max-w-md text-white">
-              {description}
-            </p>
+            {isRichText ? (
+              <div
+                data-aos="fade-up"
+                data-aos-delay="150"
+                className={descriptionClassName}
+                dangerouslySetInnerHTML={{ __html: normalisedDescription }}
+              />
+            ) : (
+              <div data-aos="fade-up" data-aos-delay="150" className={descriptionClassName}>
+                {normalisedDescription.split(/\n\s*\n/).map((paragraph, index) => (
+                  <p key={index}>{paragraph}</p>
+                ))}
+              </div>
+            )}
             {button && (
               <div data-aos="fade-up" data-aos-delay="200" className="mt-1">
                 <Link

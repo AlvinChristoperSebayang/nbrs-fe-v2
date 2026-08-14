@@ -5,6 +5,24 @@ import type { SocialInitiative } from "@/lib/social-sustainability";
 
 type SocialInitiativesSectionProps = { initiatives: SocialInitiative[] };
 
+function InitiativeDescription({ description, className }: { description: string; className: string }) {
+  const normalisedDescription = description.replace(/\\n/g, "\n").replace(/\r\n?/g, "\n");
+  const isRichText = /<\/?[a-z][\s\S]*>/i.test(normalisedDescription);
+  const richTextClassName = `${className} [&_a]:underline [&_a]:underline-offset-2 [&_li]:ml-5 [&_ol]:list-decimal [&_ul]:list-disc`;
+
+  if (isRichText) {
+    return <div className={richTextClassName} dangerouslySetInnerHTML={{ __html: normalisedDescription }} />;
+  }
+
+  return (
+    <div className={className}>
+      {normalisedDescription.split(/\n\s*\n/).map((paragraph, index) => (
+        <p key={index}>{paragraph}</p>
+      ))}
+    </div>
+  );
+}
+
 /** Renders the three editorial initiative treatments from the Social Sustainability page. */
 export function SocialInitiativesSection({ initiatives }: SocialInitiativesSectionProps) {
   const [teKworo, ...featureInitiatives] = initiatives;
@@ -33,11 +51,10 @@ export function SocialInitiativesSection({ initiatives }: SocialInitiativesSecti
                     <h2 className="font-heading text-2xl sm:text-3xl font-bold uppercase leading-tight text-black mb-3">
                       {initiative.title}
                     </h2>
-                    <div className="space-y-3 font-sans text-sm sm:text-base leading-relaxed text-black mb-6">
-                      {initiative.description.split(/\n\s*\n/).map((paragraph) => (
-                        <p key={paragraph}>{paragraph}</p>
-                      ))}
-                    </div>
+                    <InitiativeDescription
+                      description={initiative.description}
+                      className="mb-6 space-y-3 font-sans text-sm leading-relaxed text-black sm:text-base"
+                    />
                   </div>
                   <div
                     data-aos="fade-up"
@@ -76,11 +93,10 @@ export function SocialInitiativesSection({ initiatives }: SocialInitiativesSecti
                     <h2 className="font-heading text-[40px] uppercase leading-tight font-bold text-black">
                       {initiative.title}
                     </h2>
-                    <div className="mt-5 space-y-4 font-sans text-sm leading-relaxed text-black">
-                      {initiative.description.split(/\n\s*\n/).map((paragraph) => (
-                        <p key={paragraph}>{paragraph}</p>
-                      ))}
-                    </div>
+                    <InitiativeDescription
+                      description={initiative.description}
+                      className="mt-5 space-y-4 font-sans text-sm leading-relaxed text-black"
+                    />
                   </article>
                 </div>
               </div>
