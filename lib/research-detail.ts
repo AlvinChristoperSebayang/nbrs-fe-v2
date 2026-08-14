@@ -365,7 +365,9 @@ export const getResearchDetail = cache(async (slug: string): Promise<ResearchDet
     // not a banner fallback because it can be a photographic card image rather than the
     // transparent artwork used over the Sector accent colour.
     hero: toImageSource(entry.artHdrHeroImage?.[0]),
-    featureImage: toImageSource(entry.thumbnail?.[0]) ?? toImageSource(entry.thumbnail?.[0]) ?? toImageSource(entry.artHdrPortraitImage?.[0]),
+    // The supporting image uses the dedicated portrait asset when supplied;
+    // thumbnail remains a safe fallback for existing research entries.
+    featureImage: toImageSource(entry.artHdrPortraitImage?.[0]) ?? toImageSource(entry.thumbnail?.[0]),
     seoTitle: entry.seoPageTitle,
     seoDescription: entry.seoMetaDescription,
     author: entry.researchAuthor?.trim() || null,
