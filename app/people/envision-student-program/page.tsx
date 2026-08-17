@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { createPageMetadata } from "@/lib/seo";
 import { Container } from "@/components/ui/Container";
 import { CareersHero } from "@/components/people/CareersHero";
 import { ArticleCard } from "@/components/ui/ArticleCard";
@@ -6,9 +6,7 @@ import { CareersAccordionSection } from "@/components/people/CareersAccordionSec
 import { CtaSection } from "@/components/cta/CtaSection";
 import { getEnvisionContent } from "@/lib/envision";
 
-export const metadata: Metadata = {
-  title: "Envision Student Program | Our People",
-};
+export const metadata = createPageMetadata({ pathname: "/people/envision-student-program", title: "Envision Student Program | Our People" });
 
 export default async function EnvisionStudentProgramPage() {
   const page = await getEnvisionContent();

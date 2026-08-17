@@ -7,6 +7,7 @@ import { ResearchDetailHero } from "@/components/research/ResearchDetailHero";
 import { Container } from "@/components/ui/Container";
 import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
 import { getResearchDetail } from "@/lib/research-detail";
+import { createPageMetadata } from "@/lib/seo";
 
 export const revalidate = 60;
 
@@ -14,10 +15,15 @@ export async function generateMetadata({ params }: PageProps<"/research/[slug]">
   const { slug } = await params;
   const research = await getResearchDetail(slug);
 
-  return {
+  return createPageMetadata({
+    pathname: `/research/${slug}`,
     title: research?.seoTitle ?? research?.title ?? "Research",
-    description: research?.seoDescription ?? undefined,
-  };
+    description: research?.seoDescription,
+    image: research?.hero,
+    imageAlt: research?.title,
+    type: "article",
+    noIndex: !research,
+  });
 }
 
 function MetadataItem({ label, value }: { label: string; value: string | null }) {

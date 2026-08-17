@@ -1,12 +1,10 @@
-import type { Metadata } from "next";
+import { createPageMetadata } from "@/lib/seo";
 import { CareersHero } from "@/components/people/CareersHero";
 import { CareersAccordionSection } from "@/components/people/CareersAccordionSection";
 import { CtaSection } from "@/components/cta/CtaSection";
 import { getCareersContent } from "@/lib/careers";
 
-export const metadata: Metadata = {
-  title: "Careers | Our People",
-};
+export const metadata = createPageMetadata({ pathname: "/people/careers", title: "Careers | Our People" });
 
 export default async function CareersPage() {
   const page = await getCareersContent();

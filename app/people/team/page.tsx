@@ -1,12 +1,10 @@
-import type { Metadata } from "next";
+import { createPageMetadata } from "@/lib/seo";
 import { Hero } from "@/components/ui/Hero";
 import { TeamListSection } from "@/components/people/TeamListSection";
 import { CtaSection } from "@/components/cta/CtaSection";
 import { getOurPeopleContent } from "@/lib/our-people";
 
-export const metadata: Metadata = {
-  title: "Meet Our Leaders | Our People",
-};
+export const metadata = createPageMetadata({ pathname: "/people/team", title: "Meet Our Leaders | Our People" });
 
 export default async function TeamPage() {
   const page = await getOurPeopleContent();

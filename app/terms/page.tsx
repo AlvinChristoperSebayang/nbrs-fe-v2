@@ -3,12 +3,17 @@ import { Hero } from "@/components/ui/Hero";
 import { Container } from "@/components/ui/Container";
 import { CtaSection } from "@/components/cta/CtaSection";
 import { getTermsPageContent } from "@/lib/terms";
+import { createPageMetadata } from "@/lib/seo";
 
 export const revalidate = 60;
 
 export async function generateMetadata(): Promise<Metadata> {
   const page = await getTermsPageContent();
-  return { title: page.seoTitle, description: page.seoDescription };
+  return createPageMetadata({
+    pathname: "/terms",
+    title: page.seoTitle,
+    description: page.seoDescription,
+  });
 }
 
 export default async function TermsAndConditionsPage() {

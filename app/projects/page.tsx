@@ -5,8 +5,10 @@ import { ProjectsHero } from "@/components/projects/ProjectsHero";
 import { ProjectsFilters } from "@/components/projects/ProjectsFilters";
 import { ProjectsGrid } from "@/components/projects/ProjectsGrid";
 import { PreserveScrollOnNavigate } from "@/components/projects/PreserveScrollOnNavigate";
+import { createPageMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
+export const metadata = createPageMetadata({ pathname: "/projects", title: "Projects" });
 
 const PAGE_SIZE = 9;
 

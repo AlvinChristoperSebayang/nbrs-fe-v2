@@ -3,12 +3,17 @@ import { Hero } from "@/components/ui/Hero";
 import { Container } from "@/components/ui/Container";
 import { CtaSection } from "@/components/cta/CtaSection";
 import { getPrivacyPageContent } from "@/lib/privacy";
+import { createPageMetadata } from "@/lib/seo";
 
 export const revalidate = 60;
 
 export async function generateMetadata(): Promise<Metadata> {
   const page = await getPrivacyPageContent();
-  return { title: page.seoTitle, description: page.seoDescription };
+  return createPageMetadata({
+    pathname: "/privacy",
+    title: page.seoTitle,
+    description: page.seoDescription,
+  });
 }
 
 export default async function PrivacyPolicyPage() {

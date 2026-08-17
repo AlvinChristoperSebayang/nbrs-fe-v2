@@ -1,12 +1,10 @@
-import type { Metadata } from "next";
+import { createPageMetadata } from "@/lib/seo";
 import { Hero } from "@/components/ui/Hero";
 import { Container } from "@/components/ui/Container";
 import { NewsInfiniteGrid } from "@/components/news/NewsInfiniteGrid";
 import { getNewsListing, NEWS_PAGE_SIZE } from "@/lib/news-listing";
 
-export const metadata: Metadata = {
-  title: "Latest News",
-};
+export const metadata = createPageMetadata({ pathname: "/news", title: "Latest News" });
 
 export const revalidate = 60;
 

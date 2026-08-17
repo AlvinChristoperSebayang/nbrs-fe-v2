@@ -5,6 +5,7 @@ import { ProjectDetailHero } from "@/components/projects/ProjectDetailHero";
 import { ProjectDetailLegacyBody } from "@/components/projects/ProjectDetailLegacyBody";
 import { ProjectDetailV2Body } from "@/components/projects/ProjectDetailV2Body";
 import { KeyProjectsSection, type KeyProjectItem } from "@/components/sectors/KeyProjectsSection";
+import { createPageMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 
@@ -21,19 +22,24 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const { slug } = await props.params;
   const project = await getProjectDetail(slug);
-  if (!project) return { title: "Project Not Found" };
+  if (!project) {
+    return createPageMetadata({
+      pathname: `/projects/${slug}`,
+      title: "Project Not Found",
+      noIndex: true,
+    });
+  }
 
   const title = project.seoPageTitle || project.heading || "Project Detail";
   const heroImageRaw = project.splash?.find((slide) => slide.imageUrl)?.imageUrl ?? project.thumbnailUrl;
   const heroImageUrl = getImageUrlString(heroImageRaw);
 
-  return {
+  return createPageMetadata({
+    pathname: `/projects/${slug}`,
     title,
-    openGraph: {
-      title,
-      images: heroImageUrl ? [{ url: heroImageUrl }] : undefined,
-    },
-  };
+    image: heroImageUrl,
+    imageAlt: project.heading,
+  });
 }
 
 export default async function ProjectPage(

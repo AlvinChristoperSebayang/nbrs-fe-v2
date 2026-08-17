@@ -6,10 +6,14 @@ import { Footer } from "@/components/layout/Footer";
 import { AosInit } from "@/components/layout/AosInit";
 import { GlobalLoading } from "@/components/ui/GlobalLoading";
 import { getFooter } from "@/lib/footer";
+import {
+  DEFAULT_OG_IMAGE,
+  DEFAULT_SEO_DESCRIPTION,
+  getRobotsMetadata,
+  SITE_URL,
+} from "@/lib/seo";
 import "./globals.css";
 import "./header.css";
-
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://nbrs.com.au";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -17,16 +21,24 @@ export const metadata: Metadata = {
     default: "NBRS Architecture | Multidisciplinary Design",
     template: "%s | NBRS",
   },
-  description:
-    "NBRS is a multidisciplinary design practice uniting architecture, landscape, interior design, and heritage to create life-changing environments.",
+  description: DEFAULT_SEO_DESCRIPTION,
+  robots: getRobotsMetadata(),
+  alternates: {
+    canonical: "/",
+  },
   icons: {
-    icon: "/images/favicon.png",
+    icon: [{ url: "/images/favicon.png", type: "image/png", sizes: "32x32" }],
   },
   openGraph: {
     type: "website",
     locale: "en_AU",
-    url: SITE_URL,
+    url: "/",
     siteName: "NBRS Architecture",
+    images: [DEFAULT_OG_IMAGE],
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: [DEFAULT_OG_IMAGE.url],
   },
 };
 

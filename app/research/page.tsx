@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { createPageMetadata } from "@/lib/seo";
 import { Hero } from "@/components/ui/Hero";
 import { Container } from "@/components/ui/Container";
 import { ResearchSection } from "@/components/research/ResearchSection";
@@ -8,7 +8,7 @@ import { getResearchListing } from "@/lib/research-listing";
 import { getPageCta } from "@/lib/cta";
 import type { CtaContent } from "@/lib/types";
 
-export const metadata: Metadata = { title: "Research" };
+export const metadata = createPageMetadata({ pathname: "/research", title: "Research" });
 export const dynamic = "force-dynamic";
 
 const cta: CtaContent = {

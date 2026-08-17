@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { createPageMetadata } from "@/lib/seo";
 import { SocialInitiativesSection } from "@/components/sustainability/SocialInitiativesSection";
 import { SupportedOrganisations } from "@/components/sustainability/SupportedOrganisations";
 import { Hero } from "@/components/ui/Hero";
@@ -7,7 +7,7 @@ import {
   SOCIAL_SUSTAINABILITY_FALLBACK,
 } from "@/lib/social-responsibility";
 
-export const metadata: Metadata = { title: "Social RESponsibility" };
+export const metadata = createPageMetadata({ pathname: "/social-responsibility", title: "Social Responsibility" });
 
 export default async function SocialSustainabilityPage() {
   const content = await getSocialSustainabilityContent().catch(

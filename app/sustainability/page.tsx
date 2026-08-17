@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { createPageMetadata } from "@/lib/seo";
 import { AboutSection } from "@/components/home/AboutSection";
 import { CtaSection } from "@/components/cta/CtaSection";
 import { FeatureGlassSection } from "@/components/sustainability/FeatureGlassSection";
@@ -7,9 +7,7 @@ import { GreenStarSection } from "@/components/sustainability/GreenStarSection";
 import { Hero } from "@/components/ui/Hero";
 import { getSustainabilityPage } from "@/lib/sustainability";
 
-export const metadata: Metadata = {
-  title: "Sustainability",
-};
+export const metadata = createPageMetadata({ pathname: "/sustainability", title: "Sustainability" });
 
 export default async function SustainabilityPage() {
   const page = await getSustainabilityPage();
