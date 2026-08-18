@@ -9,6 +9,17 @@ import { ABOUT_FALLBACK, getAboutContent } from "@/lib/about";
 
 export const metadata = createPageMetadata({ pathname: "/about", title: "About Us" });
 
+function formatAboutIntroHeading(heading?: string | null): string {
+  if (!heading) return "PEOPLE-CENTRED\nDESIGN FOR GOOD";
+  if (heading.includes("\n")) return heading;
+
+  if (/people[- ]centred\s+design\s+for\s+good/i.test(heading)) {
+    return "PEOPLE-CENTRED\nDESIGN FOR GOOD";
+  }
+
+  return "PEOPLE-CENTRED\nDESIGN FOR GOOD";
+}
+
 export default async function AboutPage() {
   const about = await getAboutContent().catch(() => ABOUT_FALLBACK);
 
@@ -19,12 +30,13 @@ export default async function AboutPage() {
         title={about.hero.title}
         description={about.hero.description}
       />
-      <div className="bg-[#FFFFFF] lg:pb-32">
+      <div className="bg-[#FFFFFF] lg:pb-20">
         <AboutSection
           image_url={about.intro.image}
           background_color="#FDD4B6"
-          heading={about.intro.heading}
+          heading={formatAboutIntroHeading(about.intro.heading)}
           description={about.intro.description}
+          description_class_name="max-w-none lg:max-w-[314px]"
         />
       </div>
       <GridEffect

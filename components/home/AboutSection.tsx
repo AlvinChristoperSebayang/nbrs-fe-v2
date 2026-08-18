@@ -45,6 +45,7 @@ export function AboutSection({
   description = "Working collaboratively with clients and communities to create enduring, human-centred places",
   button,
   heading_size = "text-[28px] sm:text-[40px]",
+  description_class_name,
 }: {
   image_url: ImageSource;
   image_alt?: string;
@@ -56,14 +57,13 @@ export function AboutSection({
     href: string;
   };
   heading_size?: string;
+  description_class_name?: string;
 }) {
   const normalisedDescription = description.replace(/\\n/g, "\n").replace(/\r\n?/g, "\n");
-  const descriptionClassName =
-    "max-w-md text-white [&_a]:underline [&_a]:underline-offset-4 [&_li]:ml-5 [&_ol]:list-decimal [&_ol]:space-y-2 [&_p]:mb-4 [&_p:last-child]:mb-0 [&_ul]:list-disc [&_ul]:space-y-2";
   const isRichText = /<\/?[a-z][\s\S]*>/i.test(normalisedDescription);
 
   return (
-    <section className="section-about bg-white pb-0 lg:pb-24">
+    <section className="section-about bg-white pb-5 lg:pb-24">
       <div className="w-full bg-[#070F0F] relative">
         {background_color && <div className="h-3 w-full" style={{ backgroundColor: background_color }} />}
         <Container className="relative">
@@ -75,7 +75,11 @@ export function AboutSection({
               >
                 {renderAboutHeading(heading)}
               </h2>
-              <p data-aos="fade-up" data-aos-delay="150" className="max-w-md text-white/90">
+              <p
+                data-aos="fade-up"
+                data-aos-delay="150"
+                className={description_class_name ? `text-white/90 ${description_class_name}` : "max-w-md text-white/90"}
+              >
                 {description}
               </p>
               {button && (
@@ -109,7 +113,7 @@ export function AboutSection({
             <div
               data-aos="fade-up"
               data-aos-delay="200"
-              className="lg:col-span-8 relative w-[calc(100%+2.5rem)] sm:w-[calc(100%+3rem)] lg:w-full -mx-5 sm:-mx-6 lg:mx-0 h-[320px] sm:h-[420px] lg:h-[580px] lg:-mt-24 lg:-mb-36 z-20 overflow-hidden"
+              className="lg:col-span-8 relative w-[calc(100%+2.5rem)] sm:w-[calc(100%+3rem)] lg:w-full -mx-5 sm:-mx-6 lg:mx-0 h-[320px] sm:h-[420px] lg:h-[580px] lg:-mt-24 lg:-mb-48 z-20 overflow-hidden"
             >
               <ResponsiveImage
                 src={image_url}

@@ -22,7 +22,8 @@ export function CtaSection({ content, cta, titleUppercase = true }: CtaSectionPr
     <section className="relative overflow-hidden">
       <ResponsiveImage
         src={data.image}
-        alt=""
+        alt={data.title || "NBRS Call to Action"}
+        title={data.title || "NBRS Call to Action"}
         className="absolute inset-0 h-full w-full object-cover"
         priority
       />

@@ -30,15 +30,15 @@ export function FeatureGlassSection({
           <div
             data-aos="fade-up"
             data-aos-delay="100"
-            className={`z-10 w-full lg:w-[50%] bg-white/80 backdrop-blur-xs border border-[#FDFFEA] p-6 lg:p-10 max-lg:mb-6 ${
+            className={`z-10 w-full lg:w-[50%] bg-white/80 backdrop-blur-xs border border-[#FDFFEA] px-0 lg:px-6 p-6 lg:p-10 max-lg:mb-6 ${
               reverse
                 ? "lg:absolute lg:right-0 lg:top-1/2 lg:-translate-y-1/2"
                 : "lg:absolute lg:left-0 lg:top-1/2 lg:-translate-y-1/2"
             }`}
           >
-            <h3 className="font-heading text-3xl lg:text-4xl uppercase font-bold text-black leading-tight mb-4">
+            <h2 className="font-heading text-3xl lg:text-4xl uppercase font-bold text-black leading-tight mb-4">
               {title}
-            </h3>
+            </h2>
             <div className="flex flex-col gap-4 text-base text-zinc-900 leading-relaxed font-sans">
               {paragraphs.map((paragraph, index) => (
                 <p key={index}>{paragraph}</p>

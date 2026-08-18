@@ -20,11 +20,11 @@ export function KeyProjectsSection({
   if (!projects || projects.length === 0) return null;
 
   return (
-    <section className="bg-white py-12 lg:py-16 text-black">
+    <section className="bg-white py-10 lg:py-14 text-black">
       <Container>
         <h2
           data-aos="fade-up"
-          className="font-heading text-3xl lg:text-4xl uppercase font-bold text-black tracking-tight mb-8"
+          className="font-heading text-3xl lg:text-4xl uppercase font-bold text-black tracking-tight mb-6"
         >
           {title}
         </h2>

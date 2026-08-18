@@ -13,9 +13,9 @@ export const DEFAULT_SEO_DESCRIPTION =
   "NBRS is a multidisciplinary design practice uniting architecture, landscape, interior design, and heritage to create life-changing environments.";
 
 export const DEFAULT_OG_IMAGE = {
-  url: "/images/hero/about-hero.png",
-  width: 1440,
-  height: 910,
+  url: `${SITE_URL}/images/hero/about-hero.png`,
+  width: 1200,
+  height: 630,
   alt: "NBRS Architecture",
 };
 
@@ -42,13 +42,32 @@ export function getRobotsMetadata(noIndex = false): Metadata["robots"] {
   };
 }
 
-function getImageUrl(image: unknown): string | null {
-  if (typeof image === "string") return image;
+export function toAbsoluteUrl(url: string): string {
+  if (url.startsWith("http://") || url.startsWith("https://")) {
+    return url;
+  }
+  return `${SITE_URL}${url.startsWith("/") ? "" : "/"}${url}`;
+}
+
+export function getImageUrl(image: unknown): string | null {
+  if (typeof image === "string" && image.trim()) {
+    return toAbsoluteUrl(image.trim());
+  }
   if (!image || typeof image !== "object") return null;
 
-  for (const key of ["url", "src"] as const) {
-    const value = (image as Record<string, unknown>)[key];
-    if (typeof value === "string") return value;
+  const candidate = image as Record<string, unknown>;
+
+  // Prefer desktop crop (landscape aspect ratio optimal for 1200x630 OG preview)
+  for (const key of ["desktop", "url", "src", "tablet", "mobile"] as const) {
+    const value = candidate[key];
+    if (typeof value === "string" && value.trim()) {
+      return toAbsoluteUrl(value.trim());
+    }
+  }
+
+  // Nested image object
+  if (candidate.image && typeof candidate.image === "object") {
+    return getImageUrl(candidate.image);
   }
 
   return null;
@@ -66,27 +85,37 @@ export function createPageMetadata({
   const resolvedDescription = description || DEFAULT_SEO_DESCRIPTION;
   const imageUrl = getImageUrl(image);
   const resolvedImage = imageUrl
-    ? [{ url: imageUrl, alt: imageAlt || title || "NBRS Architecture" }]
+    ? [
+        {
+          url: imageUrl,
+          width: 1200,
+          height: 630,
+          alt: imageAlt || title || "NBRS Architecture",
+        },
+      ]
     : [DEFAULT_OG_IMAGE];
+
+  const fullCanonicalUrl = toAbsoluteUrl(pathname);
+  const formattedTitle = title ? `${title} | NBRS` : "NBRS Architecture | Multidisciplinary Design";
 
   return {
     title,
     description: resolvedDescription,
     alternates: {
-      canonical: pathname,
+      canonical: fullCanonicalUrl,
     },
     openGraph: {
       type,
       locale: "en_AU",
-      url: pathname,
+      url: fullCanonicalUrl,
       siteName: "NBRS Architecture",
-      title,
+      title: formattedTitle,
       description: resolvedDescription,
       images: resolvedImage,
     },
     twitter: {
       card: "summary_large_image",
-      title,
+      title: formattedTitle,
       description: resolvedDescription,
       images: resolvedImage.map(({ url }) => url),
     },

@@ -14,7 +14,8 @@ export function ProjectsHero({
     <section className="relative max-md:h-100 lg:h-[90vh] w-full overflow-hidden project-hero">
       <ResponsiveImage
         src={image || "/images/hero/hero3.png"}
-        alt=""
+        alt={title || "Projects"}
+        title={title || "Projects"}
         className="absolute inset-0 h-full w-full object-cover lg:min-h-screen"
         priority
       />

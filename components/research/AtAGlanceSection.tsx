@@ -45,7 +45,7 @@ export function AtAGlanceSection({
 
               <div className="mb-5 flex h-10 w-10 shrink-0 items-center justify-center">
                 {item.icon ? (
-                  <ResponsiveImage src={item.icon} alt="" className="h-10 w-10 object-contain" />
+                  <ResponsiveImage src={item.icon} alt={item.text || "Research metric icon"} title={item.text || "Research metric icon"} className="h-10 w-10 object-contain" />
                 ) : (
                   <div className="h-8 w-8 rounded-sm border-2 border-white/60 transition-colors group-hover:border-white" />
                 )}

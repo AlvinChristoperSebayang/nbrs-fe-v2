@@ -18,7 +18,7 @@ type Entry = {
 export type SectorsPageContent = { hero: { title: string; description: string; image: ImageSource }; sectorsHeading: string; sectors: Sector[]; cta: CtaContent };
 
 const FALLBACK: SectorsPageContent = {
-  hero: { title: "EXPLORING OUR SECTORS", description: "Identify how we can support your project through the breadth of our sector expertise.", image: "/images/hero/hero4.png" },
+  hero: { title: "EXPLORING\nOUR SECTORS", description: "Identify how we can support your project through the breadth of our sector expertise.", image: "/images/hero/hero4.png" },
   sectorsHeading: "Designing spaces bespoke to their needs",
   sectors: SECTORS_DATA.map(({ label, image, href, description, hoverColor }) => ({ label, image, href, description, hoverColor })),
   cta: { image: "/images/contact-bg.png", title: "LET’S SHAPE WHAT’S NEXT-TOGETHER", description: "Whether it’s a place to gather, to heal, to learn or to live - we’re ready to collaborate. Let’s shape spaces that matter, together.", buttonText: "LET’S SHAPE WHAT’S NEXT-TOGETHER", buttonHref: "/contact" },

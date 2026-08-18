@@ -16,14 +16,14 @@ export function NewsArticleContent({ blocks }: { blocks: NewsContentBlock[] }) {
         }
 
         if (block.type === "image") {
-          return <ResponsiveImage key={index} src={block.image} alt="" className="h-auto w-full rounded-[3px]" />;
+          return <ResponsiveImage key={index} src={block.image} alt="News article image" title="News article image" className="h-auto w-full rounded-[3px]" />;
         }
 
         if (block.type === "gallery") {
           return (
             <div key={index} className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               {block.images.map((image, imageIndex) => (
-                <ResponsiveImage key={imageIndex} src={image} alt="" className="h-full w-full rounded-[3px] object-cover" />
+                <ResponsiveImage key={imageIndex} src={image} alt={`News article image ${imageIndex + 1}`} title={`News article image ${imageIndex + 1}`} className="h-full w-full rounded-[3px] object-cover" />
               ))}
             </div>
           );

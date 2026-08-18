@@ -81,7 +81,7 @@ const FALLBACK: AwardsPageContent = {
     button: { text: "Learn more", href: "#recognising-awards" },
   },
   intro: {
-    heading: "BEST IN PRACTICE – AIA AWARD 2022",
+    heading: "BEST IN PRACTICE\n— AIA AWARD 2022",
     description: "This recognition reflects NBRS' commitment to creating life-changing environments that elevate public value and human experience.",
     image: "/images/about-us-about.png",
     button: { text: "Learn more", href: "/news" },

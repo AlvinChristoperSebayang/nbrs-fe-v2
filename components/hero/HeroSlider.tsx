@@ -37,6 +37,7 @@ export function HeroSlider({ slides }: { slides: HeroSlide[] }) {
   };
 
   const isLastSlide = activeIndex === slides.length - 1;
+  const TitleTag = "h1";
 
   return (
     <section className="relative overflow-hidden hero-slider">
@@ -44,7 +45,8 @@ export function HeroSlider({ slides }: { slides: HeroSlide[] }) {
         <ResponsiveImage
           key={slide.title}
           src={imageSource(slide.image)}
-          alt=""
+          alt={slide.title || "NBRS Architecture"}
+          title={slide.title || "NBRS Architecture"}
           className={`absolute inset-0 z-10 h-full w-full scale-110 object-cover transition-opacity duration-1000 ease-in-out ${
             index === activeIndex ? "opacity-100" : "opacity-0"
           }`}
@@ -58,27 +60,27 @@ export function HeroSlider({ slides }: { slides: HeroSlide[] }) {
             key={activeIndex}
             className="lg:col-span-4 z-20 flex flex-col justify-center gap-3 w-full pointer-events-none"
           >
-            <h2
+            <TitleTag
               style={{ animation: "hero-fade-up 0.7s ease-out both" }}
               className={`font-heading font-bold uppercase text-white ${
                 isLastSlide
-                  ? "text-[130px] lg:text-[264px] leading-[0.85] tracking-tighter"
+                  ? "text-[130px] lg:text-[264px] leading-[0.85] tracking-tighter whitespace-nowrap"
                   : "text-[50px] lg:text-[132px] leading-none tracking-tight"
               }`}
             >
               <span
                 className={
                   isLastSlide
-                    ? "inline-block relative"
+                    ? "inline-block whitespace-nowrap relative"
                     : "inline-block border-b-[4px] sm:border-b-[6px] lg:border-b-[10px] border-white pb-1 sm:pb-2 lg:pb-3 leading-none"
                 }
               >
                 {activeSlide.title}
                 {isLastSlide && (
-                  <span className="inline-block w-[0.22em] h-[0.22em] rounded-full bg-[#A0A0A0] ml-2 lg:ml-3 align-top mt-[0.06em]" />
+                  <span className="inline-block shrink-0 w-[0.22em] h-[0.22em] rounded-full bg-[#A0A0A0] ml-2 lg:ml-3 align-top mt-[0.06em]" />
                 )}
               </span>
-            </h2>
+            </TitleTag>
             {!isLastSlide && activeSlide.headline && (
               <p
                 style={{ animation: "hero-fade-up 0.7s ease-out 0.2s both" }}
@@ -109,7 +111,8 @@ export function HeroSlider({ slides }: { slides: HeroSlide[] }) {
                   <SwiperSlide key={slide.title} className="relative">
                     <ResponsiveImage
                       src={src}
-                      alt=""
+                      alt={slide.title || "NBRS Architecture"}
+                      title={slide.title || "NBRS Architecture"}
                       className="h-full w-full object-cover"
                     />
                   </SwiperSlide>

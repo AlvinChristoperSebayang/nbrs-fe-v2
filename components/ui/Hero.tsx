@@ -157,7 +157,7 @@ export function Hero({
   showDivider = true,
   children,
 }: HeroProps) {
-  const isShortTitle = typeof title === "string" && title.trim().split(/\s+/).length <= 3;
+  const isShortTitle = typeof title === "string" && !title.includes("\n") && title.trim().split(/\s+/).length <= 3;
   const hasExplicitLines = typeof title === "string" && title.includes("\n");
 
   return (
@@ -166,7 +166,8 @@ export function Hero({
       <div className="absolute inset-0 overflow-hidden">
         <ResponsiveImage
           src={image}
-          alt=""
+          alt={typeof title === "string" ? title.replace(/\n/g, " ") : "NBRS Architecture"}
+          title={typeof title === "string" ? title.replace(/\n/g, " ") : "NBRS Architecture"}
           className="h-full w-full object-cover"
           priority
         />
@@ -203,12 +204,17 @@ export function Hero({
                 data-aos="fade-up"
                 data-aos-delay="200"
                 suppressHydrationWarning
-                className={`mt-6 text-white text-base max-w-xl ${descriptionClassName}`}
+                className={`mt-6 text-white text-base ${descriptionClassName ? descriptionClassName : "max-w-xl"} ${descriptionClassName && !descriptionClassName.includes("max-w-") ? "max-w-xl" : ""}`}
               >
                 {description}
               </p>
             ) : (
-              <div data-aos="fade-up" data-aos-delay="200" suppressHydrationWarning className={`max-w-xl ${descriptionClassName}`}>
+              <div
+                data-aos="fade-up"
+                data-aos-delay="200"
+                suppressHydrationWarning
+                className={`${descriptionClassName ? descriptionClassName : "max-w-xl"} ${descriptionClassName && !descriptionClassName.includes("max-w-") ? "max-w-xl" : ""}`}
+              >
                 {description}
               </div>
             )

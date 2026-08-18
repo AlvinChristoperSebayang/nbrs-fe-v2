@@ -50,9 +50,9 @@ export function ProjectsGrid({ projects }: { projects: ProjectListItem[] }) {
               )}
             </div>
             <div className="flex flex-col gap-1 bg-black p-6 text-white flex-1">
-              <h3 className="font-heading text-2xl lg:text-[36px] uppercase leading-tight">
+              <h2 className="font-heading text-2xl lg:text-[36px] uppercase leading-tight">
                 {project.heading}
-              </h3>
+              </h2>
               {project.subheading && (
                 <p className="font-bold text-[20px] mt-auto">{project.subheading}</p>
               )}

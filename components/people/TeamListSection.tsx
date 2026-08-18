@@ -41,43 +41,45 @@ export function TeamListSection({ members }: { members: TeamMember[] }) {
           data-aos="fade-up"
           className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6"
         >
-          <div className="flex flex-col sm:flex-row flex-wrap items-start sm:items-center gap-3 sm:gap-4">
+          <div className="flex flex-col gap-3 sm:gap-4">
             <span className="font-sans font-bold text-black text-base sm:text-lg mr-2">
               Practice
             </span>
-
-            {practices.map((practice) => {
-              const isActive = selectedPractices.includes(practice);
-              return (
-                <button
-                  key={practice}
-                  type="button"
-                  onClick={() => togglePractice(practice)}
-                  className={`inline-flex items-center gap-2.5 rounded-full px-5 py-1.75 text-sm font-sans transition-colors duration-300 ease-out cursor-pointer ${
-                    isActive
-                      ? "bg-black text-white border border-black"
-                      : "bg-white text-black border border-black/80 hover:bg-black hover:text-white"
-                  }`}
-                >
-                  <span>{practice}</span>
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className={`transition-transform duration-300 ease-out ${
-                      isActive ? "rotate-90 text-rose-300" : ""
+            <div className="flex flex-col sm:flex-row flex-wrap items-start sm:items-center gap-3 sm:gap-4">
+              {practices.map((practice) => {
+                const isActive = selectedPractices.includes(practice);
+                return (
+                  <button
+                    key={practice}
+                    type="button"
+                    onClick={() => togglePractice(practice)}
+                    className={`inline-flex items-center gap-2.5 rounded-full px-5 py-1.75 text-sm font-sans transition-colors duration-300 ease-out cursor-pointer ${
+                      isActive
+                        ? "bg-black text-white border border-black"
+                        : "bg-white text-black border border-black/80 hover:bg-black hover:text-white"
                     }`}
                   >
-                    <path d="M5 12h14M12 5l7 7-7 7" />
-                  </svg>
-                </button>
-              );
-            })}
+                    <span>{practice}</span>
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className={`transition-transform duration-300 ease-out ${
+                        isActive ? "rotate-90 text-rose-300" : ""
+                      }`}
+                    >
+                      <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                  </button>
+                );
+              })}
+            </div>
+
           </div>
 
           {/* Reset Filters Button */}
@@ -114,9 +116,9 @@ export function TeamListSection({ members }: { members: TeamMember[] }) {
                   className="relative flex flex-col justify-between gap-4 p-6 sm:p-7 min-h-[200px] bg-[#DEE1F2] text-black transition-colors duration-500 ease-out group-hover:brightness-[0.96]"
                 >
                   <div className="flex flex-col gap-2 pr-6">
-                    <h3 className="font-heading text-2xl sm:text-3xl font-bold leading-tight text-black">
+                    <h2 className="font-heading text-2xl sm:text-3xl font-bold leading-tight text-black">
                       {member.name}
-                    </h3>
+                    </h2>
                     <p className="font-sans text-sm sm:text-base font-bold text-black/90">
                       {member.role}
                     </p>

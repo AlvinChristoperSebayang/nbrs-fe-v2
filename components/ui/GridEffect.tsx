@@ -67,9 +67,9 @@ export function GridEffect({
       <Container className="overflow-hidden">
         <div data-aos="fade-up" className="mb-6 lg:flex hidden items-start justify-between gap-6">
           <div className="flex flex-col gap-2">
-            <span className="font-heading text-[28px] lg:text-[24px] uppercase text-black">
+            <h2 className="font-heading text-[28px] lg:text-[24px] uppercase text-black">
               {title}
-            </span>
+            </h2>
             {description && (
               <p className="max-w-3xl text-base text-black">{description}</p>
             )}
@@ -100,9 +100,9 @@ export function GridEffect({
 
         <div className="relative w-full">
           <div data-aos="fade-up" className="mb-6 lg:hidden flex lg:flex-row flex-col lg:items-center items-start justify-between relative z-10 px-0 sm:px-6 md:px-8 pt-12">
-            <span className="font-heading text-[28px] lg:text-[22px] uppercase text-white">
+            <h2 className="font-heading text-[28px] lg:text-[22px] uppercase text-white">
               {title}
-            </span>
+            </h2>
             {showViewAll && (
               <Link
                 href={viewAllUrl}
@@ -132,7 +132,8 @@ export function GridEffect({
                 <ResponsiveImage
                   key={item.title}
                   src={item.image}
-                  alt=""
+                  alt={item.title || "NBRS Architecture"}
+                  title={item.title || "NBRS Architecture"}
                   className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${
                     index === activeIndex ? "opacity-100" : "opacity-0"
                   }`}

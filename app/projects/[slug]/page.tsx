@@ -31,14 +31,16 @@ export async function generateMetadata(
   }
 
   const title = project.seoPageTitle || project.heading || "Project Detail";
-  const heroImageRaw = project.splash?.find((slide) => slide.imageUrl)?.imageUrl ?? project.thumbnailUrl;
-  const heroImageUrl = getImageUrlString(heroImageRaw);
+  const heroImageRaw =
+    project.splash?.find((slide) => slide.imageUrl)?.imageUrl ??
+    project.thumbnailUrl;
 
   return createPageMetadata({
     pathname: `/projects/${slug}`,
     title,
-    image: heroImageUrl,
-    imageAlt: project.heading,
+    description: project.subheading || undefined,
+    image: heroImageRaw,
+    imageAlt: project.heading || title,
   });
 }
 
