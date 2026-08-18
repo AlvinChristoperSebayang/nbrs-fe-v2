@@ -17,6 +17,10 @@ type RawBlock =
       sectionHeading: string | null;
       text: string | null;
       image: RawResponsiveAsset[];
+      links: Array<{
+        linkText: string | null;
+        linkUrl: string | null;
+      }>;
     }
   | {
       __typename: "blocks_awards_BlockType";
@@ -90,7 +94,7 @@ const FALLBACK: AwardsPageContent = {
     heading: "BEST IN PRACTICE – AIA AWARD 2022",
     description: "This recognition reflects NBRS' commitment to creating life-changing environments that elevate public value and human experience.",
     image: "/images/about-us-about.png",
-    button: { text: "Learn more", href: "/news" },
+    button: { text: "Learn more", href: "/news/winner-best-in-practice-aia-2022" },
   },
   awards: {
     heading: "RECOGNISING WHAT MATTERS",
@@ -147,6 +151,12 @@ const AWARDS_QUERY = /* GraphQL */ `
               mobile: url @transform(width: 600, height: 450, mode: "crop", format: "webp", quality: 80, immediately: true)
               tablet: url @transform(width: 900, height: 675, mode: "crop", format: "webp", quality: 82, immediately: true)
               desktop: url @transform(width: 1200, height: 900, mode: "crop", format: "webp", quality: 85, immediately: true)
+            }
+            links {
+              ... on links_Entry {
+                linkText
+                linkUrl
+              }
             }
           }
           ... on blocks_awards_BlockType {
@@ -251,6 +261,7 @@ export async function getAwardsPage(): Promise<AwardsPageContent> {
     if (!entry) return FALLBACK;
 
     const intro = entry.blocks.find((block): block is Extract<RawBlock, { __typename: "blocks_text_BlockType" }> => block.__typename === "blocks_text_BlockType");
+    const introLink = intro?.links?.[0];
     const awardsBlock = entry.blocks.find((block): block is Extract<RawBlock, { __typename: "blocks_awards_BlockType" }> => block.__typename === "blocks_awards_BlockType");
     const items = awardsBlock ? mapAwards(awardsBlock.awards, data.projects) : [];
     const cta = entry.ctaSection;
@@ -266,7 +277,10 @@ export async function getAwardsPage(): Promise<AwardsPageContent> {
         heading: clean(intro?.sectionHeading) || FALLBACK.intro.heading,
         description: clean(intro?.text) || FALLBACK.intro.description,
         image: toImageSource(intro?.image?.[0]) || FALLBACK.intro.image,
-        button: { text: clean(entry.pageIntroCtaLabel) || FALLBACK.intro.button.text, href: clean(entry.pageIntroCtaUrl) || FALLBACK.intro.button.href },
+        button: {
+          text: clean(introLink?.linkText) || clean(entry.pageIntroCtaLabel) || FALLBACK.intro.button.text,
+          href: clean(introLink?.linkUrl) || clean(entry.pageIntroCtaUrl) || FALLBACK.intro.button.href,
+        },
       },
       awards: {
         heading: clean(awardsBlock?.sectionHeading) || FALLBACK.awards.heading,

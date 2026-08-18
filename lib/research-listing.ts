@@ -162,7 +162,7 @@ export async function getResearchListing(): Promise<ResearchListingResult> {
     secondaryResearch: (page?.secondaryResearch ?? []).map((article) => ({
       id: article.id,
       slug: article.slug,
-      title: article.artHdrHeading ?? article.title ?? article.slug,
+      title: article.title ?? article.artHdrHeading ?? article.slug,
     })),
   };
 }
