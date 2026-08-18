@@ -6,7 +6,10 @@ import { CtaSection } from "@/components/cta/CtaSection";
 import { AwardsSection } from "@/components/awards/AwardsSection";
 import { getAwardsPage } from "@/lib/awards";
 
-export const metadata = createPageMetadata({ pathname: "/awards", title: "Awards" });
+export async function generateMetadata() {
+  const page = await getAwardsPage();
+  return createPageMetadata({ pathname: "/awards", title: page.hero.title, cmsTitle: page.cmsSeoTitle, description: page.seoDescription, image: page.seoImage ?? page.hero.image });
+}
 
 function formatIntroHeading(heading?: string | null): string {
   if (!heading) return "BEST IN PRACTICE\n— AIA AWARD 2022";

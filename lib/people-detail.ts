@@ -15,6 +15,7 @@ type PeopleDetailResponse = {
     slug: string;
     seoPageTitle: string | null;
     seoMetaDescription: string | null;
+    seoImage: RawAsset[];
     PplName: string | null;
     pplRegistrationNumber: string | null;
     pplRole: string | null;
@@ -37,6 +38,7 @@ export type PeopleDetail = {
   quote: string | null;
   seoTitle: string | null;
   seoDescription: string | null;
+  seoImage: RawAsset | null;
 };
 
 const PEOPLE_DETAIL_QUERY = /* GraphQL */ `
@@ -47,6 +49,7 @@ const PEOPLE_DETAIL_QUERY = /* GraphQL */ `
         slug
         seoPageTitle
         seoMetaDescription
+        seoImage { url width height title }
         PplName
         pplRegistrationNumber
         pplRole
@@ -54,6 +57,7 @@ const PEOPLE_DETAIL_QUERY = /* GraphQL */ `
           ... on studio_Category { title slug }
         }
         pplProfileImage {
+          url
           mobile: url @transform(width: 768, immediately: true)
           tablet: url @transform(width: 1440, immediately: true)
           desktop: url @transform(width: 1920, immediately: true)
@@ -78,6 +82,10 @@ function cleanLegacyPunctuation(value: string | null) {
   return value?.replaceAll("???", "").trim() || null;
 }
 
+function plainText(value: string | null) {
+  return cleanLegacyPunctuation(value)?.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim() || null;
+}
+
 function formatStudio(value: string | undefined) {
   if (!value) return null;
   return /(?:office|studio)$/i.test(value) ? value : `${value} Office`;
@@ -100,6 +108,7 @@ export const getPeopleDetail = cache(async (slug: string): Promise<PeopleDetail 
     biographyHtml: cleanLegacyPunctuation(entry.pplBiography) ?? entry.pplShortBiography?.trim() ?? null,
     quote: cleanLegacyPunctuation(entry.pplquote),
     seoTitle: entry.seoPageTitle,
-    seoDescription: entry.seoMetaDescription,
+    seoDescription: entry.seoMetaDescription?.trim() || plainText(entry.pplShortBiography),
+    seoImage: entry.seoImage?.[0] ?? entry.pplProfileImage?.[0] ?? null,
   };
 });

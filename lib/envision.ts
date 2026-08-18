@@ -1,5 +1,5 @@
 import { craftFetch } from "./craft";
-import { toImageSource, type RawResponsiveAsset } from "./media";
+import { toImageSource, toSeoImage, type RawResponsiveAsset, type RawSeoAsset, type SeoImage } from "./media";
 import type { CtaContent, ImageSource } from "./types";
 import type { AccordionItem } from "@/components/people/CareersAccordionSection";
 import type { ArticleCardProps } from "@/components/ui/ArticleCard";
@@ -7,7 +7,10 @@ import type { ArticleCardProps } from "@/components/ui/ArticleCard";
 type RawEnvision = {
   envHeading: string | null;
   envSubheading: string | null;
-  envHeroImage: RawResponsiveAsset[];
+  seoPageTitle: string | null;
+  seoMetaDescription: string | null;
+  seoImage: RawSeoAsset[];
+  envHeroImage: Array<RawResponsiveAsset & RawSeoAsset>;
   envPastResearch: Array<{ id: string; title: string | null; slug: string | null; thumbnail: RawResponsiveAsset[] }>;
   envFaqsHeading: string | null;
   envFaqsText: string | null;
@@ -27,6 +30,9 @@ export type EnvisionContent = {
   research: ArticleCardProps[];
   faqs: { title: string; introText?: string; items: AccordionItem[] } | null;
   cta: CtaContent | null;
+  cmsSeoTitle: string | null;
+  seoDescription: string | null;
+  seoImage: SeoImage | null;
 };
 
 const heroImage = `mobile: url @transform(width: 600, height: 800, mode: "crop", format: "webp", quality: 80, immediately: true) tablet: url @transform(width: 1440, height: 1000, mode: "crop", format: "webp", quality: 82, immediately: true) desktop: url @transform(width: 2400, height: 1200, mode: "crop", format: "webp", quality: 85, immediately: true)`;
@@ -39,7 +45,10 @@ const QUERY = /* GraphQL */ `
       ... on envision_Entry {
         envHeading
         envSubheading
-        envHeroImage { ${heroImage} }
+        seoPageTitle
+        seoMetaDescription
+        seoImage { url width height title }
+        envHeroImage { url width height title ${heroImage} }
         envPastResearch {
           ... on research_Entry {
             id title slug thumbnail { ${cardImage} }
@@ -74,7 +83,7 @@ function plainText(value: string | null | undefined): string {
 export async function getEnvisionContent(): Promise<EnvisionContent> {
   const data = await craftFetch<{ entries: RawEnvision[] }>(QUERY);
   const entry = data.entries[0];
-  if (!entry) return { hero: null, research: [], faqs: null, cta: null };
+  if (!entry) return { hero: null, research: [], faqs: null, cta: null, cmsSeoTitle: null, seoDescription: null, seoImage: null };
 
   const hero = toImageSource(entry.envHeroImage[0]);
   const research = entry.envPastResearch.flatMap((item, index) => {
@@ -118,5 +127,8 @@ export async function getEnvisionContent(): Promise<EnvisionContent> {
           buttonHref: entry.ctaSection?.ctaSectionButtonUrl?.trim() || undefined,
         }
       : null,
+    cmsSeoTitle: entry.seoPageTitle?.trim() || null,
+    seoDescription: entry.seoMetaDescription?.trim() || plainText(entry.envSubheading) || null,
+    seoImage: toSeoImage(entry.seoImage?.[0]) || toSeoImage(entry.envHeroImage?.[0]),
   };
 }

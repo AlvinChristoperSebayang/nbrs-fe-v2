@@ -1,5 +1,5 @@
 import { craftFetch } from "./craft";
-import { toImageSource, type RawResponsiveAsset } from "./media";
+import { toImageSource, toSeoImage, type RawResponsiveAsset, type RawSeoAsset, type SeoImage } from "./media";
 import type { CtaContent, ImageSource } from "./types";
 import type { FastFact } from "@/components/people/FastFactsSection";
 import type { SubMenuCard } from "@/components/people/PeopleNavigationGrid";
@@ -16,7 +16,10 @@ type RawFactsBlock = { __typename: "blocks_fastFacts_BlockType"; sectionHeading:
 type RawPage = {
   pageHeading: string | null;
   pageSubheading: string | null;
-  pageHeroImage: RawResponsiveAsset[];
+  seoPageTitle: string | null;
+  seoMetaDescription: string | null;
+  seoImage: RawSeoAsset[];
+  pageHeroImage: Array<RawResponsiveAsset & RawSeoAsset>;
   blocks: Array<RawTextBlock | RawNavigationBlock | RawFactsBlock>;
   ctaSection: {
     ctaSectionBackgroundImage: RawResponsiveAsset[];
@@ -47,6 +50,9 @@ export type DesigningForPeoplePageContent = {
   cta: CtaContent;
   navigationCards: SubMenuCard[];
   fastFacts: { heading: string; items: FastFact[] };
+  cmsSeoTitle: string | null;
+  seoDescription: string;
+  seoImage: SeoImage | null;
 };
 
 const FALLBACK: DesigningForPeoplePageContent = {
@@ -71,6 +77,9 @@ const FALLBACK: DesigningForPeoplePageContent = {
   },
   navigationCards: [],
   fastFacts: { heading: "", items: [] },
+  cmsSeoTitle: null,
+  seoDescription: "A collective of visionary leaders, architects, interior designers, and researchers.",
+  seoImage: null,
 };
 
 const DESIGNING_FOR_PEOPLE_QUERY = /* GraphQL */ `
@@ -79,7 +88,14 @@ const DESIGNING_FOR_PEOPLE_QUERY = /* GraphQL */ `
       ... on pages_Entry {
         pageHeading
         pageSubheading
+        seoPageTitle
+        seoMetaDescription
+        seoImage { url width height title }
         pageHeroImage {
+          url
+          width
+          height
+          title
           mobile: url @transform(width: 600, height: 800, mode: "crop", format: "webp", quality: 80, immediately: true)
           tablet: url @transform(width: 1440, height: 1000, mode: "crop", format: "webp", quality: 82, immediately: true)
           desktop: url @transform(width: 2400, height: 1200, mode: "crop", format: "webp", quality: 85, immediately: true)
@@ -166,6 +182,9 @@ export async function getDesigningForPeoplePage(): Promise<DesigningForPeoplePag
         return [{ id: `card-${index}`, title, description: clean(card.peopleNavigationCardDescription), actionText: clean(card.peopleNavigationCardAction), href, image }];
       }),
       fastFacts: { heading: clean(facts?.sectionHeading), items: (facts?.fastFacts ?? []).flatMap((fact) => { const number = clean(fact.fastFactValue); const label = clean(fact.fastFactLabel); return number && label ? [{ number, label }] : []; }) },
+      cmsSeoTitle: entry.seoPageTitle?.trim() || null,
+      seoDescription: entry.seoMetaDescription?.trim() || clean(entry.pageSubheading) || FALLBACK.seoDescription,
+      seoImage: toSeoImage(entry.seoImage?.[0]) || toSeoImage(entry.pageHeroImage?.[0]),
     };
   } catch {
     return FALLBACK;

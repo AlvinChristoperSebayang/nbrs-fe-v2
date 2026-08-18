@@ -104,7 +104,7 @@ export type ProjectDetail = {
   locations: ProjectCategory[];
   seoPageTitle: string | null;
   seoMetaDescription: string | null;
-  seoImageUrl: ImageSource | null;
+  seoImage: RawAsset | null;
 };
 
 type RawAsset = {
@@ -237,6 +237,7 @@ const PROJECT_DETAIL_QUERY = /* GraphQL */ `
         proHdrHeading
         proHdrSubheading
         thumbnail {
+          url
           mobile: url @transform(width: 600, height: 750, mode: "crop", format: "webp", quality: 80, immediately: true)
           tablet: url @transform(width: 1440, height: 900, mode: "crop", format: "webp", quality: 82, immediately: true)
           desktop: url @transform(width: 2400, height: 1500, mode: "crop", format: "webp", quality: 85, immediately: true)
@@ -253,7 +254,7 @@ const PROJECT_DETAIL_QUERY = /* GraphQL */ `
         proHdrSplash {
           ... on slide4_Entry {
             image {
-              url: url @transform(width: 2400, format: "webp", quality: 85, immediately: true)
+              url
               width
               height
               title
@@ -435,7 +436,7 @@ const PROJECT_DETAIL_QUERY = /* GraphQL */ `
         seoPageTitle
         seoMetaDescription
         seoImage {
-          url: url @transform(width: 2400, format: "webp", quality: 85, immediately: true)
+          url
           width
           height
           title
@@ -553,8 +554,12 @@ export async function getProjectDetail(
     collaborators: toProjectCategories(entry.catCollaborators),
     locations: toProjectCategories(entry.catLocation),
     seoPageTitle: entry.seoPageTitle,
-    seoMetaDescription: entry.seoMetaDescription,
-    seoImageUrl: toImageSource(entry.seoImage?.[0]),
+    seoMetaDescription: entry.seoMetaDescription?.trim() || entry.proHdrSubheading?.trim() || null,
+    seoImage:
+      entry.seoImage?.[0]
+      ?? entry.proHdrSplash?.find((slide) => slide.image?.[0])?.image?.[0]
+      ?? entry.thumbnail?.[0]
+      ?? null,
   };
 }
 

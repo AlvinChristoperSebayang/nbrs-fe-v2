@@ -33,9 +33,10 @@ export async function generateMetadata({
 
   return createPageMetadata({
     pathname: `/sectors/${slug}`,
-    title: sector.seoTitle,
+    title: sector.title,
+    cmsTitle: sector.cmsSeoTitle,
     description: sector.seoDescription,
-    image: sector.image,
+    image: sector.seoImage ?? sector.image,
     imageAlt: sector.title,
   });
 }

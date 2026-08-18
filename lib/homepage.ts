@@ -1,6 +1,6 @@
 import { craftFetch } from "./craft";
 import type { HeroSlide } from "./hero";
-import { toImageSource } from "./media";
+import { toImageSource, toSeoImage, type RawSeoAsset, type SeoImage } from "./media";
 import type { CtaContent, NewsItem, Sector } from "./types";
 
 type RawAsset = { mobile?: string; tablet?: string; desktop?: string };
@@ -48,6 +48,9 @@ type HomepageResponse = {
     homepageNewsSource: string | null;
     homepageFeaturedNews: RawNewsArticle[];
     ctaSection: RawHomepageCta | null;
+    seoPageTitle: string | null;
+    seoMetaDescription: string | null;
+    seoImage: RawSeoAsset[];
   }>;
   articles: RawNewsArticle[];
 };
@@ -65,6 +68,9 @@ export type HomepageContent = {
   latestNewsHeading: string | null;
   latestNews: NewsItem[];
   cta: CtaContent | null;
+  cmsSeoTitle: string | null;
+  seoDescription: string | null;
+  seoImage: SeoImage | null;
 };
 
 function path(value: string | null | undefined): string | null {
@@ -162,6 +168,9 @@ const HOMEPAGE_QUERY = /* GraphQL */ `
           ctaSectionButtonLabel
           ctaSectionButtonUrl
         }
+        seoPageTitle
+        seoMetaDescription
+        seoImage { url width height title }
       }
     }
     articles: entries(section: "news", orderBy: "postDate DESC", limit: 6) {
@@ -199,6 +208,9 @@ export async function getHomepageContent(): Promise<HomepageContent> {
     latestNewsHeading: null,
     latestNews: [],
     cta: null,
+    cmsSeoTitle: null,
+    seoDescription: null,
+    seoImage: null,
   };
 
   try {
@@ -251,6 +263,9 @@ export async function getHomepageContent(): Promise<HomepageContent> {
       latestNewsHeading: homepage.sectionHeading,
       latestNews,
       cta: homepageCta(homepage.ctaSection),
+      cmsSeoTitle: homepage.seoPageTitle?.trim() || null,
+      seoDescription: homepage.seoMetaDescription?.trim() || null,
+      seoImage: toSeoImage(homepage.seoImage?.[0]),
     };
   } catch (error) {
     console.warn("Failed to load Homepage content from Craft, using fallback:", error);

@@ -9,14 +9,6 @@ import { createPageMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 
-function getImageUrlString(source: unknown): string | undefined {
-  if (typeof source === "string") return source;
-  if (source && typeof source === "object" && "src" in source && typeof (source as { src: unknown }).src === "string") {
-    return (source as { src: string }).src;
-  }
-  return undefined;
-}
-
 export async function generateMetadata(
   props: PageProps<"/projects/[slug]">
 ): Promise<Metadata> {
@@ -38,9 +30,10 @@ export async function generateMetadata(
   return createPageMetadata({
     pathname: `/projects/${slug}`,
     title,
-    description: project.subheading || undefined,
-    image: heroImageRaw,
     imageAlt: project.heading || title,
+    cmsTitle: project.seoPageTitle,
+    description: project.seoMetaDescription,
+    image: project.seoImage,
   });
 }
 

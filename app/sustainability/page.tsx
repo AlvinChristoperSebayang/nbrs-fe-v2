@@ -7,7 +7,10 @@ import { GreenStarSection } from "@/components/sustainability/GreenStarSection";
 import { Hero } from "@/components/ui/Hero";
 import { getSustainabilityPage } from "@/lib/sustainability";
 
-export const metadata = createPageMetadata({ pathname: "/sustainability", title: "Sustainability" });
+export async function generateMetadata() {
+  const page = await getSustainabilityPage();
+  return createPageMetadata({ pathname: "/sustainability", title: page.title, cmsTitle: page.cmsSeoTitle, description: page.seoDescription, image: page.seoImage ?? page.hero });
+}
 
 export default async function SustainabilityPage() {
   const page = await getSustainabilityPage();

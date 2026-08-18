@@ -17,9 +17,10 @@ export async function generateMetadata({
 
   return createPageMetadata({
     pathname: `/people/team/${slug}`,
-    title: person?.seoTitle ?? (person ? `${person.name} | Our People` : "Team Member | Our People"),
+    title: person ? `${person.name} | Our People` : "Team Member | Our People",
+    cmsTitle: person?.seoTitle,
     description: person?.seoDescription,
-    image: person?.hero,
+    image: person?.seoImage ?? person?.hero,
     imageAlt: person?.name,
     noIndex: !person,
   });

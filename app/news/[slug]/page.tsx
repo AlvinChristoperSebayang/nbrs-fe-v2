@@ -20,9 +20,10 @@ export async function generateMetadata({
 
   return createPageMetadata({
     pathname: `/news/${slug}`,
-    title: article?.seoTitle ?? article?.title ?? "News Article",
+    title: article?.title ?? "News Article",
+    cmsTitle: article?.seoTitle,
     description: article?.seoDescription,
-    image: article?.hero,
+    image: article?.seoImage ?? article?.hero,
     imageAlt: article?.title,
     type: "article",
     noIndex: !article,

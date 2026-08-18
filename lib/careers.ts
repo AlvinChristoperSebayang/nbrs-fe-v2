@@ -1,5 +1,5 @@
 import { craftFetch } from "./craft";
-import { toImageSource, type RawResponsiveAsset } from "./media";
+import { toImageSource, toSeoImage, type RawResponsiveAsset, type RawSeoAsset, type SeoImage } from "./media";
 import type { CtaContent, ImageSource } from "./types";
 import type { AccordionItem } from "@/components/people/CareersAccordionSection";
 
@@ -13,7 +13,10 @@ type RawFaqBlock = {
 type RawCareersPage = {
   pageHeading: string | null;
   pageSubheading: string | null;
-  pageHeroImage: RawResponsiveAsset[];
+  seoPageTitle: string | null;
+  seoMetaDescription: string | null;
+  seoImage: RawSeoAsset[];
+  pageHeroImage: Array<RawResponsiveAsset & RawSeoAsset>;
   blocks: RawFaqBlock[];
   ctaSection: {
     ctaSectionBackgroundImage: RawResponsiveAsset[];
@@ -28,6 +31,9 @@ export type CareersContent = {
   hero: { title: string; description?: string; image: ImageSource } | null;
   accordion: { title: string; introText?: string; items: AccordionItem[] } | null;
   cta: CtaContent | null;
+  cmsSeoTitle: string | null;
+  seoDescription: string | null;
+  seoImage: SeoImage | null;
 };
 
 const heroImage = `mobile: url @transform(width: 600, height: 800, mode: "crop", format: "webp", quality: 80, immediately: true) tablet: url @transform(width: 1440, height: 1000, mode: "crop", format: "webp", quality: 82, immediately: true) desktop: url @transform(width: 2400, height: 1200, mode: "crop", format: "webp", quality: 85, immediately: true)`;
@@ -40,7 +46,10 @@ const QUERY = /* GraphQL */ `
       ... on pages_Entry {
         pageHeading
         pageSubheading
-        pageHeroImage { ${heroImage} }
+        seoPageTitle
+        seoMetaDescription
+        seoImage { url width height title }
+        pageHeroImage { url width height title ${heroImage} }
         blocks {
           __typename
           ... on blocks_faqs_BlockType {
@@ -77,7 +86,7 @@ export async function getCareersContent(): Promise<CareersContent> {
   try {
     const data = await craftFetch<{ entries: RawCareersPage[] }>(QUERY);
     const entry = data.entries?.[0];
-    if (!entry) return { hero: null, accordion: null, cta: null };
+    if (!entry) return { hero: null, accordion: null, cta: null, cmsSeoTitle: null, seoDescription: null, seoImage: null };
 
     const heroImageSource = toImageSource(entry.pageHeroImage[0]);
     const faq = entry.blocks.find((block) => block.__typename === "blocks_faqs_BlockType");
@@ -102,11 +111,14 @@ export async function getCareersContent(): Promise<CareersContent> {
             description: plainText(entry.ctaSection?.ctaSectionDescription) || undefined,
             buttonText: plainText(entry.ctaSection?.ctaSectionButtonLabel) || undefined,
             buttonHref: entry.ctaSection?.ctaSectionButtonUrl?.trim() || undefined,
-          }
+        }
         : null,
+      cmsSeoTitle: entry.seoPageTitle?.trim() || null,
+      seoDescription: entry.seoMetaDescription?.trim() || plainText(entry.pageSubheading) || null,
+      seoImage: toSeoImage(entry.seoImage?.[0]) || toSeoImage(entry.pageHeroImage?.[0]),
     };
   } catch (error) {
     console.error("Failed to fetch careers content from Craft:", error);
-    return { hero: null, accordion: null, cta: null };
+    return { hero: null, accordion: null, cta: null, cmsSeoTitle: null, seoDescription: null, seoImage: null };
   }
 }

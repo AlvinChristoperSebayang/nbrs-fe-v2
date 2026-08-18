@@ -1,5 +1,5 @@
 import { craftFetch } from "./craft";
-import { toImageSource, type RawResponsiveAsset } from "./media";
+import { toImageSource, toSeoImage, type RawResponsiveAsset, type SeoImage } from "./media";
 import type { CtaContent, ImageSource } from "./types";
 
 type SustainabilityAsset = RawResponsiveAsset & {
@@ -13,6 +13,9 @@ type SustainabilityResponse = {
     title?: string | null;
     pageHeading?: string | null;
     pageSubheading?: string | null;
+    seoPageTitle?: string | null;
+    seoMetaDescription?: string | null;
+    seoImage?: SustainabilityAsset[];
     pageHeroImage?: SustainabilityAsset[];
     blocks?: Array<
       | {
@@ -81,6 +84,9 @@ export type SustainabilityPageData = {
   features: SustainabilityFeature[];
   projects: SustainabilityProject[];
   cta: CtaContent;
+  cmsSeoTitle: string | null;
+  seoDescription: string;
+  seoImage: SeoImage | null;
 };
 
 const query = /* GraphQL */ `
@@ -89,6 +95,9 @@ const query = /* GraphQL */ `
       ... on pages_Entry {
         pageHeading
         pageSubheading
+        seoPageTitle
+        seoMetaDescription
+        seoImage { url width height title }
         pageHeroImage {
           mobile: url @transform(width: 600, height: 800, mode: "crop", format: "webp", quality: 80, immediately: true)
           tablet: url @transform(width: 1440, height: 1000, mode: "crop", format: "webp", quality: 82, immediately: true)
@@ -225,6 +234,9 @@ function fallbackPage(): SustainabilityPageData {
       secondaryButtonText: "START A CONVERSATION",
       secondaryButtonHref: "/contact",
     },
+    cmsSeoTitle: null,
+    seoDescription: "A regenerative, insight-driven approach foregrounds climate-responsive design and long term value.",
+    seoImage: null,
   };
 }
 
@@ -307,6 +319,9 @@ export async function getSustainabilityPage(): Promise<SustainabilityPageData> {
         secondaryButtonHref:
           cta?.ctaSectionSecondaryButtonUrl || fallback.cta.secondaryButtonHref,
       },
+      cmsSeoTitle: entry.seoPageTitle?.trim() || null,
+      seoDescription: entry.seoMetaDescription?.trim() || entry.pageSubheading || fallback.seoDescription,
+      seoImage: toSeoImage(entry.seoImage?.[0]),
     };
   } catch (error) {
     if (process.env.NODE_ENV === "development") {

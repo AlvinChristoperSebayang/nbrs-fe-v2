@@ -40,6 +40,7 @@ type NewsDetailResponse = {
     dateCreated: string | null;
     seoPageTitle: string | null;
     seoMetaDescription: string | null;
+    seoImage: RawAsset[];
     artHdrHeading: string | null;
     artHdrSubheading: string | null;
     thumbnail: RawAsset[];
@@ -67,6 +68,7 @@ export type NewsDetail = {
   description: string | null;
   seoTitle: string | null;
   seoDescription: string | null;
+  seoImage: RawAsset | null;
   content: NewsContentBlock[];
   cta: CtaContent;
 };
@@ -87,9 +89,11 @@ const NEWS_DETAIL_QUERY = /* GraphQL */ `
       ... on news_Entry {
         seoPageTitle
         seoMetaDescription
+        seoImage { url width height title }
         artHdrHeading
         artHdrSubheading
         thumbnail {
+          url
           mobile: url @transform(width: 768, immediately: true)
           tablet: url @transform(width: 1440, immediately: true)
           desktop: url @transform(width: 1920, immediately: true)
@@ -98,6 +102,7 @@ const NEWS_DETAIL_QUERY = /* GraphQL */ `
           title
         }
         artHdrHeroImage {
+          url
           mobile: url @transform(width: 768, immediately: true)
           tablet: url @transform(width: 1440, immediately: true)
           desktop: url @transform(width: 1920, immediately: true)
@@ -210,7 +215,8 @@ export const getNewsDetail = cache(async (slug: string): Promise<NewsDetail | nu
     hero: toImageSource(entry.artHdrHeroImage?.[0]) ?? toImageSource(entry.thumbnail?.[0]),
     description: entry.artHdrSubheading ?? null,
     seoTitle: entry.seoPageTitle,
-    seoDescription: entry.seoMetaDescription,
+    seoDescription: entry.seoMetaDescription?.trim() || entry.artHdrSubheading?.trim() || null,
+    seoImage: entry.seoImage?.[0] ?? entry.artHdrHeroImage?.[0] ?? entry.thumbnail?.[0] ?? null,
     content: toContentBlocks(entry.artContent ?? []),
     cta: toCta(entry.ctaSection),
   };

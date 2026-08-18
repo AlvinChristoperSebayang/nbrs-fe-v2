@@ -8,7 +8,10 @@ import { getResearchListing } from "@/lib/research-listing";
 import { getPageCta } from "@/lib/cta";
 import type { CtaContent } from "@/lib/types";
 
-export const metadata = createPageMetadata({ pathname: "/research", title: "Research" });
+export async function generateMetadata() {
+  const page = await getResearchListing();
+  return createPageMetadata({ pathname: "/research", title: page.pageHeading || "Research", cmsTitle: page.cmsSeoTitle, description: page.seoDescription, image: page.seoImage ?? page.pageHeroImageUrl });
+}
 export const dynamic = "force-dynamic";
 
 const cta: CtaContent = {
