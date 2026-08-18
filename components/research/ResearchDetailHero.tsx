@@ -27,22 +27,42 @@ function getTitleLines(title: string): string[] {
   const words = title.trim().split(/\s+/);
   if (words.length <= 3) return [title.trim()];
 
-  const targetMid = title.trim().length / 2;
-  let currentLine = "";
-  const firstLine: string[] = [];
-  const secondLine: string[] = [];
+  const MAX_LINE_LENGTH = 26;
+  const lines: string[] = [];
+  let currentWords: string[] = [];
+  let currentLength = 0;
 
-  for (let index = 0; index < words.length; index += 1) {
-    const word = words[index];
-    if (firstLine.length === 0 || (currentLine.length < targetMid && index < words.length - 1)) {
-      firstLine.push(word);
-      currentLine = firstLine.join(" ");
+  for (const word of words) {
+    const wordLength = word.length;
+    const nextLength = currentLength === 0 ? wordLength : currentLength + 1 + wordLength;
+
+    if (nextLength <= MAX_LINE_LENGTH || currentWords.length === 0) {
+      currentWords.push(word);
+      currentLength = nextLength;
     } else {
-      secondLine.push(word);
+      lines.push(currentWords.join(" "));
+      currentWords = [word];
+      currentLength = wordLength;
     }
   }
 
-  return secondLine.length > 0 ? [firstLine.join(" "), secondLine.join(" ")] : [title.trim()];
+  if (currentWords.length > 0) {
+    lines.push(currentWords.join(" "));
+  }
+
+  if (lines.length > 1) {
+    const lastLineWords = lines[lines.length - 1].split(" ");
+    if (lastLineWords.length === 1 && lastLineWords[0].length < 10) {
+      const prevLineWords = lines[lines.length - 2].split(" ");
+      if (prevLineWords.length > 1) {
+        const movedWord = prevLineWords.pop()!;
+        lines[lines.length - 2] = prevLineWords.join(" ");
+        lines[lines.length - 1] = `${movedWord} ${lastLineWords[0]}`;
+      }
+    }
+  }
+
+  return lines;
 }
 
 export function renderResearchTitleWithUnderline(title: string) {
@@ -61,13 +81,13 @@ export function renderResearchTitleWithUnderline(title: string) {
       {lines.map((line, index) =>
         index === lines.length - 1 ? (
           <span
-            key={line}
+            key={`${line}-${index}`}
             className="mt-1 inline-block border-b-[4px] border-black pb-1 leading-none sm:border-b-[5px] sm:pb-2 lg:border-b-[6px]"
           >
             {line}
           </span>
         ) : (
-          <span key={line} className="block leading-[1.05]">
+          <span key={`${line}-${index}`} className="block leading-[1.05]">
             {line}
           </span>
         ),

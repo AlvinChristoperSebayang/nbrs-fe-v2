@@ -54,6 +54,7 @@ export function SectorPrinciplesSection({
               <ResponsiveImage
                 src={imgUrl}
                 alt={`${title} principle ${index + 1}`}
+                title={`${title} principle ${index + 1}`}
                 className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
             </div>

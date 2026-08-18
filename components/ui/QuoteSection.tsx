@@ -26,6 +26,7 @@ export function QuoteSection({
             <ResponsiveImage
               src={image}
               alt={author}
+              title={author}
               className="h-[350px] w-full object-cover lg:h-[495px] rounded-sm"
             />
           </div>

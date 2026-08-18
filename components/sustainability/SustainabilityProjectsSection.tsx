@@ -11,18 +11,30 @@ export function SustainabilityProjectsSection({ projects }: { projects: Sustaina
       <Container>
         <div className="mb-8 flex items-end justify-between gap-4">
           <h2 className="font-heading text-3xl uppercase leading-none sm:text-4xl">Sustainable projects</h2>
-          <Link href="/projects" className="text-sm underline underline-offset-4">
+          <Link
+            href="/projects"
+            title="View all sustainable projects"
+            aria-label="View all sustainable projects"
+            className="text-sm underline underline-offset-4"
+          >
             View all projects
           </Link>
         </div>
         <div className="grid gap-6 md:grid-cols-3">
           {projects.map((project) => (
-            <Link key={`${project.href}-${project.title}`} href={project.href} className="group block">
+            <Link
+              key={`${project.href}-${project.title}`}
+              href={project.href}
+              title={project.title}
+              aria-label={project.title}
+              className="group block"
+            >
               <div className="aspect-[4/3] overflow-hidden bg-zinc-200">
                 {project.image ? (
                   <ResponsiveImage
                     src={project.image}
                     alt={project.title}
+                    title={project.title}
                     className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
                   />
                 ) : null}

@@ -352,16 +352,7 @@ export const getResearchDetail = cache(async (slug: string): Promise<ResearchDet
     : null;
 
     const rawArtTypes = (entry.artType ?? []).map((category) => category.title).filter(Boolean);
-    const fallbackArticleType = entry.slug.includes("care")
-      ? "Research Paper / Early Childhood / Regional Victoria"
-      : entry.slug.includes("university-student") || entry.slug.includes("vol2") || entry.slug.includes("vol-2")
-      ? "Research Paper / Higher Education / Student Wellbeing"
-      : entry.slug.includes("wellness") || entry.slug.includes("vol3") || entry.slug.includes("vol-3")
-      ? "Research Paper / Wellness Environment"
-      : entry.slug.includes("workplace") || entry.slug.includes("vol1") || entry.slug.includes("vol-1")
-      ? "Research Paper / Workplace Productivity"
-      : "Research Paper";
-    const articleType = rawArtTypes.length > 0 ? rawArtTypes.join(" / ") : fallbackArticleType;
+    const articleType = rawArtTypes.length > 0 ? rawArtTypes.join(" / ") : null;
 
     return {
       slug: entry.slug,

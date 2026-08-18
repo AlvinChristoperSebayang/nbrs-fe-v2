@@ -115,6 +115,8 @@ export default async function ProjectsIndexPage(
               <Link
                 href={`/projects?${loadMoreParams.toString()}`}
                 scroll={false}
+                title="Load more projects"
+                aria-label="Load more projects"
                 className="inline-flex items-center rounded-full border border-black px-8 py-3 text-sm uppercase text-black transition hover:bg-black hover:text-white"
               >
                 Load more

@@ -109,6 +109,8 @@ export function SectorsSection({ sectors, heading = "Designing spaces bespoke to
             <Link
               key={sector.label}
               href={sector.href}
+              title={sector.label}
+              aria-label={sector.label}
               data-aos="fade-up"
               data-aos-delay={100 + index * 100}
               className="group relative block aspect-[5/4] overflow-hidden rounded-[5px] lg:aspect-[37/30] lg:col-span-4"
@@ -148,6 +150,7 @@ export function SectorsSection({ sectors, heading = "Designing spaces bespoke to
               <ResponsiveImage
                 src={sector.image}
                 alt={sector.label}
+                title={sector.label}
                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 z-[5]"
               />
               <div className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-4 p-5 z-[6]">

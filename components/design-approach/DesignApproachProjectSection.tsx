@@ -24,7 +24,8 @@ export function DesignApproachProjectSection({
       <div className="absolute inset-0 lg:hidden">
         <ResponsiveImage
           src={image}
-          alt=""
+          alt={heading || "Design Approach"}
+          title={heading || "Design Approach"}
           className="h-full w-full object-cover"
           priority
         />
@@ -43,6 +44,8 @@ export function DesignApproachProjectSection({
           {buttonText && buttonHref && (
             <Link
               href={buttonHref}
+              title={buttonText}
+              aria-label={buttonText}
               className="group inline-flex items-center gap-2 rounded-[5px] bg-white/30 backdrop-blur-md border border-white/30 px-6 py-2.5 text-sm font-sans font-medium text-white transition hover:bg-white/40"
             >
               <span>{buttonText}</span>
@@ -81,6 +84,8 @@ export function DesignApproachProjectSection({
             {buttonText && buttonHref && (
               <Link
                 href={buttonHref}
+                title={buttonText}
+                aria-label={buttonText}
                 className="group inline-flex items-center gap-2 rounded-[5px] border border-black bg-white px-6 py-2.5 text-base font-sans font-medium text-black transition hover:bg-black hover:text-white"
               >
                 <span>{buttonText}</span>
@@ -110,7 +115,8 @@ export function DesignApproachProjectSection({
           >
             <ResponsiveImage
               src={image}
-              alt=""
+              alt={heading || "Design Approach"}
+              title={heading || "Design Approach"}
               className="h-[410px] max-h-[410px] w-full object-cover"
             />
           </div>

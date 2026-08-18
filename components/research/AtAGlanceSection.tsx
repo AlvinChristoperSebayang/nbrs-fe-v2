@@ -30,28 +30,33 @@ export function AtAGlanceSection({
               key={`${item.text}-${index}`}
               data-aos="fade-up"
               data-aos-delay={index * 100}
-              className="group relative flex h-full min-h-[224px] flex-col items-center
-  overflow-hidden bg-black px-6 pt-10 pb-8 text-center
-  transform-gpu
-  transition-[transform,box-shadow]
-  duration-500
-  ease-[cubic-bezier(0.22,1,0.36,1)]
-  will-change-transform
-  hover:-translate-y-0.5
-  hover:scale-[1.015]
-  hover:shadow-xl"
+              className="group h-full w-full pt-2"
             >
-              <div className="absolute top-0 right-0 left-0 h-2.5" style={{ backgroundColor: item.accentColor }} />
+              <div
+                className="relative flex h-full min-h-[224px] flex-col items-center overflow-hidden rounded-[2px] bg-black px-6 pt-10 pb-8 text-center shadow-md transition-all duration-500 ease-out group-hover:-translate-y-2 group-hover:bg-[#181B22] group-hover:shadow-xl will-change-transform"
+              >
+                <div
+                  className="absolute top-0 right-0 left-0 h-2.5 transition-all duration-300 group-hover:h-3"
+                  style={{ backgroundColor: item.accentColor }}
+                />
 
-              <div className="mb-5 flex h-10 w-10 shrink-0 items-center justify-center">
-                {item.icon ? (
-                  <ResponsiveImage src={item.icon} alt={item.text || "Research metric icon"} title={item.text || "Research metric icon"} className="h-10 w-10 object-contain" />
-                ) : (
-                  <div className="h-8 w-8 rounded-sm border-2 border-white/60 transition-colors group-hover:border-white" />
-                )}
+                <div className="mb-5 flex h-10 w-10 shrink-0 items-center justify-center transition-transform duration-500 ease-out group-hover:scale-110">
+                  {item.icon ? (
+                    <ResponsiveImage
+                      src={item.icon}
+                      alt={item.text || "Research metric icon"}
+                      title={item.text || "Research metric icon"}
+                      className="h-10 w-10 object-contain"
+                    />
+                  ) : (
+                    <div className="h-8 w-8 rounded-sm border-2 border-white/60 transition-colors group-hover:border-white" />
+                  )}
+                </div>
+
+                <p className="max-w-[210px] font-sans text-base font-normal text-white transition-colors duration-300 sm:text-[18px]">
+                  {item.text}
+                </p>
               </div>
-
-              <p className="max-w-[210px] font-sans text-base font-normal text-white sm:text-[18px]">{item.text}</p>
             </div>
           ))}
         </div>

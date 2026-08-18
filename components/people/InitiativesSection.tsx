@@ -127,6 +127,7 @@ export function InitiativesSection({
                 <ResponsiveImage
                   src={item.image}
                   alt={item.title}
+                  title={item.title}
                   className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
                 />
               </div>

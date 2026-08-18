@@ -51,6 +51,8 @@ export function ResearchCard({ item }: { item: ResearchCardItem }) {
   return (
     <Link
       href={`/research/${item.slug}`}
+      title={item.title}
+      aria-label={item.title}
       className="group flex flex-col w-full overflow-hidden transition-all duration-300"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -60,6 +62,7 @@ export function ResearchCard({ item }: { item: ResearchCardItem }) {
         <ResponsiveImage
           src={item.image}
           alt={item.title}
+          title={item.title}
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
       </div>

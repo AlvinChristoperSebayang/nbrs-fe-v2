@@ -86,6 +86,8 @@ export function PracticesHoverSection({
               <Link
                 key={item.id}
                 href={item.href}
+                title={item.title}
+                aria-label={item.title}
                 onMouseEnter={() => setHoveredId(item.id)}
                 className={`group relative flex flex-col justify-end overflow-hidden rounded-[5px] w-full lg:flex-1 lg:min-w-0 aspect-[16/10] sm:aspect-[21/9] lg:aspect-[370/320] xl:aspect-[370/300] min-h-[260px] lg:min-h-[340px] bg-zinc-900 shadow-md transition-all duration-500 ${
                   isHovered
@@ -99,6 +101,7 @@ export function PracticesHoverSection({
                 <ResponsiveImage
                   src={item.image}
                   alt={item.title}
+                  title={item.title}
                   className={`absolute inset-0 h-full w-full object-cover transition-all duration-700 group-hover:scale-105 ${
                     isOtherHovered
                       ? "grayscale contrast-125 opacity-80"

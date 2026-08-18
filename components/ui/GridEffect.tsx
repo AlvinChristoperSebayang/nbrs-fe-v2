@@ -77,6 +77,8 @@ export function GridEffect({
           {showViewAll && (
             <Link
               href={viewAllUrl}
+              title={viewAllLabel}
+              aria-label={viewAllLabel}
               className="group items-center gap-2 font-heading text-lg lg:text-[22px] uppercase text-black lg:flex hidden"
             >
               {viewAllLabel}
@@ -106,6 +108,8 @@ export function GridEffect({
             {showViewAll && (
               <Link
                 href={viewAllUrl}
+                title={viewAllLabel}
+                aria-label={viewAllLabel}
                 className="group items-center gap-2 font-heading text-lg lg:text-[22px] uppercase text-white flex"
               >
                 {viewAllLabel}
@@ -213,6 +217,8 @@ export function GridEffect({
                       cardRefs.current[index] = el;
                     }}
                     href={item.href!}
+                    title={item.title}
+                    aria-label={item.title}
                     onMouseEnter={() => setActiveIndex(index)}
                     className={cardClassName}
                   >
