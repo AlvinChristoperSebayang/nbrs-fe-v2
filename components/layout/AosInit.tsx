@@ -1,55 +1,58 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { usePathname } from "next/navigation";
-
-function resetAosClasses() {
-  document.querySelectorAll<HTMLElement>("[data-aos]").forEach((element) => {
-    element.classList.remove("aos-init", "aos-animate");
-  });
-}
 
 export function AosInit() {
-  const pathname = usePathname();
   const initializedRef = useRef(false);
 
   useEffect(() => {
     let cancelled = false;
-    let frame: number | undefined;
+    let firstFrame: number | undefined;
+    let secondFrame: number | undefined;
 
-    void import("aos")
-      .then(({ default: AOS }) => {
-        if (cancelled) return;
+    const initialize = () => {
+      void import("aos")
+        .then(({ default: AOS }) => {
+          if (cancelled || initializedRef.current) return;
 
-        if (!initializedRef.current) {
-          AOS.init({
-            duration: 700,
-            easing: "ease-out",
-            once: true,
-            offset: 40,
-            disableMutationObserver: true,
-            disable: () => window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+          // Start after the initial page has hydrated. AOS mutates data-aos
+          // elements, so doing this during hydration causes React mismatches.
+          firstFrame = window.requestAnimationFrame(() => {
+            secondFrame = window.requestAnimationFrame(() => {
+              if (cancelled || initializedRef.current) return;
+
+              AOS.init({
+                duration: 700,
+                easing: "ease-out",
+                once: true,
+                offset: 40,
+                // Keep AOS' observer enabled so client-side route content and
+                // filtered lists are registered after React has rendered them.
+                disable: () =>
+                  window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+              });
+              initializedRef.current = true;
+            });
           });
-          initializedRef.current = true;
-        }
-
-        // Refresh after React has committed the current route's DOM.
-        frame = window.requestAnimationFrame(() => {
-          if (!cancelled) AOS.refreshHard();
+        })
+        .catch((error: unknown) => {
+          if (!cancelled) console.warn("Unable to initialize AOS:", error);
         });
-      })
-      .catch((error: unknown) => {
-        if (!cancelled) {
-          console.warn("Unable to initialize AOS:", error);
-        }
-      });
+    };
+
+    if (document.readyState === "complete") {
+      initialize();
+    } else {
+      window.addEventListener("load", initialize, { once: true });
+    }
 
     return () => {
       cancelled = true;
-      if (frame !== undefined) window.cancelAnimationFrame(frame);
-      resetAosClasses();
+      window.removeEventListener("load", initialize);
+      if (firstFrame !== undefined) window.cancelAnimationFrame(firstFrame);
+      if (secondFrame !== undefined) window.cancelAnimationFrame(secondFrame);
     };
-  }, [pathname]);
+  }, []);
 
   return null;
 }
