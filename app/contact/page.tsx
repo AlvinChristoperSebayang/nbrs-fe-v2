@@ -3,7 +3,10 @@ import { Container } from "@/components/ui/Container";
 import { getContactPageContent } from "@/lib/contact";
 import { createPageMetadata } from "@/lib/seo";
 
-export const metadata = createPageMetadata({ pathname: "/contact", title: "Contact Us" });
+export async function generateMetadata() {
+  const page = await getContactPageContent();
+  return createPageMetadata({ pathname: "/contact", title: page.title, cmsTitle: page.cmsSeoTitle, description: page.seoDescription, image: page.seoImage ?? page.heroImage, imageAlt: page.title });
+}
 
 export default async function ContactPage() {
   const content = await getContactPageContent();

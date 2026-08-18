@@ -4,7 +4,10 @@ import { TeamListSection } from "@/components/people/TeamListSection";
 import { CtaSection } from "@/components/cta/CtaSection";
 import { getOurPeopleContent } from "@/lib/our-people";
 
-export const metadata = createPageMetadata({ pathname: "/people/team", title: "Meet Our Leaders | Our People" });
+export async function generateMetadata() {
+  const page = await getOurPeopleContent();
+  return createPageMetadata({ pathname: "/people/team", title: page.hero?.title || "Our People", cmsTitle: page.cmsSeoTitle, description: page.seoDescription || page.hero?.description, image: page.seoImage ?? page.hero?.image });
+}
 
 export default async function TeamPage() {
   const page = await getOurPeopleContent();

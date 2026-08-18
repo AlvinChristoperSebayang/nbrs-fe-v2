@@ -8,7 +8,10 @@ import { PreserveScrollOnNavigate } from "@/components/projects/PreserveScrollOn
 import { createPageMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
-export const metadata = createPageMetadata({ pathname: "/projects", title: "Projects" });
+export async function generateMetadata() {
+  const page = await getProjectsListing({ limit: 1 });
+  return createPageMetadata({ pathname: "/projects", title: page.pageHeading || "Projects", cmsTitle: page.cmsSeoTitle, description: page.seoDescription, image: page.seoImage ?? page.pageHeroImageUrl });
+}
 
 const PAGE_SIZE = 9;
 

@@ -17,9 +17,10 @@ export async function generateMetadata({ params }: PageProps<"/research/[slug]">
 
   return createPageMetadata({
     pathname: `/research/${slug}`,
-    title: research?.seoTitle ?? research?.title ?? "Research",
+    title: research?.title ?? "Research",
+    cmsTitle: research?.seoTitle,
     description: research?.seoDescription,
-    image: research?.hero,
+    image: research?.seoImage ?? research?.hero,
     imageAlt: research?.title,
     type: "article",
     noIndex: !research,

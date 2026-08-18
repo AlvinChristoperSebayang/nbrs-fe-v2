@@ -32,9 +32,10 @@ export async function generateMetadata({
 
   return createPageMetadata({
     pathname: `/practices/${slug}`,
-    title: practice.seoTitle,
+    title: practice.title,
+    cmsTitle: practice.cmsSeoTitle,
     description: practice.seoDescription,
-    image: practice.image,
+    image: practice.seoImage ?? practice.image,
     imageAlt: practice.title,
   });
 }

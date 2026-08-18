@@ -2,7 +2,7 @@ const SITE_URL = (
   process.env.NEXT_PUBLIC_SITE_URL || "https://nbrs.com.au"
 ).replace(/\/$/, "");
 const ALLOW_INDEXING =
-  process.env.NEXT_PUBLIC_ALLOW_INDEXING?.toLowerCase() !== "false";
+  process.env.NEXT_PUBLIC_ALLOW_INDEXING?.toLowerCase() === "true";
 
 export function proxy(): Response {
   const robots = ALLOW_INDEXING

@@ -7,7 +7,10 @@ import { GridEffect } from "@/components/ui/GridEffect";
 import { Hero } from "@/components/ui/Hero";
 import { ABOUT_FALLBACK, getAboutContent } from "@/lib/about";
 
-export const metadata = createPageMetadata({ pathname: "/about", title: "About Us" });
+export async function generateMetadata() {
+  const page = await getAboutContent().catch(() => ABOUT_FALLBACK);
+  return createPageMetadata({ pathname: "/about", title: page.hero.title, description: page.hero.description, image: page.hero.image });
+}
 
 export default async function AboutPage() {
   const about = await getAboutContent().catch(() => ABOUT_FALLBACK);

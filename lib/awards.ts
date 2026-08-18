@@ -1,5 +1,5 @@
 import { craftFetch } from "./craft";
-import { toImageSource, type RawResponsiveAsset } from "./media";
+import { toImageSource, toSeoImage, type RawResponsiveAsset, type RawSeoAsset, type SeoImage } from "./media";
 import type { CtaContent, ImageSource } from "./types";
 import { DUMMY_AWARDS, type AwardItem } from "./awards-data";
 
@@ -28,7 +28,10 @@ type RawBlock =
 type RawPage = {
   pageHeading: string | null;
   pageSubheading: string | null;
-  pageHeroImage: RawResponsiveAsset[];
+  seoPageTitle: string | null;
+  seoMetaDescription: string | null;
+  seoImage: RawSeoAsset[];
+  pageHeroImage: Array<RawResponsiveAsset & RawSeoAsset>;
   pageHeroCtaLabel: string | null;
   pageHeroCtaUrl: string | null;
   pageIntroCtaLabel: string | null;
@@ -61,6 +64,9 @@ export type AwardsPageContent = {
   intro: { heading: string; description: string; image: ImageSource; button: { text: string; href: string } };
   awards: { heading: string; description: string; items: AwardItem[] };
   cta: CtaContent;
+  cmsSeoTitle: string | null;
+  seoDescription: string;
+  seoImage: SeoImage | null;
 };
 
 const FALLBACK_CTA: CtaContent = {
@@ -92,6 +98,9 @@ const FALLBACK: AwardsPageContent = {
     items: DUMMY_AWARDS,
   },
   cta: FALLBACK_CTA,
+  cmsSeoTitle: null,
+  seoDescription: "Our work is recognised for elevating everyday experience through purposeful, people-centred design.",
+  seoImage: null,
 };
 
 const PROJECT_SLUGS = [
@@ -113,7 +122,14 @@ const AWARDS_QUERY = /* GraphQL */ `
       ... on pages_Entry {
         pageHeading
         pageSubheading
+        seoPageTitle
+        seoMetaDescription
+        seoImage { url width height title }
         pageHeroImage {
+          url
+          width
+          height
+          title
           mobile: url @transform(width: 600, height: 800, mode: "crop", format: "webp", quality: 80, immediately: true)
           tablet: url @transform(width: 1440, height: 1000, mode: "crop", format: "webp", quality: 82, immediately: true)
           desktop: url @transform(width: 2400, height: 1200, mode: "crop", format: "webp", quality: 85, immediately: true)
@@ -266,6 +282,9 @@ export async function getAwardsPage(): Promise<AwardsPageContent> {
         secondaryButtonText: clean(cta?.ctaSectionSecondaryButtonLabel) || FALLBACK_CTA.secondaryButtonText,
         secondaryButtonHref: clean(cta?.ctaSectionSecondaryButtonUrl) || FALLBACK_CTA.secondaryButtonHref,
       },
+      cmsSeoTitle: entry.seoPageTitle?.trim() || null,
+      seoDescription: entry.seoMetaDescription?.trim() || clean(entry.pageSubheading) || FALLBACK.seoDescription,
+      seoImage: toSeoImage(entry.seoImage?.[0]) || toSeoImage(entry.pageHeroImage?.[0]),
     };
   } catch {
     return FALLBACK;

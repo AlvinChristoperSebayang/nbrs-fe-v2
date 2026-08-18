@@ -9,14 +9,6 @@ import { createPageMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 
-function getImageUrlString(source: unknown): string | undefined {
-  if (typeof source === "string") return source;
-  if (source && typeof source === "object" && "src" in source && typeof (source as { src: unknown }).src === "string") {
-    return (source as { src: string }).src;
-  }
-  return undefined;
-}
-
 export async function generateMetadata(
   props: PageProps<"/projects/[slug]">
 ): Promise<Metadata> {
@@ -30,14 +22,14 @@ export async function generateMetadata(
     });
   }
 
-  const title = project.seoPageTitle || project.heading || "Project Detail";
-  const heroImageRaw = project.splash?.find((slide) => slide.imageUrl)?.imageUrl ?? project.thumbnailUrl;
-  const heroImageUrl = getImageUrlString(heroImageRaw);
+  const title = project.heading || "Project Detail";
 
   return createPageMetadata({
     pathname: `/projects/${slug}`,
     title,
-    image: heroImageUrl,
+    cmsTitle: project.seoPageTitle,
+    description: project.seoMetaDescription,
+    image: project.seoImage,
     imageAlt: project.heading,
   });
 }
