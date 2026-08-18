@@ -55,15 +55,6 @@ body {
     .container {
       padding-inline: 8.4375rem; /* 135px */
     }
-    .section-about .image__wrapper{
-      height: calc(100% + 100px) !important;
-    }
-  }
-  @media(min-width:768px){
-    .image__wrapper{
-      width: calc(100% + 40px);
-      margin-left: -20px;
-    }
   }
   @media(min-width: 1280px) {
     .container {
@@ -88,13 +79,6 @@ body {
 }
 
 @media(max-width:768px){
-  .image-about__wrapper{
-    width: calc(100% + 40px);
-    margin-left: -20px;
-  }
-  .hero-slider .slider-area{
-    margin-left: 20px;
-  }
   .hero-slider .swipe-controls{
     display: flex !important;
     justify-content: center !important;

@@ -141,12 +141,12 @@ export function GridEffect({
             )}
           </div>
 
-          <div data-aos="fade-up" data-aos-delay="150" className="grid grid-cols-1 lg:grid-cols-3 items-stretch sm:inset-x-0 pb-20 gap-10 sm:px-6 md:px-8 lg:gap-20 lg:py-40 lg:px-4 relative z-10">
+          <div data-aos="fade-up" data-aos-delay="150" className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-[30px] items-stretch sm:inset-x-0 pb-20 sm:px-6 md:px-8 lg:py-40 lg:px-0 relative z-10">
             {items.map((item, index) => {
               const isActive = index === activeIndex;
               const hasHref = Boolean(item.href);
 
-              const cardClassName = `group flex h-64 flex-col justify-between gap-8 overflow-hidden p-5 sm:p-6 md:p-8 transition-colors duration-300 lg:h-80 lg:p-5 ${
+              const cardClassName = `lg:col-span-4 group flex h-64 flex-col justify-between gap-8 overflow-hidden p-5 sm:p-6 md:p-8 transition-colors duration-300 lg:h-80 lg:p-5 mx-0 md:mx-4 ${
                 isActive
                   ? "bg-black/50 backdrop-blur-[5px] border-b-[5px] border-white"
                   : "bg-white/70 backdrop-blur-[0px] border-b-[5px] border-transparent"
