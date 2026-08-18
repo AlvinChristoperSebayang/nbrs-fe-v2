@@ -7,16 +7,16 @@ import { craftFetch } from "./craft";
 import { toImageSource } from "./media";
 import { SECTORS_DATA, SectorItem } from "./sectors-data";
 
-type Asset = { mobile?: string; tablet?: string; desktop?: string };
+type Asset = { url?: string; mobile?: string; tablet?: string; desktop?: string; width?: number | null; height?: number | null; title?: string | null };
 type Project = { id: string; title: string; slug: string; uri: string | null; proHdrHeading: string | null; thumbnail?: Asset[]; catStatus: Array<{ title: string }>; catDiscipline: Array<{ title: string }> };
 type FeatureBlock = { image: Asset[]; leftColumnHeading: string | null; leftColumnText: string | null; rightColumnHeading: string | null; rightColumnText: string | null };
 type SectorFeature = { sectorFeatureHeading: string | null; sectorFeatureText: string | null; sectorFeatureImage: Asset[] };
 type QuoteBlock = { quote: string | null; person: Array<{ title: string; PplName: string | null; pplProfileImage: Asset[] }> };
-type Category = { id: string; title: string; slug: string; accentColor: string | null; seoPageTitle: string | null; seoMetaDescription: string | null; catHdrHeading: string | null; catHdrSubheading: string | null; sectorServicesIntro: string | null; sectorHeritageAdvisoryServices: string | null; sectorHeritageConservationServices: string | null; catHdrImage: Asset[]; catOvrHeading: string | null; catOvrText: string | null; catOverImageText: FeatureBlock[]; sectorFeatures: SectorFeature[]; catFeaturedProjects: Project[]; catSelectedProjects: Project[]; catPclPerson: QuoteBlock[]; ctaSection: { ctaSectionBackgroundImage: Asset[]; ctaSectionHeading: string | null; ctaSectionDescription: string | null; ctaSectionButtonLabel: string | null; ctaSectionButtonUrl: string | null } | null };
+type Category = { id: string; title: string; slug: string; accentColor: string | null; seoPageTitle: string | null; seoMetaDescription: string | null; seoImage: Asset[]; catHdrHeading: string | null; catHdrSubheading: string | null; sectorServicesIntro: string | null; sectorHeritageAdvisoryServices: string | null; sectorHeritageConservationServices: string | null; catHdrImage: Asset[]; catOvrHeading: string | null; catOvrText: string | null; catOverImageText: FeatureBlock[]; sectorFeatures: SectorFeature[]; catFeaturedProjects: Project[]; catSelectedProjects: Project[]; catPclPerson: QuoteBlock[]; ctaSection: { ctaSectionBackgroundImage: Asset[]; ctaSectionHeading: string | null; ctaSectionDescription: string | null; ctaSectionButtonLabel: string | null; ctaSectionButtonUrl: string | null } | null };
 type Response = { category: Category[] };
 
 export type SectorDetailContent = {
-  title: string; description: string; image: ImageSource; principlesTitle: string; principlesDescription: string; principlesImages: ImageSource[]; features: FeatureItem[]; backgroundColor: string; heritageServices?: { intro: string; advisory: string[]; conservation: string[] }; keyProjects: KeyProjectItem[]; tableProjects: ProjectTableRow[]; quote?: { image: ImageSource; text: string; author: string }; cta: CtaContent; seoTitle: string; seoDescription: string;
+  title: string; description: string; image: ImageSource; principlesTitle: string; principlesDescription: string; principlesImages: ImageSource[]; features: FeatureItem[]; backgroundColor: string; heritageServices?: { intro: string; advisory: string[]; conservation: string[] }; keyProjects: KeyProjectItem[]; tableProjects: ProjectTableRow[]; quote?: { image: ImageSource; text: string; author: string }; cta: CtaContent; cmsSeoTitle: string | null; seoDescription: string; seoImage: Asset | null;
 };
 
 const crop = (width: number, height: number, quality = 80) => `url @transform(width: ${width}, height: ${height}, mode: "crop", format: "webp", quality: ${quality}, immediately: true)`;
@@ -32,8 +32,8 @@ const QUERY = /* GraphQL */ `
 query SectorDetail($slug: [String]!) {
   category: categories(group: "sector", slug: $slug, limit: 1) {
     ... on sector_Category {
-      id title slug accentColor seoPageTitle seoMetaDescription catHdrHeading catHdrSubheading sectorServicesIntro sectorHeritageAdvisoryServices sectorHeritageConservationServices
-      catHdrImage { ${heroImage} }
+      id title slug accentColor seoPageTitle seoMetaDescription seoImage { url width height title } catHdrHeading catHdrSubheading sectorServicesIntro sectorHeritageAdvisoryServices sectorHeritageConservationServices
+      catHdrImage { url width height title ${heroImage} }
       catOvrHeading catOvrText
       catOverImageText { ... on block3_Entry { image { ${landscapeImage} } leftColumnHeading leftColumnText rightColumnHeading rightColumnText } }
       sectorFeatures { ... on sectorFeature_Entry { sectorFeatureHeading sectorFeatureText sectorFeatureImage { ${landscapeImage} } } }
@@ -52,7 +52,10 @@ const FALLBACK_CTA: CtaContent = {
 };
 
 function cleanHtml(value: string | null | undefined): string {
-  return value?.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim() ?? "";
+  return value
+    ?.replace(/<[^>]*>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim() ?? "";
 }
 
 function projectHref(project: Pick<Project, "uri" | "slug">): string {
@@ -73,8 +76,9 @@ function buildFallback(fallback: SectorItem): SectorDetailContent {
     tableProjects: fallback.tableProjects,
     quote: fallback.quote,
     cta: FALLBACK_CTA,
-    seoTitle: fallback.label,
+    cmsSeoTitle: null,
     seoDescription: fallback.heroSubtitle,
+    seoImage: null,
   };
 }
 
@@ -125,8 +129,9 @@ export async function getSectorDetailContent(slug: string): Promise<SectorDetail
       tableProjects: tableProjects.length ? tableProjects : fallback.tableProjects,
       quote: quoteBlock && person && quoteImage ? { image: quoteImage, text: quoteBlock.quote!.trim(), author: person.PplName?.trim() || person.title } : fallback.quote,
       cta: mapCta(category, FALLBACK_CTA),
-      seoTitle: category.seoPageTitle?.trim() || category.title,
-      seoDescription: category.seoMetaDescription?.trim() || category.catHdrSubheading?.trim() || fallback.heroSubtitle,
+      cmsSeoTitle: category.seoPageTitle?.trim() || null,
+      seoDescription: cleanHtml(category.seoMetaDescription) || category.catHdrSubheading?.trim() || fallback.heroSubtitle,
+      seoImage: category.seoImage?.[0] ?? category.catHdrImage?.[0] ?? null,
     };
   } catch (error) {
     console.warn(`Failed to fetch sector detail for ${slug}, using local fallback:`, error);

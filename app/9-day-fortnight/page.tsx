@@ -1,12 +1,20 @@
 import type { Metadata } from "next";
 import { Container } from "@/components/ui/Container";
 import { getNineDayFortnightPageContent } from "@/lib/nine-day-fortnight";
+import { createPageMetadata } from "@/lib/seo";
 
 export const revalidate = 60;
 
 export async function generateMetadata(): Promise<Metadata> {
   const page = await getNineDayFortnightPageContent();
-  return { title: page.seoTitle, description: page.seoDescription };
+  return createPageMetadata({
+    pathname: "/9-day-fortnight",
+    title: page.title,
+    cmsTitle: page.cmsSeoTitle,
+    description: page.seoDescription,
+    image: page.seoImage,
+    imageAlt: page.title,
+  });
 }
 
 export default async function NineDayFortnightPage() {

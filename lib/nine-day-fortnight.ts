@@ -5,11 +5,19 @@ type RawTextBlock = {
   text: string | null;
 };
 
+type RawSeoImage = {
+  url: string | null;
+  width: number | null;
+  height: number | null;
+  title: string | null;
+};
+
 type NineDayFortnightEntry = {
   pageHeading: string | null;
   pageSubheading: string | null;
   seoPageTitle: string | null;
   seoMetaDescription: string | null;
+  seoImage: RawSeoImage[];
   blocks: RawTextBlock[];
 };
 
@@ -21,8 +29,9 @@ export type NineDayFortnightPageContent = {
   title: string;
   description: string;
   contentHtml: string;
-  seoTitle: string;
+  cmsSeoTitle: string | null;
   seoDescription: string;
+  seoImage: RawSeoImage | null;
 };
 
 const FALLBACK: NineDayFortnightPageContent = {
@@ -33,9 +42,10 @@ const FALLBACK: NineDayFortnightPageContent = {
     <p>Our operating hours are 8:15 am to 5:30 pm, Monday to Friday, and we are closed on Fridays on alternating weeks.</p>
     <p>At NBRS, we believe that a 9-day fortnight and flexible working arrangements help to improve employee morale, productivity, and overall well-being.</p>
   `,
-  seoTitle: "9-Day Fortnight | NBRS",
+  cmsSeoTitle: null,
   seoDescription:
     "Learn about the NBRS 9-day fortnight and our commitment to a healthy work-life balance.",
+  seoImage: null,
 };
 
 const QUERY = /* GraphQL */ `
@@ -46,6 +56,12 @@ const QUERY = /* GraphQL */ `
         pageSubheading
         seoPageTitle
         seoMetaDescription
+        seoImage {
+          url
+          width
+          height
+          title
+        }
         blocks {
           __typename
           ... on blocks_text_BlockType {
@@ -59,6 +75,10 @@ const QUERY = /* GraphQL */ `
 
 function clean(value: string | null | undefined): string {
   return value?.trim() ?? "";
+}
+
+function toSeoImage(asset: RawSeoImage | undefined): RawSeoImage | null {
+  return asset?.url?.trim() ? asset : null;
 }
 
 export async function getNineDayFortnightPageContent(): Promise<NineDayFortnightPageContent> {
@@ -77,8 +97,9 @@ export async function getNineDayFortnightPageContent(): Promise<NineDayFortnight
       title: clean(entry.pageHeading) || FALLBACK.title,
       description: clean(entry.pageSubheading) || FALLBACK.description,
       contentHtml: clean(textBlock?.text) || FALLBACK.contentHtml,
-      seoTitle: clean(entry.seoPageTitle) || FALLBACK.seoTitle,
+      cmsSeoTitle: clean(entry.seoPageTitle) || null,
       seoDescription: clean(entry.seoMetaDescription) || FALLBACK.seoDescription,
+      seoImage: toSeoImage(entry.seoImage?.[0]),
     };
   } catch (error) {
     if (process.env.NODE_ENV === "development") {

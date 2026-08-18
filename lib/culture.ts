@@ -1,12 +1,15 @@
 import { craftFetch } from "./craft";
-import { toImageSource } from "./media";
+import { toImageSource, toSeoImage, type RawSeoAsset, type SeoImage } from "./media";
 import type { CtaContent, ImageSource } from "./types";
 import type { InitiativeItem } from "@/components/people/InitiativesSection";
 
-type Asset = { mobile?: string; tablet?: string; desktop?: string };
+type Asset = { url?: string; mobile?: string; tablet?: string; desktop?: string; width?: number | null; height?: number | null; title?: string | null };
 type Entry = {
   pageHeading: string | null;
   pageSubheading: string | null;
+  seoPageTitle: string | null;
+  seoMetaDescription: string | null;
+  seoImage: RawSeoAsset[];
   pageHeroImage: Asset[];
   cultureValuesHeading: string | null;
   cultureValuesDescription: string | null;
@@ -28,6 +31,9 @@ export type CultureContent = {
   values: { heading: string; description: string; image: ImageSource } | null;
   initiatives: { heading: string; items: InitiativeItem[] } | null;
   cta: CtaContent | null;
+  cmsSeoTitle: string | null;
+  seoDescription: string | null;
+  seoImage: SeoImage | null;
 };
 
 const heroImage = `mobile: url @transform(width: 600, height: 800, mode: "crop", format: "webp", quality: 80, immediately: true) tablet: url @transform(width: 1440, height: 1000, mode: "crop", format: "webp", quality: 82, immediately: true) desktop: url @transform(width: 2400, height: 1200, mode: "crop", format: "webp", quality: 85, immediately: true)`;
@@ -48,7 +54,10 @@ const QUERY = /* GraphQL */ `
       ... on culture_Entry {
         pageHeading
         pageSubheading
-        pageHeroImage { ${heroImage} }
+        seoPageTitle
+        seoMetaDescription
+        seoImage { url width height title }
+        pageHeroImage { url width height title ${heroImage} }
         cultureValuesHeading
         cultureValuesDescription
         cultureValuesImage { ${valuesDiagramImage} }
@@ -74,7 +83,7 @@ const QUERY = /* GraphQL */ `
 export async function getCultureContent(): Promise<CultureContent> {
   const data = await craftFetch<{ entries: Entry[] }>(QUERY);
   const entry = data.entries[0];
-  if (!entry) return { hero: null, values: null, initiatives: null, cta: null };
+  if (!entry) return { hero: null, values: null, initiatives: null, cta: null, cmsSeoTitle: null, seoDescription: null, seoImage: null };
 
   const hero = toImageSource(entry.pageHeroImage[0]);
   const valuesImage = toImageSource(entry.cultureValuesImage[0]);
@@ -96,5 +105,8 @@ export async function getCultureContent(): Promise<CultureContent> {
       buttonText: entry.ctaSection.ctaSectionButtonLabel?.trim() || undefined,
       buttonHref: entry.ctaSection.ctaSectionButtonUrl?.trim() || undefined,
     } : null,
+    cmsSeoTitle: entry.seoPageTitle?.trim() || null,
+    seoDescription: entry.seoMetaDescription?.trim() || entry.pageSubheading?.trim() || null,
+    seoImage: toSeoImage(entry.seoImage?.[0]) || toSeoImage(entry.pageHeroImage?.[0]),
   };
 }

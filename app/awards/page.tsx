@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { createPageMetadata } from "@/lib/seo";
 import { Hero } from "@/components/ui/Hero";
 import { Container } from "@/components/ui/Container";
 import { AboutSection } from "@/components/home/AboutSection";
@@ -6,9 +6,10 @@ import { CtaSection } from "@/components/cta/CtaSection";
 import { AwardsSection } from "@/components/awards/AwardsSection";
 import { getAwardsPage } from "@/lib/awards";
 
-export const metadata: Metadata = {
-  title: "Awards",
-};
+export async function generateMetadata() {
+  const page = await getAwardsPage();
+  return createPageMetadata({ pathname: "/awards", title: page.hero.title, cmsTitle: page.cmsSeoTitle, description: page.seoDescription, image: page.seoImage ?? page.hero.image });
+}
 
 export default async function AwardsPage() {
   const page = await getAwardsPage();

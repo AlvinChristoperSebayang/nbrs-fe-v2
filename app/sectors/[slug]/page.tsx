@@ -10,6 +10,7 @@ import { SectorQuoteSection } from "@/components/sectors/SectorQuoteSection";
 import { Hero } from "@/components/ui/Hero";
 import { getSectorDetailContent } from "@/lib/sector-detail";
 import { SECTORS_DATA } from "@/lib/sectors-data";
+import { createPageMetadata } from "@/lib/seo";
 
 export function generateStaticParams() {
   return SECTORS_DATA.map((sector) => ({ slug: sector.slug }));
@@ -20,10 +21,24 @@ export async function generateMetadata({
 }: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const sector = await getSectorDetailContent((await params).slug);
-  if (!sector) return { title: "Sector Not Found" };
+  const { slug } = await params;
+  const sector = await getSectorDetailContent(slug);
+  if (!sector) {
+    return createPageMetadata({
+      pathname: `/sectors/${slug}`,
+      title: "Sector Not Found",
+      noIndex: true,
+    });
+  }
 
-  return { title: sector.seoTitle, description: sector.seoDescription };
+  return createPageMetadata({
+    pathname: `/sectors/${slug}`,
+    title: sector.title,
+    cmsTitle: sector.cmsSeoTitle,
+    description: sector.seoDescription,
+    image: sector.seoImage ?? sector.image,
+    imageAlt: sector.title,
+  });
 }
 
 export default async function SingleSectorPage({

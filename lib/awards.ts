@@ -1,5 +1,5 @@
 import { craftFetch } from "./craft";
-import { toImageSource, type RawResponsiveAsset } from "./media";
+import { toImageSource, toSeoImage, type RawResponsiveAsset, type RawSeoAsset, type SeoImage } from "./media";
 import type { CtaContent, ImageSource } from "./types";
 import { DUMMY_AWARDS, type AwardItem } from "./awards-data";
 
@@ -17,6 +17,10 @@ type RawBlock =
       sectionHeading: string | null;
       text: string | null;
       image: RawResponsiveAsset[];
+      links: Array<{
+        linkText: string | null;
+        linkUrl: string | null;
+      }>;
     }
   | {
       __typename: "blocks_awards_BlockType";
@@ -28,7 +32,10 @@ type RawBlock =
 type RawPage = {
   pageHeading: string | null;
   pageSubheading: string | null;
-  pageHeroImage: RawResponsiveAsset[];
+  seoPageTitle: string | null;
+  seoMetaDescription: string | null;
+  seoImage: RawSeoAsset[];
+  pageHeroImage: Array<RawResponsiveAsset & RawSeoAsset>;
   pageHeroCtaLabel: string | null;
   pageHeroCtaUrl: string | null;
   pageIntroCtaLabel: string | null;
@@ -61,6 +68,9 @@ export type AwardsPageContent = {
   intro: { heading: string; description: string; image: ImageSource; button: { text: string; href: string } };
   awards: { heading: string; description: string; items: AwardItem[] };
   cta: CtaContent;
+  cmsSeoTitle: string | null;
+  seoDescription: string;
+  seoImage: SeoImage | null;
 };
 
 const FALLBACK_CTA: CtaContent = {
@@ -84,7 +94,7 @@ const FALLBACK: AwardsPageContent = {
     heading: "BEST IN PRACTICE – AIA AWARD 2022",
     description: "This recognition reflects NBRS' commitment to creating life-changing environments that elevate public value and human experience.",
     image: "/images/about-us-about.png",
-    button: { text: "Learn more", href: "/news" },
+    button: { text: "Learn more", href: "/news/winner-best-in-practice-aia-2022" },
   },
   awards: {
     heading: "RECOGNISING WHAT MATTERS",
@@ -92,6 +102,9 @@ const FALLBACK: AwardsPageContent = {
     items: DUMMY_AWARDS,
   },
   cta: FALLBACK_CTA,
+  cmsSeoTitle: null,
+  seoDescription: "Our work is recognised for elevating everyday experience through purposeful, people-centred design.",
+  seoImage: null,
 };
 
 const PROJECT_SLUGS = [
@@ -113,7 +126,14 @@ const AWARDS_QUERY = /* GraphQL */ `
       ... on pages_Entry {
         pageHeading
         pageSubheading
+        seoPageTitle
+        seoMetaDescription
+        seoImage { url width height title }
         pageHeroImage {
+          url
+          width
+          height
+          title
           mobile: url @transform(width: 600, height: 800, mode: "crop", format: "webp", quality: 80, immediately: true)
           tablet: url @transform(width: 1440, height: 1000, mode: "crop", format: "webp", quality: 82, immediately: true)
           desktop: url @transform(width: 2400, height: 1200, mode: "crop", format: "webp", quality: 85, immediately: true)
@@ -131,6 +151,12 @@ const AWARDS_QUERY = /* GraphQL */ `
               mobile: url @transform(width: 600, height: 450, mode: "crop", format: "webp", quality: 80, immediately: true)
               tablet: url @transform(width: 900, height: 675, mode: "crop", format: "webp", quality: 82, immediately: true)
               desktop: url @transform(width: 1200, height: 900, mode: "crop", format: "webp", quality: 85, immediately: true)
+            }
+            links {
+              ... on links_Entry {
+                linkText
+                linkUrl
+              }
             }
           }
           ... on blocks_awards_BlockType {
@@ -235,6 +261,7 @@ export async function getAwardsPage(): Promise<AwardsPageContent> {
     if (!entry) return FALLBACK;
 
     const intro = entry.blocks.find((block): block is Extract<RawBlock, { __typename: "blocks_text_BlockType" }> => block.__typename === "blocks_text_BlockType");
+    const introLink = intro?.links?.[0];
     const awardsBlock = entry.blocks.find((block): block is Extract<RawBlock, { __typename: "blocks_awards_BlockType" }> => block.__typename === "blocks_awards_BlockType");
     const items = awardsBlock ? mapAwards(awardsBlock.awards, data.projects) : [];
     const cta = entry.ctaSection;
@@ -250,7 +277,10 @@ export async function getAwardsPage(): Promise<AwardsPageContent> {
         heading: clean(intro?.sectionHeading) || FALLBACK.intro.heading,
         description: clean(intro?.text) || FALLBACK.intro.description,
         image: toImageSource(intro?.image?.[0]) || FALLBACK.intro.image,
-        button: { text: clean(entry.pageIntroCtaLabel) || FALLBACK.intro.button.text, href: clean(entry.pageIntroCtaUrl) || FALLBACK.intro.button.href },
+        button: {
+          text: clean(introLink?.linkText) || clean(entry.pageIntroCtaLabel) || FALLBACK.intro.button.text,
+          href: clean(introLink?.linkUrl) || clean(entry.pageIntroCtaUrl) || FALLBACK.intro.button.href,
+        },
       },
       awards: {
         heading: clean(awardsBlock?.sectionHeading) || FALLBACK.awards.heading,
@@ -266,6 +296,9 @@ export async function getAwardsPage(): Promise<AwardsPageContent> {
         secondaryButtonText: clean(cta?.ctaSectionSecondaryButtonLabel) || FALLBACK_CTA.secondaryButtonText,
         secondaryButtonHref: clean(cta?.ctaSectionSecondaryButtonUrl) || FALLBACK_CTA.secondaryButtonHref,
       },
+      cmsSeoTitle: entry.seoPageTitle?.trim() || null,
+      seoDescription: entry.seoMetaDescription?.trim() || clean(entry.pageSubheading) || FALLBACK.seoDescription,
+      seoImage: toSeoImage(entry.seoImage?.[0]) || toSeoImage(entry.pageHeroImage?.[0]),
     };
   } catch {
     return FALLBACK;

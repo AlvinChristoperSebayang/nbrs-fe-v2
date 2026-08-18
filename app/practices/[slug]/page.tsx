@@ -7,6 +7,7 @@ import { SectorsSection } from "@/components/home/SectorsSection";
 import { CtaSection } from "@/components/cta/CtaSection";
 import { getPracticeDetailContent } from "@/lib/practice-detail";
 import { PRACTICES_DATA } from "@/lib/practices-data";
+import { createPageMetadata } from "@/lib/seo";
 
 export function generateStaticParams() {
   return PRACTICES_DATA.map((item) => ({
@@ -19,13 +20,24 @@ export async function generateMetadata({
 }: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const practice = await getPracticeDetailContent((await params).slug);
-  if (!practice) return { title: "Practice Detail" };
+  const { slug } = await params;
+  const practice = await getPracticeDetailContent(slug);
+  if (!practice) {
+    return createPageMetadata({
+      pathname: `/practices/${slug}`,
+      title: "Practice Detail",
+      noIndex: true,
+    });
+  }
 
-  return {
-    title: practice.seoTitle,
+  return createPageMetadata({
+    pathname: `/practices/${slug}`,
+    title: practice.title,
+    cmsTitle: practice.cmsSeoTitle,
     description: practice.seoDescription,
-  };
+    image: practice.seoImage ?? practice.image,
+    imageAlt: practice.title,
+  });
 }
 
 export default async function PracticeDetailPage({

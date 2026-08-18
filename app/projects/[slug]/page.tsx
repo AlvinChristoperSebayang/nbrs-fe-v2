@@ -5,35 +5,33 @@ import { ProjectDetailHero } from "@/components/projects/ProjectDetailHero";
 import { ProjectDetailLegacyBody } from "@/components/projects/ProjectDetailLegacyBody";
 import { ProjectDetailV2Body } from "@/components/projects/ProjectDetailV2Body";
 import { KeyProjectsSection, type KeyProjectItem } from "@/components/sectors/KeyProjectsSection";
+import { createPageMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
-
-function getImageUrlString(source: unknown): string | undefined {
-  if (typeof source === "string") return source;
-  if (source && typeof source === "object" && "src" in source && typeof (source as { src: unknown }).src === "string") {
-    return (source as { src: string }).src;
-  }
-  return undefined;
-}
 
 export async function generateMetadata(
   props: PageProps<"/projects/[slug]">
 ): Promise<Metadata> {
   const { slug } = await props.params;
   const project = await getProjectDetail(slug);
-  if (!project) return { title: "Project Not Found" };
+  if (!project) {
+    return createPageMetadata({
+      pathname: `/projects/${slug}`,
+      title: "Project Not Found",
+      noIndex: true,
+    });
+  }
 
-  const title = project.seoPageTitle || project.heading || "Project Detail";
-  const heroImageRaw = project.splash?.find((slide) => slide.imageUrl)?.imageUrl ?? project.thumbnailUrl;
-  const heroImageUrl = getImageUrlString(heroImageRaw);
+  const title = project.heading || "Project Detail";
 
-  return {
+  return createPageMetadata({
+    pathname: `/projects/${slug}`,
     title,
-    openGraph: {
-      title,
-      images: heroImageUrl ? [{ url: heroImageUrl }] : undefined,
-    },
-  };
+    cmsTitle: project.seoPageTitle,
+    description: project.seoMetaDescription,
+    image: project.seoImage,
+    imageAlt: project.heading,
+  });
 }
 
 export default async function ProjectPage(

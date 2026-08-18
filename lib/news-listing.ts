@@ -1,5 +1,5 @@
 import { craftFetch } from "./craft";
-import { toImageSource } from "./media";
+import { toImageSource, toSeoImage, type RawSeoAsset, type SeoImage } from "./media";
 import type { ImageSource, ResponsiveImage } from "./types";
 
 export const NEWS_PAGE_SIZE = 12;
@@ -15,6 +15,9 @@ export type NewsListingResult = {
   pageHeading: string | null;
   pageSubheading: string | null;
   pageHeroImage: ImageSource | null;
+  cmsSeoTitle: string | null;
+  seoDescription: string | null;
+  seoImage: SeoImage | null;
   articles: NewsListItem[];
   total: number;
 };
@@ -30,6 +33,9 @@ type NewsListingResponse = {
   page: Array<{
     pageHeading: string | null;
     pageSubheading: string | null;
+    seoPageTitle: string | null;
+    seoMetaDescription: string | null;
+    seoImage: RawSeoAsset[];
     pageHeroImage: RawAsset[];
   }>;
   articles: Array<{
@@ -47,6 +53,9 @@ const NEWS_LISTING_QUERY = /* GraphQL */ `
       ... on latestNews_Entry {
         pageHeading
         pageSubheading
+        seoPageTitle
+        seoMetaDescription
+        seoImage { url width height title }
         pageHeroImage {
           mobile: url @transform(width: 768, immediately: true)
           tablet: url @transform(width: 1440, immediately: true)
@@ -99,6 +108,9 @@ export async function getNewsListing({
       pageHeading: page?.pageHeading ?? null,
       pageSubheading: page?.pageSubheading ?? null,
       pageHeroImage: toImageSource(page?.pageHeroImage?.[0]),
+      cmsSeoTitle: page?.seoPageTitle?.trim() || null,
+      seoDescription: page?.seoMetaDescription?.trim() || page?.pageSubheading?.trim() || null,
+      seoImage: toSeoImage(page?.seoImage?.[0]),
       articles: (data.articles ?? []).map((article) => ({
         id: article.id,
         slug: article.slug,
@@ -113,6 +125,9 @@ export async function getNewsListing({
       pageHeading: "NEWS & INSIGHTS",
       pageSubheading: null,
       pageHeroImage: null,
+      cmsSeoTitle: null,
+      seoDescription: null,
+      seoImage: null,
       articles: [],
       total: 0,
     };

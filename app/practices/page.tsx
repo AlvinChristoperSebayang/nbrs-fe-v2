@@ -1,12 +1,13 @@
-import type { Metadata } from "next";
+import { createPageMetadata } from "@/lib/seo";
 import { Hero } from "@/components/ui/Hero";
 import { AboutSection } from "@/components/home/AboutSection";
 import { PracticesHoverSection } from "@/components/practices/PracticesHoverSection";
 import { getPracticesPageContent } from "@/lib/practices-page";
 
-export const metadata: Metadata = {
-  title: "Our Practices",
-};
+export async function generateMetadata() {
+  const page = await getPracticesPageContent();
+  return createPageMetadata({ pathname: "/practices", title: page.hero.title, description: page.hero.description, image: page.hero.image });
+}
 
 export default async function PracticesPage() {
   const content = await getPracticesPageContent();

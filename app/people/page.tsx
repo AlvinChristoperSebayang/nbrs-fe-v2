@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { createPageMetadata } from "@/lib/seo";
 import { Hero } from "@/components/ui/Hero";
 import { AboutSection } from "@/components/home/AboutSection";
 import { PeopleNavigationGrid } from "@/components/people/PeopleNavigationGrid";
@@ -6,9 +6,10 @@ import { FastFactsSection } from "@/components/people/FastFactsSection";
 import { getDesigningForPeoplePage } from "@/lib/designing-for-people";
 import { CtaSection } from "@/components/cta/CtaSection";
 
-export const metadata: Metadata = {
-  title: "People | Designing for People",
-};
+export async function generateMetadata() {
+  const page = await getDesigningForPeoplePage();
+  return createPageMetadata({ pathname: "/people", title: page.hero.title, cmsTitle: page.cmsSeoTitle, description: page.seoDescription, image: page.seoImage ?? page.hero.image });
+}
 
 export default async function PeoplePage() {
   const page = await getDesigningForPeoplePage();

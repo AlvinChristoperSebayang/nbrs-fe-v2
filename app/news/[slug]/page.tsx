@@ -5,6 +5,7 @@ import { Container } from "@/components/ui/Container";
 import { CtaSection } from "@/components/cta/CtaSection";
 import { NewsArticleContent } from "@/components/news/NewsArticleContent";
 import { getNewsDetail } from "@/lib/news-detail";
+import { createPageMetadata } from "@/lib/seo";
 
 export const revalidate = 60;
 
@@ -16,10 +17,16 @@ export async function generateMetadata({
   const { slug } = await params;
   const article = await getNewsDetail(slug);
 
-  return {
-    title: article?.seoTitle ?? article?.title ?? "News Article",
-    description: article?.seoDescription ?? undefined,
-  };
+  return createPageMetadata({
+    pathname: `/news/${slug}`,
+    title: article?.title ?? "News Article",
+    cmsTitle: article?.seoTitle,
+    description: article?.seoDescription,
+    image: article?.seoImage ?? article?.hero,
+    imageAlt: article?.title,
+    type: "article",
+    noIndex: !article,
+  });
 }
 
 export default async function NewsDetailPage({
