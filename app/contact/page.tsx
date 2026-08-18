@@ -1,6 +1,9 @@
 import { ContactForm } from "@/components/contact/ContactForm";
 import { Container } from "@/components/ui/Container";
 import { getContactPageContent } from "@/lib/contact";
+import { createPageMetadata } from "@/lib/seo";
+
+export const metadata = createPageMetadata({ pathname: "/contact", title: "Contact Us" });
 
 export default async function ContactPage() {
   const content = await getContactPageContent();

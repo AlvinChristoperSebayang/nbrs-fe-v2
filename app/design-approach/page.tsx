@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { createPageMetadata } from "@/lib/seo";
 import { CtaSection } from "@/components/cta/CtaSection";
 import { GridEffect } from "@/components/ui/GridEffect";
 import { Hero } from "@/components/ui/Hero";
@@ -7,7 +7,7 @@ import { TextGrid } from "@/components/ui/TextGrid";
 import { DesignApproachProjectSection } from "@/components/design-approach/DesignApproachProjectSection";
 import { getDesignApproachContent } from "@/lib/design-approach";
 
-export const metadata: Metadata = { title: "Design Approach" };
+export const metadata = createPageMetadata({ pathname: "/design-approach", title: "Design Approach" });
 
 export default async function DesignApproachPage() {
   const content = await getDesignApproachContent();

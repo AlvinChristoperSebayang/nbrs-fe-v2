@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { createPageMetadata } from "@/lib/seo";
 import { AboutPracticeSection } from "@/components/about/AboutPracticeSection";
 import { AboutTimelineSection } from "@/components/about/AboutTimelineSection";
 import { CtaSection } from "@/components/cta/CtaSection";
@@ -7,9 +7,7 @@ import { GridEffect } from "@/components/ui/GridEffect";
 import { Hero } from "@/components/ui/Hero";
 import { ABOUT_FALLBACK, getAboutContent } from "@/lib/about";
 
-export const metadata: Metadata = {
-  title: "About Us",
-};
+export const metadata = createPageMetadata({ pathname: "/about", title: "About Us" });
 
 export default async function AboutPage() {
   const about = await getAboutContent().catch(() => ABOUT_FALLBACK);

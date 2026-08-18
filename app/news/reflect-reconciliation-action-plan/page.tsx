@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { createPageMetadata } from "@/lib/seo";
 import { Container } from "@/components/ui/Container";
 import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
 import { Hero } from "@/components/ui/Hero";
@@ -6,10 +6,11 @@ import { getRapPage } from "@/lib/rap";
 
 export const revalidate = 60;
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
+  pathname: "/news/reflect-reconciliation-action-plan",
   title: "Reflect Reconciliation Action Plan",
   description: "NBRS Reflect Reconciliation Action Plan",
-};
+});
 
 function Arrow() {
   return (

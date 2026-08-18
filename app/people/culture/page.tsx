@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { createPageMetadata } from "@/lib/seo";
 import { Hero } from "@/components/ui/Hero";
 import { CareersHero } from "@/components/people/CareersHero";
 import { CultureValuesSection } from "@/components/people/CultureValuesSection";
@@ -6,9 +6,7 @@ import { InitiativesSection } from "@/components/people/InitiativesSection";
 import { CtaSection } from "@/components/cta/CtaSection";
 import { getCultureContent } from "@/lib/culture";
 
-export const metadata: Metadata = {
-  title: "Our Culture | Our People",
-};
+export const metadata = createPageMetadata({ pathname: "/people/culture", title: "Our Culture | Our People" });
 
 export default async function PeopleCulturePage() {
   const page = await getCultureContent();

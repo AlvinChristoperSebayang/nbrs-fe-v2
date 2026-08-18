@@ -1,12 +1,10 @@
-import type { Metadata } from "next";
+import { createPageMetadata } from "@/lib/seo";
 import { CtaSection } from "@/components/cta/CtaSection";
 import { SectorsSection } from "@/components/home/SectorsSection";
 import { Hero } from "@/components/ui/Hero";
 import { getSectorsPageContent } from "@/lib/sectors-page";
 
-export const metadata: Metadata = {
-  title: "Exploring Our Sectors",
-};
+export const metadata = createPageMetadata({ pathname: "/sectors", title: "Exploring Our Sectors" });
 
 export default async function SectorsPage() {
   const content = await getSectorsPageContent();
