@@ -94,7 +94,7 @@ export async function getEnvisionContent(): Promise<EnvisionContent> {
   });
   const faqItems = entry.envFaqs.flatMap((item) => {
     const title = plainText(item.heading);
-    const content = plainText(item.text);
+    const content = item.text?.trim() ?? "";
     return title && content ? [{ id: item.id, title, content }] : [];
   });
   const ctaImageSource = toImageSource(entry.ctaSection?.ctaSectionBackgroundImage[0]);
