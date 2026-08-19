@@ -109,7 +109,7 @@ export async function getSectorDetailContent(slug: string): Promise<SectorDetail
 
     const heritageServices = category.slug === "heritage" && category.sectorHeritageAdvisoryServices?.trim()
       ? {
-        intro: cleanHtml(category.sectorServicesIntro),
+        intro: category.sectorServicesIntro?.trim() ?? "",
         advisory: category.sectorHeritageAdvisoryServices.split(/\r?\n/).map((item) => item.trim()).filter(Boolean),
         conservation: (category.sectorHeritageConservationServices ?? "").split(/\r?\n/).map((item) => item.trim()).filter(Boolean),
       }
