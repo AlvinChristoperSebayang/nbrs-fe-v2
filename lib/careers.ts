@@ -92,7 +92,7 @@ export async function getCareersContent(): Promise<CareersContent> {
     const faq = entry.blocks.find((block) => block.__typename === "blocks_faqs_BlockType");
     const items = (faq?.envFaqs ?? []).flatMap((item) => {
       const title = plainText(item.heading);
-      const content = plainText(item.text);
+      const content = item.text?.trim() ?? "";
       return title && content ? [{ id: item.id, title, content }] : [];
     });
     const ctaImageSource = toImageSource(entry.ctaSection?.ctaSectionBackgroundImage[0]);

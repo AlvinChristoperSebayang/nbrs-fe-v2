@@ -234,11 +234,10 @@ export function CareersAccordionSection({
                       }`}
                     >
                       <div className="overflow-hidden">
-                        <div className="px-6 pb-7 sm:px-7 font-sans text-base sm:text-lg text-zinc-800 leading-relaxed border-t border-zinc-100 pt-5 flex flex-col gap-4">
-                          {item.content.split("\n\n").map((para, idx) => (
-                            <p key={idx}>{para}</p>
-                          ))}
-                        </div>
+                        <div
+                          className="px-6 pb-7 pt-5 sm:px-7 font-sans text-base sm:text-lg text-zinc-800 leading-relaxed border-t border-zinc-100 [&_a]:underline [&_a]:underline-offset-4 [&_a:hover]:text-rose-600 [&_p]:mb-4 [&_p:last-child]:mb-0 [&_li]:ml-5 [&_ol]:list-decimal [&_ul]:list-disc"
+                          dangerouslySetInnerHTML={{ __html: item.content }}
+                        />
                       </div>
                     </div>
                   </div>
