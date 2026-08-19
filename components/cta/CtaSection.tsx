@@ -22,7 +22,8 @@ export function CtaSection({ content, cta, titleUppercase = true }: CtaSectionPr
     <section className="relative overflow-hidden">
       <ResponsiveImage
         src={data.image}
-        alt=""
+        alt={data.title || "NBRS Call to Action"}
+        title={data.title || "NBRS Call to Action"}
         className="absolute inset-0 h-full w-full object-cover"
         priority
       />
@@ -43,6 +44,8 @@ export function CtaSection({ content, cta, titleUppercase = true }: CtaSectionPr
               <Link
                 target={data.buttonHref.startsWith("http") ? "_blank" : undefined}
                 href={data.buttonHref}
+                title={data.buttonText}
+                aria-label={data.buttonText}
                 className="group inline-flex items-center justify-center gap-2 rounded-full bg-white px-3 py-3.5 sm:px-10 sm:py-4 text-sm sm:text-[20px] font-semibold text-[#D18148] transition hover:bg-white/90 uppercase"
               >
                 <span>{data.buttonText}</span>
@@ -66,6 +69,8 @@ export function CtaSection({ content, cta, titleUppercase = true }: CtaSectionPr
             {data.secondaryButtonText && data.secondaryButtonHref && (
               <Link
                 href={data.secondaryButtonHref}
+                title={data.secondaryButtonText}
+                aria-label={data.secondaryButtonText}
                 className="group inline-flex items-center justify-center gap-2 text-xs sm:text-[20px] uppercase tracking-wider text-white/90 transition-opacity hover:opacity-100 font-medium mt-1"
               >
                 <span>{data.secondaryButtonText}</span>

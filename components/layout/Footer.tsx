@@ -128,6 +128,8 @@ function FooterLinkGroup({
               <li key={link.label}>
                 <Link
                   href={link.href}
+                  title={link.label}
+                  aria-label={link.label}
                   className="text-sm lg:text-lg text-white/70 transition-colors duration-200 hover:text-white"
                 >
                   {link.label}
@@ -158,19 +160,23 @@ export function Footer({ content }: { content: FooterContent }) {
         <div className="grid grid-cols-1 gap-[35px] sm:grid-cols-2 lg:grid-cols-3">
           {/* Column 1: Business Info & Logo */}
           <div data-aos="fade-up" className="flex flex-col gap-8 order-1 lg:order-1">
-            <img
-              src="/images/logo/footer-logo.png"
-              alt="NBRS"
-              width={110}
-              height={40}
-            />
+            <Link href="/" aria-label="NBRS Home" title="NBRS Home" className="inline-block w-fit">
+              <img
+                src="/images/logo/logo-white-2.svg"
+                alt="NBRS"
+                title="NBRS"
+                width={180}
+                height={65}
+                className="w-[150px] sm:w-[165px] lg:w-[180px] h-auto object-contain"
+              />
+            </Link>
             {content.businessDetailsHtml && (
-              <div>
-              <h3 className="text-sm lg:text-lg tracking-wide text-white">
-                Business Details
-              </h3>
+              <div className="mt-4">
+                <h3 className="text-sm lg:text-lg tracking-wide text-white">
+                  Business Details
+                </h3>
                 <div
-                  className="mt-4 text-sm text-white/70 [&_p]:m-0 [&_p:first-child]:font-semibold [&_p:first-child]:text-white [&_p+p]:mt-1 [&_p+p+p]:mt-3"
+                  className="mt-4 text-sm text-white/70 [&_p]:m-0 [&_p:first-child]:font-semibold [&_p:first-child]:text-white [&_p+p]:mt-4 [&_p+p+p]:mt-4"
                   dangerouslySetInnerHTML={{ __html: content.businessDetailsHtml }}
                 />
               </div>
@@ -184,6 +190,8 @@ export function Footer({ content }: { content: FooterContent }) {
                 {content.contactMessage && content.contactLink ? (
                   <a
                     href={content.contactLink}
+                    title={content.contactMessage}
+                    aria-label={content.contactMessage}
                     className="mt-4 inline-block whitespace-pre-line text-sm lg:text-lg text-white/70 transition-colors hover:text-white"
                   >
                     {content.contactMessage}
@@ -202,6 +210,7 @@ export function Footer({ content }: { content: FooterContent }) {
                         target="_blank"
                         rel="noreferrer"
                         aria-label={social.label}
+                        title={social.label}
                         className="text-white/80 transition hover:text-white"
                       >
                         {social.icon}

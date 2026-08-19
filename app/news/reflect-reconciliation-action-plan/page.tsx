@@ -103,7 +103,8 @@ export default async function ReflectRapPage() {
       <section className="relative overflow-hidden">
         <ResponsiveImage
           src={page.cta.background}
-          alt=""
+          alt={page.cta.heading || "Reconciliation Action Plan CTA"}
+          title={page.cta.heading || "Reconciliation Action Plan CTA"}
           className="absolute inset-0 h-full w-full object-cover"
           priority
         />
@@ -117,6 +118,8 @@ export default async function ReflectRapPage() {
               href={page.cta.buttonUrl}
               target="_blank"
               rel="noreferrer"
+              title={page.cta.buttonLabel}
+              aria-label={page.cta.buttonLabel}
               className="mt-8 inline-flex items-center gap-3 rounded-full bg-white px-7 py-4 text-base uppercase text-[#D18148] transition hover:bg-white/90 sm:px-10 sm:py-5 sm:text-[20px]"
             >
               {page.cta.buttonLabel}

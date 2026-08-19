@@ -23,12 +23,12 @@ export function ProjectDetailHero({
 }) {
   return (
     <section>
-      <div className="bg-black text-white pt-16 sm:pt-0 lg:pt-[160px]">
-        <Container className="pt-4 sm:pt-8 pb-20 sm:pb-48 lg:pb-56">
+      <div className="bg-black text-white pt-16 sm:pt-0 lg:pt-[140px]">
+        <Container className="pt-4 sm:pt-8 pb-12 sm:pb-24 lg:pb-28">
           <div className="flex flex-col w-fit">
             <h1
               data-aos="fade-up"
-              className="font-heading mt-6 sm:mt-16 text-[38px] uppercase tracking-tight sm:text-[38px] lg:text-[70px] leading-[1]"
+              className="font-heading mt-6 sm:mt-12 text-[38px] uppercase tracking-tight sm:text-[38px] lg:text-[70px] leading-[1]"
             >
               {title}
             </h1>
@@ -42,7 +42,7 @@ export function ProjectDetailHero({
             <p
               data-aos="fade-up"
               data-aos-delay="200"
-              className="mt-6 lg:text-[20px] text-[16px] font-semibold"
+              className="mt-5 lg:text-[20px] text-[16px] font-semibold"
             >
               {subheading}
             </p>
@@ -60,7 +60,7 @@ export function ProjectDetailHero({
         </Container>
       </div>
 
-      <Container className="lg:-mt-[104px] overflow-hidden">
+      <Container className="lg:-mt-[60px] overflow-hidden">
         {image && (
           <figure
             
@@ -69,8 +69,7 @@ export function ProjectDetailHero({
             <ResponsiveImage
               src={image}
               alt={title}
-              data-aos="zoom-out"
-              data-aos-delay="150"
+              title={title}
               className="lg:aspect-[16/10] max-md:min-h-[438px] w-full object-cover"
             />
           </figure>

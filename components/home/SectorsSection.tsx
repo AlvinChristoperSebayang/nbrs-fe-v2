@@ -98,8 +98,8 @@ export function SectorsSection({ sectors, heading = "Designing spaces bespoke to
   return (
     <section className="bg-white py-8 lg:py-24">
       <Container>
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3 lg:gap-x-[30px] lg:gap-y-[35px]">
-          <div data-aos="fade-up" className="flex flex-col justify-center">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-6 lg:gap-x-[30px] lg:gap-y-[35px]">
+          <div data-aos="fade-up" className="lg:col-span-4 flex flex-col justify-center">
             <h2 className="font-heading text-4xl leading-[1.05] uppercase text-black sm:text-[40px] lg:text-[70px] flex flex-col items-start">
               {renderSectorsHeading(heading)}
             </h2>
@@ -109,9 +109,11 @@ export function SectorsSection({ sectors, heading = "Designing spaces bespoke to
             <Link
               key={sector.label}
               href={sector.href}
+              title={sector.label}
+              aria-label={sector.label}
               data-aos="fade-up"
               data-aos-delay={100 + index * 100}
-              className="group relative block aspect-[5/4] overflow-hidden rounded-[5px] lg:aspect-[37/30]"
+              className="group relative block aspect-[5/4] overflow-hidden rounded-[5px] lg:aspect-[37/30] lg:col-span-4"
             >
               <div
                 className={`absolute  top-[-100%] group-hover:top-0  duration-300 z-10 opacity-100  w-full h-full`}
@@ -148,6 +150,7 @@ export function SectorsSection({ sectors, heading = "Designing spaces bespoke to
               <ResponsiveImage
                 src={sector.image}
                 alt={sector.label}
+                title={sector.label}
                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 z-[5]"
               />
               <div className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-4 p-5 z-[6]">

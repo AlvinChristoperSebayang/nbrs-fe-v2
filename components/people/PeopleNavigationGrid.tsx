@@ -25,6 +25,8 @@ export function PeopleNavigationGrid({ cards }: { cards: SubMenuCard[] }) {
         <div data-aos="fade-up">
           <Link
             href={teamCard.href}
+            title={teamCard.title}
+            aria-label={teamCard.title}
             className="group relative grid grid-cols-1 lg:grid-cols-12 overflow-hidden bg-black text-white cursor-pointer"
           >
             {/* Top Colored Accent Bar Across Card */}
@@ -73,6 +75,7 @@ export function PeopleNavigationGrid({ cards }: { cards: SubMenuCard[] }) {
               <ResponsiveImage
                 src={teamCard.image}
                 alt={teamCard.title}
+                title={teamCard.title}
                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
               />
             </div>
@@ -85,6 +88,8 @@ export function PeopleNavigationGrid({ cards }: { cards: SubMenuCard[] }) {
             <div key={card.id} data-aos="fade-up" data-aos-delay={index * 100}>
               <Link
                 href={card.href}
+                title={card.title}
+                aria-label={card.title}
                 className="group relative flex flex-col justify-between overflow-hidden bg-black text-white p-6 sm:p-7 pt-8 min-h-[250px] md:aspect-[370/290] cursor-pointer"
               >
                 {/* Top Colored Accent Bar on Mobile */}
@@ -96,6 +101,7 @@ export function PeopleNavigationGrid({ cards }: { cards: SubMenuCard[] }) {
                 <ResponsiveImage
                   src={card.image}
                   alt={card.title}
+                  title={card.title}
                   className="hidden md:block absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
                 />
 

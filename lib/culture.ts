@@ -81,18 +81,19 @@ const QUERY = /* GraphQL */ `
 `;
 
 export async function getCultureContent(): Promise<CultureContent> {
-  const data = await craftFetch<{ entries: Entry[] }>(QUERY);
-  const entry = data.entries[0];
-  if (!entry) return { hero: null, values: null, initiatives: null, cta: null, cmsSeoTitle: null, seoDescription: null, seoImage: null };
+  try {
+    const data = await craftFetch<{ entries: Entry[] }>(QUERY);
+    const entry = data.entries[0];
+    if (!entry) return { hero: null, values: null, initiatives: null, cta: null, cmsSeoTitle: null, seoDescription: null, seoImage: null };
 
-  const hero = toImageSource(entry.pageHeroImage[0]);
-  const valuesImage = toImageSource(entry.cultureValuesImage[0]);
-  const items = entry.cultureInitiatives.flatMap((item, index) => {
-    const image = toImageSource(item.image[0]);
-    if (!item.title?.trim() || !item.description2?.trim() || !image) return [];
-    return [{ id: item.id, title: item.title, description: item.description2, image, reverse: index % 2 === 1 }];
-  });
-  const ctaImageSource = toImageSource(entry.ctaSection?.ctaSectionBackgroundImage[0]);
+    const hero = toImageSource(entry.pageHeroImage[0]);
+    const valuesImage = toImageSource(entry.cultureValuesImage[0]);
+    const items = entry.cultureInitiatives.flatMap((item, index) => {
+      const image = toImageSource(item.image[0]);
+      if (!item.title?.trim() || !item.description2?.trim() || !image) return [];
+      return [{ id: item.id, title: item.title, description: item.description2, image, reverse: index % 2 === 1 }];
+    });
+    const ctaImageSource = toImageSource(entry.ctaSection?.ctaSectionBackgroundImage[0]);
 
   return {
     hero: hero && entry.pageHeading?.trim() && entry.pageSubheading?.trim() ? { title: entry.pageHeading, description: entry.pageSubheading, image: hero } : null,
@@ -109,4 +110,8 @@ export async function getCultureContent(): Promise<CultureContent> {
     seoDescription: entry.seoMetaDescription?.trim() || entry.pageSubheading?.trim() || null,
     seoImage: toSeoImage(entry.seoImage?.[0]) || toSeoImage(entry.pageHeroImage?.[0]),
   };
+  } catch (error) {
+    console.warn("Failed to load culture content from Craft:", error);
+    return { hero: null, values: null, initiatives: null, cta: null, cmsSeoTitle: null, seoDescription: null, seoImage: null };
+  }
 }

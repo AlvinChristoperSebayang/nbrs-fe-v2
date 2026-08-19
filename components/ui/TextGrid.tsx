@@ -41,7 +41,7 @@ export function TextGrid({
               data-aos-delay={100 + index * 100}
               className="h-56 w-full overflow-hidden sm:h-48 lg:col-span-1 lg:h-[300px]"
             >
-              <ResponsiveImage src={src} alt="" className="h-full w-full object-cover" />
+              <ResponsiveImage src={src} alt="NBRS Architecture project" title="NBRS Architecture project" className="h-full w-full object-cover" />
             </div>
           ))}
         </div>
@@ -54,7 +54,7 @@ export function TextGrid({
               data-aos-delay={index * 100}
               className="h-56 w-full overflow-hidden sm:h-48 lg:h-[300px]"
             >
-              <ResponsiveImage src={src} alt="" className="h-full w-full object-cover" />
+              <ResponsiveImage src={src} alt="NBRS Architecture project gallery" title="NBRS Architecture project gallery" className="h-full w-full object-cover" />
             </div>
           ))}
         </div>

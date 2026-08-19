@@ -64,6 +64,7 @@ export function SocialInitiativesSection({ initiatives }: SocialInitiativesSecti
                     <ResponsiveImage
                       src={initiative.image}
                       alt={initiative.title}
+                      title={initiative.title}
                       className="aspect-[4/3] sm:aspect-[77/41] h-full w-full object-cover"
                     />
                   </div>
@@ -80,6 +81,7 @@ export function SocialInitiativesSection({ initiatives }: SocialInitiativesSecti
                     <ResponsiveImage
                       src={initiative.image}
                       alt={initiative.title}
+                      title={initiative.title}
                       className="aspect-[77/41] h-full w-full object-cover"
                     />
                   </div>

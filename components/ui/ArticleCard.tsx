@@ -50,6 +50,8 @@ export function ArticleCard({
   return (
     <Link
       href={linkHref}
+      title={item.title}
+      aria-label={item.title}
       className="group flex flex-col w-full overflow-hidden rounded-[3px] cursor-pointer"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -59,6 +61,7 @@ export function ArticleCard({
         <ResponsiveImage
           src={item.image}
           alt={item.title}
+          title={item.title}
           className="h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
         />
       </div>

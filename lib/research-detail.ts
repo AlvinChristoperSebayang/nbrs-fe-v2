@@ -360,16 +360,19 @@ export const getResearchDetail = cache(async (slug: string): Promise<ResearchDet
       }
     : null;
 
-  return {
-    slug: entry.slug,
-    title: entry.artHdrHeading?.trim() || entry.title,
-    subheading: entry.artHdrSubheading?.trim() || null,
-    publicationDate: entry.researchPublicationDate?.trim() || null,
-    category: entry.catSector?.[0]?.title ?? entry.artType?.[0]?.title ?? null,
-    categoryColor: entry.catSector?.[0]?.accentColor ?? null,
-    sectors: (entry.catSector ?? []).map((category) => category.title),
-    practices: (entry.catDiscipline ?? []).map((category) => category.title),
-    articleType: entry.artType?.[0]?.title ?? null,
+    const rawArtTypes = (entry.artType ?? []).map((category) => category.title).filter(Boolean);
+    const articleType = rawArtTypes.length > 0 ? rawArtTypes.join(" / ") : null;
+
+    return {
+      slug: entry.slug,
+      title: entry.artHdrHeading?.trim() || entry.title,
+      subheading: entry.artHdrSubheading?.trim() || null,
+      publicationDate: entry.researchPublicationDate?.trim() || null,
+      category: entry.catSector?.[0]?.title ?? entry.artType?.[0]?.title ?? null,
+      categoryColor: entry.catSector?.[0]?.accentColor ?? null,
+      sectors: (entry.catSector ?? []).map((category) => category.title),
+      practices: (entry.catDiscipline ?? []).map((category) => category.title),
+      articleType,
     // The detail banner accepts only the dedicated Hero Image. Thumbnail is intentionally
     // not a banner fallback because it can be a photographic card image rather than the
     // transparent artwork used over the Sector accent colour.

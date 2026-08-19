@@ -116,13 +116,16 @@ export function CareersHero({
   description,
   imageSrc = "/images/hero/hero4.png",
 }: CareersHeroProps) {
+  const altTitle = typeof title === "string" ? title : "NBRS Careers";
+
   return (
     <section className="relative bg-[#0B131F] text-white h-full lg:h-[730px] mb-0 lg:mb-24 overflow-visible">
       {/* Background Dimmed Image on Right Side */}
       <div className="absolute top-0 right-0 w-full lg:w-[948px] h-full lg:h-[730px] overflow-hidden pointer-events-none z-0 hidden lg:block">
         <ResponsiveImage
           src={imageSrc}
-          alt=""
+          alt={altTitle}
+          title={altTitle}
           className="h-full w-full object-cover filter brightness-[0.35] contrast-[1.1]"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-[#0B131F] via-[#0B131F]/80 to-transparent" />
@@ -191,6 +194,7 @@ export function CareersHero({
               <ResponsiveImage
                 src={imageSrc}
                 alt="NBRS Featured Hero"
+                title="NBRS Featured Hero"
                 className="h-full w-full object-cover"
               />
             </div>

@@ -51,6 +51,7 @@ export function ProjectOverviewSection({
           <ResponsiveImage
             src={displayImage}
             alt={alt}
+            title={alt}
             className="w-full h-auto max-h-[650px] object-cover"
           />
         </div>
