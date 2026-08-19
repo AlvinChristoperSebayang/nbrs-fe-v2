@@ -6,7 +6,7 @@ import { PRACTICES_DATA, type PracticeDetail } from "./practices-data";
 import { SECTORS_DATA } from "./sectors-data";
 import type { CtaContent, ImageSource, Sector } from "./types";
 
-type Asset = { mobile?: string; tablet?: string; desktop?: string };
+type Asset = { url?: string; mobile?: string; tablet?: string; desktop?: string; width?: number | null; height?: number | null; title?: string | null };
 type Project = {
   id: string;
   title: string;
@@ -36,6 +36,7 @@ type Category = {
   title: string;
   seoPageTitle: string | null;
   seoMetaDescription: string | null;
+  seoImage: Asset[];
   catHdrHeading: string | null;
   catHdrSubheading: string | null;
   catHdrImage: Asset[];
@@ -56,8 +57,9 @@ export type PracticeDetailContent = {
   tableProjects: ProjectTableRow[];
   sectors: Sector[];
   cta: CtaContent;
-  seoTitle: string;
+  cmsSeoTitle: string | null;
   seoDescription: string;
+  seoImage: Asset | null;
 };
 
 const CATEGORY_SLUGS: Record<string, string> = {
@@ -90,9 +92,10 @@ query PracticeDetail($categorySlug: [String]!) {
       title
       seoPageTitle
       seoMetaDescription
+      seoImage { url width height title }
       catHdrHeading
       catHdrSubheading
-      catHdrImage { ${heroImage} }
+      catHdrImage { url width height title ${heroImage} }
       catOvrText
       catOvrGallery { ${introImage} }
       catSelectedProjects { ... on projects_Entry { ${PROJECT_FIELDS} } }
@@ -128,7 +131,10 @@ query PracticeDetail($categorySlug: [String]!) {
 `;
 
 function cleanHtml(value: string | null | undefined): string {
-  return value?.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim() ?? "";
+  return value
+    ?.replace(/<[^>]*>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim() ?? "";
 }
 
 function projectHref(project: Pick<Project, "uri" | "slug">): string {
@@ -213,8 +219,9 @@ function buildFallback(fallback: PracticeDetail): PracticeDetailContent {
     })),
     sectors: FALLBACK_SECTORS,
     cta: ctaFor(fallback.title),
-    seoTitle: fallback.title,
+    cmsSeoTitle: null,
     seoDescription: fallback.description,
+    seoImage: null,
   };
 }
 
@@ -242,8 +249,9 @@ export async function getPracticeDetailContent(routeSlug: string): Promise<Pract
       tableProjects: mapProjects(selectedProjects),
       sectors: mapFeaturedSectors(category.practiceFeaturedSectors),
       cta: mapPracticeCta(category, ctaFor(title)),
-      seoTitle: category.seoPageTitle?.trim() || title,
-      seoDescription: category.seoMetaDescription?.trim() || category.catHdrSubheading?.trim() || fallback.description,
+      cmsSeoTitle: category.seoPageTitle?.trim() || null,
+      seoDescription: cleanHtml(category.seoMetaDescription) || category.catHdrSubheading?.trim() || fallback.description,
+      seoImage: category.seoImage?.[0] ?? category.catHdrImage?.[0] ?? null,
     };
   } catch (error) {
     console.warn(`Failed to fetch practice detail for ${routeSlug}, using local fallback:`, error);

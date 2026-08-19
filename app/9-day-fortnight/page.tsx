@@ -9,8 +9,11 @@ export async function generateMetadata(): Promise<Metadata> {
   const page = await getNineDayFortnightPageContent();
   return createPageMetadata({
     pathname: "/9-day-fortnight",
-    title: page.seoTitle,
+    title: page.title,
+    cmsTitle: page.cmsSeoTitle,
     description: page.seoDescription,
+    image: page.seoImage,
+    imageAlt: page.title,
   });
 }
 

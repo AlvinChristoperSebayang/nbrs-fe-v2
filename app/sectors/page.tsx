@@ -4,7 +4,10 @@ import { SectorsSection } from "@/components/home/SectorsSection";
 import { Hero } from "@/components/ui/Hero";
 import { getSectorsPageContent } from "@/lib/sectors-page";
 
-export const metadata = createPageMetadata({ pathname: "/sectors", title: "Exploring Our Sectors" });
+export async function generateMetadata() {
+  const page = await getSectorsPageContent();
+  return createPageMetadata({ pathname: "/sectors", title: page.hero.title, description: page.hero.description, image: page.hero.image });
+}
 
 export default async function SectorsPage() {
   const content = await getSectorsPageContent();

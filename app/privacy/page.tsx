@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { Hero } from "@/components/ui/Hero";
 import { Container } from "@/components/ui/Container";
 import { CtaSection } from "@/components/cta/CtaSection";
@@ -7,13 +6,9 @@ import { createPageMetadata } from "@/lib/seo";
 
 export const revalidate = 60;
 
-export async function generateMetadata(): Promise<Metadata> {
+export async function generateMetadata() {
   const page = await getPrivacyPageContent();
-  return createPageMetadata({
-    pathname: "/privacy",
-    title: page.seoTitle,
-    description: page.seoDescription,
-  });
+  return createPageMetadata({ pathname: "/privacy", title: page.title, cmsTitle: page.cmsSeoTitle, description: page.seoDescription, image: page.seoImage ?? page.hero });
 }
 
 export default async function PrivacyPolicyPage() {

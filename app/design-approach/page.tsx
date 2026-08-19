@@ -7,7 +7,10 @@ import { TextGrid } from "@/components/ui/TextGrid";
 import { DesignApproachProjectSection } from "@/components/design-approach/DesignApproachProjectSection";
 import { getDesignApproachContent } from "@/lib/design-approach";
 
-export const metadata = createPageMetadata({ pathname: "/design-approach", title: "Design Approach" });
+export async function generateMetadata() {
+  const page = await getDesignApproachContent();
+  return createPageMetadata({ pathname: "/design-approach", title: page.hero.title, description: page.hero.description, image: page.hero.image });
+}
 
 export default async function DesignApproachPage() {
   const content = await getDesignApproachContent();

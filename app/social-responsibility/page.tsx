@@ -7,7 +7,10 @@ import {
   SOCIAL_SUSTAINABILITY_FALLBACK,
 } from "@/lib/social-responsibility";
 
-export const metadata = createPageMetadata({ pathname: "/social-responsibility", title: "Social Responsibility" });
+export async function generateMetadata() {
+  const page = await getSocialSustainabilityContent().catch(() => SOCIAL_SUSTAINABILITY_FALLBACK);
+  return createPageMetadata({ pathname: "/social-responsibility", title: page.hero.title, description: page.hero.description, image: page.hero.image });
+}
 
 export default async function SocialSustainabilityPage() {
   const content = await getSocialSustainabilityContent().catch(

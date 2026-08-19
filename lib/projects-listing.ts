@@ -1,5 +1,5 @@
 import { craftFetch } from "./craft";
-import { toImageSource } from "./media";
+import { toImageSource, toSeoImage, type SeoImage } from "./media";
 import type { ImageSource } from "./types";
 
 export type ProjectCategory = {
@@ -25,6 +25,9 @@ export type ProjectsListingResult = {
   pageHeading: string | null;
   pageSubheading: string | null;
   pageHeroImageUrl: ImageSource | null;
+  cmsSeoTitle: string | null;
+  seoDescription: string | null;
+  seoImage: SeoImage | null;
   sectors: ProjectCategory[];
   practices: ProjectCategory[];
   projects: ProjectListItem[];
@@ -44,6 +47,7 @@ type RawCategory = {
 };
 
 type RawAsset = {
+  url?: string;
   mobile?: string;
   tablet?: string;
   desktop?: string;
@@ -99,6 +103,7 @@ const PROJECTS_LISTING_QUERY = /* GraphQL */ `
         seoPageTitle
         seoMetaDescription
         seoImage {
+          url
           mobile: url @transform(width: 600, height: 800, mode: "crop", format: "webp", quality: 80, immediately: true)
           tablet: url @transform(width: 1440, height: 1000, mode: "crop", format: "webp", quality: 82, immediately: true)
           desktop: url @transform(width: 2400, height: 1200, mode: "crop", format: "webp", quality: 85, immediately: true)
@@ -219,6 +224,9 @@ export async function getProjectsListing({
       pageHeading: page?.pageHeading ?? null,
       pageSubheading: page?.pageSubheading ?? null,
       pageHeroImageUrl: toImageSource(page?.seoImage?.[0]),
+      cmsSeoTitle: page?.seoPageTitle?.trim() || null,
+      seoDescription: page?.seoMetaDescription?.trim() || page?.pageSubheading?.trim() || null,
+      seoImage: toSeoImage(page?.seoImage?.[0]),
       sectors: data.sectors ?? [],
       practices: (data.practices ?? []).filter(
         (p) => p.slug !== "heritage" && p.title?.toLowerCase() !== "heritage"
@@ -242,6 +250,9 @@ export async function getProjectsListing({
       pageHeading: "PROJECTS",
       pageSubheading: null,
       pageHeroImageUrl: null,
+      cmsSeoTitle: null,
+      seoDescription: null,
+      seoImage: null,
       sectors: [],
       practices: [],
       projects: [],

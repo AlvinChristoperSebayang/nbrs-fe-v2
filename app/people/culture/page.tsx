@@ -6,7 +6,10 @@ import { InitiativesSection } from "@/components/people/InitiativesSection";
 import { CtaSection } from "@/components/cta/CtaSection";
 import { getCultureContent } from "@/lib/culture";
 
-export const metadata = createPageMetadata({ pathname: "/people/culture", title: "Our Culture | Our People" });
+export async function generateMetadata() {
+  const page = await getCultureContent();
+  return createPageMetadata({ pathname: "/people/culture", title: page.hero?.title || "Our Culture", cmsTitle: page.cmsSeoTitle, description: page.seoDescription || page.hero?.description, image: page.seoImage ?? page.hero?.image });
+}
 
 export default async function PeopleCulturePage() {
   const page = await getCultureContent();
