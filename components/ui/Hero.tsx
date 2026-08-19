@@ -65,34 +65,6 @@ export function renderTitleWithUnderline(title: React.ReactNode, showDivider: bo
     return title;
   }
 
-  if (title.trim().toUpperCase() === "LANDSCAPE ARCHITECTURE") {
-    if (!showDivider) {
-      return (
-        <>
-          <span className="sm:hidden inline-flex flex-col items-start">
-            <span className="block leading-[1.05]">LANDSCAPE</span>
-            <span className="block leading-[1.05]">ARCHITECTURE</span>
-          </span>
-          <span className="hidden sm:inline">LANDSCAPE ARCHITECTURE</span>
-        </>
-      );
-    }
-
-    return (
-      <>
-        <span className="sm:hidden inline-flex flex-col items-start">
-          <span className="block leading-[1.05]">LANDSCAPE</span>
-          <span className="inline-block max-w-full border-b-[4px] border-white pb-1 leading-none mt-1">
-            ARCHITECTURE
-          </span>
-        </span>
-        <span className="hidden sm:inline-block border-b-[4px] sm:border-b-[5px] lg:border-b-[6px] border-white pb-1 sm:pb-2 leading-[1.05]">
-          LANDSCAPE ARCHITECTURE
-        </span>
-      </>
-    );
-  }
-
   const lines = getTitleLines(title);
 
   if (!showDivider) {
@@ -124,6 +96,28 @@ export function renderTitleWithUnderline(title: React.ReactNode, showDivider: bo
       {lines.map((line, idx) => {
         const isLast = idx === lines.length - 1;
         if (isLast) {
+          const words = line.trim().split(/\s+/);
+          if (words.length > 1 && line.length >= 18) {
+            const firstPart = words.slice(0, -1).join(" ");
+            const lastWord = words[words.length - 1];
+
+            return (
+              <span key={idx} className="w-full flex flex-col items-start">
+                {/* Desktop: single inline-block with full underline */}
+                <span className="hidden sm:inline-block border-b-[4px] sm:border-b-[5px] lg:border-b-[6px] border-white pb-1 sm:pb-2 leading-none mt-1">
+                  {line}
+                </span>
+                {/* Mobile: split only if line is excessively long */}
+                <span className="sm:hidden flex flex-col items-start">
+                  <span className="block leading-[1.05]">{firstPart}</span>
+                  <span className="inline-block border-b-[4px] border-white pb-1 leading-none mt-1">
+                    {lastWord}
+                  </span>
+                </span>
+              </span>
+            );
+          }
+
           return (
             <span
               key={idx}
@@ -192,9 +186,12 @@ export function Hero({
               {renderTitleWithUnderline(title, showDivider)}
             </h1>
           ) : (
-            <div data-aos="fade-up" className={titleClassName}>
+            <h1
+              data-aos="fade-up"
+              className={`font-heading text-[36px] sm:text-[38px] uppercase leading-[1.05] text-white lg:text-[70px] max-w-2xl lg:max-w-none ${titleClassName}`}
+            >
               {title}
-            </div>
+            </h1>
           )}
 
           {/* Description */}
@@ -228,7 +225,7 @@ export function Hero({
               aria-label={button.text}
               data-aos="fade-up"
               data-aos-delay="300"
-              className="group mt-8 inline-flex items-center gap-2 rounded-[5px] bg-white/30 px-6 py-2 text-xs text-white transition sm:text-base"
+              className="group mt-8 inline-flex items-center gap-2 rounded-[5px] bg-white/30 px-6 py-2 text-xs text-white transition sm:text-base font-medium"
             >
               {button.text}
               <svg

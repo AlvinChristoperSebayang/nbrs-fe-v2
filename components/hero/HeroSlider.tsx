@@ -58,7 +58,7 @@ export function HeroSlider({ slides }: { slides: HeroSlide[] }) {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-[30px] items-center relative">
           <div
             key={activeIndex}
-            className="lg:col-span-4 z-20 flex flex-col justify-center gap-3 w-full pointer-events-none"
+            className="lg:col-span-4 z-20 flex flex-col justify-center gap-1 w-full pointer-events-none"
           >
             <TitleTag
               style={{ animation: "hero-fade-up 0.7s ease-out both" }}

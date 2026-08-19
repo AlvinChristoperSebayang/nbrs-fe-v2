@@ -51,40 +51,63 @@ function normalizeLocalAssetUrls(value: unknown): unknown {
   return value;
 }
 
+import { cache } from "react";
+
+const memoizedFetch = cache(
+  async (
+    url: string,
+    bodyString: string,
+    bypassCache: boolean,
+    revalidate: number,
+    tagsString: string
+  ): Promise<string> => {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: bodyString,
+      cache: bypassCache ? "no-store" : "force-cache",
+      ...(bypassCache
+        ? {}
+        : {
+            next: {
+              revalidate,
+              tags: tagsString ? tagsString.split(",") : ["craft"],
+            },
+          }),
+    });
+
+    if (!res.ok) {
+      throw new Error(`Craft GraphQL request failed with status ${res.status}`);
+    }
+
+    return res.text();
+  }
+);
+
 export async function craftFetch<T>(
   query: string,
   variables?: Record<string, unknown>,
   options?: CraftFetchOptions
 ): Promise<T> {
-
-  const cacheMode = process.env.CMS_CACHE_MODE ?? "revalidate";
+  const isDev = process.env.NODE_ENV === "development";
+  const cacheMode = process.env.CMS_CACHE_MODE ?? (isDev ? "no-store" : "revalidate");
   const bypassCache =
-    cacheMode === "no-store" || options?.cache === "no-store";
+    isDev || cacheMode === "no-store" || options?.cache === "no-store";
+  const revalidate = options?.revalidate ?? 60;
+  const tagsString = (options?.tags ?? ["craft"]).join(",");
+  const bodyString = JSON.stringify({ query, variables });
 
-  const res = await fetch(CRAFT_GRAPHQL_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
-    body: JSON.stringify({ query, variables }),
-    signal: options?.signal,
-    cache: bypassCache ? "no-store" : "force-cache",
-    ...(bypassCache
-      ? {}
-      : {
-          next: {
-            revalidate: options?.revalidate ?? 60,
-            tags: options?.tags ?? ["craft"],
-          },
-        }),
-  });
+  const body = await memoizedFetch(
+    CRAFT_GRAPHQL_URL,
+    bodyString,
+    bypassCache,
+    revalidate,
+    tagsString
+  );
 
-  if (!res.ok) {
-    throw new Error(`Craft GraphQL request failed with status ${res.status}`);
-  }
-
-  const body = await res.text();
   let json: unknown;
   try {
     json = JSON.parse(body);

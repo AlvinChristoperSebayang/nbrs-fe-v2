@@ -80,55 +80,74 @@ function plainText(value: string | null | undefined): string {
     .trim();
 }
 
+const fallbackEnvision: EnvisionContent = {
+  hero: {
+    title: "ENVISION\nSTUDENT\nPROGRAM",
+    description: "Empowering the next generation of architectural thinkers and designers.",
+    image: "/images/hero/hero1.png",
+  },
+  research: [],
+  faqs: null,
+  cta: null,
+  cmsSeoTitle: "Envision Student Program | NBRS Architecture",
+  seoDescription: "Empowering the next generation of architectural thinkers and designers.",
+  seoImage: null,
+};
+
 export async function getEnvisionContent(): Promise<EnvisionContent> {
-  const data = await craftFetch<{ entries: RawEnvision[] }>(QUERY);
-  const entry = data.entries[0];
-  if (!entry) return { hero: null, research: [], faqs: null, cta: null, cmsSeoTitle: null, seoDescription: null, seoImage: null };
+  try {
+    const data = await craftFetch<{ entries: RawEnvision[] }>(QUERY);
+    const entry = data.entries?.[0];
+    if (!entry) return fallbackEnvision;
 
-  const hero = toImageSource(entry.envHeroImage[0]);
-  const research = entry.envPastResearch.flatMap((item, index) => {
-    const image = toImageSource(item.thumbnail[0]);
-    return item.title?.trim() && item.slug?.trim() && image
-      ? [{ id: item.id, slug: item.slug, title: item.title, image, href: `/research/${item.slug}`, hoverColor: ["#F0C7BD", "#FDD4B6", "#EDE3F0"][index % 3] }]
-      : [];
-  });
-  const faqItems = entry.envFaqs.flatMap((item) => {
-    const title = plainText(item.heading);
-    const content = item.text?.trim() ?? "";
-    return title && content ? [{ id: item.id, title, content }] : [];
-  });
-  const ctaImageSource = toImageSource(entry.ctaSection?.ctaSectionBackgroundImage[0]);
+    const hero = toImageSource(entry.envHeroImage?.[0]);
+    const research = (entry.envPastResearch ?? []).flatMap((item, index) => {
+      const image = toImageSource(item.thumbnail?.[0]);
+      return item.title?.trim() && item.slug?.trim() && image
+        ? [{ id: item.id, slug: item.slug, title: item.title, image, href: `/research/${item.slug}`, hoverColor: ["#F0C7BD", "#FDD4B6", "#EDE3F0"][index % 3] }]
+        : [];
+    });
+    const faqItems = (entry.envFaqs ?? []).flatMap((item) => {
+      const title = plainText(item.heading);
+      const content = item.text?.trim() ?? "";
+      return title && content ? [{ id: item.id, title, content }] : [];
+    });
+    const ctaImageSource = toImageSource(entry.ctaSection?.ctaSectionBackgroundImage?.[0]);
 
-  const rawHeading = plainText(entry.envHeading);
-  const formattedTitle = rawHeading.includes("\n")
-    ? rawHeading
-    : rawHeading.toUpperCase().includes("ENVISION")
-    ? rawHeading.split(/\s+/).join("\n")
-    : rawHeading;
+    const rawHeading = plainText(entry.envHeading);
+    const formattedTitle = rawHeading.includes("\n")
+      ? rawHeading
+      : rawHeading.toUpperCase().includes("ENVISION")
+      ? rawHeading.split(/\s+/).join("\n")
+      : rawHeading;
 
-  return {
-    hero: hero && rawHeading
-      ? {
-          title: formattedTitle,
-          description: plainText(entry.envSubheading) ? plainText(entry.envSubheading).replace(/\?\?\?/g, "’") : undefined,
-          image: hero,
-        }
-      : null,
-    research,
-    faqs: plainText(entry.envFaqsHeading) && faqItems.length
-      ? { title: plainText(entry.envFaqsHeading), introText: plainText(entry.envFaqsText) || undefined, items: faqItems }
-      : null,
-    cta: entry.envisionShowCta && ctaImageSource && plainText(entry.ctaSection?.ctaSectionHeading)
-      ? {
-          image: ctaImageSource,
-          title: plainText(entry.ctaSection?.ctaSectionHeading),
-          description: plainText(entry.ctaSection?.ctaSectionDescription) || undefined,
-          buttonText: plainText(entry.ctaSection?.ctaSectionButtonLabel) || undefined,
-          buttonHref: entry.ctaSection?.ctaSectionButtonUrl?.trim() || undefined,
-        }
-      : null,
-    cmsSeoTitle: entry.seoPageTitle?.trim() || null,
-    seoDescription: entry.seoMetaDescription?.trim() || plainText(entry.envSubheading) || null,
-    seoImage: toSeoImage(entry.seoImage?.[0]) || toSeoImage(entry.envHeroImage?.[0]),
-  };
+    return {
+      hero: hero && rawHeading
+        ? {
+            title: formattedTitle,
+            description: plainText(entry.envSubheading) ? plainText(entry.envSubheading).replace(/\?\?\?/g, "’") : undefined,
+            image: hero,
+          }
+        : fallbackEnvision.hero,
+      research,
+      faqs: plainText(entry.envFaqsHeading) && faqItems.length
+        ? { title: plainText(entry.envFaqsHeading), introText: plainText(entry.envFaqsText) || undefined, items: faqItems }
+        : null,
+      cta: entry.envisionShowCta && ctaImageSource && plainText(entry.ctaSection?.ctaSectionHeading)
+        ? {
+            image: ctaImageSource,
+            title: plainText(entry.ctaSection?.ctaSectionHeading),
+            description: plainText(entry.ctaSection?.ctaSectionDescription) || undefined,
+            buttonText: plainText(entry.ctaSection?.ctaSectionButtonLabel) || undefined,
+            buttonHref: entry.ctaSection?.ctaSectionButtonUrl?.trim() || undefined,
+          }
+        : null,
+      cmsSeoTitle: entry.seoPageTitle?.trim() || null,
+      seoDescription: entry.seoMetaDescription?.trim() || plainText(entry.envSubheading) || null,
+      seoImage: toSeoImage(entry.seoImage?.[0]) || toSeoImage(entry.envHeroImage?.[0]),
+    };
+  } catch (error) {
+    console.warn("Failed to fetch Envision content from Craft, using fallback:", error);
+    return fallbackEnvision;
+  }
 }

@@ -40,8 +40,8 @@ function CheckboxGroup({
 
   return (
     <fieldset className="flex flex-col gap-3">
-      <legend className="font-sans text-sm font-semibold text-black">{legend}</legend>
-      <div className={compact ? "grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-x-6 gap-y-3" : "grid grid-cols-2 gap-2.5"}>
+      <span className="font-sans text-sm text-black pb-1">{legend}</span>
+      <div className={compact ? "grid grid-cols-2 sm:flex items-center gap-x-6 gap-y-3" : "grid grid-cols-2 gap-2.5"}>
         {options.map((option) => {
           const slug = slugify(option);
           const id = `${prefix}-${slug}`;
@@ -68,7 +68,7 @@ function CheckboxGroup({
                   </svg>
                 )}
               </span>
-              <span className="font-sans text-xs sm:text-sm text-stone-700 font-normal">{option}</span>
+              <span className="font-sans text-xs text-stone-700 font-normal">{option}</span>
             </label>
           );
         })}
@@ -288,7 +288,7 @@ export function ContactForm({ title, serviceOptions, sectorOptions, referralSour
             <button
               type="submit"
               disabled={submissionState === "submitting"}
-              className="inline-flex items-center justify-between gap-6 bg-black text-white px-8 py-3.5 rounded-sm font-sans text-sm font-semibold transition-opacity disabled:cursor-wait disabled:opacity-60 hover:bg-black/85"
+              className="inline-flex items-center justify-between gap-6 bg-black text-white px-4 py-3.5 rounded-sm font-sans text-sm font-semibold transition-opacity disabled:cursor-wait disabled:opacity-60 hover:bg-black/85 w-[150px]"
             >
               <span>{submissionState === "submitting" ? "Sending…" : "Submit"}</span>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

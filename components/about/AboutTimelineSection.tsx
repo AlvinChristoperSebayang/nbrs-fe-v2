@@ -76,7 +76,7 @@ export function AboutTimelineSection({
                 }}
                 className="w-[230px] sm:w-[260px] lg:w-[280px] flex-shrink-0 border-l-[1.5px] pl-5 pr-3"
               >
-                <div className="flex items-center gap-3.5">
+                <div className="flex items-center gap-7">
                   <span className="font-heading text-3xl sm:text-4xl lg:text-[40px] uppercase tracking-tight text-white leading-none">
                     {item.year}
                   </span>

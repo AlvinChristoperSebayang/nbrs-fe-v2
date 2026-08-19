@@ -28,6 +28,7 @@ export default async function PeoplePage() {
         heading={page.intro.heading}
         description={page.intro.description}
         heading_size="text-[28px] sm:text-[50px]"
+        single_line_heading
       />
 
       <PeopleNavigationGrid cards={page.navigationCards} />

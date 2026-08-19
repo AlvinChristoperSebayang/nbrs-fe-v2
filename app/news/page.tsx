@@ -21,7 +21,7 @@ export default async function NewsPage() {
         title={listing.pageHeading ?? "Latest News"}
       />
 
-      <section className="bg-white py-16 lg:py-24">
+      <section className="bg-white py-16 lg:py-22">
         <Container>
           <NewsInfiniteGrid initialItems={listing.articles} total={listing.total} />
         </Container>

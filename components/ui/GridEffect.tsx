@@ -13,6 +13,8 @@ export function GridEffect({
   viewAllLabel = "View all latest news",
   viewAllUrl = "/news",
   backgroundColor = "#FFFFFF",
+  titleClassNameNonHover = "text-black",
+  descriptionClassName = "",
 }: {
   items: NewsItem[];
   title?: string;
@@ -20,6 +22,8 @@ export function GridEffect({
   viewAllLabel?: string;
   viewAllUrl?: string;
   backgroundColor?: string;
+  titleClassNameNonHover?: string;
+  descriptionClassName?: string;
 }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const cardRefs = useRef<(HTMLAnchorElement | HTMLDivElement | null)[]>([]);
@@ -79,7 +83,7 @@ export function GridEffect({
               href={viewAllUrl}
               title={viewAllLabel}
               aria-label={viewAllLabel}
-              className="group items-center gap-2 font-heading text-lg lg:text-[22px] uppercase text-black lg:flex hidden"
+              className={`group items-center gap-2 font-heading text-lg lg:text-[22px] uppercase text-black lg:flex hidden`}
             >
               {viewAllLabel}
               <svg
@@ -164,7 +168,7 @@ export function GridEffect({
                       className={`font-heading text-2xl uppercase leading-tight duration-300 sm:text-3xl sm:max-w-none lg:max-w-[231px] ${
                         isActive
                           ? "text-white lg:text-[36px]"
-                          : "text-black lg:text-[18px]"
+                          : `lg:text-[18px] ${titleClassNameNonHover}`
                       }`}
                     >
                       {item.title}

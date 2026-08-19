@@ -23,7 +23,6 @@ function InitiativeDescription({ description, className }: { description: string
   );
 }
 
-/** Renders the three editorial initiative treatments from the Social Sustainability page. */
 export function SocialInitiativesSection({ initiatives }: SocialInitiativesSectionProps) {
   const [teKworo, ...featureInitiatives] = initiatives;
 
@@ -33,6 +32,8 @@ export function SocialInitiativesSection({ initiatives }: SocialInitiativesSecti
         <AboutSection
           background_color="#F0C7BD"
           heading={teKworo.title}
+          heading_size="!max-w-full text-[28px] sm:text-[40px]"
+          single_line_heading={true}
           description={teKworo.description}
           image_url={teKworo.image}
           image_alt={teKworo.title}
@@ -45,7 +46,6 @@ export function SocialInitiativesSection({ initiatives }: SocialInitiativesSecti
             const imageLeft = index % 2 === 0;
             return (
               <div key={initiative.title}>
-                {/* Mobile View (< lg): Heading -> Description -> Image */}
                 <div className="flex flex-col lg:hidden">
                   <div data-aos="fade-up">
                     <h2 className="font-heading text-2xl sm:text-3xl font-bold uppercase leading-tight text-black mb-3">

@@ -7,9 +7,10 @@ export type CtaSectionProps = {
   content?: CtaContent;
   cta?: CtaContent;
   titleUppercase?: boolean;
+  descriptionClassName?: string;
 };
 
-export function CtaSection({ content, cta, titleUppercase = true }: CtaSectionProps) {
+export function CtaSection({ content, cta, titleUppercase = true, descriptionClassName }: CtaSectionProps) {
   const data = content || cta;
 
   if (!data) return null;
@@ -28,13 +29,17 @@ export function CtaSection({ content, cta, titleUppercase = true }: CtaSectionPr
         priority
       />
       <Container className="relative flex items-center justify-center py-24 sm:py-32 lg:py-[116px]">
-        <div data-aos="fade-up" className="w-full border-t-[4px] border-white bg-black/35 px-2 py-10 text-center sm:px-8 sm:py-14 lg:py-[100px]">
+        <div
+          data-aos="fade-up"
+          suppressHydrationWarning
+          className="w-full border-t-[4px] border-white bg-black/35 px-2 py-10 text-center sm:px-8 sm:py-14 lg:py-[100px] rounded-[5px]"
+        >
           <h2 className={`font-heading text-[28px] lg:text-2xl tracking-tight text-white sm:text-4xl lg:text-[40px] ${titleUppercase ? "uppercase" : ""}`}>
             {data.title}
           </h2>
 
           {descriptionText && (
-            <p className="mx-auto mt-3 max-w-xl text-white/90 text-sm sm:text-base">
+            <p className={`mx-auto mt-3 max-w-xl text-white/90 text-sm sm:text-base ${descriptionClassName}`}>
               {descriptionText}
             </p>
           )}
@@ -46,7 +51,7 @@ export function CtaSection({ content, cta, titleUppercase = true }: CtaSectionPr
                 href={data.buttonHref}
                 title={data.buttonText}
                 aria-label={data.buttonText}
-                className="group inline-flex items-center justify-center gap-2 rounded-full bg-white px-3 py-3.5 sm:px-10 sm:py-4 text-sm sm:text-[20px] font-semibold text-[#D18148] transition hover:bg-white/90 uppercase"
+                className="group inline-flex items-center justify-center gap-2 rounded-full bg-white px-3 py-3.5 sm:px-10 sm:py-4 text-sm sm:text-[20px] font-normal text-[#D18148] transition hover:bg-white/90 uppercase"
               >
                 <span>{data.buttonText}</span>
                 <svg
