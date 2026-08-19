@@ -44,8 +44,17 @@ export function getRobotsMetadata(noIndex = false): Metadata["robots"] {
   };
 }
 
-function getImageUrl(image: unknown): string | null {
-  if (typeof image === "string") return image;
+export function toAbsoluteUrl(url: string): string {
+  if (url.startsWith("http://") || url.startsWith("https://")) {
+    return url;
+  }
+  return `${SITE_URL}${url.startsWith("/") ? "" : "/"}${url}`;
+}
+
+export function getImageUrl(image: unknown): string | null {
+  if (typeof image === "string" && image.trim()) {
+    return toAbsoluteUrl(image.trim());
+  }
   if (!image || typeof image !== "object") return null;
 
   for (const key of ["url", "src", "desktop"] as const) {
@@ -101,18 +110,21 @@ export function createPageMetadata({
     ? [imageMetadata]
     : [DEFAULT_OG_IMAGE];
 
+  const fullCanonicalUrl = toAbsoluteUrl(pathname);
+  const formattedTitle = title ? `${title} | NBRS` : "NBRS Architecture | Multidisciplinary Design";
+
   return {
     // Craft SEO titles are already final editor-authored strings. Fallback labels
     // intentionally inherit the root "%s | NBRS" template.
     title: resolvedCmsTitle ? { absolute: resolvedCmsTitle } : resolvedTitle,
     description: resolvedDescription,
     alternates: {
-      canonical: pathname,
+      canonical: fullCanonicalUrl,
     },
     openGraph: {
       type,
       locale: "en_AU",
-      url: pathname,
+      url: fullCanonicalUrl,
       siteName: "NBRS Architecture",
       title: socialTitle,
       description: resolvedDescription,

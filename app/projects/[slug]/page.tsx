@@ -22,7 +22,10 @@ export async function generateMetadata(
     });
   }
 
-  const title = project.heading || "Project Detail";
+  const title = project.seoPageTitle || project.heading || "Project Detail";
+  const heroImageRaw =
+    project.splash?.find((slide) => slide.imageUrl)?.imageUrl ??
+    project.thumbnailUrl;
 
   return createPageMetadata({
     pathname: `/projects/${slug}`,

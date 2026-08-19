@@ -158,19 +158,23 @@ export function Footer({ content }: { content: FooterContent }) {
         <div className="grid grid-cols-1 gap-[35px] sm:grid-cols-2 lg:grid-cols-3">
           {/* Column 1: Business Info & Logo */}
           <div data-aos="fade-up" className="flex flex-col gap-8 order-1 lg:order-1">
-            <img
-              src="/images/logo/footer-logo.png"
-              alt="NBRS"
-              width={110}
-              height={40}
-            />
+            <Link href="/" className="inline-block w-fit">
+              <img
+                src="/images/logo/logo-white-2.svg"
+                alt="NBRS"
+                title="NBRS"
+                width={180}
+                height={65}
+                className="w-[150px] sm:w-[165px] lg:w-[180px] h-auto object-contain"
+              />
+            </Link>
             {content.businessDetailsHtml && (
-              <div>
-              <h3 className="text-sm lg:text-lg tracking-wide text-white">
-                Business Details
-              </h3>
+              <div className="mt-4">
+                <h3 className="text-sm lg:text-lg tracking-wide text-white">
+                  Business Details
+                </h3>
                 <div
-                  className="mt-4 text-sm text-white/70 [&_p]:m-0 [&_p:first-child]:font-semibold [&_p:first-child]:text-white [&_p+p]:mt-1 [&_p+p+p]:mt-3"
+                  className="mt-4 text-sm text-white/70 [&_p]:m-0 [&_p:first-child]:font-semibold [&_p:first-child]:text-white [&_p+p]:mt-4 [&_p+p+p]:mt-4"
                   dangerouslySetInnerHTML={{ __html: content.businessDetailsHtml }}
                 />
               </div>

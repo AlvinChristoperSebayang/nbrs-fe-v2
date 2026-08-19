@@ -163,29 +163,72 @@ export function ContactForm({ title, serviceOptions, sectorOptions, referralSour
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
             <div>
               <label htmlFor="contact-first-name" className="sr-only">First name</label>
-              <input id="contact-first-name" name="firstName" type="text" required placeholder="First name" className="w-full h-11 px-4 rounded-sm border border-zinc-300 font-sans text-sm text-black placeholder:text-stone-500 focus:outline-none focus:border-black transition-colors" />
+              <input
+                id="contact-first-name"
+                name="firstName"
+                type="text"
+                required
+                aria-required="true"
+                autoComplete="given-name"
+                placeholder="First name"
+                className="w-full h-11 px-4 rounded-sm border border-zinc-300 font-sans text-sm text-black placeholder:text-stone-500 focus:outline-none focus:border-black transition-colors"
+              />
             </div>
             <div>
               <label htmlFor="contact-last-name" className="sr-only">Last name</label>
-              <input id="contact-last-name" name="lastName" type="text" required placeholder="Last name" className="w-full h-11 px-4 rounded-sm border border-zinc-300 font-sans text-sm text-black placeholder:text-stone-500 focus:outline-none focus:border-black transition-colors" />
+              <input
+                id="contact-last-name"
+                name="lastName"
+                type="text"
+                required
+                aria-required="true"
+                autoComplete="family-name"
+                placeholder="Last name"
+                className="w-full h-11 px-4 rounded-sm border border-zinc-300 font-sans text-sm text-black placeholder:text-stone-500 focus:outline-none focus:border-black transition-colors"
+              />
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
             <div>
               <label htmlFor="contact-company" className="sr-only">Company</label>
-              <input id="contact-company" name="company" type="text" required placeholder="Company" className="w-full h-11 px-4 rounded-sm border border-zinc-300 font-sans text-sm text-black placeholder:text-stone-500 focus:outline-none focus:border-black transition-colors" />
+              <input
+                id="contact-company"
+                name="company"
+                type="text"
+                required
+                aria-required="true"
+                autoComplete="organization"
+                placeholder="Company"
+                className="w-full h-11 px-4 rounded-sm border border-zinc-300 font-sans text-sm text-black placeholder:text-stone-500 focus:outline-none focus:border-black transition-colors"
+              />
             </div>
             <div>
               <label htmlFor="contact-role" className="sr-only">Role or position</label>
-              <input id="contact-role" name="role" type="text" required placeholder="Role/Position" className="w-full h-11 px-4 rounded-sm border border-zinc-300 font-sans text-sm text-black placeholder:text-stone-500 focus:outline-none focus:border-black transition-colors" />
+              <input
+                id="contact-role"
+                name="role"
+                type="text"
+                required
+                aria-required="true"
+                autoComplete="organization-title"
+                placeholder="Role/Position"
+                className="w-full h-11 px-4 rounded-sm border border-zinc-300 font-sans text-sm text-black placeholder:text-stone-500 focus:outline-none focus:border-black transition-colors"
+              />
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
             <div className="flex gap-2">
               <label htmlFor="contact-phone-country-code" className="sr-only">Country code</label>
-              <select id="contact-phone-country-code" name="phoneCountryCode" required defaultValue="+61" className="h-11 px-3 rounded-sm border border-zinc-300 font-sans text-sm text-stone-700 bg-white focus:outline-none focus:border-black transition-colors shrink-0">
+              <select
+                id="contact-phone-country-code"
+                name="phoneCountryCode"
+                required
+                aria-required="true"
+                defaultValue="+61"
+                className="h-11 px-3 rounded-sm border border-zinc-300 font-sans text-sm text-stone-700 bg-white focus:outline-none focus:border-black transition-colors shrink-0"
+              >
                 <option value="+61">+61</option>
                 <option value="+62">+62</option>
                 <option value="+1">+1</option>
@@ -193,11 +236,29 @@ export function ContactForm({ title, serviceOptions, sectorOptions, referralSour
                 <option value="+65">+65</option>
               </select>
               <label htmlFor="contact-phone" className="sr-only">Phone number</label>
-              <input id="contact-phone" name="phone" type="tel" required placeholder="Phone number" className="w-full h-11 px-4 rounded-sm border border-zinc-300 font-sans text-sm text-black placeholder:text-stone-500 focus:outline-none focus:border-black transition-colors" />
+              <input
+                id="contact-phone"
+                name="phone"
+                type="tel"
+                required
+                aria-required="true"
+                autoComplete="tel"
+                placeholder="Phone number"
+                className="w-full h-11 px-4 rounded-sm border border-zinc-300 font-sans text-sm text-black placeholder:text-stone-500 focus:outline-none focus:border-black transition-colors"
+              />
             </div>
             <div>
               <label htmlFor="contact-email" className="sr-only">Email address</label>
-              <input id="contact-email" name="email" type="email" required placeholder="Email address" className="w-full h-11 px-4 rounded-sm border border-zinc-300 font-sans text-sm text-black placeholder:text-stone-500 focus:outline-none focus:border-black transition-colors" />
+              <input
+                id="contact-email"
+                name="email"
+                type="email"
+                required
+                aria-required="true"
+                autoComplete="email"
+                placeholder="Email address"
+                className="w-full h-11 px-4 rounded-sm border border-zinc-300 font-sans text-sm text-black placeholder:text-stone-500 focus:outline-none focus:border-black transition-colors"
+              />
             </div>
           </div>
 
@@ -208,7 +269,15 @@ export function ContactForm({ title, serviceOptions, sectorOptions, referralSour
 
           <div className="pt-2">
             <label htmlFor="contact-message" className="sr-only">Tell us about your project or how we can help you</label>
-            <textarea id="contact-message" name="message" rows={5} required placeholder="Tell us about your project/how can we help you" className="w-full p-4 rounded-sm border border-zinc-300 font-sans text-sm text-black placeholder:text-stone-500 focus:outline-none focus:border-black transition-colors resize-none" />
+            <textarea
+              id="contact-message"
+              name="message"
+              rows={5}
+              required
+              aria-required="true"
+              placeholder="Tell us about your project/how can we help you"
+              className="w-full p-4 rounded-sm border border-zinc-300 font-sans text-sm text-black placeholder:text-stone-500 focus:outline-none focus:border-black transition-colors resize-none"
+            />
           </div>
 
           <div className="pt-2">
@@ -216,7 +285,11 @@ export function ContactForm({ title, serviceOptions, sectorOptions, referralSour
           </div>
 
           <div className="pt-4">
-            <button type="submit" disabled={submissionState === "submitting"} className="inline-flex items-center justify-between gap-6 bg-black text-white px-8 py-3.5 rounded-sm font-sans text-sm font-semibold transition-opacity disabled:cursor-wait disabled:opacity-60">
+            <button
+              type="submit"
+              disabled={submissionState === "submitting"}
+              className="inline-flex items-center justify-between gap-6 bg-black text-white px-8 py-3.5 rounded-sm font-sans text-sm font-semibold transition-opacity disabled:cursor-wait disabled:opacity-60 hover:bg-black/85"
+            >
               <span>{submissionState === "submitting" ? "Sending…" : "Submit"}</span>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M5 12h14M12 5l7 7-7 7" />
@@ -225,7 +298,7 @@ export function ContactForm({ title, serviceOptions, sectorOptions, referralSour
           </div>
 
           {submissionState !== "idle" && (
-            <p aria-live="polite" className={submissionState === "success" ? "font-sans text-sm text-emerald-700" : submissionState === "error" ? "font-sans text-sm text-red-700" : "sr-only"}>
+            <p role="status" aria-live="polite" className={submissionState === "success" ? "font-sans text-sm text-emerald-700" : submissionState === "error" ? "font-sans text-sm text-red-700" : "sr-only"}>
               {submissionMessage}
             </p>
           )}

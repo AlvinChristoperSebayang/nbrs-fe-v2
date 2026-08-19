@@ -125,6 +125,17 @@ export function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (!open) return;
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        setOpen(false);
+      }
+    }
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [open]);
+
   const isScrolledHeader = scrolled && !open;
   const useDarkElements = (scrolled || isResearchDetail) && !open;
 
@@ -150,6 +161,7 @@ export function Header() {
               <img
                 src={useDarkElements ? "/images/logo/logo-black-2.svg" : "/images/logo/logo-white-2.svg"}
                 alt="NBRS Logo"
+                title="NBRS Logo"
                 width={100}
                 height={36}
                 className="inline-block transition-opacity duration-300"
@@ -159,8 +171,9 @@ export function Header() {
             {/* Smooth Animated Hamburger / Close Morph Button */}
             <button
               type="button"
-              aria-label={open ? "Close menu" : "Open menu"}
+              aria-label={open ? "Close navigation menu" : "Open navigation menu"}
               aria-expanded={open}
+              aria-controls="mobile-nav-drawer"
               onClick={() => setOpen((prev) => !prev)}
               className={`relative z-50 flex h-10 w-10 cursor-pointer flex-col items-center justify-center gap-[6px] rounded-full p-2 transition-transform duration-500 ease-[cubic-bezier(0.65,0,0.35,1)] active:scale-90 ${
                 open ? "rotate-180" : "rotate-0 hover:scale-105"
@@ -205,6 +218,10 @@ export function Header() {
 
       {/* FULL-SCREEN OVERLAY MENU */}
       <div
+        id="mobile-nav-drawer"
+        role="dialog"
+        aria-modal={open}
+        aria-label="Site Navigation"
         aria-hidden={!open}
         style={{
           clipPath: open

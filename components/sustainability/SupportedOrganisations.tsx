@@ -53,9 +53,9 @@ export function SupportedOrganisations({
             className="relative inline-block bg-[#F0C7BD] py-8 lg:py-10 pr-8 lg:pr-16 max-w-[620px]"
           >
             <div className="absolute top-0 bottom-0 right-full w-[100vw] bg-[#F0C7BD]" />
-            <h3 className="relative z-10 font-heading text-3xl lg:text-[40px] uppercase font-bold text-black leading-tight">
+            <h2 className="relative z-10 font-heading text-3xl lg:text-[40px] uppercase font-bold text-black leading-tight">
               {heading}
-            </h3>
+            </h2>
           </div>
         </Container>
       </div>
@@ -65,9 +65,9 @@ export function SupportedOrganisations({
         <Container>
           {/* Mobile Header Title (Visible on Mobile) */}
           <div data-aos="fade-up" className="block md:hidden text-center mb-8 px-2">
-            <h3 className="font-heading text-[28px] uppercase font-bold text-black leading-tight">
+            <h2 className="font-heading text-[28px] uppercase font-bold text-black leading-tight">
               {heading}
-            </h3>
+            </h2>
           </div>
 
           {/* Desktop Grid (3 columns, transparent logo view) */}

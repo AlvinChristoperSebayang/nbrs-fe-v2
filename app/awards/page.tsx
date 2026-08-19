@@ -11,6 +11,16 @@ export async function generateMetadata() {
   return createPageMetadata({ pathname: "/awards", title: page.hero.title, cmsTitle: page.cmsSeoTitle, description: page.seoDescription, image: page.seoImage ?? page.hero.image });
 }
 
+function formatIntroHeading(heading?: string | null): string {
+  if (!heading) return "BEST IN PRACTICE\n— AIA AWARD 2022";
+  if (heading.includes("\n")) return heading;
+  if (/[-–—]/.test(heading)) {
+    const parts = heading.split(/\s*[-–—]\s*/);
+    return `${parts[0].trim()}\n— ${parts.slice(1).join(" — ").trim()}`;
+  }
+  return heading;
+}
+
 export default async function AwardsPage() {
   const page = await getAwardsPage();
 
@@ -27,7 +37,7 @@ export default async function AwardsPage() {
         <AboutSection
           image_url={page.intro.image}
           background_color="#DEE1F2"
-          heading={page.intro.heading}
+          heading={formatIntroHeading(page.intro.heading)}
           description={page.intro.description}
           button={page.intro.button}
         />

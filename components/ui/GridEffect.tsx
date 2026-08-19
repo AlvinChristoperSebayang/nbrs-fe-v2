@@ -67,9 +67,9 @@ export function GridEffect({
       <Container className="overflow-hidden">
         <div data-aos="fade-up" className="mb-6 lg:flex hidden items-start justify-between gap-6">
           <div className="flex flex-col gap-2">
-            <span className="font-heading text-[28px] lg:text-[24px] uppercase text-black">
+            <h2 className="font-heading text-[28px] lg:text-[24px] uppercase text-black">
               {title}
-            </span>
+            </h2>
             {description && (
               <p className="max-w-3xl text-base text-black">{description}</p>
             )}
@@ -100,9 +100,9 @@ export function GridEffect({
 
         <div className="relative w-full">
           <div data-aos="fade-up" className="mb-6 lg:hidden flex lg:flex-row flex-col lg:items-center items-start justify-between relative z-10 px-0 sm:px-6 md:px-8 pt-12">
-            <span className="font-heading text-[28px] lg:text-[22px] uppercase text-white">
+            <h2 className="font-heading text-[28px] lg:text-[22px] uppercase text-white">
               {title}
-            </span>
+            </h2>
             {showViewAll && (
               <Link
                 href={viewAllUrl}
@@ -132,7 +132,8 @@ export function GridEffect({
                 <ResponsiveImage
                   key={item.title}
                   src={item.image}
-                  alt=""
+                  alt={item.title || "NBRS Architecture"}
+                  title={item.title || "NBRS Architecture"}
                   className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${
                     index === activeIndex ? "opacity-100" : "opacity-0"
                   }`}
@@ -141,12 +142,12 @@ export function GridEffect({
             )}
           </div>
 
-          <div data-aos="fade-up" data-aos-delay="150" className="grid grid-cols-1 lg:grid-cols-3 items-stretch sm:inset-x-0 pb-20 gap-10 sm:px-6 md:px-8 lg:gap-20 lg:py-40 lg:px-4 relative z-10">
+          <div data-aos="fade-up" data-aos-delay="150" className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-[30px] items-stretch sm:inset-x-0 pb-20 sm:px-6 md:px-8 lg:py-40 lg:px-0 relative z-10">
             {items.map((item, index) => {
               const isActive = index === activeIndex;
               const hasHref = Boolean(item.href);
 
-              const cardClassName = `group flex h-64 flex-col justify-between gap-8 overflow-hidden p-5 sm:p-6 md:p-8 transition-colors duration-300 lg:h-80 lg:p-5 ${
+              const cardClassName = `lg:col-span-4 group flex h-64 flex-col justify-between gap-8 overflow-hidden p-5 sm:p-6 md:p-8 transition-colors duration-300 lg:h-80 lg:p-5 mx-0 md:mx-4 ${
                 isActive
                   ? "bg-black/50 backdrop-blur-[5px] border-b-[5px] border-white"
                   : "bg-white/70 backdrop-blur-[0px] border-b-[5px] border-transparent"

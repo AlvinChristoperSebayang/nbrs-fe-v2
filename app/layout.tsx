@@ -12,6 +12,7 @@ import {
   getRobotsMetadata,
   SITE_URL,
 } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
 import "./globals.css";
 import "./header.css";
 
@@ -27,7 +28,13 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   icons: {
-    icon: [{ url: "/images/favicon.png", type: "image/png", sizes: "32x32" }],
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/images/logo/logo-white-2.svg", type: "image/svg+xml" },
+    ],
+    apple: [
+      { url: "/apple-icon.svg", type: "image/svg+xml" },
+    ],
   },
   openGraph: {
     type: "website",
@@ -49,6 +56,34 @@ export default async function RootLayout({
 }>) {
   const footer = await getFooter();
 
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": `${SITE_URL}/#organization`,
+        name: "NBRS Architecture",
+        url: SITE_URL,
+        logo: `${SITE_URL}/images/logo/logo-black-2.svg`,
+        description: DEFAULT_SEO_DESCRIPTION,
+        sameAs: [
+          "https://www.linkedin.com/company/10692733",
+          "https://www.instagram.com/nbrsarchitecture/",
+          "https://www.youtube.com",
+        ],
+      },
+      {
+        "@type": "WebSite",
+        "@id": `${SITE_URL}/#website`,
+        url: SITE_URL,
+        name: "NBRS Architecture",
+        publisher: {
+          "@id": `${SITE_URL}/#organization`,
+        },
+      },
+    ],
+  };
+
   return (
     <html
       lang="en"
@@ -56,6 +91,7 @@ export default async function RootLayout({
       className={`${roboto.variable} ${tradeGothic.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col" suppressHydrationWarning>
+        <JsonLd data={organizationSchema} />
         <AosInit />
         <Suspense fallback={null}>
           <GlobalLoading />

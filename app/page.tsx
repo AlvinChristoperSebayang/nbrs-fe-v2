@@ -100,6 +100,7 @@ export default async function Home() {
         heading={homepage?.about?.heading ?? undefined}
         description={homepage?.about?.description ?? undefined}
         button={homepage?.about?.button ?? undefined}
+        description_class_name="max-w-none lg:max-w-[314px]"
       />
       <SectorsSection sectors={homepageSectors} heading={homepage?.sectorsHeading ?? "Designing spaces bespoke to their needs"} />
       <GridEffect

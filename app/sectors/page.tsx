@@ -12,12 +12,17 @@ export async function generateMetadata() {
 export default async function SectorsPage() {
   const content = await getSectorsPageContent();
 
+  const heroTitle = content.hero.title
+    ? content.hero.title.replace(/exploring\s+our\s+sectors/i, "EXPLORING\nOUR SECTORS")
+    : "EXPLORING\nOUR SECTORS";
+
   return (
     <article className="bg-white text-black min-h-screen">
       <Hero
         image={content.hero.image}
-        title={content.hero.title}
+        title={heroTitle}
         description={content.hero.description}
+        descriptionClassName="max-w-[340px]"
       />
 
       <SectorsSection sectors={content.sectors} heading={content.sectorsHeading} />
