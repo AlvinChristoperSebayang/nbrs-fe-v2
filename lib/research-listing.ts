@@ -27,6 +27,8 @@ export type SecondaryResearchItem = {
 export type ResearchListingResult = {
   pageHeading: string | null;
   pageSubheading: string | null;
+  researchGridHeading: string | null;
+  researchGridDescription: string | null;
   pageHeroImageUrl: ImageSource | null;
   cmsSeoTitle: string | null;
   seoDescription: string | null;
@@ -44,6 +46,8 @@ type ResearchListingResponse = {
   page: Array<{
     pageHeading: string | null;
     pageSubheading: string | null;
+    researchGridHeading: string | null;
+    researchGridDescription: string | null;
     pageHeroImage: RawAsset[];
     seoPageTitle: string | null;
     seoMetaDescription: string | null;
@@ -71,6 +75,8 @@ const RESEARCH_LISTING_QUERY = /* GraphQL */ `
       ... on latestResearch_Entry {
         pageHeading
         pageSubheading
+        researchGridHeading
+        researchGridDescription
         seoPageTitle
         seoMetaDescription
         pageHeroImage {
@@ -145,6 +151,8 @@ export async function getResearchListing(): Promise<ResearchListingResult> {
   return {
     pageHeading: page?.pageHeading ?? null,
     pageSubheading: page?.pageSubheading ?? null,
+    researchGridHeading: page?.researchGridHeading ?? null,
+    researchGridDescription: page?.researchGridDescription ?? null,
     pageHeroImageUrl: toImageSource(page?.pageHeroImage?.[0]) ?? toSeoImage(page?.seoImage?.[0])?.url ?? null,
     cmsSeoTitle: page?.seoPageTitle?.trim() || null,
     seoDescription: page?.seoMetaDescription?.trim() || page?.pageSubheading?.trim() || null,
