@@ -23,7 +23,12 @@ export function HeritageServicesSection({
       <Container>
         <div className="max-w-3xl">
           <h2 className="font-heading text-[40px] uppercase leading-none">Our heritage services</h2>
-          {intro && <p className="mt-5 text-sm leading-relaxed text-zinc-800 sm:text-base">{intro}</p>}
+          {intro && (
+            <div
+              className="mt-5 text-sm leading-relaxed text-zinc-800 sm:text-base [&_a]:underline [&_a]:underline-offset-4 [&_a:hover]:text-rose-600 [&_p]:mb-4 [&_p:last-child]:mb-0 [&_li]:ml-5 [&_ol]:list-decimal [&_ul]:list-disc"
+              dangerouslySetInnerHTML={{ __html: intro }}
+            />
+          )}
         </div>
 
         <div className="mt-12 space-y-10 lg:mt-16">
