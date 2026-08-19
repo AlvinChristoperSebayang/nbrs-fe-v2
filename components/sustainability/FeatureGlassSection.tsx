@@ -50,6 +50,8 @@ export function FeatureGlassSection({
               <div className="mt-6">
                 <Link
                   href={buttonHref}
+                  title={buttonText}
+                  aria-label={buttonText}
                   className="group inline-flex items-center gap-2 rounded-[5px] border border-black px-5 py-2.5 text-sm font-medium text-black transition-colors hover:bg-black hover:text-white"
                 >
                   <span>{buttonText}</span>
@@ -85,6 +87,7 @@ export function FeatureGlassSection({
             <ResponsiveImage
               src={image}
               alt={imageAlt || title}
+              title={imageAlt || title}
               className="h-full w-full object-cover"
             />
           </div>

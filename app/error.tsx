@@ -38,6 +38,8 @@ export default function ErrorBoundary({
           </button>
           <Link
             href="/"
+            title="Back to Home"
+            aria-label="Back to Home"
             className="rounded-full border border-white/40 px-8 py-3.5 font-heading text-sm font-semibold uppercase tracking-wider text-white transition-all duration-300 hover:border-white hover:bg-white/10"
           >
             Back to Home

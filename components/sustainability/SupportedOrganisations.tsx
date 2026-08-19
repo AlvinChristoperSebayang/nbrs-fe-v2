@@ -79,7 +79,12 @@ export function SupportedOrganisations({
                 data-aos-delay={100 + index * 100}
                 className="flex items-center justify-center p-4 h-24 lg:h-28 w-full max-w-[280px]"
               >
-                <ResponsiveImage src={org.logo} alt={org.name} className="max-h-full max-w-full object-contain transition-all duration-300" />
+                <ResponsiveImage
+                  src={org.logo}
+                  alt={org.name}
+                  title={org.name}
+                  className="max-h-full max-w-full object-contain transition-all duration-300"
+                />
               </div>
             ))}
           </div>
@@ -93,7 +98,12 @@ export function SupportedOrganisations({
                 data-aos-delay={index * 100}
                 className="bg-white h-[120px] p-6 flex items-center justify-center rounded-[8px] shadow-sm"
               >
-                <ResponsiveImage src={org.logo} alt={org.name} className="max-h-full max-w-full object-contain" />
+                <ResponsiveImage
+                  src={org.logo}
+                  alt={org.name}
+                  title={org.name}
+                  className="max-h-full max-w-full object-contain"
+                />
               </div>
             ))}
           </div>

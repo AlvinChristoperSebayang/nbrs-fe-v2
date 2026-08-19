@@ -156,6 +156,8 @@ export function Header() {
             <Link
               href="/"
               onClick={() => setOpen(false)}
+              aria-label="NBRS Home"
+              title="NBRS Home"
               className="relative z-50 focus:outline-none"
             >
               <img
@@ -253,6 +255,8 @@ export function Header() {
                   >
                     <Link
                       href={item.href}
+                      title={item.label}
+                      aria-label={item.label}
                       data-no-loading={
                         item.subItems && item.subItems.length > 0 && activeCategory !== item.id
                           ? "true"
@@ -291,6 +295,8 @@ export function Header() {
                     <Link
                       key={sub.label}
                       href={sub.href}
+                      title={sub.label}
+                      aria-label={sub.label}
                       onClick={() => setOpen(false)}
                       className={`font-sans text-[14px] sm:text-base lg:text-lg text-white/90 hover:text-white transition-all duration-500 ease-out py-0.5 inline-block hover:translate-x-1 leading-relaxed ${
                         open ? "translate-y-0 opacity-100" : "translate-y-5 opacity-0"

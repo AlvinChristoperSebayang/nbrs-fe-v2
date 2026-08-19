@@ -224,6 +224,8 @@ export function Hero({
           {button && (
             <Link
               href={button.href}
+              title={button.text}
+              aria-label={button.text}
               data-aos="fade-up"
               data-aos-delay="300"
               className="group mt-8 inline-flex items-center gap-2 rounded-[5px] bg-white/30 px-6 py-2 text-xs text-white transition sm:text-base"

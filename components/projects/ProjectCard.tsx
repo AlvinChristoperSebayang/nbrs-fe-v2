@@ -4,7 +4,12 @@ import type { Project } from "@/lib/types";
 export function ProjectCard({ project }: { project: Project }) {
   return (
     <li>
-      <Link href={`/projects/${project.slug}`} className="group block">
+      <Link        
+        href={`/projects/${project.slug}`}
+        title={project.title}
+        aria-label={project.title}
+        className="group block"
+      >
         <div className="aspect-[4/3] w-full overflow-hidden">
           <img
             // src={project.image}

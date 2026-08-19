@@ -100,6 +100,8 @@ export function TeamListSection({ members }: { members: TeamMember[] }) {
             <div key={member.id} data-aos="fade-up" data-aos-delay={(index % 3) * 60}>
               <Link
                 href={`/people/team/${member.id}`}
+                title={member.name}
+                aria-label={member.name}
                 className="group flex flex-col overflow-hidden bg-white cursor-pointer"
               >
                 {/* Member Photo */}
@@ -107,6 +109,7 @@ export function TeamListSection({ members }: { members: TeamMember[] }) {
                   <ResponsiveImage
                     src={member.image}
                     alt={member.name}
+                    title={member.name}
                     className="h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
                   />
                 </div>

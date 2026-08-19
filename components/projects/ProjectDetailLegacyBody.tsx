@@ -32,7 +32,8 @@ export function ProjectDetailLegacyBody({
               <ResponsiveImage
                 key={index}
                 src={image}
-                alt=""
+                alt={`Project gallery image ${index + 1}`}
+                title={`Project gallery image ${index + 1}`}
                 className="aspect-[16/10] h-full w-full object-cover"
               />
             ))}

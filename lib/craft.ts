@@ -1,14 +1,15 @@
-// if (
-//   process.env.NODE_ENV === "development" &&
-//   !process.env.NODE_TLS_REJECT_UNAUTHORIZED
-// ) {
-//   process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-// }
-
 const CRAFT_GRAPHQL_URL =
   process.env.CRAFT_GRAPHQL_URL ??
   "https://phpstack-1082258-6573734.cloudwaysapps.com/api/";
-  // https://nbrs-update.test/
+
+if (
+  process.env.NODE_ENV === "development" ||
+  CRAFT_GRAPHQL_URL.includes(".test") ||
+  CRAFT_GRAPHQL_URL.includes("localhost") ||
+  CRAFT_GRAPHQL_URL.includes("127.0.0.1")
+) {
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+}
 
 type GraphQLResponse = {
   data?: unknown;

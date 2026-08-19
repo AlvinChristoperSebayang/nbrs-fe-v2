@@ -34,6 +34,8 @@ export function KeyProjectsSection({
             <Link
               key={project.id || project.title}
               href={project.href}
+              title={project.title}
+              aria-label={project.title}
               data-aos="fade-up"
               data-aos-delay={100 + index * 100}
               className="group flex flex-col w-full cursor-pointer"
@@ -43,6 +45,7 @@ export function KeyProjectsSection({
                 <ResponsiveImage
                   src={project.image}
                   alt={project.title}
+                  title={project.title}
                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
               </div>

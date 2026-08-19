@@ -18,12 +18,16 @@ export default function NotFound() {
         <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
           <Link
             href="/"
+            title="Back to Home"
+            aria-label="Back to Home"
             className="rounded-full bg-white px-8 py-3.5 font-heading text-sm font-semibold uppercase tracking-wider text-[#181D33] transition-all duration-300 hover:bg-[#FFD6CD] hover:scale-105"
           >
             Back to Home
           </Link>
           <Link
             href="/projects"
+            title="Explore Projects"
+            aria-label="Explore Projects"
             className="rounded-full border border-white/40 px-8 py-3.5 font-heading text-sm font-semibold uppercase tracking-wider text-white transition-all duration-300 hover:border-white hover:bg-white/10"
           >
             Explore Projects

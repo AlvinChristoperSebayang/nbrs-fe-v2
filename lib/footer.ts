@@ -97,7 +97,7 @@ const fallbackFooter: FooterContent = {
     ["practices", "Interior Design", "/practices/interior-design"],
     ["legal", "Terms & Conditions", "/terms"],
     ["legal", "Privacy Policy", "/privacy"],
-    ["legal", "Sitemap", "#"],
+    ["legal", "Sitemap", "/sitemap.xml"],
   ].map(([section, label, href]) => ({
     section: section as FooterSection,
     label,

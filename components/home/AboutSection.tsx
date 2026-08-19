@@ -86,6 +86,8 @@ export function AboutSection({
                 <div data-aos="fade-up" data-aos-delay="200" className="mt-1">
                   <Link
                     href={button.href}
+                    title={button.text}
+                    aria-label={button.text}
                     className="group inline-flex items-center gap-2.5 rounded-[5px] bg-[#454B4B] hover:bg-[#575E5E] px-5 py-3 text-sm font-medium text-white transition-colors"
                   >
                     <span>{button.text}</span>
