@@ -7,9 +7,9 @@ export function OneLifeToLoveSection() {
         <div className="relative flex flex-col lg:flex-row items-center">
           {/* Overlapping Glass Card */}
           <div className="z-10 w-full lg:w-[50%] lg:absolute lg:left-0 lg:top-1/2 lg:-translate-y-1/2 bg-white/70 backdrop-blur-md border border-white/80 p-6 sm:p-8 lg:p-10 shadow-sm max-lg:mb-6">
-            <h3 className="font-heading text-3xl lg:text-4xl uppercase font-bold text-black leading-tight mb-4">
+            <h2 className="font-heading text-3xl lg:text-4xl uppercase font-bold text-black leading-tight mb-4">
               One Life to Love
-            </h3>
+            </h2>
             <div className="flex flex-col gap-4 text-base text-zinc-900 leading-relaxed font-sans">
               <p>
                 Through AWF, NBRS supports One Life to Love, a not‑for‑profit
@@ -29,6 +29,7 @@ export function OneLifeToLoveSection() {
             <img
               src="/images/about/creative-partnership.jpg"
               alt="One Life to Love Campus Design"
+              title="One Life to Love Campus Design"
               className="h-full w-full object-cover"
             />
           </div>

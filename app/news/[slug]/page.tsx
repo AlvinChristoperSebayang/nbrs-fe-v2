@@ -4,7 +4,9 @@ import { Hero } from "@/components/ui/Hero";
 import { Container } from "@/components/ui/Container";
 import { CtaSection } from "@/components/cta/CtaSection";
 import { NewsArticleContent } from "@/components/news/NewsArticleContent";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { getNewsDetail } from "@/lib/news-detail";
+import { createPageMetadata, SITE_URL } from "@/lib/seo";
 
 export const revalidate = 60;
 
@@ -16,10 +18,16 @@ export async function generateMetadata({
   const { slug } = await params;
   const article = await getNewsDetail(slug);
 
-  return {
-    title: article?.seoTitle ?? article?.title ?? "News Article",
-    description: article?.seoDescription ?? undefined,
-  };
+  return createPageMetadata({
+    pathname: `/news/${slug}`,
+    title: article?.title ?? "News Article",
+    cmsTitle: article?.seoTitle,
+    description: article?.seoDescription,
+    image: article?.seoImage ?? article?.hero,
+    imageAlt: article?.title,
+    type: "article",
+    noIndex: !article,
+  });
 }
 
 export default async function NewsDetailPage({
@@ -33,8 +41,31 @@ export default async function NewsDetailPage({
 
   const meta = [article.category, article.date].filter(Boolean).join(" • ");
 
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: article.title,
+    description: article.seoDescription || article.title,
+    url: `${SITE_URL}/news/${slug}`,
+    datePublished: article.date,
+    author: {
+      "@type": "Organization",
+      name: "NBRS Architecture",
+      url: SITE_URL,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "NBRS Architecture",
+      logo: {
+        "@type": "ImageObject",
+        url: `${SITE_URL}/images/logo/logo-black-2.svg`,
+      },
+    },
+  };
+
   return (
     <article className="bg-white text-black min-h-screen">
+      <JsonLd data={articleSchema} />
       <Hero
         image={article.hero ?? "/images/hero/hero6.png"}
         title={article.title}

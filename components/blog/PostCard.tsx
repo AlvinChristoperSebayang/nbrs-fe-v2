@@ -6,6 +6,8 @@ export function PostCard({ post }: { post: Post }) {
     <li>
       <Link
         href={`/blog/${post.slug}`}
+        title={post.title}
+        aria-label={post.title}
         className="text-xl font-medium text-black hover:underline dark:text-zinc-50"
       >
         {post.title}

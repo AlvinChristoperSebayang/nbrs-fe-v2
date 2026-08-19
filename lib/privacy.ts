@@ -1,5 +1,5 @@
 import { craftFetch } from "./craft";
-import { toImageSource, type RawResponsiveAsset } from "./media";
+import { toImageSource, toSeoImage, type RawResponsiveAsset, type RawSeoAsset, type SeoImage } from "./media";
 import type { CtaContent, ImageSource } from "./types";
 
 type PrivacyEntry = {
@@ -10,6 +10,7 @@ type PrivacyEntry = {
   privacyContent: string | null;
   seoPageTitle: string | null;
   seoMetaDescription: string | null;
+  seoImage: RawSeoAsset[];
   ctaSection: {
     ctaSectionBackgroundImage: RawResponsiveAsset[];
     ctaSectionHeading: string | null;
@@ -28,8 +29,9 @@ export type PrivacyPageContent = {
   contentHtml: string;
   lastUpdated: string;
   cta: CtaContent;
-  seoTitle: string;
+  cmsSeoTitle: string | null;
   seoDescription: string;
+  seoImage: SeoImage | null;
 };
 
 const FALLBACK: PrivacyPageContent = {
@@ -62,8 +64,9 @@ const FALLBACK: PrivacyPageContent = {
     buttonText: "CONTACT NBRS",
     buttonHref: "/contact",
   },
-  seoTitle: "Privacy Policy | NBRS Architecture",
+  cmsSeoTitle: null,
   seoDescription: "Learn about NBRS Architecture's commitment to protecting your personal data and privacy.",
+  seoImage: null,
 };
 
 const QUERY = /* GraphQL */ `
@@ -76,6 +79,7 @@ const QUERY = /* GraphQL */ `
         privacyContent
         seoPageTitle
         seoMetaDescription
+        seoImage { url width height title }
         pageHeroImage {
           mobile: url @transform(width: 600, height: 800, mode: "crop", format: "webp", quality: 80, immediately: true)
           tablet: url @transform(width: 1440, height: 1000, mode: "crop", format: "webp", quality: 82, immediately: true)
@@ -130,8 +134,9 @@ export async function getPrivacyPageContent(): Promise<PrivacyPageContent> {
         buttonText: cta?.ctaSectionButtonLabel?.trim() || FALLBACK.cta.buttonText,
         buttonHref: cta?.ctaSectionButtonUrl?.trim() || FALLBACK.cta.buttonHref,
       },
-      seoTitle: entry.seoPageTitle?.trim() || FALLBACK.seoTitle,
+      cmsSeoTitle: entry.seoPageTitle?.trim() || null,
       seoDescription: entry.seoMetaDescription?.trim() || FALLBACK.seoDescription,
+      seoImage: toSeoImage(entry.seoImage?.[0]),
     };
   } catch (error) {
     if (process.env.NODE_ENV === "development") {

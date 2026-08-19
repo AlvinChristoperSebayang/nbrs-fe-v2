@@ -1,12 +1,13 @@
-import type { Metadata } from "next";
+import { createPageMetadata } from "@/lib/seo";
 import { Hero } from "@/components/ui/Hero";
 import { Container } from "@/components/ui/Container";
 import { NewsInfiniteGrid } from "@/components/news/NewsInfiniteGrid";
 import { getNewsListing, NEWS_PAGE_SIZE } from "@/lib/news-listing";
 
-export const metadata: Metadata = {
-  title: "Latest News",
-};
+export async function generateMetadata() {
+  const page = await getNewsListing({ limit: NEWS_PAGE_SIZE });
+  return createPageMetadata({ pathname: "/news", title: page.pageHeading || "Latest News", cmsTitle: page.cmsSeoTitle, description: page.seoDescription, image: page.seoImage ?? page.pageHeroImage });
+}
 
 export const revalidate = 60;
 

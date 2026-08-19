@@ -146,9 +146,9 @@ export function SectorFeaturesSliderSection({
       <div className="hidden lg:block">
         <Container className="overflow-hidden">
           <div className="mb-6 flex items-start justify-between gap-6">
-            <span className="font-heading text-[24px] uppercase text-black">
+            <h2 className="font-heading text-[24px] uppercase text-black">
               {title}
-            </span>
+            </h2>
           </div>
 
           <div className="relative w-full">
@@ -235,6 +235,8 @@ export function SectorFeaturesSliderSection({
                     <Link
                       key={index}
                       href={item.href!}
+                      title={item.title}
+                      aria-label={item.title}
                       onMouseEnter={() => setActiveIndex(index)}
                       className={cardClassName}
                     >

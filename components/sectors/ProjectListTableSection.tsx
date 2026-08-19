@@ -53,6 +53,8 @@ export function ProjectListTableSection({
             <Link
               key={row.id || row.project}
               href={row.href}
+              title={row.project}
+              aria-label={row.project}
               data-aos="fade-up"
               data-aos-delay={index * 80}
               className="group bg-white md:bg-transparent p-6 flex md:grid md:grid-cols-12 items-center justify-between gap-4 md:gap-4 hover:bg-zinc-50 transition-colors cursor-pointer"
@@ -60,7 +62,7 @@ export function ProjectListTableSection({
               {/* Project Title (Mobile & Desktop) */}
               <div className="md:col-span-4 flex flex-col justify-center">
                 {showMobileProjectLabel && (
-                  <span className="font-bold text-xs uppercase tracking-wider text-black md:hidden mb-2">
+                  <span className="font-bold text-base uppercase tracking-wider text-black md:hidden mb-2">
                     PROJECT
                   </span>
                 )}

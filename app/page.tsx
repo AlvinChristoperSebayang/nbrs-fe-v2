@@ -5,6 +5,7 @@ import { SectorsSection } from "@/components/home/SectorsSection";
 import { GridEffect } from "@/components/ui/GridEffect";
 import { CtaSection } from "@/components/cta/CtaSection";
 import { getHomepageContent } from "@/lib/homepage";
+import { createPageMetadata } from "@/lib/seo";
 import type { Sector, NewsItem, CtaContent } from "@/lib/types";
 
 const sectors: Sector[] = [
@@ -72,6 +73,11 @@ const cta: CtaContent = {
   buttonHref: "/contact",
 };
 
+export async function generateMetadata() {
+  const page = await getHomepageContent();
+  return createPageMetadata({ pathname: "/", title: "Architecture, Design & Heritage", cmsTitle: page.cmsSeoTitle, description: page.seoDescription, image: page.seoImage });
+}
+
 export default async function Home() {
   let homepage: Awaited<ReturnType<typeof getHomepageContent>> | null = null;
 
@@ -94,6 +100,7 @@ export default async function Home() {
         heading={homepage?.about?.heading ?? undefined}
         description={homepage?.about?.description ?? undefined}
         button={homepage?.about?.button ?? undefined}
+        description_class_name="max-w-none lg:max-w-[314px]"
       />
       <SectorsSection sectors={homepageSectors} heading={homepage?.sectorsHeading ?? "Designing spaces bespoke to their needs"} />
       <GridEffect

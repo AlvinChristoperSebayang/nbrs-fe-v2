@@ -3,14 +3,105 @@ import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
 import { Container } from "@/components/ui/Container";
 import type { Sector } from "@/lib/types";
 
+function getDesktopSectorsLines(heading: string): string[] {
+  if (heading.includes("\n")) {
+    return heading.split("\n").map((l) => l.trim()).filter(Boolean);
+  }
+
+  const words = heading.trim().split(/\s+/);
+  if (words.length >= 5) {
+    return [
+      words[0],
+      words[1],
+      words.slice(2, 4).join(" "),
+      words.slice(4).join(" "),
+    ];
+  }
+  if (words.length >= 3) {
+    return [
+      words.slice(0, words.length - 2).join(" "),
+      words[words.length - 2],
+      words[words.length - 1],
+    ];
+  }
+  return [heading];
+}
+
+function getMobileSectorsLines(heading: string): string[] {
+  if (heading.includes("\n")) {
+    const raw = heading.split("\n").map((l) => l.trim()).filter(Boolean);
+    if (raw.length <= 2) return raw;
+    const mid = Math.ceil(raw.length / 2);
+    return [raw.slice(0, mid).join(" "), raw.slice(mid).join(" ")];
+  }
+
+  const words = heading.trim().split(/\s+/);
+  if (words.length <= 2) return words;
+
+  if (words.length >= 4) {
+    return [words.slice(0, 2).join(" "), words.slice(2).join(" ")];
+  }
+  return [words[0], words.slice(1).join(" ")];
+}
+
+function renderSectorsLines(lines: string[]) {
+  if (lines.length === 1) {
+    return (
+      <span className="inline-block border-b-4 border-black pb-2 leading-[1.05]">
+        {lines[0]}
+      </span>
+    );
+  }
+
+  return (
+    <span className="inline-flex flex-col items-start">
+      {lines.map((line, idx) => {
+        const isLast = idx === lines.length - 1;
+        return isLast ? (
+          <span
+            key={idx}
+            className="inline-block border-b-4 border-black pb-2 leading-[1.05] mt-1"
+          >
+            {line}
+          </span>
+        ) : (
+          <span key={idx} className="block leading-[1.05]">
+            {line}
+          </span>
+        );
+      })}
+    </span>
+  );
+}
+
+function renderSectorsHeading(heading: string) {
+  const desktopLines = getDesktopSectorsLines(heading);
+  const mobileLines = getMobileSectorsLines(heading);
+
+  const isSame =
+    desktopLines.length === mobileLines.length &&
+    desktopLines.every((l, i) => l === mobileLines[i]);
+
+  if (isSame) {
+    return renderSectorsLines(desktopLines);
+  }
+
+  return (
+    <>
+      <span className="lg:hidden">{renderSectorsLines(mobileLines)}</span>
+      <span className="hidden lg:inline">{renderSectorsLines(desktopLines)}</span>
+    </>
+  );
+}
+
 export function SectorsSection({ sectors, heading = "Designing spaces bespoke to their needs" }: { sectors: Sector[]; heading?: string }) {
   return (
     <section className="bg-white py-8 lg:py-24">
       <Container>
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3 lg:gap-x-[30px] lg:gap-y-[35px]">
-          <div data-aos="fade-up" className="flex flex-col justify-center">
-            <h2 className="font-heading text-4xl leading-[1.05] uppercase text-black sm:text-[40px] lg:text-[70px] border-b-4 border-black">
-              {heading}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-6 lg:gap-x-[30px] lg:gap-y-[35px]">
+          <div data-aos="fade-up" className="lg:col-span-4 flex flex-col justify-center">
+            <h2 className="font-heading text-4xl leading-[1.05] uppercase text-black sm:text-[40px] lg:text-[70px] flex flex-col items-start">
+              {renderSectorsHeading(heading)}
             </h2>
           </div>
 
@@ -18,9 +109,11 @@ export function SectorsSection({ sectors, heading = "Designing spaces bespoke to
             <Link
               key={sector.label}
               href={sector.href}
+              title={sector.label}
+              aria-label={sector.label}
               data-aos="fade-up"
               data-aos-delay={100 + index * 100}
-              className="group relative block aspect-[5/4] overflow-hidden rounded-[5px] lg:aspect-[37/30]"
+              className="group relative block aspect-[5/4] overflow-hidden rounded-[5px] lg:aspect-[37/30] lg:col-span-4"
             >
               <div
                 className={`absolute  top-[-100%] group-hover:top-0  duration-300 z-10 opacity-100  w-full h-full`}
@@ -57,10 +150,11 @@ export function SectorsSection({ sectors, heading = "Designing spaces bespoke to
               <ResponsiveImage
                 src={sector.image}
                 alt={sector.label}
+                title={sector.label}
                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 z-[5]"
               />
               <div className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-4 p-5 z-[6]">
-                <span className="font-heading text-lg lg:text-[34px] uppercase text-white">
+                <span className="font-heading text-2xl lg:text-[34px] uppercase text-white">
                   {sector.label}
                 </span>
                 <svg

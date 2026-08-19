@@ -1,9 +1,27 @@
 import { Container } from "@/components/ui/Container";
 import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
 import { AboutSection } from "@/components/home/AboutSection";
-import type { SocialInitiative } from "@/lib/social-sustainability";
+import type { SocialInitiative } from "@/lib/social-responsibility";
 
 type SocialInitiativesSectionProps = { initiatives: SocialInitiative[] };
+
+function InitiativeDescription({ description, className }: { description: string; className: string }) {
+  const normalisedDescription = description.replace(/\\n/g, "\n").replace(/\r\n?/g, "\n");
+  const isRichText = /<\/?[a-z][\s\S]*>/i.test(normalisedDescription);
+  const richTextClassName = `${className} [&_a]:underline [&_a]:underline-offset-2 [&_li]:ml-5 [&_ol]:list-decimal [&_ul]:list-disc`;
+
+  if (isRichText) {
+    return <div className={richTextClassName} dangerouslySetInnerHTML={{ __html: normalisedDescription }} />;
+  }
+
+  return (
+    <div className={className}>
+      {normalisedDescription.split(/\n\s*\n/).map((paragraph, index) => (
+        <p key={index}>{paragraph}</p>
+      ))}
+    </div>
+  );
+}
 
 /** Renders the three editorial initiative treatments from the Social Sustainability page. */
 export function SocialInitiativesSection({ initiatives }: SocialInitiativesSectionProps) {
@@ -21,25 +39,72 @@ export function SocialInitiativesSection({ initiatives }: SocialInitiativesSecti
         />
       )}
 
-      <section className="space-y-16 bg-white py-16 lg:space-y-[143px] lg:py-[94px]">
-        {featureInitiatives.map((initiative, index) => {
-          const imageLeft = index % 2 === 0;
-          return (
-            <Container key={initiative.title}>
-              <div className="relative flex flex-col items-center lg:min-h-[410px]">
-                <div data-aos="fade-up" className={`w-full overflow-hidden bg-zinc-100 lg:absolute lg:top-0 lg:h-[410px] lg:w-[66%] ${imageLeft ? "lg:left-0" : "lg:right-0"}`}>
-                  <ResponsiveImage src={initiative.image} alt={initiative.title} className="aspect-[77/41] h-full w-full object-cover" />
-                </div>
-                <article data-aos="fade-up" data-aos-delay="150" className={`z-10 w-full border-2 border-[#FDFFEA] bg-white/75 p-8 backdrop-blur-md lg:absolute lg:top-1/2 lg:w-1/2 lg:-translate-y-1/2 lg:p-8 ${imageLeft ? "lg:right-0" : "lg:left-0"}`}>
-                  <h2 className="font-heading text-3xl uppercase leading-tight text-black lg:text-[40px]">{initiative.title}</h2>
-                  <div className="mt-5 space-y-4 text-sm leading-relaxed text-black">
-                    {initiative.description.split(/\n\s*\n/).map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+      <section className="bg-white py-12 sm:py-16 lg:py-[94px]">
+        <Container className="space-y-12 sm:space-y-16 lg:space-y-[143px]">
+          {featureInitiatives.map((initiative, index) => {
+            const imageLeft = index % 2 === 0;
+            return (
+              <div key={initiative.title}>
+                {/* Mobile View (< lg): Heading -> Description -> Image */}
+                <div className="flex flex-col lg:hidden">
+                  <div data-aos="fade-up">
+                    <h2 className="font-heading text-2xl sm:text-3xl font-bold uppercase leading-tight text-black mb-3">
+                      {initiative.title}
+                    </h2>
+                    <InitiativeDescription
+                      description={initiative.description}
+                      className="mb-6 space-y-3 font-sans text-sm leading-relaxed text-black sm:text-base"
+                    />
                   </div>
-                </article>
+                  <div
+                    data-aos="fade-up"
+                    data-aos-delay="100"
+                    className="w-full overflow-hidden bg-zinc-100 rounded-[5px]"
+                  >
+                    <ResponsiveImage
+                      src={initiative.image}
+                      alt={initiative.title}
+                      title={initiative.title}
+                      className="aspect-[4/3] sm:aspect-[77/41] h-full w-full object-cover"
+                    />
+                  </div>
+                </div>
+
+                {/* Desktop View (>= lg): Overlapping Image + Glass Card */}
+                <div className="hidden lg:relative lg:flex lg:flex-col lg:items-center lg:min-h-[410px]">
+                  <div
+                    data-aos="fade-up"
+                    className={`absolute top-0 h-[410px] w-[66%] overflow-hidden bg-zinc-100 ${
+                      imageLeft ? "left-0" : "right-0"
+                    }`}
+                  >
+                    <ResponsiveImage
+                      src={initiative.image}
+                      alt={initiative.title}
+                      title={initiative.title}
+                      className="aspect-[77/41] h-full w-full object-cover"
+                    />
+                  </div>
+                  <article
+                    data-aos="fade-up"
+                    data-aos-delay="150"
+                    className={`absolute top-1/2 z-10 w-1/2 -translate-y-1/2 border-2 border-[#FDFFEA] bg-white/75 p-8 backdrop-blur-md ${
+                      imageLeft ? "right-0" : "left-0"
+                    }`}
+                  >
+                    <h2 className="font-heading text-[32px] uppercase leading-tight font-bold text-black">
+                      {initiative.title}
+                    </h2>
+                    <InitiativeDescription
+                      description={initiative.description}
+                      className="mt-5 space-y-4 font-sans text-sm leading-relaxed text-black"
+                    />
+                  </article>
+                </div>
               </div>
-            </Container>
-          );
-        })}
+            );
+          })}
+        </Container>
       </section>
     </>
   );

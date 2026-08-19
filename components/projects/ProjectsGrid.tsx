@@ -40,7 +40,12 @@ export function ProjectsGrid({ projects }: { projects: ProjectListItem[] }) {
           data-aos="fade-up"
           data-aos-delay={(index % 3) * 100}
         >
-          <Link href={`/projects/${project.slug}`} className="group block w-full h-full flex flex-col">
+          <Link
+            href={`/projects/${project.slug}`}
+            title={project.heading}
+            aria-label={project.heading}
+            className="group block w-full h-full flex flex-col"
+          >
             <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#7A0C0C]">
               {project.thumbnailUrl && (
                 <ProjectThumbnail
@@ -50,9 +55,9 @@ export function ProjectsGrid({ projects }: { projects: ProjectListItem[] }) {
               )}
             </div>
             <div className="flex flex-col gap-1 bg-black p-6 text-white flex-1">
-              <h3 className="font-heading text-2xl lg:text-[36px] uppercase leading-tight">
+              <h2 className="font-heading text-2xl lg:text-[36px] uppercase leading-tight">
                 {project.heading}
-              </h3>
+              </h2>
               {project.subheading && (
                 <p className="font-bold text-[20px] mt-auto">{project.subheading}</p>
               )}

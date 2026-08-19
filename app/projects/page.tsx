@@ -5,8 +5,13 @@ import { ProjectsHero } from "@/components/projects/ProjectsHero";
 import { ProjectsFilters } from "@/components/projects/ProjectsFilters";
 import { ProjectsGrid } from "@/components/projects/ProjectsGrid";
 import { PreserveScrollOnNavigate } from "@/components/projects/PreserveScrollOnNavigate";
+import { createPageMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
+export async function generateMetadata() {
+  const page = await getProjectsListing({ limit: 1 });
+  return createPageMetadata({ pathname: "/projects", title: page.pageHeading || "Projects", cmsTitle: page.cmsSeoTitle, description: page.seoDescription, image: page.seoImage ?? page.pageHeroImageUrl });
+}
 
 const PAGE_SIZE = 9;
 
@@ -113,6 +118,8 @@ export default async function ProjectsIndexPage(
               <Link
                 href={`/projects?${loadMoreParams.toString()}`}
                 scroll={false}
+                title="Load more projects"
+                aria-label="Load more projects"
                 className="inline-flex items-center rounded-full border border-black px-8 py-3 text-sm uppercase text-black transition hover:bg-black hover:text-white"
               >
                 Load more

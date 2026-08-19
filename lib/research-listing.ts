@@ -1,5 +1,5 @@
 import { craftFetch } from "./craft";
-import { toImageSource } from "./media";
+import { toImageSource, toSeoImage, type RawSeoAsset, type SeoImage } from "./media";
 import type { ImageSource } from "./types";
 
 export type ResearchCategory = {
@@ -27,22 +27,31 @@ export type SecondaryResearchItem = {
 export type ResearchListingResult = {
   pageHeading: string | null;
   pageSubheading: string | null;
+  researchGridHeading: string | null;
+  researchGridDescription: string | null;
   pageHeroImageUrl: ImageSource | null;
+  cmsSeoTitle: string | null;
+  seoDescription: string | null;
+  seoImage: SeoImage | null;
   sectors: ResearchCategory[];
   practices: ResearchCategory[];
   articles: ResearchListItem[];
   secondaryResearch: SecondaryResearchItem[];
 };
 
-type RawAsset = { mobile?: string; tablet?: string; desktop?: string };
+type RawAsset = { url?: string; mobile?: string; tablet?: string; desktop?: string; width?: number | null; height?: number | null; title?: string | null };
 type RawCategory = ResearchCategory;
 
 type ResearchListingResponse = {
   page: Array<{
     pageHeading: string | null;
     pageSubheading: string | null;
+    researchGridHeading: string | null;
+    researchGridDescription: string | null;
     pageHeroImage: RawAsset[];
-    seoImage: RawAsset[];
+    seoPageTitle: string | null;
+    seoMetaDescription: string | null;
+    seoImage: RawSeoAsset[];
     primaryResearch: RawResearch[];
     secondaryResearch: RawResearch[];
   }>;
@@ -66,12 +75,24 @@ const RESEARCH_LISTING_QUERY = /* GraphQL */ `
       ... on latestResearch_Entry {
         pageHeading
         pageSubheading
+        researchGridHeading
+        researchGridDescription
+        seoPageTitle
+        seoMetaDescription
         pageHeroImage {
+          url
+          width
+          height
+          title
           mobile: url @transform(width: 768, immediately: true)
           tablet: url @transform(width: 1440, immediately: true)
           desktop: url @transform(width: 1920, immediately: true)
         }
         seoImage {
+          url
+          width
+          height
+          title
           mobile: url @transform(width: 768, immediately: true)
           tablet: url @transform(width: 1440, immediately: true)
           desktop: url @transform(width: 1920, immediately: true)
@@ -130,14 +151,26 @@ export async function getResearchListing(): Promise<ResearchListingResult> {
   return {
     pageHeading: page?.pageHeading ?? null,
     pageSubheading: page?.pageSubheading ?? null,
-    pageHeroImageUrl: toImageSource(page?.pageHeroImage?.[0]) ?? toImageSource(page?.seoImage?.[0]),
+    researchGridHeading: page?.researchGridHeading ?? null,
+    researchGridDescription: page?.researchGridDescription ?? null,
+    pageHeroImageUrl: toImageSource(page?.pageHeroImage?.[0]) ?? toSeoImage(page?.seoImage?.[0])?.url ?? null,
+    cmsSeoTitle: page?.seoPageTitle?.trim() || null,
+    seoDescription: page?.seoMetaDescription?.trim() || page?.pageSubheading?.trim() || null,
+    seoImage: toSeoImage(page?.seoImage?.[0]) || toSeoImage(page?.pageHeroImage?.[0]),
     sectors: data.sectors ?? [],
-    practices: data.practices ?? [],
+    // Heritage is currently treated as a Sector in the public filter UI.
+    // Keep the CMS relation on each research item intact; hide only the
+    // legacy Practice option until the taxonomy migration is complete.
+    practices: (data.practices ?? []).filter(
+      (practice) =>
+        practice.slug !== "heritage" &&
+        practice.title?.toLowerCase() !== "heritage",
+    ),
     articles,
     secondaryResearch: (page?.secondaryResearch ?? []).map((article) => ({
       id: article.id,
       slug: article.slug,
-      title: article.artHdrHeading ?? article.title ?? article.slug,
+      title: article.title ?? article.artHdrHeading ?? article.slug,
     })),
   };
 }

@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { CareersHero } from "@/components/people/CareersHero";
 import { SingleTeamBioSection } from "@/components/people/SingleTeamBioSection";
 import { getPeopleDetail } from "@/lib/people-detail";
+import { createPageMetadata } from "@/lib/seo";
 
 export const revalidate = 60;
 
@@ -14,10 +15,15 @@ export async function generateMetadata({
   const { slug } = await params;
   const person = await getPeopleDetail(slug);
 
-  return {
-    title: person?.seoTitle ?? (person ? `${person.name} | Our People` : "Team Member | Our People"),
-    description: person?.seoDescription ?? undefined,
-  };
+  return createPageMetadata({
+    pathname: `/people/team/${slug}`,
+    title: person ? `${person.name} | Our People` : "Team Member | Our People",
+    cmsTitle: person?.seoTitle,
+    description: person?.seoDescription,
+    image: person?.seoImage ?? person?.hero,
+    imageAlt: person?.name,
+    noIndex: !person,
+  });
 }
 
 export default async function SingleTeamPage({

@@ -4,7 +4,7 @@ import type { ImageSource } from "@/lib/types";
 
 export function CultureValuesSection({ heading, description, image }: { heading: string; description: string; image: ImageSource }) {
   return (
-    <section className="bg-zinc-100 py-16 lg:py-24 text-black">
+    <section className="bg-[#EEEEEE] py-16 lg:py-24 text-black">
       <Container>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
           {/* Left Column: Title & Text */}
@@ -23,11 +23,12 @@ export function CultureValuesSection({ heading, description, image }: { heading:
             data-aos-delay="150"
             className="lg:col-span-5 flex justify-center lg:justify-end items-center"
           >
-            <div className="relative w-64 sm:w-72 aspect-square flex items-center justify-center">
+            <div className="relative w-64 sm:w-80 lg:w-[360px] max-w-full flex items-center justify-center">
               <ResponsiveImage
                 src={image}
                 alt="NBRS Our Values Diagram"
-                className="w-full h-full object-contain mix-blend-multiply"
+                title="NBRS Our Values Diagram"
+                className="w-full h-auto object-contain mix-blend-multiply"
               />
             </div>
           </div>

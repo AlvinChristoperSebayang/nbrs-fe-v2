@@ -1,0 +1,16 @@
+{
+  "current_focus": null,
+  "last_completed": {
+    "completed_at": "2026-08-15T10:36:58Z",
+    "goal": "Add the approved NEXT_PUBLIC_ALLOW_INDEXING control so staging emits noindex/nofollow, blocks crawling, and does not publish sitemap URLs while production remains indexable.",
+    "id": "SEO-STAGING-NOINDEX-001"
+  },
+  "next_planned_reference": null,
+  "preflight_candidate": null,
+  "proposals": {},
+  "rejected_findings": [],
+  "schema_version": 2,
+  "skill_version": "0.5.0",
+  "tasks": {},
+  "updated_at": "2026-08-15T10:36:59Z"
+}

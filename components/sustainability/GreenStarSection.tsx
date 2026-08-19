@@ -38,6 +38,7 @@ export function GreenStarSection({
               <ResponsiveImage
                 src={image}
                 alt={heading}
+                title={heading}
                 className="w-full max-w-[480px] sm:max-w-[540px] object-contain"
               />
             ) : (

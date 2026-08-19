@@ -25,8 +25,8 @@ export const NAV_STRUCTURE: NavItem[] = [
     subItems: [
       { label: "About NBRS", href: "/about" },
       { label: "Sustainability", href: "/sustainability" },
-      { label: "Social Sustainability", href: "/social-sustainability" },
-      { label: "RAP", href: "/rap" },
+      { label: "Social Responsibility", href: "/social-responsibility" },
+      // { label: "RAP", href: "/rap" },
       { label: "Awards", href: "/awards" },
       { label: "Insights", href: "/research" },
       { label: "Design Approach", href: "/design-approach" },
@@ -125,6 +125,17 @@ export function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (!open) return;
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        setOpen(false);
+      }
+    }
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [open]);
+
   const isScrolledHeader = scrolled && !open;
   const useDarkElements = (scrolled || isResearchDetail) && !open;
 
@@ -145,11 +156,14 @@ export function Header() {
             <Link
               href="/"
               onClick={() => setOpen(false)}
+              aria-label="NBRS Home"
+              title="NBRS Home"
               className="relative z-50 focus:outline-none"
             >
               <img
                 src={useDarkElements ? "/images/logo/logo-black-2.svg" : "/images/logo/logo-white-2.svg"}
                 alt="NBRS Logo"
+                title="NBRS Logo"
                 width={100}
                 height={36}
                 className="inline-block transition-opacity duration-300"
@@ -159,8 +173,9 @@ export function Header() {
             {/* Smooth Animated Hamburger / Close Morph Button */}
             <button
               type="button"
-              aria-label={open ? "Close menu" : "Open menu"}
+              aria-label={open ? "Close navigation menu" : "Open navigation menu"}
               aria-expanded={open}
+              aria-controls="mobile-nav-drawer"
               onClick={() => setOpen((prev) => !prev)}
               className={`relative z-50 flex h-10 w-10 cursor-pointer flex-col items-center justify-center gap-[6px] rounded-full p-2 transition-transform duration-500 ease-[cubic-bezier(0.65,0,0.35,1)] active:scale-90 ${
                 open ? "rotate-180" : "rotate-0 hover:scale-105"
@@ -205,6 +220,10 @@ export function Header() {
 
       {/* FULL-SCREEN OVERLAY MENU */}
       <div
+        id="mobile-nav-drawer"
+        role="dialog"
+        aria-modal={open}
+        aria-label="Site Navigation"
         aria-hidden={!open}
         style={{
           clipPath: open
@@ -236,11 +255,19 @@ export function Header() {
                   >
                     <Link
                       href={item.href}
+                      title={item.label}
+                      aria-label={item.label}
+                      data-no-loading={
+                        item.subItems && item.subItems.length > 0 && activeCategory !== item.id
+                          ? "true"
+                          : undefined
+                      }
                       onClick={(e) => {
                         const hasSubItems = item.subItems && item.subItems.length > 0;
                         if (hasSubItems && activeCategory !== item.id) {
                           // 1st click: open/expand submenu without navigating or closing menu
                           e.preventDefault();
+                          e.stopPropagation();
                           setActiveCategory(item.id);
                         } else {
                           // 2nd click (or item without sub-items): navigate to parent href and close menu
@@ -268,6 +295,8 @@ export function Header() {
                     <Link
                       key={sub.label}
                       href={sub.href}
+                      title={sub.label}
+                      aria-label={sub.label}
                       onClick={() => setOpen(false)}
                       className={`font-sans text-[14px] sm:text-base lg:text-lg text-white/90 hover:text-white transition-all duration-500 ease-out py-0.5 inline-block hover:translate-x-1 leading-relaxed ${
                         open ? "translate-y-0 opacity-100" : "translate-y-5 opacity-0"

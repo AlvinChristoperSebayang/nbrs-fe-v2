@@ -20,11 +20,11 @@ export function KeyProjectsSection({
   if (!projects || projects.length === 0) return null;
 
   return (
-    <section className="bg-white py-12 lg:py-16 text-black">
+    <section className="bg-white py-10 lg:py-14 text-black">
       <Container>
         <h2
           data-aos="fade-up"
-          className="font-heading text-3xl lg:text-4xl uppercase font-bold text-black tracking-tight mb-8"
+          className="font-heading text-3xl lg:text-4xl uppercase font-bold text-black tracking-tight mb-6"
         >
           {title}
         </h2>
@@ -34,6 +34,8 @@ export function KeyProjectsSection({
             <Link
               key={project.id || project.title}
               href={project.href}
+              title={project.title}
+              aria-label={project.title}
               data-aos="fade-up"
               data-aos-delay={100 + index * 100}
               className="group flex flex-col w-full cursor-pointer"
@@ -43,6 +45,7 @@ export function KeyProjectsSection({
                 <ResponsiveImage
                   src={project.image}
                   alt={project.title}
+                  title={project.title}
                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
               </div>

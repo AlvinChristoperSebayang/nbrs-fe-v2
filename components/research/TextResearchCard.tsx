@@ -19,11 +19,13 @@ export function TextResearchCard({ item }: { item: SecondaryResearchItem }) {
   return (
     <Link
       href={`/research/${item.slug}`}
+      title={item.title}
+      aria-label={item.title}
       className="group flex h-[150px] w-full flex-col overflow-hidden border border-[#E7E7E7] transition-all duration-300 hover:border-black"
     >
       {/* Top Title Section */}
       <div className="flex h-[94px] w-full items-start bg-[#E7E7E7] p-5 transition-colors duration-300 group-hover:bg-black">
-        <span className="font-sans text-base font-normal text-black transition-colors duration-300 group-hover:text-white leading-snug">
+        <span className="font-sans text-base font-normal text-black transition-colors duration-300 group-hover:text-white leading-snug md:max-w-[167px]">
           {toTitleCase(item.title)}
         </span>
       </div>

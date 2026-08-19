@@ -31,6 +31,8 @@ export function TextImageSection({
           {buttonText && buttonHref && (
             <Link
               href={buttonHref}
+              title={buttonText}
+              aria-label={buttonText}
               className="group mt-2 inline-flex items-center gap-2 rounded-[5px] border border-black px-6 py-3 text-sm uppercase text-black transition hover:bg-black hover:text-white"
             >
               {buttonText}
@@ -59,7 +61,8 @@ export function TextImageSection({
         >
           <ResponsiveImage
             src={image}
-            alt=""
+            alt={heading}
+            title={heading}
             className="h-64 w-full object-cover sm:h-80 lg:h-[420px]"
           />
         </div>

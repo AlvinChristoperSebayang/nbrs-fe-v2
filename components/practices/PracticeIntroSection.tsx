@@ -16,10 +16,10 @@ export function PracticeIntroSection({
       <Container>
         <div
           data-aos="fade-up"
-          className="relative max-w-[1171px] mx-auto min-h-none lg:min-h-[410px] flex flex-col-reverse lg:flex-col lg:block justify-center"
+          className="relative w-full min-h-none lg:min-h-[410px] flex flex-col-reverse lg:flex-col lg:block justify-center gap-6 lg:gap-0"
         >
           {/* Main Left Image (770px x 410px) */}
-          <div className="w-full lg:w-[770px] h-[300px] sm:h-[380px] lg:h-[410px] relative lg:absolute lg:left-0 lg:top-0 overflow-hidden">
+          <div className="w-[calc(100%+1rem)] sm:w-[calc(100%+1.5rem)] lg:w-[770px] -mr-4 sm:-mr-6 lg:mr-0 h-[260px] sm:h-[360px] lg:h-[410px] relative lg:absolute lg:left-0 lg:top-0 overflow-hidden">
             <ResponsiveImage
               src={image}
               alt={alt}
@@ -31,9 +31,9 @@ export function PracticeIntroSection({
           <div
             data-aos="fade-up"
             data-aos-delay="150"
-            className="w-full lg:w-[585px] relative lg:absolute lg:left-[586px] lg:top-[125px] z-10 bg-white/80 backdrop-blur-[5px] p-0 sm:p-8 lg:p-10 flex items-center border border-white/60 max-lg:mb-4"
+            className="w-full lg:w-[585px] relative lg:absolute lg:right-0 lg:top-[125px] z-10 bg-transparent lg:bg-white/80 lg:backdrop-blur-[5px] p-0 sm:p-8 lg:p-10 flex items-center border-none lg:border lg:border-white/60"
           >
-            <p className="font-sans text-base text-black font-normal leading-relaxed max-w-[453px]">
+            <p className="font-sans text-base sm:text-base text-black font-normal leading-relaxed max-w-[453px]">
               {quote}
             </p>
           </div>

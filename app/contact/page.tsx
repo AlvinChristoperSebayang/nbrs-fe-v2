@@ -1,6 +1,12 @@
 import { ContactForm } from "@/components/contact/ContactForm";
 import { Container } from "@/components/ui/Container";
 import { getContactPageContent } from "@/lib/contact";
+import { createPageMetadata } from "@/lib/seo";
+
+export async function generateMetadata() {
+  const page = await getContactPageContent();
+  return createPageMetadata({ pathname: "/contact", title: page.title, cmsTitle: page.cmsSeoTitle, description: page.seoDescription, image: page.seoImage ?? page.heroImage, imageAlt: page.title });
+}
 
 export default async function ContactPage() {
   const content = await getContactPageContent();
@@ -8,7 +14,14 @@ export default async function ContactPage() {
   return (
     <article className="relative bg-white text-black min-h-screen pb-24">
       <div className="relative w-full h-[450px] sm:h-[360px] lg:h-[400px] overflow-hidden bg-white">
-        {content.heroImage && <img src={content.heroImage.url} alt={content.heroImage.alt} className="h-full w-full object-cover" />}
+        {content.heroImage && (
+          <img
+            src={content.heroImage.url}
+            alt={content.heroImage.alt || "Contact Us"}
+            title={content.heroImage.alt || "Contact Us"}
+            className="h-full w-full object-cover"
+          />
+        )}
         <div className="absolute inset-0 bg-white/55" />
       </div>
 

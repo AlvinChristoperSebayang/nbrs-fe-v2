@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { createPageMetadata } from "@/lib/seo";
 import { Hero } from "@/components/ui/Hero";
 import { Container } from "@/components/ui/Container";
 import { ResearchSection } from "@/components/research/ResearchSection";
@@ -8,7 +8,10 @@ import { getResearchListing } from "@/lib/research-listing";
 import { getPageCta } from "@/lib/cta";
 import type { CtaContent } from "@/lib/types";
 
-export const metadata: Metadata = { title: "Research" };
+export async function generateMetadata() {
+  const page = await getResearchListing();
+  return createPageMetadata({ pathname: "/research", title: page.pageHeading || "Research", cmsTitle: page.cmsSeoTitle, description: page.seoDescription, image: page.seoImage ?? page.pageHeroImageUrl });
+}
 export const dynamic = "force-dynamic";
 
 const cta: CtaContent = {
@@ -37,7 +40,13 @@ export default async function ResearchPage() {
       />
       <section className="bg-white py-16 lg:py-24">
         <Container className="flex flex-col gap-16 lg:gap-24">
-          <ResearchSection heading={listing?.pageHeading} subheading={listing?.pageSubheading} sectors={listing?.sectors} practices={listing?.practices} items={listing?.articles} />
+          <ResearchSection
+            heading={listing?.researchGridHeading}
+            subheading={listing?.researchGridDescription}
+            sectors={listing?.sectors}
+            practices={listing?.practices}
+            items={listing?.articles}
+          />
           <TextResearchGrid items={listing?.secondaryResearch} />
         </Container>
       </section>

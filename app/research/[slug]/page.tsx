@@ -7,6 +7,8 @@ import { ResearchDetailHero } from "@/components/research/ResearchDetailHero";
 import { Container } from "@/components/ui/Container";
 import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
 import { getResearchDetail } from "@/lib/research-detail";
+import { ResearchShareButtons } from "@/components/research/ResearchShareButtons";
+import { createPageMetadata } from "@/lib/seo";
 
 export const revalidate = 60;
 
@@ -14,10 +16,16 @@ export async function generateMetadata({ params }: PageProps<"/research/[slug]">
   const { slug } = await params;
   const research = await getResearchDetail(slug);
 
-  return {
-    title: research?.seoTitle ?? research?.title ?? "Research",
-    description: research?.seoDescription ?? undefined,
-  };
+  return createPageMetadata({
+    pathname: `/research/${slug}`,
+    title: research?.title ?? "Research",
+    cmsTitle: research?.seoTitle,
+    description: research?.seoDescription,
+    image: research?.seoImage ?? research?.hero,
+    imageAlt: research?.title,
+    type: "article",
+    noIndex: !research,
+  });
 }
 
 function MetadataItem({ label, value }: { label: string; value: string | null }) {
@@ -51,7 +59,7 @@ export default async function ResearchDetailPage({ params }: PageProps<"/researc
       <section className="relative z-20 overflow-hidden lg:-mt-10">
         <div className="container uncontainer-mobile mx-auto">
           <div className="flex flex-col gap-6 rounded-sm bg-[#E5E5E5] p-6 shadow-sm sm:p-8 lg:p-10">
-            <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
+            <div className="flex flex-col gap-[90px] sm:flex-row sm:items-end">
               <div className="flex flex-col gap-1">
                 <span className="font-heading text-sm font-bold tracking-wider text-black uppercase">Sector • Practice</span>
                 {taxonomy && <span className="font-sans text-lg font-normal text-black">{taxonomy}</span>}
@@ -61,13 +69,15 @@ export default async function ResearchDetailPage({ params }: PageProps<"/researc
 
             <hr className="border-t border-zinc-400" />
 
-            <div className="grid grid-cols-2 items-start gap-6 text-sm sm:grid-cols-3 lg:grid-cols-6">
+            <div className="grid grid-cols-2 items-start gap-6 text-sm sm:grid-cols-3 lg:grid-cols-5">
               <MetadataItem label="Publication date:" value={research.publicationDate} />
               <MetadataItem label="Author:" value={research.author} />
               <MetadataItem label="Reviewed by:" value={research.reviewedBy} />
               <MetadataItem label="Sponsored by:" value={research.sponsoredBy} />
               <MetadataItem label="Read time:" value={research.readTime} />
             </div>
+
+            <ResearchShareButtons title={research.title} />
           </div>
         </div>
       </section>
@@ -100,7 +110,7 @@ export default async function ResearchDetailPage({ params }: PageProps<"/researc
 
               {research.featureImage && (
                 <div data-aos="fade-up" data-aos-delay="200" className="flex w-full justify-start lg:w-1/2 lg:justify-end">
-                  <div className="aspect-[570/587] w-full max-w-[570px] overflow-hidden rounded-xs bg-zinc-100 shadow-md">
+                  <div className="aspect-[570/587] w-full max-w-[570px] overflow-hidden rounded-xs bg-zinc-100">
                     <ResponsiveImage src={research.featureImage} alt={research.title} className="h-full w-full object-cover" />
                   </div>
                 </div>

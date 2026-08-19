@@ -57,6 +57,8 @@ function renderEmailLinks(value: string) {
       <a
         key={`${part}-${index}`}
         href={`mailto:${part}`}
+        title={`Send email to ${part}`}
+        aria-label={`Send email to ${part}`}
         className="font-medium text-black underline underline-offset-4 hover:text-rose-600 transition-colors"
       >
         {part}
@@ -67,14 +69,51 @@ function renderEmailLinks(value: string) {
   );
 }
 
+function renderBodyTitle(title: React.ReactNode) {
+  if (typeof title !== "string") {
+    return title;
+  }
+
+  const lines = title.includes("\n")
+    ? title.split("\n").map((l) => l.trim()).filter(Boolean)
+    : title.trim().split(/\s+/).length >= 3
+    ? [title.trim().split(/\s+/).slice(0, -2).join(" "), title.trim().split(/\s+/).slice(-2).join(" ")]
+    : [title.trim()];
+
+  if (lines.length <= 1) {
+    return (
+      <span className="inline-block border-b-4 border-zinc-200/50 pb-2 leading-none">
+        {lines[0]}
+      </span>
+    );
+  }
+
+  return (
+    <span className="inline-flex flex-col items-start">
+      {lines.map((line, idx) => {
+        const isLast = idx === lines.length - 1;
+        if (isLast) {
+          return (
+            <span
+              key={idx}
+              className="inline-block border-b-4 border-zinc-200/50 pb-2 leading-none mt-1"
+            >
+              {line}
+            </span>
+          );
+        }
+        return (
+          <span key={idx} className="block leading-[1.05]">
+            {line}
+          </span>
+        );
+      })}
+    </span>
+  );
+}
+
 export function CareersAccordionSection({
-  title = (
-    <>
-      CAREERS
-      <br />
-      AT NBRS
-    </>
-  ),
+  title = "CAREERS\nAT NBRS",
   items = DEFAULT_ACCORDION_ITEMS,
   introParagraphs,
   introText,
@@ -89,11 +128,11 @@ export function CareersAccordionSection({
   return (
     <section className="bg-white pb-16 lg:pb-24 text-black">
       <Container>
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           {/* Left Column: Light Gray Watermark Title */}
           <div data-aos="fade-up" className="lg:col-span-4 lg:sticky lg:top-28">
-            <h2 className="hidden md:block font-heading whitespace-pre-line text-4xl sm:text-5xl lg:text-[64px] font-bold uppercase text-zinc-200/90 leading-none tracking-wide border-b-4 border-zinc-200/40 pb-4">
-              {title}
+            <h2 className="hidden md:block font-heading whitespace-pre-line text-4xl sm:text-5xl lg:text-[64px] font-bold uppercase text-zinc-200/90 leading-none tracking-wide">
+              {renderBodyTitle(title)}
             </h2>
           </div>
 
@@ -105,13 +144,13 @@ export function CareersAccordionSection({
           >
             {/* Custom Intro Paragraphs */}
             {introParagraphs && (
-              <div className="font-sans text-sm sm:text-base text-zinc-800 leading-relaxed flex flex-col gap-3 max-w-3xl pt-8 lg:pt-0">
+              <div className="font-sans text-sm sm:text-base text-black leading-relaxed flex flex-col gap-3 max-w-3xl pt-8 lg:pt-0">
                 {introParagraphs}
               </div>
             )}
 
             {introText && (
-              <div className="font-sans text-sm sm:text-base text-zinc-800 leading-relaxed flex flex-col gap-3 max-w-3xl pt-8 lg:pt-0">
+              <div className="font-sans text-sm sm:text-base text-black leading-relaxed flex flex-col gap-3 max-w-3xl pt-8 lg:pt-0">
                 {introText.split(/\n\s*\n/).filter(Boolean).map((paragraph, index) => (
                   <p key={index}>{renderEmailLinks(paragraph)}</p>
                 ))}
@@ -133,6 +172,8 @@ export function CareersAccordionSection({
                   joining our award‑winning studio are invited to connect with us at{" "}
                   <a
                     href="mailto:careers@nbrs.com.au"
+                    title="Send email to careers@nbrs.com.au"
+                    aria-label="Send email to careers@nbrs.com.au"
                     className="font-medium text-black underline underline-offset-4 hover:text-rose-600 transition-colors"
                   >
                     careers@nbrs.com.au
@@ -193,11 +234,10 @@ export function CareersAccordionSection({
                       }`}
                     >
                       <div className="overflow-hidden">
-                        <div className="px-6 pb-7 sm:px-7 font-sans text-base sm:text-lg text-zinc-800 leading-relaxed border-t border-zinc-100 pt-5 flex flex-col gap-4">
-                          {item.content.split("\n\n").map((para, idx) => (
-                            <p key={idx}>{para}</p>
-                          ))}
-                        </div>
+                        <div
+                          className="px-6 pb-7 pt-5 sm:px-7 font-sans text-base sm:text-lg text-zinc-800 leading-relaxed border-t border-zinc-100 [&_a]:underline [&_a]:underline-offset-4 [&_a:hover]:text-rose-600 [&_p]:mb-4 [&_p:last-child]:mb-0 [&_li]:ml-5 [&_ol]:list-decimal [&_ul]:list-disc"
+                          dangerouslySetInnerHTML={{ __html: item.content }}
+                        />
                       </div>
                     </div>
                   </div>

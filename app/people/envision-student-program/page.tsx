@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { createPageMetadata } from "@/lib/seo";
 import { Container } from "@/components/ui/Container";
 import { CareersHero } from "@/components/people/CareersHero";
 import { ArticleCard } from "@/components/ui/ArticleCard";
@@ -6,9 +6,10 @@ import { CareersAccordionSection } from "@/components/people/CareersAccordionSec
 import { CtaSection } from "@/components/cta/CtaSection";
 import { getEnvisionContent } from "@/lib/envision";
 
-export const metadata: Metadata = {
-  title: "Envision Student Program | Our People",
-};
+export async function generateMetadata() {
+  const page = await getEnvisionContent();
+  return createPageMetadata({ pathname: "/people/envision-student-program", title: page.hero?.title || "Envision Student Program", cmsTitle: page.cmsSeoTitle, description: page.seoDescription || page.hero?.description, image: page.seoImage ?? page.hero?.image });
+}
 
 export default async function EnvisionStudentProgramPage() {
   const page = await getEnvisionContent();

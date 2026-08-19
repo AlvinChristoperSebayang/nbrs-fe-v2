@@ -6,7 +6,7 @@ import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
 
 export function AwardCard({ item }: { item: AwardItem }) {
   const [isHovered, setIsHovered] = useState(false);
-  const hoverBg = item.projectCategoryColor ?? "#F0C7BD";
+  const hoverBg = "#DADBEF";
 
   return (
     <div
@@ -19,6 +19,7 @@ export function AwardCard({ item }: { item: AwardItem }) {
         <ResponsiveImage
           src={item.image}
           alt={item.awardTitle}
+          title={item.awardTitle}
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
       </div>
@@ -43,7 +44,7 @@ export function AwardCard({ item }: { item: AwardItem }) {
         <span
           className="mt-1 text-base font-bold transition-colors duration-300"
           style={{
-            color: isHovered ? "#000000" : (item.projectCategoryColor ?? "#F0C7BD"),
+            color: isHovered ? "#000000" : (item.projectCategoryColor ?? "#DADBEF"),
           }}
         >
           {item.projectName}

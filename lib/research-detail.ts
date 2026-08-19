@@ -59,6 +59,7 @@ type ResearchDetailResponse = {
     slug: string;
     seoPageTitle: string | null;
     seoMetaDescription: string | null;
+    seoImage: RawAsset[];
     artType: RawCategory[];
     catSector: RawCategory[];
     catDiscipline: RawCategory[];
@@ -122,6 +123,7 @@ export type ResearchDetail = {
   featureImage: ImageSource | null;
   seoTitle: string | null;
   seoDescription: string | null;
+  seoImage: RawAsset | null;
   author: string | null;
   reviewedBy: string | null;
   sponsoredBy: string | null;
@@ -157,6 +159,7 @@ const RESEARCH_DETAIL_QUERY = /* GraphQL */ `
       ... on research_Entry {
         seoPageTitle
         seoMetaDescription
+        seoImage { url width height title }
         artType { ... on articleType_Category { title slug } }
         catSector { ... on sector_Category { id title slug accentColor } }
         catDiscipline { ... on discipline_Category { id title slug accentColor } }
@@ -164,12 +167,18 @@ const RESEARCH_DETAIL_QUERY = /* GraphQL */ `
         artHdrSubheading
         thumbnail {
           url
+          width
+          height
+          title
           mobile: url @transform(width: 768, immediately: true)
           tablet: url @transform(width: 1440, immediately: true)
           desktop: url @transform(width: 1920, immediately: true)
         }
         artHdrHeroImage {
           url
+          width
+          height
+          title
           mobile: url @transform(width: 768, immediately: true)
           tablet: url @transform(width: 1440, immediately: true)
           desktop: url @transform(width: 1920, immediately: true)
@@ -351,23 +360,29 @@ export const getResearchDetail = cache(async (slug: string): Promise<ResearchDet
       }
     : null;
 
-  return {
-    slug: entry.slug,
-    title: entry.artHdrHeading?.trim() || entry.title,
-    subheading: entry.artHdrSubheading?.trim() || null,
-    publicationDate: entry.researchPublicationDate?.trim() || null,
-    category: entry.catSector?.[0]?.title ?? entry.artType?.[0]?.title ?? null,
-    categoryColor: entry.catSector?.[0]?.accentColor ?? null,
-    sectors: (entry.catSector ?? []).map((category) => category.title),
-    practices: (entry.catDiscipline ?? []).map((category) => category.title),
-    articleType: entry.artType?.[0]?.title ?? null,
+    const rawArtTypes = (entry.artType ?? []).map((category) => category.title).filter(Boolean);
+    const articleType = rawArtTypes.length > 0 ? rawArtTypes.join(" / ") : null;
+
+    return {
+      slug: entry.slug,
+      title: entry.artHdrHeading?.trim() || entry.title,
+      subheading: entry.artHdrSubheading?.trim() || null,
+      publicationDate: entry.researchPublicationDate?.trim() || null,
+      category: entry.catSector?.[0]?.title ?? entry.artType?.[0]?.title ?? null,
+      categoryColor: entry.catSector?.[0]?.accentColor ?? null,
+      sectors: (entry.catSector ?? []).map((category) => category.title),
+      practices: (entry.catDiscipline ?? []).map((category) => category.title),
+      articleType,
     // The detail banner accepts only the dedicated Hero Image. Thumbnail is intentionally
     // not a banner fallback because it can be a photographic card image rather than the
     // transparent artwork used over the Sector accent colour.
     hero: toImageSource(entry.artHdrHeroImage?.[0]),
-    featureImage: toImageSource(entry.thumbnail?.[0]) ?? toImageSource(entry.thumbnail?.[0]) ?? toImageSource(entry.artHdrPortraitImage?.[0]),
+    // The supporting image uses the dedicated portrait asset when supplied;
+    // thumbnail remains a safe fallback for existing research entries.
+    featureImage: toImageSource(entry.artHdrPortraitImage?.[0]) ?? toImageSource(entry.thumbnail?.[0]),
     seoTitle: entry.seoPageTitle,
-    seoDescription: entry.seoMetaDescription,
+    seoDescription: entry.seoMetaDescription?.trim() || entry.artHdrSubheading?.trim() || null,
+    seoImage: entry.seoImage?.[0] ?? entry.artHdrHeroImage?.[0] ?? entry.thumbnail?.[0] ?? null,
     author: entry.researchAuthor?.trim() || null,
     reviewedBy: entry.researchReviewedByText?.trim() || null,
     sponsoredBy: entry.researchSponsoredByText?.trim() || null,
