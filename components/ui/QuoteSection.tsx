@@ -19,7 +19,7 @@ export function QuoteSection({
 }) {
   return (
     <section className="bg-white py-0 lg:py-20 text-black overflow-hidden">
-      <Container>
+      <Container className="max-lg:px-0 max-lg:max-w-none">
         <div className="relative flex flex-col items-center lg:block">
           {/* Image */}
           <div data-aos="fade-up" className="w-full overflow-hidden lg:w-[65%] xl:w-[68%]">
@@ -27,7 +27,7 @@ export function QuoteSection({
               src={image}
               alt={author}
               title={author}
-              className="h-[350px] w-full object-cover lg:h-[495px] rounded-sm"
+              className="h-[350px] w-full object-cover lg:h-[495px] max-lg:rounded-none rounded-sm"
             />
           </div>
 

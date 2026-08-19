@@ -23,6 +23,7 @@ export default async function SocialSustainabilityPage() {
         image={content.hero.image}
         title={content.hero.title}
         description={content.hero.description}
+        descriptionClassName="max-w-[364px]"
       />
       <SocialInitiativesSection initiatives={content.initiatives} />
       <SupportedOrganisations

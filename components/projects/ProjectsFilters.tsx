@@ -143,7 +143,8 @@ export function ProjectsFilters({
             onClick={resetFilters}
             className="inline-flex shrink-0 items-center justify-center rounded-full border border-black px-6 py-1.75 text-sm font-sans text-black hover:bg-black hover:text-white transition-colors duration-300 ease-out cursor-pointer self-start sm:self-auto"
           >
-            Reset Filters ({selectedSectors.length + selectedPractices.length})
+            Reset Filters 
+            {/* ({selectedSectors.length + selectedPractices.length}) */}
           </button>
         )}
       </div>

@@ -4,6 +4,28 @@ import { AboutSection } from "@/components/home/AboutSection";
 import { PracticesHoverSection } from "@/components/practices/PracticesHoverSection";
 import { getPracticesPageContent } from "@/lib/practices-page";
 
+function formatPracticesIntroHeading(heading?: string | null): string {
+  if (!heading) return "OUR PRACTICES\nAT A GLANCE";
+  if (heading.includes("\n")) return heading;
+
+  const normalized = heading.trim();
+  if (/^our\s+practices\s+at\s+a\s+glance$/i.test(normalized)) {
+    return "OUR PRACTICES\nAT A GLANCE";
+  }
+
+  const words = normalized.split(/\s+/);
+  if (words.length === 5) {
+    return `${words.slice(0, 2).join(" ")}\n${words.slice(2).join(" ")}`;
+  }
+
+  if (words.length >= 4) {
+    const splitIndex = Math.ceil(words.length / 2);
+    return `${words.slice(0, splitIndex).join(" ")}\n${words.slice(splitIndex).join(" ")}`;
+  }
+
+  return heading;
+}
+
 export async function generateMetadata() {
   const page = await getPracticesPageContent();
   return createPageMetadata({ pathname: "/practices", title: page.hero.title, description: page.hero.description, image: page.hero.image });
@@ -25,8 +47,9 @@ export default async function PracticesPage() {
         <AboutSection
           image_url={content.intro.image}
           background_color="#FDD4B6"
-          heading={content.intro.heading}
+          heading={formatPracticesIntroHeading(content.intro.heading)}
           description={content.intro.description}
+          description_class_name="max-w-[363px]"
         /> 
         <PracticesHoverSection items={content.practices} />
       

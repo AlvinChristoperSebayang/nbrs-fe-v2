@@ -11,6 +11,38 @@ export type DesignApproachProjectSectionProps = {
   buttonHref?: string;
 };
 
+function renderMobileHeading(heading: string) {
+  if (heading.includes("\n")) {
+    return heading.split("\n").map((line, idx) => (
+      <span key={idx} className="block">
+        {line}
+      </span>
+    ));
+  }
+
+  if (/^from\s+possibility\s+to\s+place$/i.test(heading.trim())) {
+    return (
+      <>
+        <span className="block">FROM POSSIBILITY</span>
+        <span className="block">TO PLACE</span>
+      </>
+    );
+  }
+
+  const words = heading.trim().split(/\s+/);
+  if (words.length >= 4) {
+    const mid = Math.ceil(words.length / 2);
+    return (
+      <>
+        <span className="block">{words.slice(0, mid).join(" ")}</span>
+        <span className="block">{words.slice(mid).join(" ")}</span>
+      </>
+    );
+  }
+
+  return heading;
+}
+
 export function DesignApproachProjectSection({
   heading,
   description,
@@ -19,7 +51,7 @@ export function DesignApproachProjectSection({
   buttonHref,
 }: DesignApproachProjectSectionProps) {
   return (
-    <section className="relative w-full overflow-hidden py-16 lg:py-24 bg-white text-black lg:pb-[94px]">
+    <section className="relative w-full overflow-hidden min-h-[480px] sm:min-h-[520px] lg:min-h-0 py-12 sm:py-16 lg:py-24 bg-white text-black lg:pb-[94px] flex flex-col justify-start">
       {/* Mobile Overlay Background Image (< lg) */}
       <div className="absolute inset-0 lg:hidden">
         <ResponsiveImage
@@ -29,16 +61,16 @@ export function DesignApproachProjectSection({
           className="h-full w-full object-cover"
           priority
         />
-        <div className="absolute inset-0 bg-black/60 backdrop-blur-[1px]" />
+        <div className="absolute inset-0 bg-black/40 backdrop-blur-[0.5px]" />
       </div>
 
       <Container className="relative z-10">
         {/* Mobile Layout (< lg) */}
-        <div data-aos="fade-up" className="flex flex-col items-start text-white py-6 lg:hidden">
-          <h2 className="font-heading text-3xl sm:text-4xl uppercase font-bold text-white leading-tight mb-4">
-            {heading}
+        <div data-aos="fade-up" className="flex flex-col items-start text-white pt-4 pb-28 sm:pb-36 lg:hidden">
+          <h2 className="font-heading text-[36px] sm:text-3xl uppercase font-bold text-white leading-[1.05] tracking-tight mb-3">
+            {renderMobileHeading(heading)}
           </h2>
-          <p className="text-sm sm:text-base text-white/90 font-sans leading-relaxed mb-6 max-w-xl">
+          <p className="text-sm text-white/95 font-sans leading-relaxed mb-6 max-w-[280px] sm:max-w-xs">
             {description}
           </p>
           {buttonText && buttonHref && (
@@ -46,12 +78,12 @@ export function DesignApproachProjectSection({
               href={buttonHref}
               title={buttonText}
               aria-label={buttonText}
-              className="group inline-flex items-center gap-2 rounded-[5px] bg-white/30 backdrop-blur-md border border-white/30 px-6 py-2.5 text-sm font-sans font-medium text-white transition hover:bg-white/40"
+              className="group inline-flex items-center gap-2 rounded-[5px] bg-white/25 backdrop-blur-md border border-white/30 px-5 py-2 text-xs sm:text-sm font-sans font-medium text-white transition hover:bg-white/40"
             >
               <span>{buttonText}</span>
               <svg
-                width="16"
-                height="16"
+                width="14"
+                height="14"
                 viewBox="0 0 16 16"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -73,12 +105,12 @@ export function DesignApproachProjectSection({
           <div
             data-aos="fade-up"
             data-aos-delay="100"
-            className="z-10 w-[50%] bg-white/80 backdrop-blur-md border border-[#FDFFEA] p-10 absolute left-0 top-1/2 -translate-y-1/2"
+            className="z-10 w-[50%] bg-white/80 backdrop-blur-xs border border-[#FDFFEA] p-10 absolute left-0 top-1/2 -translate-y-1/2"
           >
             <h2 className="font-heading text-3xl lg:text-[32px] uppercase font-bold text-black leading-tight mb-4">
               {heading}
             </h2>
-            <p className="text-base text-zinc-900 leading-relaxed font-sans mb-6">
+            <p className="text-base text-zinc-900 leading-relaxed font-sans mb-6 max-w-[359px]">
               {description}
             </p>
             {buttonText && buttonHref && (

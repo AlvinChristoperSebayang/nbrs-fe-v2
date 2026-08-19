@@ -51,7 +51,7 @@ export default async function SingleSectorPage({
 
   return (
     <article className="min-h-screen bg-white text-black">
-      <Hero image={sector.image} title={sector.title.toUpperCase()} description={sector.description} />
+      <Hero image={sector.image} title={sector.title.toUpperCase()} description={sector.description} descriptionClassName="max-w-[334px]"/>
       <SectorPrinciplesSection title={sector.principlesTitle} description={sector.principlesDescription} images={sector.principlesImages} />
       {sector.heritageServices ? (
         <HeritageServicesSection

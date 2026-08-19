@@ -65,7 +65,7 @@ export function ResearchSection({ heading, subheading, sectors, practices, items
     <div className="flex flex-col gap-7 bg-white text-black">
       <div data-aos="fade-up" className="flex max-w-xl flex-col gap-4">
         <h2 className="font-heading text-4xl uppercase leading-none text-black lg:text-[40px]">{heading || "ENVISION"}</h2>
-        <p className="text-base leading-normal text-zinc-800">{subheading || "In-depth investigations into emerging industry themes, exploring the intersection of design, performance and community impact."}</p>
+        <p className="text-base leading-normal text-zinc-800 max-w-[393px]">{subheading || "In-depth investigations into emerging industry themes, exploring the intersection of design, performance and community impact."}</p>
       </div>
       <hr className="border-t border-zinc-200" />
       {visibleSectors.length > 0 && <div data-aos="fade-up" data-aos-delay="100" className="flex flex-col gap-3">

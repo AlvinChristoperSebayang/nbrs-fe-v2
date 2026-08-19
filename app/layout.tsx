@@ -97,7 +97,9 @@ export default async function RootLayout({
           <GlobalLoading />
         </Suspense>
         <Header />
-        {children}
+        <main className="flex-1 flex flex-col min-h-[calc(100vh-80px)] w-full">
+          {children}
+        </main>
         <Footer content={footer} />
       </body>
     </html>

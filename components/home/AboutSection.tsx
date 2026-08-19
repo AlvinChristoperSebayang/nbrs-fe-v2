@@ -3,7 +3,11 @@ import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
 import Link from "next/link";
 import type { ImageSource } from "@/lib/types";
 
-function renderAboutHeading(heading: string) {
+function renderAboutHeading(heading: string, singleLine = false) {
+  if (singleLine) {
+    return <span className="block leading-[1.05] whitespace-nowrap">{heading}</span>;
+  }
+
   if (heading.includes("\n")) {
     const lines = heading.split("\n").map((l) => l.trim()).filter(Boolean);
     return (
@@ -46,6 +50,7 @@ export function AboutSection({
   button,
   heading_size = "text-[28px] sm:text-[40px]",
   description_class_name,
+  single_line_heading = false,
 }: {
   image_url: ImageSource;
   image_alt?: string;
@@ -58,6 +63,7 @@ export function AboutSection({
   };
   heading_size?: string;
   description_class_name?: string;
+  single_line_heading?: boolean;
 }) {
   const normalisedDescription = description.replace(/\\n/g, "\n").replace(/\r\n?/g, "\n");
   const isRichText = /<\/?[a-z][\s\S]*>/i.test(normalisedDescription);
@@ -73,7 +79,7 @@ export function AboutSection({
                 data-aos="fade-up"
                 className={`font-heading ${heading_size} leading-[1.05] uppercase text-white`}
               >
-                {renderAboutHeading(heading)}
+                {renderAboutHeading(heading, single_line_heading)}
               </h2>
               <p
                 data-aos="fade-up"
