@@ -26,7 +26,6 @@ export function CtaSection({ content, cta, titleUppercase = true, descriptionCla
         alt={data.title || "NBRS Call to Action"}
         title={data.title || "NBRS Call to Action"}
         className="absolute inset-0 h-full w-full object-cover"
-        priority
       />
       <Container className="relative flex items-center justify-center py-24 sm:py-32 lg:py-[116px]">
         <div
