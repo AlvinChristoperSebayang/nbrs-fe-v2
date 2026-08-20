@@ -9,7 +9,13 @@ import { ABOUT_FALLBACK, getAboutContent } from "@/lib/about";
 
 export async function generateMetadata() {
   const page = await getAboutContent().catch(() => ABOUT_FALLBACK);
-  return createPageMetadata({ pathname: "/about", title: page.hero.title, description: page.hero.description, image: page.hero.image });
+  return createPageMetadata({
+    pathname: "/about",
+    title: page.hero.title,
+    cmsTitle: page.cmsSeoTitle,
+    description: page.seoDescription ?? page.hero.description,
+    image: page.seoImage ?? page.hero.image,
+  });
 }
 
 function formatAboutIntroHeading(heading?: string | null): string {

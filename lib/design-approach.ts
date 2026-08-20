@@ -1,10 +1,11 @@
 import { craftFetch } from "./craft";
 import { mapCta } from "./cta";
-import { toImageSource } from "./media";
+import { toImageSource, toSeoImage, type RawSeoAsset, type SeoImage } from "./media";
 import type { CtaContent, ImageSource, NewsItem } from "./types";
 
 type Asset = { mobile?: string; tablet?: string; desktop?: string };
 type Entry = {
+  seoPageTitle: string | null; seoMetaDescription: string | null; seoImage: RawSeoAsset[];
   designApproachHeroHeading: string | null; designApproachHeroDescription: string | null; designApproachHeroImage: Asset[];
   designApproachHeroCtaLabel: string | null; designApproachHeroCtaUrl: string | null;
   designApproachPillarsHeading: string | null; designApproachPillarsDescription: string | null;
@@ -18,6 +19,9 @@ type Entry = {
 };
 
 export type DesignApproachContent = {
+  cmsSeoTitle: string | null;
+  seoDescription: string | null;
+  seoImage: SeoImage | null;
   hero: { title: string; description: string; image: ImageSource; button: { text: string; href: string } };
   pillars: { title: string; description: string; items: NewsItem[] };
   communities: { heading: string; description: string; topImages: ImageSource[]; galleryImages: ImageSource[] };
@@ -27,6 +31,9 @@ export type DesignApproachContent = {
 };
 
 export const DESIGN_APPROACH_FALLBACK: DesignApproachContent = {
+  cmsSeoTitle: null,
+  seoDescription: null,
+  seoImage: null,
   hero: { title: "From Insight to\nTransformative Design", description: "Every project begins with curiosity and ends with environments that enhance the way people live.", image: "/images/hero/hero-design-approach.png", button: { text: "See Our Sectors", href: "/projects" } },
   pillars: { title: "Three Pillars of Design", description: "Every NBRS project - whether a school, civic centre, hospital or secure space - follows a consistent methodology that adapts to context but never loses its foundation. We call it our Three Pillars:", items: [
     { title: "Site & Program", description: "Listening, research and immersion.", image: "/images/design-approach/pillar1.jpg" },
@@ -46,6 +53,7 @@ const cta = `mobile: ${crop(600, 900)} tablet: ${crop(1440, 900, 82)} desktop: $
 
 const QUERY = /* GraphQL */ `
 query DesignApproachPage { entries(section: ["designApproach"], limit: 1) { ... on designApproach_Entry {
+  seoPageTitle seoMetaDescription seoImage { url width height title }
   designApproachHeroHeading designApproachHeroDescription designApproachHeroImage { ${hero} } designApproachHeroCtaLabel designApproachHeroCtaUrl
   designApproachPillarsHeading designApproachPillarsDescription
   thumbnailGrid { ... on block_Entry { heading text image { ${landscape} } } }
@@ -72,6 +80,9 @@ export async function getDesignApproachContent(): Promise<DesignApproachContent>
     const images = entry.gallery.map((item) => toImageSource(item.image[0])).filter((image): image is ImageSource => Boolean(image));
     const link = entry.links[0];
     return {
+      cmsSeoTitle: entry.seoPageTitle?.trim() || null,
+      seoDescription: entry.seoMetaDescription?.trim() || null,
+      seoImage: toSeoImage(entry.seoImage?.[0]),
       hero: {
         title: (entry.designApproachHeroHeading?.trim() || DESIGN_APPROACH_FALLBACK.hero.title)
           .replace("From Insight to Transformative Design", "From Insight to\nTransformative Design"),
