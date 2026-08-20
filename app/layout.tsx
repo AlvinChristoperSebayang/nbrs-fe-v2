@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { AosInit } from "@/components/layout/AosInit";
+import { ScrollToTop } from "@/components/layout/ScrollToTop";
 import { GlobalLoading } from "@/components/ui/GlobalLoading";
 import { getFooter } from "@/lib/footer";
 import {
@@ -92,6 +93,7 @@ export default async function RootLayout({
     >
       <body className="flex min-h-full flex-col" suppressHydrationWarning>
         <JsonLd data={organizationSchema} />
+        <ScrollToTop />
         <AosInit />
         <Suspense fallback={null}>
           <GlobalLoading />

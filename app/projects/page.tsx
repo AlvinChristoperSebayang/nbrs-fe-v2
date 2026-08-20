@@ -98,34 +98,33 @@ export default async function ProjectsIndexPage(
       <ProjectsHero
         image={pageHeroImageUrl}
         title={pageHeading}
-        subheading={pageSubheading}
       />
       <Container className="py-16">
         <PreserveScrollOnNavigate>
-          <ProjectsFilters
-            sectors={sectors}
-            practices={practices}
-            selectedSectors={selectedSectors}
-            selectedPractices={selectedPractices}
-          />
+        <ProjectsFilters
+          sectors={sectors}
+          practices={practices}
+          selectedSectors={selectedSectors}
+          selectedPractices={selectedPractices}
+        />
 
-          <div className="mt-12">
-            <ProjectsGrid projects={displayProjects} />
+        <div className="mt-12">
+          <ProjectsGrid projects={displayProjects} />
+        </div>
+
+        {hasMore && (
+          <div className="mt-12 flex justify-center">
+            <Link
+              href={`/projects?${loadMoreParams.toString()}`}
+              scroll={false}
+              title="Load more projects"
+              aria-label="Load more projects"
+              className="inline-flex items-center rounded-full border border-black px-8 py-3 text-sm uppercase text-black transition hover:bg-black hover:text-white"
+            >
+              Load more
+            </Link>
           </div>
-
-          {hasMore && (
-            <div className="mt-12 flex justify-center">
-              <Link
-                href={`/projects?${loadMoreParams.toString()}`}
-                scroll={false}
-                title="Load more projects"
-                aria-label="Load more projects"
-                className="inline-flex items-center rounded-full border border-black px-8 py-3 text-sm uppercase text-black transition hover:bg-black hover:text-white"
-              >
-                Load more
-              </Link>
-            </div>
-          )}
+        )}
         </PreserveScrollOnNavigate>
       </Container>
     </main>
