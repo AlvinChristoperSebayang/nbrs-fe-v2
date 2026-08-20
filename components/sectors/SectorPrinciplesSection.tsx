@@ -20,7 +20,7 @@ export function SectorPrinciplesSection({
       <Container>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 items-stretch">
           {/* Slot 1: Title & Description Text Block */}
-          <div data-aos="fade-up" className="flex flex-col justify-start pr-2">
+          <div data-aos="fade-up" suppressHydrationWarning className="flex flex-col justify-start pr-2">
             <div className="mb-4">
               {/* Mobile (< lg): Single line */}
               <div className="lg:hidden">
@@ -49,6 +49,7 @@ export function SectorPrinciplesSection({
               key={index}
               data-aos="fade-up"
               data-aos-delay={100 + index * 100}
+              suppressHydrationWarning
               className="group relative block aspect-[5/4] w-full overflow-hidden bg-zinc-100"
             >
               <ResponsiveImage

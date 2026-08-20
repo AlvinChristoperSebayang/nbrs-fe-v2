@@ -1,58 +1,48 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 
 export function AosInit() {
   const initializedRef = useRef(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     let cancelled = false;
-    let firstFrame: number | undefined;
-    let secondFrame: number | undefined;
 
-    const initialize = () => {
-      void import("aos")
-        .then(({ default: AOS }) => {
-          if (cancelled || initializedRef.current) return;
+    const initialize = async () => {
+      try {
+        const { default: AOS } = await import("aos");
+        if (cancelled) return;
 
-          // Start after the initial page has hydrated. AOS mutates data-aos
-          // elements, so doing this during hydration causes React mismatches.
-          firstFrame = window.requestAnimationFrame(() => {
-            secondFrame = window.requestAnimationFrame(() => {
-              if (cancelled || initializedRef.current) return;
-
-              AOS.init({
-                duration: 700,
-                easing: "ease-out",
-                once: true,
-                offset: 40,
-                // Keep AOS' observer enabled so client-side route content and
-                // filtered lists are registered after React has rendered them.
-                disable: () =>
-                  window.matchMedia("(prefers-reduced-motion: reduce)").matches,
-              });
-              initializedRef.current = true;
-            });
+        if (!initializedRef.current) {
+          AOS.init({
+            duration: 700,
+            easing: "ease-out",
+            once: true,
+            offset: 40,
+            disable: () =>
+              window.matchMedia("(prefers-reduced-motion: reduce)").matches,
           });
-        })
-        .catch((error: unknown) => {
-          if (!cancelled) console.warn("Unable to initialize AOS:", error);
-        });
+          initializedRef.current = true;
+        } else {
+          AOS.refresh();
+        }
+      } catch (error) {
+        if (!cancelled) console.warn("Unable to initialize AOS:", error);
+      }
     };
 
-    if (document.readyState === "complete") {
-      initialize();
-    } else {
-      window.addEventListener("load", initialize, { once: true });
-    }
+    // Run after React has fully completed hydration for the current page
+    const timer = setTimeout(() => {
+      void initialize();
+    }, 100);
 
     return () => {
       cancelled = true;
-      window.removeEventListener("load", initialize);
-      if (firstFrame !== undefined) window.cancelAnimationFrame(firstFrame);
-      if (secondFrame !== undefined) window.cancelAnimationFrame(secondFrame);
+      clearTimeout(timer);
     };
-  }, []);
+  }, [pathname]);
 
   return null;
 }

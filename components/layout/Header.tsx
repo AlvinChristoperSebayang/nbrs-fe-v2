@@ -158,19 +158,30 @@ export function Header() {
               onClick={() => setOpen(false)}
               aria-label="NBRS Home"
               title="NBRS Home"
-              className="relative z-50 focus:outline-none"
+              className="relative z-50 focus:outline-none block h-9 w-[100px]"
             >
               <img
-                src={useDarkElements ? "/images/logo/logo-black-2.svg" : "/images/logo/logo-white-2.svg"}
+                src="/images/logo/logo-white-2.svg"
                 alt="NBRS Logo"
                 title="NBRS Logo"
                 width={100}
                 height={36}
-                className="inline-block transition-opacity duration-300"
+                className={`absolute inset-0 h-full w-full object-contain transition-opacity duration-300 ${
+                  useDarkElements ? "opacity-0" : "opacity-100"
+                }`}
+              />
+              <img
+                src="/images/logo/logo-black-2.svg"
+                alt="NBRS Logo"
+                title="NBRS Logo"
+                width={100}
+                height={36}
+                className={`absolute inset-0 h-full w-full object-contain transition-opacity duration-300 ${
+                  useDarkElements ? "opacity-100" : "opacity-0"
+                }`}
               />
             </Link>
 
-            {/* Smooth Animated Hamburger / Close Morph Button */}
             <button
               type="button"
               aria-label={open ? "Close navigation menu" : "Open navigation menu"}
@@ -230,7 +241,7 @@ export function Header() {
             ? "circle(150% at calc(100% - 2.5rem) 2.5rem)"
             : "circle(0% at calc(100% - 2.5rem) 2.5rem)",
         }}
-        className={`fixed inset-0 z-40 bg-[#131722] text-white transition-[clip-path] duration-700 ease-[cubic-bezier(0.65,0,0.35,1)] overflow-y-auto ${
+        className={`fixed inset-0 z-40 bg-[#131722] text-white transition-[clip-path] duration-700 ease-[cubic-bezier(0.65,0,0.35,1)] will-change-[clip-path] transform-gpu overflow-y-auto ${
           open ? "pointer-events-auto" : "pointer-events-none"
         }`}
       >
