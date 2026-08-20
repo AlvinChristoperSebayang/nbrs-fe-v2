@@ -13,10 +13,21 @@ export type Post = {
   publishedAt: string;
 };
 
+export type ImageDimensions = {
+  width: number;
+  height: number;
+};
+
+export type ResponsiveImageDimensions = Partial<
+  Record<"mobile" | "tablet" | "desktop", ImageDimensions>
+>;
+
 export type ResponsiveImage = {
   mobile: string;
   tablet: string;
   desktop: string;
+  /** Intrinsic dimensions of each Craft crop, when its transform is known. */
+  dimensions?: ResponsiveImageDimensions;
 };
 
 export type ImageSource = string | ResponsiveImage;

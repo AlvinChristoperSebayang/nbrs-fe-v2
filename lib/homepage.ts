@@ -1,7 +1,12 @@
 import { craftFetch } from "./craft";
 import type { HeroSlide } from "./hero";
 import { toImageSource, toSeoImage, type RawSeoAsset, type SeoImage } from "./media";
-import type { CtaContent, NewsItem, Sector } from "./types";
+import type {
+  CtaContent,
+  NewsItem,
+  ResponsiveImageDimensions,
+  Sector,
+} from "./types";
 
 type RawAsset = { mobile?: string; tablet?: string; desktop?: string };
 type RawNewsArticle = {
@@ -17,6 +22,30 @@ type RawHomepageCta = {
   ctaSectionButtonLabel: string | null;
   ctaSectionButtonUrl: string | null;
 };
+
+const HERO_IMAGE_DIMENSIONS = {
+  mobile: { width: 600, height: 800 },
+  tablet: { width: 1440, height: 1000 },
+  desktop: { width: 2400, height: 1200 },
+} satisfies ResponsiveImageDimensions;
+
+const ABOUT_IMAGE_DIMENSIONS = {
+  mobile: { width: 600, height: 600 },
+  tablet: { width: 900, height: 900 },
+  desktop: { width: 1200, height: 1200 },
+} satisfies ResponsiveImageDimensions;
+
+const CARD_IMAGE_DIMENSIONS = {
+  mobile: { width: 600, height: 450 },
+  tablet: { width: 900, height: 675 },
+  desktop: { width: 1200, height: 900 },
+} satisfies ResponsiveImageDimensions;
+
+const CTA_IMAGE_DIMENSIONS = {
+  mobile: { width: 600, height: 900 },
+  tablet: { width: 1440, height: 900 },
+  desktop: { width: 2400, height: 1000 },
+} satisfies ResponsiveImageDimensions;
 
 type HomepageResponse = {
   entries: Array<{
@@ -101,7 +130,10 @@ function homepageCta(cta: RawHomepageCta | null): CtaContent | null {
     buttonText: "Contact Us",
     buttonHref: "/contact",
   };
-  const image = toImageSource(cta?.ctaSectionBackgroundImage?.[0]);
+  const image = toImageSource(
+    cta?.ctaSectionBackgroundImage?.[0],
+    CTA_IMAGE_DIMENSIONS,
+  );
 
   if (!image) return null;
 
@@ -191,11 +223,15 @@ function plainText(value: string | null): string | null {
 
 function mapNewsArticles(articles: RawNewsArticle[]): NewsItem[] {
   return articles
-    .filter((article) => article.artHdrHeading && toImageSource(article.thumbnail[0]))
+    .filter(
+      (article) =>
+        article.artHdrHeading &&
+        toImageSource(article.thumbnail[0], CARD_IMAGE_DIMENSIONS),
+    )
     .map((article) => ({
       title: article.artHdrHeading as string,
       href: `/news/${article.slug}`,
-      image: toImageSource(article.thumbnail[0])!,
+      image: toImageSource(article.thumbnail[0], CARD_IMAGE_DIMENSIONS)!,
     }));
 }
 
@@ -228,11 +264,15 @@ export async function getHomepageContent(): Promise<HomepageContent> {
 
     return {
       slides: (homepage.heroBannerCarousel ?? [])
-        .filter((slide) => slide.heading && toImageSource(slide.image[0]))
+        .filter(
+          (slide) =>
+            slide.heading &&
+            toImageSource(slide.image[0], HERO_IMAGE_DIMENSIONS),
+        )
         .map((slide) => ({
           title: slide.heading as string,
           headline: slide.subheading ?? "",
-          image: toImageSource(slide.image[0])!,
+          image: toImageSource(slide.image[0], HERO_IMAGE_DIMENSIONS)!,
         })),
       about: homepage.whatWeDo?.[0]
         ? {
@@ -247,14 +287,19 @@ export async function getHomepageContent(): Promise<HomepageContent> {
                     href: path(homepage.whatWeDo[0].buttonUrl) || "/about",
                   }
                 : null,
-            image: toImageSource(homepage.homepageAboutImage?.[0]),
+            image: toImageSource(
+              homepage.homepageAboutImage?.[0],
+              ABOUT_IMAGE_DIMENSIONS,
+            ),
           }
         : null,
       sectors: (homepage.homepageFeaturedSectors ?? [])
-        .filter((sector) => toImageSource(sector.thumbnail[0]))
+        .filter((sector) =>
+          toImageSource(sector.thumbnail[0], CARD_IMAGE_DIMENSIONS),
+        )
         .map((sector) => ({
           label: sector.title,
-          image: toImageSource(sector.thumbnail[0])!,
+          image: toImageSource(sector.thumbnail[0], CARD_IMAGE_DIMENSIONS)!,
           href: `/sectors/${sector.slug}`,
           description: sector.tagline ?? "",
           hoverColor: sector.accentColor ?? "#E0EFF4",

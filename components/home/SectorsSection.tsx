@@ -152,6 +152,8 @@ export function SectorsSection({ sectors, heading = "Designing spaces bespoke to
                 alt={sector.label}
                 title={sector.label}
                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 z-[5]"
+                width={1200}
+                height={900}
               />
               <div className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-4 p-5 z-[6]">
                 <span className="font-heading text-2xl lg:text-[34px] uppercase text-white">

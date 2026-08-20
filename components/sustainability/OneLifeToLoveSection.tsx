@@ -1,4 +1,5 @@
 import { Container } from "@/components/ui/Container";
+import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
 
 export function OneLifeToLoveSection() {
   return (
@@ -26,7 +27,7 @@ export function OneLifeToLoveSection() {
 
           {/* Right Image */}
           <div className="w-full lg:w-[68%] lg:ml-auto aspect-[16/10] overflow-hidden bg-zinc-100">
-            <img
+            <ResponsiveImage
               src="/images/about/creative-partnership.jpg"
               alt="One Life to Love Campus Design"
               title="One Life to Love Campus Design"

@@ -46,7 +46,7 @@ export const ABOUT_FALLBACK: AboutContent = {
     title: "Designing Environments\nThat Shape Lives",
     description:
       "Working collaboratively with clients and communities to create enduring, human-centred places.",
-    image: "/images/hero/hero-about.jpg",
+    image: "/images/hero/about-hero.png",
   },
   intro: {
     heading: "WHO WE ARE",

@@ -1,4 +1,5 @@
 import { Container } from "@/components/ui/Container";
+import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
 
 export function RapInsightSection({
   heading = "Insight",
@@ -28,7 +29,7 @@ export function RapInsightSection({
           data-aos-delay="100"
           className="w-full overflow-hidden lg:order-2 lg:w-1/2"
         >
-          <img
+          <ResponsiveImage
             src={image}
             alt={image_alt || heading || "RAP Insight Artwork"}
             title={image_alt || heading || "RAP Insight Artwork"}
