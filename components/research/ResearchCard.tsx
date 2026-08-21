@@ -31,15 +31,15 @@ function renderFormattedTitle(title: string) {
     const prefix = formatted.slice(0, colonIndex + 1);
     const suffix = formatted.slice(colonIndex + 1).trim();
     return (
-      <div className="font-sans text-xl leading-snug md:max-w-56">
-        <span className="block font-bold">{prefix}</span>
-        {suffix && <span className="block font-normal">{suffix}</span>}
+      <div className="font-sans leading-snug md:max-w-56">
+        <span className="block font-bold text-[18px] md:text-xl">{prefix}</span>
+        {suffix && <span className="block font-normal text-[16px] md:text-xl">{suffix}</span>}
       </div>
     );
   }
 
   return (
-    <div className="font-sans text-xl font-bold leading-snug">
+    <div className="font-sans text-[18px] md:text-xl font-bold leading-snug">
       {formatted}
     </div>
   );

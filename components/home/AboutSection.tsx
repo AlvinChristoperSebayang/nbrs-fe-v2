@@ -3,6 +3,21 @@ import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
 import Link from "next/link";
 import type { ImageSource } from "@/lib/types";
 
+export type AboutSectionProps = {
+  image_url: ImageSource;
+  image_alt?: string;
+  background_color?: string;
+  heading?: string;
+  description?: string;
+  button?: {
+    text: string;
+    href: string;
+  };
+  heading_size?: string;
+  description_class_name?: string;
+  single_line_heading?: boolean;
+};
+
 function renderAboutHeading(heading: string, singleLine = false) {
   if (singleLine) {
     return <span className="block leading-[1.05] whitespace-nowrap">{heading}</span>;
@@ -22,13 +37,7 @@ function renderAboutHeading(heading: string, singleLine = false) {
   }
 
   const words = heading.trim().split(/\s+/);
-  let lines: string[] = [];
-
-  if (words.length >= 4) {
-    lines = [words[0], words[1], words.slice(2).join(" ")];
-  } else {
-    lines = words;
-  }
+  const lines = words.length >= 4 ? [words[0], words[1], words.slice(2).join(" ")] : words;
 
   return (
     <span className="inline-flex flex-col items-start">
@@ -51,23 +60,7 @@ export function AboutSection({
   heading_size = "text-[28px] sm:text-[40px]",
   description_class_name,
   single_line_heading = false,
-}: {
-  image_url: ImageSource;
-  image_alt?: string;
-  background_color?: string;
-  heading?: string;
-  description?: string;
-  button?: {
-    text: string;
-    href: string;
-  };
-  heading_size?: string;
-  description_class_name?: string;
-  single_line_heading?: boolean;
-}) {
-  const normalisedDescription = description.replace(/\\n/g, "\n").replace(/\r\n?/g, "\n");
-  const isRichText = /<\/?[a-z][\s\S]*>/i.test(normalisedDescription);
-
+}: AboutSectionProps) {
   return (
     <section className="section-about bg-white pb-5 lg:pb-24">
       <div className="w-full bg-[#070F0F] relative">
@@ -135,3 +128,4 @@ export function AboutSection({
     </section>
   );
 }
+

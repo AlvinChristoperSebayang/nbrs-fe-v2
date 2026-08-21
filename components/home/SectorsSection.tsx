@@ -94,7 +94,15 @@ function renderSectorsHeading(heading: string) {
   );
 }
 
-export function SectorsSection({ sectors, heading = "Designing spaces bespoke to their needs" }: { sectors: Sector[]; heading?: string }) {
+export type SectorsSectionProps = {
+  sectors: Sector[];
+  heading?: string;
+};
+
+export function SectorsSection({
+  sectors,
+  heading = "Designing spaces bespoke to their needs",
+}: SectorsSectionProps) {
   return (
     <section className="bg-white py-8 lg:py-24">
       <Container>
@@ -107,7 +115,7 @@ export function SectorsSection({ sectors, heading = "Designing spaces bespoke to
 
           {sectors.map((sector, index) => (
             <Link
-              key={sector.label}
+              key={`${sector.label}-${index}`}
               href={sector.href}
               title={sector.label}
               aria-label={sector.label}
@@ -116,7 +124,7 @@ export function SectorsSection({ sectors, heading = "Designing spaces bespoke to
               className="group relative block aspect-[5/4] overflow-hidden rounded-[5px] lg:aspect-[37/30] lg:col-span-4"
             >
               <div
-                className={`absolute  top-[-100%] group-hover:top-0  duration-300 z-10 opacity-100  w-full h-full`}
+                className="absolute top-[-100%] group-hover:top-0 duration-300 z-10 opacity-100 w-full h-full"
                 style={{ backgroundColor: sector.hoverColor }}
               >
                 <div className="relative h-full w-full flex flex-col items-start justify-between gap-4 p-8">
@@ -181,3 +189,4 @@ export function SectorsSection({ sectors, heading = "Designing spaces bespoke to
     </section>
   );
 }
+

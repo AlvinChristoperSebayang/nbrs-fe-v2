@@ -4,7 +4,11 @@ import { useState } from "react";
 import type { AwardItem } from "@/lib/awards-data";
 import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
 
-export function AwardCard({ item }: { item: AwardItem }) {
+export type AwardCardProps = {
+  item: AwardItem;
+};
+
+export function AwardCard({ item }: AwardCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const hoverBg = "#DADBEF";
 

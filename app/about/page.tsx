@@ -9,17 +9,17 @@ import { ABOUT_FALLBACK, getAboutContent } from "@/lib/about";
 
 export async function generateMetadata() {
   const page = await getAboutContent().catch(() => ABOUT_FALLBACK);
-  return createPageMetadata({ pathname: "/about", title: page.hero.title, description: page.hero.description, image: page.hero.image });
+  return createPageMetadata({
+    pathname: "/about",
+    title: page.hero.title,
+    description: page.hero.description,
+    image: page.hero.image,
+  });
 }
 
 function formatAboutIntroHeading(heading?: string | null): string {
   if (!heading) return "PEOPLE-CENTRED\nDESIGN FOR GOOD";
   if (heading.includes("\n")) return heading;
-
-  if (/people[- ]centred\s+design\s+for\s+good/i.test(heading)) {
-    return "PEOPLE-CENTRED\nDESIGN FOR GOOD";
-  }
-
   return "PEOPLE-CENTRED\nDESIGN FOR GOOD";
 }
 
@@ -53,11 +53,7 @@ export default async function AboutPage() {
         heading={about.practice.heading}
         description={about.practice.description}
         mainImage={about.practice.images[0]}
-        galleryImages={[
-          about.practice.images[1],
-          about.practice.images[2],
-          about.practice.images[3],
-        ]}
+        galleryImages={about.practice.images.slice(1, 4)}
       />
       <AboutTimelineSection
         label={about.timeline.heading}
@@ -67,3 +63,4 @@ export default async function AboutPage() {
     </article>
   );
 }
+

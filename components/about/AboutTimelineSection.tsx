@@ -1,8 +1,13 @@
 import { Container } from "@/components/ui/Container";
 
-type TimelineItem = {
+export type TimelineItem = {
   year: string;
   description: string;
+};
+
+export type AboutTimelineSectionProps = {
+  label?: string;
+  items?: TimelineItem[];
 };
 
 const BORDER_COLORS = [
@@ -15,45 +20,41 @@ const BORDER_COLORS = [
   "#C8E2D4",
 ];
 
+const DEFAULT_TIMELINE_ITEMS: TimelineItem[] = [
+  {
+    year: "1968",
+    description: "Founded by Noel Bell and Ridley Smith. First project Anglicare St Johns Village Glebe",
+  },
+  {
+    year: "1976",
+    description: "St Andrew's House - First high rise school.",
+  },
+  {
+    year: "1983",
+    description: "NBRS receives Sulman Award for Parklea Correctional Centre.",
+  },
+  {
+    year: "1998",
+    description: "Olympic Upgrade - City of Sydney George Street & Circular Quay.",
+  },
+  {
+    year: "2002",
+    description: "Convention Centre Hillsong Church Vista built.",
+  },
+  {
+    year: "2022",
+    description: "Studios open in Melbourne, expanding NBRS nationally.",
+  },
+  {
+    year: "2025",
+    description: "Celebrating decades of designing for people, place and purpose.",
+  },
+];
+
 export function AboutTimelineSection({
   label = "FOUNDED IN 1968",
-  items = [
-    {
-      year: "1968",
-      description:
-        "Founded by Noel Bell and Ridley Smith. First project Anglicare St Johns Village Glebe",
-    },
-    {
-      year: "1976",
-      description: "St Andrew's House - First high rise school.",
-    },
-    {
-      year: "1983",
-      description:
-        "NBRS receives Sulman Award for Parklea Correctional Centre.",
-    },
-    {
-      year: "1998",
-      description:
-        "Olympic Upgrade - City of Sydney George Street & Circular Quay.",
-    },
-    {
-      year: "2002",
-      description: "Convention Centre Hillsong Church Vista built.",
-    },
-    {
-      year: "2022",
-      description: "Studios open in Melbourne, expanding NBRS nationally.",
-    },
-    {
-      year: "2025",
-      description: "Celebrating decades of designing for people, place and purpose.",
-    },
-  ],
-}: {
-  label?: string;
-  items?: TimelineItem[];
-}) {
+  items = DEFAULT_TIMELINE_ITEMS,
+}: AboutTimelineSectionProps) {
   return (
     <section className="bg-[#131722] py-14 lg:py-20 text-white overflow-hidden">
       <Container>

@@ -23,27 +23,30 @@ function imageSource(image: ImageSource): ImageSource {
   return image.startsWith("http") || image.startsWith("/") ? image : `/images/hero/${image}`;
 }
 
-export function HeroSlider({ slides }: { slides: HeroSlide[] }) {
+export type HeroSliderProps = {
+  slides: HeroSlide[];
+};
+
+export function HeroSlider({ slides }: HeroSliderProps) {
   const uid = useId().replace(/[^a-zA-Z0-9]/g, "");
   const paginationId = `hero-pagination-${uid}`;
   const prevId = `hero-prev-${uid}`;
   const nextId = `hero-next-${uid}`;
 
   const [activeIndex, setActiveIndex] = useState(0);
-  const activeSlide = slides[activeIndex];
+  const activeSlide = slides[activeIndex] || slides[0];
 
   const handleSlideChange = (swiper: SwiperInstance) => {
     setActiveIndex(swiper.realIndex);
   };
 
   const isLastSlide = activeIndex === slides.length - 1;
-  const TitleTag = "h1";
 
   return (
     <section className="relative overflow-hidden hero-slider">
       {slides.map((slide, index) => (
         <ResponsiveImage
-          key={slide.title}
+          key={`${slide.title}-${index}-bg`}
           src={imageSource(slide.image)}
           alt={slide.title || "NBRS Architecture"}
           title={slide.title || "NBRS Architecture"}
@@ -60,7 +63,7 @@ export function HeroSlider({ slides }: { slides: HeroSlide[] }) {
             key={activeIndex}
             className="lg:col-span-4 z-20 flex flex-col justify-center gap-1 w-full pointer-events-none"
           >
-            <TitleTag
+            <h1
               style={{ animation: "hero-fade-up 0.7s ease-out both" }}
               className={`font-heading font-bold uppercase text-white ${
                 isLastSlide
@@ -80,7 +83,7 @@ export function HeroSlider({ slides }: { slides: HeroSlide[] }) {
                   <span className="inline-block shrink-0 w-[0.22em] h-[0.22em] rounded-full bg-[#A0A0A0] ml-2 lg:ml-3 align-top mt-[0.06em]" />
                 )}
               </span>
-            </TitleTag>
+            </h1>
             {!isLastSlide && activeSlide.headline && (
               <p
                 style={{ animation: "hero-fade-up 0.7s ease-out 0.2s both" }}
@@ -104,11 +107,11 @@ export function HeroSlider({ slides }: { slides: HeroSlide[] }) {
               onSlideChange={handleSlideChange}
               className="h-64 w-full max-w-full overflow-hidden shadow-2xl ring-1 ring-white sm:h-96 lg:h-130 xl:h-160"
             >
-              {slides.map((slide) => {
+              {slides.map((slide, index) => {
                 const src = imageSource(slide.image);
 
                 return (
-                  <SwiperSlide key={slide.title} className="relative">
+                  <SwiperSlide key={`${slide.title}-${index}`} className="relative">
                     <ResponsiveImage
                       src={src}
                       alt={slide.title || "NBRS Architecture"}
