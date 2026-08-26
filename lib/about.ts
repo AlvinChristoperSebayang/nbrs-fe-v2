@@ -1,10 +1,13 @@
 import { craftFetch } from "./craft";
 import { mapCta } from "./cta";
-import { toImageSource } from "./media";
+import { toImageSource, toSeoImage, type RawSeoAsset, type SeoImage } from "./media";
 import type { CtaContent, ImageSource } from "./types";
 
 type Asset = { mobile?: string; tablet?: string; desktop?: string };
 type Entry = {
+  seoPageTitle: string | null;
+  seoMetaDescription: string | null;
+  seoImage: RawSeoAsset[];
   aboutHeroHeading: string | null;
   description2: string | null;
   aboutHeroImage: Asset[];
@@ -31,6 +34,9 @@ type Entry = {
 type AboutResponse = { entries: Entry[] };
 
 export type AboutContent = {
+  cmsSeoTitle: string | null;
+  seoDescription: string | null;
+  seoImage: SeoImage | null;
   hero: { title: string; description: string; image: ImageSource };
   intro: { heading: string; description: string; image: ImageSource };
   approachHeading: string;
@@ -42,6 +48,9 @@ export type AboutContent = {
 };
 
 export const ABOUT_FALLBACK: AboutContent = {
+  cmsSeoTitle: null,
+  seoDescription: null,
+  seoImage: null,
   hero: {
     title: "Designing Environments\nThat Shape Lives",
     description:
@@ -113,6 +122,9 @@ const CTA_QUERY = /* GraphQL */ `
   query AboutPage {
     entries(section: ["aboutUs"], limit: 1) {
       ... on aboutUs3_Entry {
+        seoPageTitle
+        seoMetaDescription
+        seoImage { url width height title }
         aboutHeroHeading
         description2
       aboutHeroImage { ${hero} }
@@ -171,6 +183,9 @@ export async function getAboutContent(): Promise<AboutContent> {
     const ctaUrl = about.ctaElement?.url_1?.url?.trim();
 
     return {
+      cmsSeoTitle: about.seoPageTitle?.trim() || null,
+      seoDescription: about.seoMetaDescription?.trim() || null,
+      seoImage: toSeoImage(about.seoImage?.[0]),
       hero: {
         title: (about.aboutHeroHeading?.trim() || ABOUT_FALLBACK.hero.title).includes("\n")
           ? (about.aboutHeroHeading?.trim() || ABOUT_FALLBACK.hero.title)

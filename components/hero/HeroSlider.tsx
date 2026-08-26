@@ -53,7 +53,7 @@ export function HeroSlider({ slides }: HeroSliderProps) {
           className={`absolute inset-0 z-10 h-full w-full scale-110 object-cover transition-opacity duration-1000 ease-in-out ${
             index === activeIndex ? "opacity-100" : "opacity-0"
           }`}
-          priority
+          priority={index === 0}
         />
       ))}
       <div className="absolute inset-0 top-0 left-0 z-20 h-full w-full bg-black/30" />

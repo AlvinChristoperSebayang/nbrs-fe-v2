@@ -12,8 +12,9 @@ export async function generateMetadata() {
   return createPageMetadata({
     pathname: "/design-approach",
     title: page.hero.title,
-    description: page.hero.description,
-    image: page.hero.image,
+    cmsTitle: page.cmsSeoTitle,
+    description: page.seoDescription ?? page.hero.description,
+    image: page.seoImage ?? page.hero.image,
   });
 }
 

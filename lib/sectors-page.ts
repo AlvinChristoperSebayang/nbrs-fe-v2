@@ -1,12 +1,15 @@
 import { craftFetch } from "./craft";
 import { mapCta } from "./cta";
-import { toImageSource } from "./media";
+import { toImageSource, toSeoImage, type RawSeoAsset, type SeoImage } from "./media";
 import { SECTORS_DATA } from "./sectors-data";
 import type { CtaContent, ImageSource, Sector } from "./types";
 
 type Asset = { mobile?: string; tablet?: string; desktop?: string };
 type SectorCategory = { title: string; slug: string; tagline: string | null; accentColor: string | null; thumbnail: Asset[] };
 type Entry = {
+  seoPageTitle: string | null;
+  seoMetaDescription: string | null;
+  seoImage: RawSeoAsset[];
   sectorsHeroHeading: string | null;
   sectorsHeroDescription: string | null;
   sectorsHeroImage: Asset[];
@@ -15,9 +18,20 @@ type Entry = {
   ctaSection: { ctaSectionBackgroundImage: Asset[]; ctaSectionHeading: string | null; ctaSectionDescription: string | null; ctaSectionButtonLabel: string | null; ctaSectionButtonUrl: string | null } | null;
 };
 
-export type SectorsPageContent = { hero: { title: string; description: string; image: ImageSource }; sectorsHeading: string; sectors: Sector[]; cta: CtaContent };
+export type SectorsPageContent = {
+  cmsSeoTitle: string | null;
+  seoDescription: string | null;
+  seoImage: SeoImage | null;
+  hero: { title: string; description: string; image: ImageSource };
+  sectorsHeading: string;
+  sectors: Sector[];
+  cta: CtaContent;
+};
 
 const FALLBACK: SectorsPageContent = {
+  cmsSeoTitle: null,
+  seoDescription: null,
+  seoImage: null,
   hero: { title: "EXPLORING\nOUR SECTORS", description: "Identify how we can support your project through the breadth of our sector expertise.", image: "/images/hero/hero4.png" },
   sectorsHeading: "Designing spaces bespoke to their needs",
   sectors: SECTORS_DATA.map(({ label, image, href, description, hoverColor }) => ({ label, image, href, description, hoverColor })),
@@ -33,6 +47,9 @@ const QUERY = /* GraphQL */ `
 query SectorsPage {
   entries(section: ["sectors"], limit: 1) {
     ... on sectors_Entry {
+      seoPageTitle
+      seoMetaDescription
+      seoImage { url width height title }
       sectorsHeroHeading
       sectorsHeroDescription
       sectorsHeroImage { ${hero} }
@@ -68,6 +85,9 @@ export async function getSectorsPageContent(): Promise<SectorsPageContent> {
     }).filter((sector): sector is Sector => Boolean(sector));
 
     return {
+      cmsSeoTitle: entry.seoPageTitle?.trim() || null,
+      seoDescription: entry.seoMetaDescription?.trim() || null,
+      seoImage: toSeoImage(entry.seoImage?.[0]),
       hero: { title: entry.sectorsHeroHeading?.trim() || FALLBACK.hero.title, description: entry.sectorsHeroDescription?.trim() || FALLBACK.hero.description, image: toImageSource(entry.sectorsHeroImage?.[0]) || FALLBACK.hero.image },
       sectorsHeading: entry.sectorsGridHeading?.trim() || FALLBACK.sectorsHeading,
       sectors: sectors?.length ? sectors : FALLBACK.sectors,

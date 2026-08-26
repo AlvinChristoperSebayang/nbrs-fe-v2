@@ -55,7 +55,7 @@ export default async function ProjectsIndexPage(
 
   if (!listing) {
     return (
-      <main className="bg-white text-black min-h-screen">
+      <div className="bg-white text-black min-h-screen">
         <ProjectsHero />
         <Container className="py-16">
           <p className="max-w-xl text-zinc-600">
@@ -64,7 +64,7 @@ export default async function ProjectsIndexPage(
             <code>CRAFT_GRAPHQL_URL</code>, then refresh this page.
           </p>
         </Container>
-      </main>
+      </div>
     );
   }
 
