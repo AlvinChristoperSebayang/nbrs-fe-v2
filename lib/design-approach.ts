@@ -10,7 +10,9 @@ type Asset = {
 };
 
 type Entry = {
-<<<<<<< HEAD
+  seoPageTitle: string | null;
+  seoMetaDescription: string | null;
+  seoImage: RawSeoAsset[];
   designApproachHeroHeading: string | null;
   designApproachHeroDescription: string | null;
   designApproachHeroImage: Asset[];
@@ -18,12 +20,6 @@ type Entry = {
   designApproachHeroCtaUrl: string | null;
   designApproachPillarsHeading: string | null;
   designApproachPillarsDescription: string | null;
-=======
-  seoPageTitle: string | null; seoMetaDescription: string | null; seoImage: RawSeoAsset[];
-  designApproachHeroHeading: string | null; designApproachHeroDescription: string | null; designApproachHeroImage: Asset[];
-  designApproachHeroCtaLabel: string | null; designApproachHeroCtaUrl: string | null;
-  designApproachPillarsHeading: string | null; designApproachPillarsDescription: string | null;
->>>>>>> origin/main
   thumbnailGrid: Array<{ heading: string | null; text: string | null; image: Asset[] }>;
   designApproachCommunitiesHeading: string | null;
   designApproachCommunitiesDescription: string | null;
@@ -46,7 +42,9 @@ type Entry = {
 };
 
 export type DesignApproachContent = {
-<<<<<<< HEAD
+  cmsSeoTitle: string | null;
+  seoDescription: string | null;
+  seoImage: SeoImage | null;
   hero: {
     title: string;
     description: string;
@@ -77,16 +75,6 @@ export type DesignApproachContent = {
     buttonText: string;
     buttonHref: string;
   };
-=======
-  cmsSeoTitle: string | null;
-  seoDescription: string | null;
-  seoImage: SeoImage | null;
-  hero: { title: string; description: string; image: ImageSource; button: { text: string; href: string } };
-  pillars: { title: string; description: string; items: NewsItem[] };
-  communities: { heading: string; description: string; topImages: ImageSource[]; galleryImages: ImageSource[] };
-  quote: { image: ImageSource; quote: string; author: string; role: string };
-  project: { heading: string; description: string; image: ImageSource; buttonText: string; buttonHref: string };
->>>>>>> origin/main
   cta: CtaContent;
 };
 
@@ -236,6 +224,10 @@ const QUERY = /* GraphQL */ `
     }
   }
 `;
+
+function text(value: string | null): string | null {
+  return value?.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim() || null;
+}
 
 function path(value: string | null): string | null {
   if (!value) return null;
