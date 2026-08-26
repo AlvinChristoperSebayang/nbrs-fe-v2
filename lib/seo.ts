@@ -22,11 +22,11 @@ export const DEFAULT_SEO_DESCRIPTION =
   "NBRS is a multidisciplinary design practice uniting architecture, landscape, interior design, and heritage to create life-changing environments.";
 
 export const DEFAULT_OG_IMAGE = {
-  url: "/images/hero/seo-image.jpg",
+  url: "/images/seoImages.png",
   width: 1200,
   height: 630,
   alt: "NBRS Architecture",
-  type: "image/jpeg",
+  type: "image/png",
 };
 
 type PageMetadataInput = {
