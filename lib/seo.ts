@@ -1,19 +1,8 @@
 import type { Metadata } from "next";
 
-function resolveSiteUrl(): string {
-  if (process.env.NEXT_PUBLIC_SITE_URL) {
-    return process.env.NEXT_PUBLIC_SITE_URL.replace(/\/$/, "");
-  }
-  if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
-    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`.replace(/\/$/, "");
-  }
-  if (process.env.VERCEL_URL) {
-    return `https://${process.env.VERCEL_URL}`.replace(/\/$/, "");
-  }
-  return "https://nbrs-fe-v2.vercel.app";
-}
-
-export const SITE_URL = resolveSiteUrl();
+export const SITE_URL = (
+  process.env.NEXT_PUBLIC_SITE_URL || "https://nbrs-fe-v2.vercel.app"
+).replace(/\/$/, "");
 
 export const ALLOW_INDEXING =
   process.env.NEXT_PUBLIC_ALLOW_INDEXING?.toLowerCase() === "true";
