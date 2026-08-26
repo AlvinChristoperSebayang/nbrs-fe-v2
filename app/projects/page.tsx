@@ -8,9 +8,16 @@ import { PreserveScrollOnNavigate } from "@/components/projects/PreserveScrollOn
 import { createPageMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
+
 export async function generateMetadata() {
   const page = await getProjectsListing({ limit: 1 });
-  return createPageMetadata({ pathname: "/projects", title: page.pageHeading || "Projects", cmsTitle: page.cmsSeoTitle, description: page.seoDescription, image: page.seoImage ?? page.pageHeroImageUrl });
+  return createPageMetadata({
+    pathname: "/projects",
+    title: page.pageHeading || "Projects",
+    cmsTitle: page.cmsSeoTitle,
+    description: page.seoDescription,
+    image: page.seoImage ?? page.pageHeroImageUrl,
+  });
 }
 
 const PAGE_SIZE = 9;
@@ -67,7 +74,6 @@ export default async function ProjectsIndexPage(
     projects,
     total,
     pageHeading,
-    pageSubheading,
     pageHeroImageUrl,
   } = listing;
 
@@ -101,32 +107,33 @@ export default async function ProjectsIndexPage(
       />
       <Container className="py-16">
         <PreserveScrollOnNavigate>
-        <ProjectsFilters
-          sectors={sectors}
-          practices={practices}
-          selectedSectors={selectedSectors}
-          selectedPractices={selectedPractices}
-        />
+          <ProjectsFilters
+            sectors={sectors}
+            practices={practices}
+            selectedSectors={selectedSectors}
+            selectedPractices={selectedPractices}
+          />
 
-        <div className="mt-12">
-          <ProjectsGrid projects={displayProjects} />
-        </div>
-
-        {hasMore && (
-          <div className="mt-12 flex justify-center">
-            <Link
-              href={`/projects?${loadMoreParams.toString()}`}
-              scroll={false}
-              title="Load more projects"
-              aria-label="Load more projects"
-              className="inline-flex items-center rounded-full border border-black px-8 py-3 text-sm uppercase text-black transition hover:bg-black hover:text-white"
-            >
-              Load more
-            </Link>
+          <div className="mt-12">
+            <ProjectsGrid projects={displayProjects} />
           </div>
-        )}
+
+          {hasMore && (
+            <div className="mt-12 flex justify-center">
+              <Link
+                href={`/projects?${loadMoreParams.toString()}`}
+                scroll={false}
+                title="Load more projects"
+                aria-label="Load more projects"
+                className="inline-flex items-center rounded-full border border-black px-8 py-3 text-sm uppercase text-black transition hover:bg-black hover:text-white"
+              >
+                Load more
+              </Link>
+            </div>
+          )}
         </PreserveScrollOnNavigate>
       </Container>
     </main>
   );
 }
+

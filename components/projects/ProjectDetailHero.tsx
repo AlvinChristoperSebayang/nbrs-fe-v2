@@ -2,6 +2,17 @@ import { Container } from "@/components/ui/Container";
 import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
 import type { ImageSource } from "@/lib/types";
 
+export type ProjectDetailHeroProps = {
+  title: string;
+  subheading?: string | null;
+  sectorLabel?: string | null;
+  practiceLabel?: string | null;
+  image?: ImageSource | null;
+  location?: string | null;
+  client?: string | null;
+  collaborators?: string | null;
+};
+
 export function ProjectDetailHero({
   title,
   subheading,
@@ -11,16 +22,7 @@ export function ProjectDetailHero({
   location,
   client,
   collaborators,
-}: {
-  title: string;
-  subheading?: string | null;
-  sectorLabel?: string | null;
-  practiceLabel?: string | null;
-  image?: ImageSource | null;
-  location?: string | null;
-  client?: string | null;
-  collaborators?: string | null;
-}) {
+}: ProjectDetailHeroProps) {
   return (
     <section>
       <div className="bg-black text-white pt-16 sm:pt-0 lg:pt-[140px]">

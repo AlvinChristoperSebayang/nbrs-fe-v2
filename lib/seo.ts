@@ -1,10 +1,19 @@
 import type { Metadata } from "next";
 
-const FALLBACK_SITE_URL = "https://nbrs.com.au";
+function resolveSiteUrl(): string {
+  if (process.env.NEXT_PUBLIC_SITE_URL) {
+    return process.env.NEXT_PUBLIC_SITE_URL.replace(/\/$/, "");
+  }
+  if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
+    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`.replace(/\/$/, "");
+  }
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`.replace(/\/$/, "");
+  }
+  return "https://nbrs-fe-v2.vercel.app";
+}
 
-export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL || FALLBACK_SITE_URL
-).replace(/\/$/, "");
+export const SITE_URL = resolveSiteUrl();
 
 export const ALLOW_INDEXING =
   process.env.NEXT_PUBLIC_ALLOW_INDEXING?.toLowerCase() === "true";
@@ -13,10 +22,11 @@ export const DEFAULT_SEO_DESCRIPTION =
   "NBRS is a multidisciplinary design practice uniting architecture, landscape, interior design, and heritage to create life-changing environments.";
 
 export const DEFAULT_OG_IMAGE = {
-  url: "/images/hero/seo-image.webp",
-  width: 1440,
-  height: 910,
+  url: "/images/hero/seo-image.jpg",
+  width: 1200,
+  height: 630,
   alt: "NBRS Architecture",
+  type: "image/jpeg",
 };
 
 type PageMetadataInput = {
@@ -59,7 +69,7 @@ export function getImageUrl(image: unknown): string | null {
 
   for (const key of ["url", "src", "desktop"] as const) {
     const value = (image as Record<string, unknown>)[key];
-    if (typeof value === "string") return value;
+    if (typeof value === "string") return toAbsoluteUrl(value.trim());
   }
 
   return null;
@@ -108,10 +118,9 @@ export function createPageMetadata({
   );
   const resolvedImage = imageMetadata
     ? [imageMetadata]
-    : [DEFAULT_OG_IMAGE];
+    : [{ ...DEFAULT_OG_IMAGE, url: toAbsoluteUrl(DEFAULT_OG_IMAGE.url) }];
 
   const fullCanonicalUrl = toAbsoluteUrl(pathname);
-  const formattedTitle = title ? `${title} | NBRS` : "NBRS Architecture | Multidisciplinary Design";
 
   return {
     // Craft SEO titles are already final editor-authored strings. Fallback labels

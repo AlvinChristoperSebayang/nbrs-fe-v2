@@ -42,7 +42,15 @@ export const metadata: Metadata = {
     locale: "en_AU",
     url: "/",
     siteName: "NBRS Architecture",
-    images: [DEFAULT_OG_IMAGE],
+    images: [
+      {
+        url: DEFAULT_OG_IMAGE.url,
+        width: DEFAULT_OG_IMAGE.width,
+        height: DEFAULT_OG_IMAGE.height,
+        alt: DEFAULT_OG_IMAGE.alt,
+        type: DEFAULT_OG_IMAGE.type,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",

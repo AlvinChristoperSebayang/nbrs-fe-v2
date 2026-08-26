@@ -65,17 +65,19 @@ function ChipRow({
   );
 }
 
+export type ProjectsFiltersProps = {
+  sectors: ProjectCategory[];
+  practices: ProjectCategory[];
+  selectedSectors: string[];
+  selectedPractices: string[];
+};
+
 export function ProjectsFilters({
   sectors,
   practices,
   selectedSectors,
   selectedPractices,
-}: {
-  sectors: ProjectCategory[];
-  practices: ProjectCategory[];
-  selectedSectors: string[];
-  selectedPractices: string[];
-}) {
+}: ProjectsFiltersProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();

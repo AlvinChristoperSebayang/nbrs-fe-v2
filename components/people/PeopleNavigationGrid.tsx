@@ -11,9 +11,13 @@ export type SubMenuCard = {
   href: string;
   image: ImageSource;
 };
+export type PeopleNavigationGridProps = {
+  cards: SubMenuCard[];
+};
+
 const ACCENTS = ["bg-[#F0C7BD]", "bg-[#EDE3F0]", "bg-[#FDD4B6]", "bg-[#F2E8D8]"];
 
-export function PeopleNavigationGrid({ cards }: { cards: SubMenuCard[] }) {
+export function PeopleNavigationGrid({ cards }: PeopleNavigationGridProps) {
   const teamCard = cards[0];
   const gridCards = cards.slice(1);
   if (!teamCard) return null;

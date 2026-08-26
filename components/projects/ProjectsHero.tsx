@@ -2,13 +2,15 @@ import { Container } from "@/components/ui/Container";
 import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
 import type { ImageSource } from "@/lib/types";
 
+export type ProjectsHeroProps = {
+  image?: ImageSource | null;
+  title?: string | null;
+};
+
 export function ProjectsHero({
   image,
   title,
-}: {
-  image?: ImageSource | null;
-  title?: string | null;
-} = {}) {
+}: ProjectsHeroProps = {}) {
   const headingText = title || "Projects";
 
   return (
