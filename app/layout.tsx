@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { AosInit } from "@/components/layout/AosInit";
+import { ScrollToTop } from "@/components/layout/ScrollToTop";
 import { GlobalLoading } from "@/components/ui/GlobalLoading";
 import { getFooter } from "@/lib/footer";
 import {
@@ -41,7 +42,15 @@ export const metadata: Metadata = {
     locale: "en_AU",
     url: "/",
     siteName: "NBRS Architecture",
-    images: [DEFAULT_OG_IMAGE],
+    images: [
+      {
+        url: DEFAULT_OG_IMAGE.url,
+        width: DEFAULT_OG_IMAGE.width,
+        height: DEFAULT_OG_IMAGE.height,
+        alt: DEFAULT_OG_IMAGE.alt,
+        type: DEFAULT_OG_IMAGE.type,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
@@ -92,6 +101,7 @@ export default async function RootLayout({
     >
       <body className="flex min-h-full flex-col" suppressHydrationWarning>
         <JsonLd data={organizationSchema} />
+        <ScrollToTop />
         <AosInit />
         <Suspense fallback={null}>
           <GlobalLoading />

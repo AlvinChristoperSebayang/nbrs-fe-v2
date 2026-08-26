@@ -1,5 +1,5 @@
 import { craftFetch } from "./craft";
-import { toImageSource } from "./media";
+import { toImageSource, toSeoImage, type RawSeoAsset, type SeoImage } from "./media";
 import type { PracticeCardItem } from "@/components/practices/PracticesHoverSection";
 import type { ImageSource } from "./types";
 
@@ -12,6 +12,9 @@ type PracticeCategory = {
   thumbnail: Asset[];
 };
 type Entry = {
+  seoPageTitle: string | null;
+  seoMetaDescription: string | null;
+  seoImage: RawSeoAsset[];
   practicesHeroHeading: string | null;
   practicesHeroDescription: string | null;
   practicesHeroImage: Asset[];
@@ -22,12 +25,18 @@ type Entry = {
 };
 
 export type PracticesPageContent = {
+  cmsSeoTitle: string | null;
+  seoDescription: string | null;
+  seoImage: SeoImage | null;
   hero: { title: string; description: string; image: ImageSource };
   intro: { heading: string; description: string; image: ImageSource };
   practices: PracticeCardItem[];
 };
 
 const FALLBACK: PracticesPageContent = {
+  cmsSeoTitle: null,
+  seoDescription: null,
+  seoImage: null,
   hero: {
     title: "EXPLORING\nOUR PRACTICES ?",
     description: "Design for purpose, responding to people.",
@@ -61,6 +70,9 @@ const QUERY = /* GraphQL */ `
 query PracticesPage {
   entries(section: ["practices"], limit: 1) {
     ... on practices_Entry {
+      seoPageTitle
+      seoMetaDescription
+      seoImage { url width height title }
       practicesHeroHeading
       practicesHeroDescription
       practicesHeroImage { url ${heroImage} }
@@ -102,6 +114,9 @@ export async function getPracticesPageContent(): Promise<PracticesPageContent> {
       });
 
     return {
+      cmsSeoTitle: entry.seoPageTitle?.trim() || null,
+      seoDescription: entry.seoMetaDescription?.trim() || null,
+      seoImage: toSeoImage(entry.seoImage?.[0]),
       hero: {
         title: entry.practicesHeroHeading?.trim() || FALLBACK.hero.title,
         description: entry.practicesHeroDescription?.trim() || FALLBACK.hero.description,

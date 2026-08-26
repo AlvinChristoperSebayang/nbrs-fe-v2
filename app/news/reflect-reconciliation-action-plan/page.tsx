@@ -2,7 +2,7 @@ import { createPageMetadata } from "@/lib/seo";
 import { Container } from "@/components/ui/Container";
 import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
 import { Hero } from "@/components/ui/Hero";
-import { getRapPage } from "@/lib/rap";
+import { getRapPage, type RapPageData } from "@/lib/rap";
 
 export const revalidate = 60;
 
@@ -20,6 +20,33 @@ function Arrow() {
   );
 }
 
+function PublicationDetails({ page }: { page: RapPageData }) {
+  return (
+    <section className="bg-[#efefed] px-6 py-8 sm:px-10 lg:px-14 lg:py-11" aria-label="Publication details">
+      <p className="text-xl font-normal text-black sm:text-2xl">Reconciliation Action Plan</p>
+      <div className="mt-4 h-px bg-black/20" />
+      <dl className="mt-6 grid gap-7 text-sm sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+        <div>
+          <dt className="font-bold text-black">Publication Date:</dt>
+          <dd className="mt-1 text-sm text-black">{page.publicationDate}</dd>
+        </div>
+        <div>
+          <dt className="font-bold text-black">Author:</dt>
+          <dd className="mt-1 max-w-[280px] text-sm text-black">{page.author}</dd>
+        </div>
+        <div>
+          <dt className="font-bold text-black">Endorsed by:</dt>
+          <dd className="mt-1 text-sm text-black">{page.endorsedBy}</dd>
+        </div>
+        <div>
+          <dt className="font-bold text-black">Read time:</dt>
+          <dd className="mt-1 text-sm text-black">{page.readTime}</dd>
+        </div>
+      </dl>
+    </section>
+  );
+}
+
 export default async function ReflectRapPage() {
   const page = await getRapPage();
 
@@ -32,52 +59,10 @@ export default async function ReflectRapPage() {
       />
 
       <div className="hidden lg:block relative z-20 mt-0 lg:-mt-16 container mx-auto">
-        <section className="bg-[#efefed] px-6 py-8 sm:px-10 lg:px-14 lg:py-11" aria-label="Publication details">
-          <p className="text-xl font-normal text-black sm:text-2xl">Reconciliation Action Plan</p>
-          <div className="mt-4 h-px bg-black/20" />
-          <dl className="mt-6 grid gap-7 text-sm sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
-            <div>
-              <dt className="font-bold text-black">Publication Date:</dt>
-              <dd className="mt-1 text-sm text-black">{page.publicationDate}</dd>
-            </div>
-            <div>
-              <dt className="font-bold text-black">Author:</dt>
-              <dd className="mt-1 max-w-[280px] text-sm text-black">{page.author}</dd>
-            </div>
-            <div>
-              <dt className="font-bold text-black">Endorsed by:</dt>
-              <dd className="mt-1 text-sm text-black">{page.endorsedBy}</dd>
-            </div>
-            <div>
-              <dt className="font-bold text-black">Read time:</dt>
-              <dd className="mt-1 text-sm text-black">{page.readTime}</dd>
-            </div>
-          </dl>
-        </section>
+        <PublicationDetails page={page} />
       </div>
       <div className="block lg:hidden relative z-20 mt-0 lg:-mt-16 uncontainer md:container md:mx-auto">
-        <section className="bg-[#efefed] px-6 py-8 sm:px-10 lg:px-14 lg:py-11" aria-label="Publication details">
-          <p className="text-xl font-normal text-black sm:text-2xl">Reconciliation Action Plan</p>
-          <div className="mt-4 h-px bg-black/20" />
-          <dl className="mt-6 grid gap-7 text-sm sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
-            <div>
-              <dt className="font-bold text-black">Publication Date:</dt>
-              <dd className="mt-1 text-sm text-black">{page.publicationDate}</dd>
-            </div>
-            <div>
-              <dt className="font-bold text-black">Author:</dt>
-              <dd className="mt-1 max-w-[280px] text-sm text-black">{page.author}</dd>
-            </div>
-            <div>
-              <dt className="font-bold text-black">Endorsed by:</dt>
-              <dd className="mt-1 text-sm text-black">{page.endorsedBy}</dd>
-            </div>
-            <div>
-              <dt className="font-bold text-black">Read time:</dt>
-              <dd className="mt-1 text-sm text-black">{page.readTime}</dd>
-            </div>
-          </dl>
-        </section>
+        <PublicationDetails page={page} />
       </div>
 
       <section className="bg-white py-20 sm:py-24 lg:py-32">
@@ -114,17 +99,17 @@ export default async function ReflectRapPage() {
             <h2 className="font-heading text-4xl leading-none sm:text-5xl lg:text-[64px]">{page.cta.heading}</h2>
             {page.cta.description && <p className="mx-auto mt-5 max-w-xl text-base text-white/90 sm:text-lg">{page.cta.description}</p>}
             {page.cta.buttonLabel && page.cta.buttonUrl && (
-            <a
-              href={page.cta.buttonUrl}
-              target="_blank"
-              rel="noreferrer"
-              title={page.cta.buttonLabel}
-              aria-label={page.cta.buttonLabel}
-              className="mt-8 inline-flex items-center gap-3 rounded-full bg-white px-7 py-4 text-base uppercase text-[#D18148] transition hover:bg-white/90 sm:px-10 sm:py-5 sm:text-[20px]"
-            >
-              {page.cta.buttonLabel}
-              <Arrow />
-            </a>
+              <a
+                href={page.cta.buttonUrl}
+                target="_blank"
+                rel="noreferrer"
+                title={page.cta.buttonLabel}
+                aria-label={page.cta.buttonLabel}
+                className="mt-8 inline-flex items-center gap-3 rounded-full bg-white px-7 py-4 text-base uppercase text-[#D18148] transition hover:bg-white/90 sm:px-10 sm:py-5 sm:text-[20px]"
+              >
+                <span>{page.cta.buttonLabel}</span>
+                <Arrow />
+              </a>
             )}
           </div>
         </Container>
@@ -132,3 +117,4 @@ export default async function ReflectRapPage() {
     </article>
   );
 }
+

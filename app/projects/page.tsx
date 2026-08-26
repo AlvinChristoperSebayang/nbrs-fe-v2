@@ -8,9 +8,16 @@ import { PreserveScrollOnNavigate } from "@/components/projects/PreserveScrollOn
 import { createPageMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
+
 export async function generateMetadata() {
   const page = await getProjectsListing({ limit: 1 });
-  return createPageMetadata({ pathname: "/projects", title: page.pageHeading || "Projects", cmsTitle: page.cmsSeoTitle, description: page.seoDescription, image: page.seoImage ?? page.pageHeroImageUrl });
+  return createPageMetadata({
+    pathname: "/projects",
+    title: page.pageHeading || "Projects",
+    cmsTitle: page.cmsSeoTitle,
+    description: page.seoDescription,
+    image: page.seoImage ?? page.pageHeroImageUrl,
+  });
 }
 
 const PAGE_SIZE = 9;
@@ -48,7 +55,7 @@ export default async function ProjectsIndexPage(
 
   if (!listing) {
     return (
-      <main className="bg-white text-black min-h-screen">
+      <div className="bg-white text-black min-h-screen">
         <ProjectsHero />
         <Container className="py-16">
           <p className="max-w-xl text-zinc-600">
@@ -57,7 +64,7 @@ export default async function ProjectsIndexPage(
             <code>CRAFT_GRAPHQL_URL</code>, then refresh this page.
           </p>
         </Container>
-      </main>
+      </div>
     );
   }
 
@@ -67,7 +74,6 @@ export default async function ProjectsIndexPage(
     projects,
     total,
     pageHeading,
-    pageSubheading,
     pageHeroImageUrl,
   } = listing;
 
@@ -98,7 +104,6 @@ export default async function ProjectsIndexPage(
       <ProjectsHero
         image={pageHeroImageUrl}
         title={pageHeading}
-        subheading={pageSubheading}
       />
       <Container className="py-16">
         <PreserveScrollOnNavigate>
@@ -131,3 +136,4 @@ export default async function ProjectsIndexPage(
     </main>
   );
 }
+

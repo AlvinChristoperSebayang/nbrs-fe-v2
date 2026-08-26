@@ -91,13 +91,15 @@ function AnimatedCounter({ rawNumber }: { rawNumber: string }) {
   );
 }
 
+export type FastFactsSectionProps = {
+  title?: string;
+  facts?: FastFact[];
+};
+
 export function FastFactsSection({
   title = "FAST FACTS",
   facts = FAST_FACTS,
-}: {
-  title?: string;
-  facts?: FastFact[];
-}) {
+}: FastFactsSectionProps) {
   const items = facts && facts.length > 0 ? facts : FAST_FACTS;
 
   return (

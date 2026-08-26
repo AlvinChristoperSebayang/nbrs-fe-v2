@@ -9,7 +9,13 @@ import { getDesignApproachContent } from "@/lib/design-approach";
 
 export async function generateMetadata() {
   const page = await getDesignApproachContent();
-  return createPageMetadata({ pathname: "/design-approach", title: page.hero.title, description: page.hero.description, image: page.hero.image });
+  return createPageMetadata({
+    pathname: "/design-approach",
+    title: page.hero.title,
+    cmsTitle: page.cmsSeoTitle,
+    description: page.seoDescription ?? page.hero.description,
+    image: page.seoImage ?? page.hero.image,
+  });
 }
 
 export default async function DesignApproachPage() {
@@ -17,13 +23,37 @@ export default async function DesignApproachPage() {
 
   return (
     <article>
-      <Hero image={content.hero.image} title={content.hero.title} description={content.hero.description} button={content.hero.button} descriptionClassName="max-w-[430px]"/>
+      <Hero
+        image={content.hero.image}
+        title={content.hero.title}
+        description={content.hero.description}
+        button={content.hero.button}
+        descriptionClassName="max-w-[430px]"
+      />
       <div>
-        <div className="bg-[#DEE1F2] h-1.5 md:h-0"></div>
-        <GridEffect items={content.pillars.items} title={content.pillars.title} description={content.pillars.description} viewAllLabel="" viewAllUrl="" backgroundColor="#DEE1F2" titleClassNameNonHover="text-[#BFBFBF]"/>
+        <div className="bg-[#DEE1F2] h-1.5 md:h-0" />
+        <GridEffect
+          items={content.pillars.items}
+          title={content.pillars.title}
+          description={content.pillars.description}
+          viewAllLabel=""
+          viewAllUrl=""
+          backgroundColor="#DEE1F2"
+          titleClassNameNonHover="text-[#BFBFBF]"
+        />
       </div>
-      <TextGrid heading={content.communities.heading} description={content.communities.description} topImages={content.communities.topImages} galleryImages={content.communities.galleryImages} />
-      <QuoteSection image={content.quote.image} quote={content.quote.quote} author={content.quote.author} role={content.quote.role} />
+      <TextGrid
+        heading={content.communities.heading}
+        description={content.communities.description}
+        topImages={content.communities.topImages}
+        galleryImages={content.communities.galleryImages}
+      />
+      <QuoteSection
+        image={content.quote.image}
+        quote={content.quote.quote}
+        author={content.quote.author}
+        role={content.quote.role}
+      />
       <DesignApproachProjectSection
         heading={content.project.heading}
         description={content.project.description}
@@ -35,3 +65,4 @@ export default async function DesignApproachPage() {
     </article>
   );
 }
+

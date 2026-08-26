@@ -2,7 +2,17 @@ import { Container } from "@/components/ui/Container";
 import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
 import type { ImageSource } from "@/lib/types";
 
-export function CultureValuesSection({ heading, description, image }: { heading: string; description: string; image: ImageSource }) {
+export type CultureValuesSectionProps = {
+  heading: string;
+  description: string;
+  image: ImageSource;
+};
+
+export function CultureValuesSection({
+  heading,
+  description,
+  image,
+}: CultureValuesSectionProps) {
   return (
     <section className="bg-[#EEEEEE] py-16 lg:py-24 text-black">
       <Container>

@@ -1,10 +1,13 @@
 import { craftFetch } from "./craft";
-import { toImageSource } from "./media";
+import { toImageSource, toSeoImage, type RawSeoAsset, type SeoImage } from "./media";
 import type { ImageSource } from "./types";
 
 type Asset = { url?: string; mobile?: string; tablet?: string; desktop?: string };
 
 type SocialSustainabilityEntry = {
+  seoPageTitle: string | null;
+  seoMetaDescription: string | null;
+  seoImage: RawSeoAsset[];
   socialSusHeroHeading: string | null;
   socialSusHeroDescription: string | null;
   socialSusHeroImage: Asset[];
@@ -20,6 +23,9 @@ export type SocialInitiative = { title: string; description: string; image: Imag
 export type SupportingOrganisation = { name: string; logo: ImageSource };
 
 export type SocialSustainabilityContent = {
+  cmsSeoTitle: string | null;
+  seoDescription: string | null;
+  seoImage: SeoImage | null;
   hero: { title: string; description: string; image: ImageSource };
   initiatives: SocialInitiative[];
   supportingHeading: string;
@@ -35,6 +41,9 @@ const QUERY = /* GraphQL */ `
   query SocialSustainabilityPage {
     entries(section: ["socialSus"], limit: 1) {
       ... on socialSus_Entry {
+        seoPageTitle
+        seoMetaDescription
+        seoImage { url width height title }
         socialSusHeroHeading
         socialSusHeroDescription
         socialSusHeroImage { url ${hero} }
@@ -47,6 +56,9 @@ const QUERY = /* GraphQL */ `
 `;
 
 export const SOCIAL_SUSTAINABILITY_FALLBACK: SocialSustainabilityContent = {
+  cmsSeoTitle: null,
+  seoDescription: null,
+  seoImage: null,
   hero: {
     title: "Design for good",
     description: "NBRS partakes in several social initiatives bringing smiles to communities in need and helping to positively shape their lives with designs that provide opportunities for a better future.",
@@ -87,6 +99,9 @@ export async function getSocialSustainabilityContent(): Promise<SocialSustainabi
   }).filter((item): item is SupportingOrganisation => item !== null);
 
   return {
+    cmsSeoTitle: entry.seoPageTitle?.trim() || null,
+    seoDescription: entry.seoMetaDescription?.trim() || null,
+    seoImage: toSeoImage(entry.seoImage?.[0]),
     hero: {
       title: entry.socialSusHeroHeading?.trim() || SOCIAL_SUSTAINABILITY_FALLBACK.hero.title,
       description: entry.socialSusHeroDescription?.trim() || SOCIAL_SUSTAINABILITY_FALLBACK.hero.description,

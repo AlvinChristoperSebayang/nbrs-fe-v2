@@ -3,7 +3,11 @@
 import type { SecondaryResearchItem } from "@/lib/research-listing";
 import { TextResearchCard } from "./TextResearchCard";
 
-export function TextResearchGrid({ items = [] }: { items?: SecondaryResearchItem[] }) {
+export type TextResearchGridProps = {
+  items?: SecondaryResearchItem[];
+};
+
+export function TextResearchGrid({ items = [] }: TextResearchGridProps) {
   if (items.length === 0) return null;
 
   return (
@@ -16,3 +20,4 @@ export function TextResearchGrid({ items = [] }: { items?: SecondaryResearchItem
     </div>
   );
 }
+

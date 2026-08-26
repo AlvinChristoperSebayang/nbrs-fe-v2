@@ -24,6 +24,7 @@ export function KeyProjectsSection({
       <Container>
         <h2
           data-aos="fade-up"
+          suppressHydrationWarning
           className="font-heading text-3xl lg:text-4xl uppercase font-bold text-black tracking-tight mb-6"
         >
           {title}
@@ -38,6 +39,7 @@ export function KeyProjectsSection({
               aria-label={project.title}
               data-aos="fade-up"
               data-aos-delay={100 + index * 100}
+              suppressHydrationWarning
               className="group flex flex-col w-full cursor-pointer"
             >
               {/* Project Cover Image */}

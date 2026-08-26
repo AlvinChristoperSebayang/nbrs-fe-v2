@@ -29,6 +29,7 @@ export function ProjectListTableSection({
         {title && (
           <h2
             data-aos="fade-up"
+            suppressHydrationWarning
             className="font-heading text-3xl sm:text-4xl uppercase font-bold text-black leading-none mb-8 lg:mb-10"
           >
             {title}
@@ -38,6 +39,7 @@ export function ProjectListTableSection({
         {/* Table Header Labels */}
         <div
           data-aos="fade-up"
+          suppressHydrationWarning
           className="hidden md:grid grid-cols-12 gap-4 px-6 pb-4 text-xs font-bold uppercase tracking-wider text-black"
         >
           <div className="col-span-4">Project</div>
@@ -57,6 +59,7 @@ export function ProjectListTableSection({
               aria-label={row.project}
               data-aos="fade-up"
               data-aos-delay={index * 80}
+              suppressHydrationWarning
               className="group bg-white md:bg-transparent p-6 flex md:grid md:grid-cols-12 items-center justify-between gap-4 md:gap-4 hover:bg-zinc-50 transition-colors cursor-pointer"
             >
               {/* Project Title (Mobile & Desktop) */}

@@ -1,7 +1,7 @@
 import type { AwardItem } from "@/lib/awards-data";
 import { AwardCard } from "./AwardCard";
 
-type AwardsSectionProps = {
+export type AwardsSectionProps = {
   heading: string;
   description: string;
   items: AwardItem[];

@@ -56,17 +56,19 @@ function renderPracticeHeading(heading: string) {
   );
 }
 
+export type AboutPracticeSectionProps = {
+  heading: string;
+  description: string;
+  mainImage: ImageSource;
+  galleryImages: ImageSource[];
+};
+
 export function AboutPracticeSection({
   heading,
   description,
   mainImage,
   galleryImages,
-}: {
-  heading: string;
-  description: string;
-  mainImage: ImageSource;
-  galleryImages: [ImageSource, ImageSource, ImageSource];
-}) {
+}: AboutPracticeSectionProps) {
   return (
     <section className="bg-white py-16 lg:py-24">
       <Container className="overflow-hidden">

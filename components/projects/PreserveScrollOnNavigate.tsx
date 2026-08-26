@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 
 const STORAGE_KEY = "projects-scroll-y";
@@ -12,6 +12,11 @@ export function PreserveScrollOnNavigate({
 }) {
   const searchParams = useSearchParams();
   const isFirstRender = useRef(true);
+
+  // Clear any stale saved scroll on initial mount (fresh visit to /projects)
+  useEffect(() => {
+    sessionStorage.removeItem(STORAGE_KEY);
+  }, []);
 
   useLayoutEffect(() => {
     if (isFirstRender.current) {
@@ -30,11 +35,22 @@ export function PreserveScrollOnNavigate({
 
   return (
     <div
-      onClickCapture={() => {
-        sessionStorage.setItem(STORAGE_KEY, String(window.scrollY));
+      onClickCapture={(e) => {
+        const target = e.target as HTMLElement | null;
+        // If clicking a link to leave the page, clear saved scroll
+        if (target?.closest("a")) {
+          sessionStorage.removeItem(STORAGE_KEY);
+          return;
+        }
+
+        // If clicking filter buttons, save current scroll position
+        if (target?.closest("button")) {
+          sessionStorage.setItem(STORAGE_KEY, String(window.scrollY));
+        }
       }}
     >
       {children}
     </div>
   );
 }
+

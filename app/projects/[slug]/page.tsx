@@ -9,6 +9,27 @@ import { createPageMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 
+const FALLBACK_KEY_PROJECTS: KeyProjectItem[] = [
+  {
+    id: "kp-1",
+    title: "ARMIDALE SECONDARY COLLEGE",
+    image: "/images/hero/hero1.png",
+    href: "/projects/armidale-secondary-college",
+  },
+  {
+    id: "kp-2",
+    title: "CANTERBURY SOUTH PUBLIC SCHOOL",
+    image: "/images/hero/hero4.png",
+    href: "/projects/canterbury-south-public-school",
+  },
+  {
+    id: "kp-3",
+    title: "TARONGA INSTITUTE OF SCIENCE AND LEARNING",
+    image: "/images/hero/hero3.png",
+    href: "/projects/taronga-institute-of-science",
+  },
+];
+
 export async function generateMetadata(
   props: PageProps<"/projects/[slug]">
 ): Promise<Metadata> {
@@ -23,9 +44,6 @@ export async function generateMetadata(
   }
 
   const title = project.seoPageTitle || project.heading || "Project Detail";
-  const heroImageRaw =
-    project.splash?.find((slide) => slide.imageUrl)?.imageUrl ??
-    project.thumbnailUrl;
 
   return createPageMetadata({
     pathname: `/projects/${slug}`,
@@ -53,27 +71,6 @@ export default async function ProjectPage(
     .map((c) => c.title)
     .join(", ");
 
-  const fallbackKeyProjects: KeyProjectItem[] = [
-    {
-      id: "kp-1",
-      title: "ARMIDALE SECONDARY COLLEGE",
-      image: "/images/hero/hero1.png",
-      href: "/projects/armidale-secondary-college",
-    },
-    {
-      id: "kp-2",
-      title: "CANTERBURY SOUTH PUBLIC SCHOOL",
-      image: "/images/hero/hero4.png",
-      href: "/projects/canterbury-south-public-school",
-    },
-    {
-      id: "kp-3",
-      title: "TARONGA INSTITUTE OF SCIENCE AND LEARNING",
-      image: "/images/hero/hero3.png",
-      href: "/projects/taronga-institute-of-science",
-    },
-  ];
-
   const relatedList = await getKeyProjectsForDetail(project);
 
   const keyProjects: KeyProjectItem[] =
@@ -84,8 +81,10 @@ export default async function ProjectPage(
           image: p.thumbnailUrl || `/images/hero/hero${(idx % 5) + 1}.png`,
           href: p.uri ? `/${p.uri.replace(/^\//, "")}` : `/projects/${p.slug}`,
         }))
-      : fallbackKeyProjects;
-  const heroImage = project.splash.find((slide) => slide.imageUrl)?.imageUrl ?? project.thumbnailUrl;
+      : FALLBACK_KEY_PROJECTS;
+
+  const heroImage =
+    project.splash.find((slide) => slide.imageUrl)?.imageUrl ?? project.thumbnailUrl;
 
   return (
     <article className="bg-white text-black min-h-screen">
@@ -111,7 +110,7 @@ export default async function ProjectPage(
 
       {/* KEY PROJECTS SECTION */}
       <KeyProjectsSection title="KEY PROJECTS" projects={keyProjects} />
-
     </article>
   );
 }
+

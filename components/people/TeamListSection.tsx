@@ -16,7 +16,11 @@ export type TeamMember = {
   bgColor?: string;
 };
 
-export function TeamListSection({ members }: { members: TeamMember[] }) {
+export type TeamListSectionProps = {
+  members: TeamMember[];
+};
+
+export function TeamListSection({ members }: TeamListSectionProps) {
   const [selectedPractices, setSelectedPractices] = useState<string[]>([]);
   const practices = Array.from(new Set(members.flatMap((member) => member.practices))).sort();
 

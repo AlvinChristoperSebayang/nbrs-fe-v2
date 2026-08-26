@@ -3,7 +3,6 @@ import { AboutSection } from "@/components/home/AboutSection";
 import { CtaSection } from "@/components/cta/CtaSection";
 import { FeatureGlassSection } from "@/components/sustainability/FeatureGlassSection";
 import { GreenStarSection } from "@/components/sustainability/GreenStarSection";
-// import { SustainabilityProjectsSection } from "@/components/sustainability/SustainabilityProjectsSection";
 import { Hero } from "@/components/ui/Hero";
 import { getSustainabilityPage } from "@/lib/sustainability";
 
@@ -26,7 +25,13 @@ function formatSustainabilityIntroHeading(heading?: string | null): string {
 
 export async function generateMetadata() {
   const page = await getSustainabilityPage();
-  return createPageMetadata({ pathname: "/sustainability", title: page.title, cmsTitle: page.cmsSeoTitle, description: page.seoDescription, image: page.seoImage ?? page.hero });
+  return createPageMetadata({
+    pathname: "/sustainability",
+    title: page.title,
+    cmsTitle: page.cmsSeoTitle,
+    description: page.seoDescription,
+    image: page.seoImage ?? page.hero,
+  });
 }
 
 export default async function SustainabilityPage() {
@@ -43,7 +48,7 @@ export default async function SustainabilityPage() {
         description={page.intro.text}
         description_class_name="max-w-[276px]"
       />
-      
+
       <div className="pb-0 md:pb-10">
         <GreenStarSection
           heading={page.greenStar.heading}
@@ -65,9 +70,8 @@ export default async function SustainabilityPage() {
         />
       ))}
 
-      {/* <SustainabilityProjectsSection projects={page.projects} /> */}
-
       <CtaSection content={page.cta} />
     </article>
   );
 }
+
