@@ -11,16 +11,25 @@ function ArrowIcon() {
 }
 
 function ProjectMeta({ project }: { project: ProjectListItem }) {
-  const segments = [
-    project.sectors.length > 0 &&
-      `Sector - ${project.sectors.map((s) => s.title).join(", ")}`,
-    project.practices.length > 0 &&
-      `Practice - ${project.practices.map((p) => p.title).join(", ")}`,
-  ].filter(Boolean);
+  const hasSectors = project.sectors.length > 0;
+  const hasPractices = project.practices.length > 0;
 
-  if (segments.length === 0) return null;
+  if (!hasSectors && !hasPractices) return null;
 
-  return <p className="mt-auto pt-4 text-sm text-[#FFD6CD]">{segments.join(", ")}</p>;
+  return (
+    <div className="mt-auto pt-4 flex flex-col gap-0.5 text-sm text-[#FFD6CD]">
+      {hasSectors && (
+        <span className="block">
+          Sector - {project.sectors.map((s) => s.title).join(", ")}
+        </span>
+      )}
+      {hasPractices && (
+        <span className="block">
+          Practice - {project.practices.map((p) => p.title).join(", ")}
+        </span>
+      )}
+    </div>
+  );
 }
 
 export function ProjectsGrid({ projects }: { projects: ProjectListItem[] }) {

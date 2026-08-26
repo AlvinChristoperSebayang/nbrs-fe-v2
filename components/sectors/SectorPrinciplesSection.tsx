@@ -50,7 +50,7 @@ export function SectorPrinciplesSection({
               data-aos="fade-up"
               data-aos-delay={100 + index * 100}
               suppressHydrationWarning
-              className="group relative block aspect-[5/4] w-full overflow-hidden bg-zinc-100"
+              className="group relative block aspect-[5/4] w-full overflow-hidden rounded-[5px] bg-zinc-100"
             >
               <ResponsiveImage
                 src={imgUrl}

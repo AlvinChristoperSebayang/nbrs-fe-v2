@@ -35,8 +35,8 @@ query SectorDetail($slug: [String]!) {
       id title slug accentColor seoPageTitle seoMetaDescription seoImage { url width height title } catHdrHeading catHdrSubheading sectorServicesIntro sectorHeritageAdvisoryServices sectorHeritageConservationServices
       catHdrImage { url width height title ${heroImage} }
       catOvrHeading catOvrText
-      catOverImageText { ... on block3_Entry { image { ${landscapeImage} } leftColumnHeading leftColumnText rightColumnHeading rightColumnText } }
-      sectorFeatures { ... on sectorFeature_Entry { sectorFeatureHeading sectorFeatureText sectorFeatureImage { ${landscapeImage} } } }
+      catOverImageText { ... on block3_Entry { image { url width height title } leftColumnHeading leftColumnText rightColumnHeading rightColumnText } }
+      sectorFeatures { ... on sectorFeature_Entry { sectorFeatureHeading sectorFeatureText sectorFeatureImage { url width height title } } }
       catFeaturedProjects { ... on projects_Entry { id title slug uri proHdrHeading thumbnail { ${cardImage} } } }
       catSelectedProjects { ... on projects_Entry { id title slug uri proHdrHeading catStatus { ... on status_Category { title } } catDiscipline { ... on discipline_Category { title } } } }
       catPclPerson { ... on block2_Entry { quote person { ... on people_Entry { title PplName pplProfileImage { ${quoteImage} } } } } }
@@ -127,7 +127,7 @@ export async function getSectorDetailContent(slug: string): Promise<SectorDetail
       heritageServices,
       keyProjects: keyProjects.length ? keyProjects : fallback.keyProjects,
       tableProjects: tableProjects.length ? tableProjects : fallback.tableProjects,
-      quote: quoteBlock && person && quoteImage ? { image: quoteImage, text: quoteBlock.quote!.trim(), author: person.PplName?.trim() || person.title } : fallback.quote,
+      quote: quoteBlock && person && quoteImage ? { image: quoteImage, text: quoteBlock.quote!.trim(), author: (person.PplName?.trim() || person.title).split("|")[0].trim() } : fallback.quote,
       cta: mapCta(category, FALLBACK_CTA),
       cmsSeoTitle: category.seoPageTitle?.trim() || null,
       seoDescription: cleanHtml(category.seoMetaDescription) || category.catHdrSubheading?.trim() || fallback.heroSubtitle,

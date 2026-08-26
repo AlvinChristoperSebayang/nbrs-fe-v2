@@ -11,7 +11,7 @@ export type ProjectTableRow = {
 
 export function ProjectListTableSection({
   title = "LATEST PROJECTS",
-  sectorHeaderLabel = "Sectors",
+  sectorHeaderLabel = "Practices",
   rows,
   showMobileProjectLabel = true,
 }: {
@@ -40,7 +40,7 @@ export function ProjectListTableSection({
         <div
           data-aos="fade-up"
           suppressHydrationWarning
-          className="hidden md:grid grid-cols-12 gap-4 px-6 pb-4 text-xs font-bold uppercase tracking-wider text-black"
+          className="hidden md:grid grid-cols-12 gap-4 px-6 pb-4 text-[16px] font-bold uppercase tracking-wider text-black"
         >
           <div className="col-span-4">Project</div>
           <div className="col-span-5">{sectorHeaderLabel}</div>

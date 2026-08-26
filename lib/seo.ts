@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 
-// export const SITE_URL = (
-//   process.env.NEXT_PUBLIC_SITE_URL || "https://nbrs-fe-v2.vercel.app"
-// ).replace(/\/$/, "");
+export const SITE_URL = (
+  process.env.NEXT_PUBLIC_SITE_URL || "https://nbrs-fe-v2.vercel.app"
+).replace(/\/$/, "");
 
-export const SITE_URL = "https://nbrs-fe-v2.vercel.app"
+// export const SITE_URL = "https://nbrs-fe-v2.vercel.app"
 
 export const ALLOW_INDEXING =
   process.env.NEXT_PUBLIC_ALLOW_INDEXING?.toLowerCase() === "true";

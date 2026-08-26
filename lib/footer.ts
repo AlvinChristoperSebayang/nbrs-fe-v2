@@ -78,8 +78,8 @@ const fallbackFooter: FooterContent = {
   navigation: [
     ["purpose", "About NBRS", "/about"],
     ["purpose", "Design Approach", "/design-approach"],
+    ["purpose", "Research", "/research"],
     ["purpose", "Awards", "/awards"],
-    ["purpose", "Research Envision", "/research"],
     ["purpose", "Sustainability", "/sustainability"],
     ["purpose", "Social Responsibility", "/social-responsibility"],
     ["purpose", "News", "/news"],

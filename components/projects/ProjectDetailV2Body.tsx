@@ -66,15 +66,15 @@ export function ProjectDetailV2Body({ blocks }: { blocks: ProjectV2Block[] }) {
           const text = (
             <div className="flex flex-col justify-center">
               {block.heading && (
-                <div className="relative">
+                <div className="relative pb-3 mb-2">
                   <h2 className="font-heading text-3xl uppercase leading-[1.1] lg:text-[32px]">
                     {block.heading}
                   </h2>
                   <div
-                    className={`hidden lg:block absolute bottom-0 h-[3px] bg-stone-300 z-20 pointer-events-none ${
+                    className={`hidden lg:block absolute bottom-0 h-[3px] bg-stone-300 z-10 pointer-events-none ${
                       block.imagePosition === "left"
-                        ? "left-[-120px] right-0"
-                        : "left-0 right-[-120px]"
+                        ? "left-[-40px] right-0"
+                        : "left-0 right-[-40px]"
                     }`}
                   />
                 </div>
