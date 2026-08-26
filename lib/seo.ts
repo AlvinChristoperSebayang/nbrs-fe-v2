@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 
-export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL || "https://nbrs-fe-v2.vercel.app"
-).replace(/\/$/, "");
+// export const SITE_URL = (
+//   process.env.NEXT_PUBLIC_SITE_URL || "https://nbrs-fe-v2.vercel.app"
+// ).replace(/\/$/, "");
+
+export const SITE_URL = "https://nbrs-fe-v2.vercel.app"
 
 export const ALLOW_INDEXING =
   process.env.NEXT_PUBLIC_ALLOW_INDEXING?.toLowerCase() === "true";
@@ -21,7 +23,6 @@ export const DEFAULT_OG_IMAGE = {
 type PageMetadataInput = {
   pathname: string;
   title?: string;
-  /** Final editor-controlled title from Craft. It must not receive the root title template. */
   cmsTitle?: string | null;
   description?: string | null;
   image?: unknown;
