@@ -382,7 +382,7 @@ export const getResearchDetail = cache(async (slug: string): Promise<ResearchDet
     featureImage: toImageSource(entry.artHdrPortraitImage?.[0]) ?? toImageSource(entry.thumbnail?.[0]),
     seoTitle: entry.seoPageTitle,
     seoDescription: entry.seoMetaDescription?.trim() || entry.artHdrSubheading?.trim() || null,
-    seoImage: entry.seoImage?.[0] ?? entry.artHdrHeroImage?.[0] ?? entry.thumbnail?.[0] ?? null,
+    seoImage: entry.seoImage?.[0] ?? entry.thumbnail?.[0] ?? entry.artHdrPortraitImage?.[0] ?? entry.artHdrHeroImage?.[0] ?? null,
     author: entry.researchAuthor?.trim() || null,
     reviewedBy: entry.researchReviewedByText?.trim() || null,
     sponsoredBy: entry.researchSponsoredByText?.trim() || null,
