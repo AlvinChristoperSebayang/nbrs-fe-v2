@@ -71,15 +71,9 @@ export function HeroSlider({ slides }: HeroSliderProps) {
                   : "text-[50px] lg:text-[132px] leading-none tracking-tight whitespace-nowrap"
               }`}
             >
-              <span
-                className={
-                  isLastSlide
-                    ? "inline-block whitespace-nowrap relative"
-                    : "inline-block border-b-4 sm:border-b-[6px] lg:border-b-10 border-white pb-1 sm:pb-2 lg:pb-3 leading-none"
-                }
-              >
-                {activeSlide.title}
-                {isLastSlide && (
+              {isLastSlide ? (
+                <span className="inline-block whitespace-nowrap relative">
+                  {activeSlide.title}
                   <span className="inline-block shrink-0 w-[0.22em] h-[0.22em] rounded-full bg-[#A0A0A0] ml-2 lg:ml-3 align-top mt-[0.06em]" />
                 </span>
               ) : (
