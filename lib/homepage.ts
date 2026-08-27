@@ -169,8 +169,8 @@ const HOMEPAGE_QUERY = /* GraphQL */ `
             linkText
             linkUrl
             image {
-              backgroundMobile: url @transform(format: "webp", quality: 80, immediately: true)
-              backgroundTablet: url @transform(format: "webp", quality: 82, immediately: true)
+              backgroundMobile: url @transform(width: 600, height: 800, mode: "crop", format: "webp", quality: 80, immediately: true)
+              backgroundTablet: url @transform(width: 1440, height: 1000, mode: "crop", format: "webp", quality: 82, immediately: true)
               backgroundDesktop: url @transform(format: "webp", quality: 85, immediately: true)
             }
             foregroundImage {
