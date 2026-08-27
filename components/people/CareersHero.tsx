@@ -150,7 +150,7 @@ export function CareersHero({
             data-aos="fade-up"
             className="lg:col-span-5 xl:col-span-4 flex flex-col items-start gap-4 lg:gap-5 xl:gap-6 pt-24 pb-4 lg:pt-0 lg:pb-0"
           >
-            <h1 className="font-heading whitespace-pre-line text-4xl sm:text-5xl lg:text-[42px] xl:text-[58px] 2xl:text-[70px] font-bold uppercase tracking-wide leading-none text-white">
+            <h1 className="font-heading whitespace-pre-line text-4xl sm:text-5xl lg:text-[58px] 2xl:text-[70px] font-bold uppercase tracking-wide leading-none text-white">
               {renderCareersTitle(title)}
             </h1>
 

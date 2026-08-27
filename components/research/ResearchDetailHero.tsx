@@ -109,7 +109,7 @@ export function ResearchDetailHero({
 
   return (
     <section
-      className="relative flex h-[610px] w-full items-center overflow-hidden transition-colors duration-500 lg:h-[85vh]"
+      className="relative flex h-[610px] w-full items-center overflow-hidden transition-colors duration-500 lg:h-[85vh] lg:min-h-[85vh] xl:min-h-[90vh] xl:h-[910px]"
       style={{ backgroundColor: activeBgColor }}
     >
       <div className="pointer-events-none absolute inset-0">

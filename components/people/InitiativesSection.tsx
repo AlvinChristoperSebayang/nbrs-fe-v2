@@ -104,8 +104,8 @@ export function InitiativesSection({
                   <div
                     className={`hidden lg:block absolute bottom-0 h-[2px] bg-stone-300 z-10 pointer-events-none ${
                       item.reverse
-                        ? "left-[-48px] xl:left-[-64px] right-0"
-                        : "left-0 right-[-48px] xl:right-[-64px]"
+                        ? "left-[-48px] lg:left-[-63px] xl:left-[-64px] right-0"
+                        : "left-0 right-[-48px] lg:right-[-63px] xl:right-[-64px]"
                     }`}
                   />
                 </div>

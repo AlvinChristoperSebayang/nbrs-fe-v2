@@ -64,7 +64,7 @@ export function QuoteSection({
             </span>
 
             {/* Quote Text - Exact Typography from Figma (Roboto, 400, Italic, 24px, 100% line-height, 0% letter-spacing) */}
-            <p className="font-sans text-[20px] sm:text-[24px] lg:text-[32px] font-normal italic leading-[1.25] tracking-normal text-black my-3">
+            <p className="font-sans text-[20px] sm:text-[24px] lg:text-[28px] xl:text-[32px] font-normal italic leading-[1.25] tracking-normal text-black my-3">
               {quote}
             </p>
 

@@ -14,7 +14,7 @@ export function ProjectsHero({
   const headingText = title || "Projects";
 
   return (
-    <section className="relative w-full flex flex-col justify-between min-h-[580px] sm:min-h-[620px] lg:min-h-[85vh] xl:min-h-[90vh] overflow-hidden project-hero">
+    <section className="relative w-full flex flex-col justify-between min-h-[580px] sm:min-h-[620px] lg:min-h-[85vh] xl:min-h-[90vh] xl:h-[910px] overflow-hidden project-hero">
       <div className="absolute inset-0 overflow-hidden">
         <ResponsiveImage
           src={image || "/images/hero/hero3.png"}

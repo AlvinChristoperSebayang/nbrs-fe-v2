@@ -57,7 +57,7 @@ export function ArticleCard({
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Card Image (Subtle Scale Zoom on Hover) */}
-      <div className="relative aspect-[370/300] w-full overflow-hidden bg-zinc-100 min-h-[180px] sm:min-h-[220px] lg:min-h-[280px]">
+      <div className="relative aspect-[370/300] w-full overflow-hidden bg-zinc-100 min-h-[180px] sm:min-h-[220px] xl:min-h-[300px]">
         <ResponsiveImage
           src={item.image}
           alt={item.title}
@@ -68,7 +68,7 @@ export function ArticleCard({
 
       {/* Card Info Box */}
       <div
-        className="flex min-h-[140px] sm:min-h-[160px] lg:min-h-[200px] flex-col justify-between p-4 sm:p-5 lg:p-6 lg:py-[22px] transition-colors duration-500 ease-out h-full flex-1"
+        className="flex min-h-[140px] sm:min-h-[160px] xl:min-h-[200px] flex-col justify-between p-4 sm:p-5 lg:p-6 lg:py-[22px] transition-colors duration-500 ease-out h-full flex-1"
         style={{
           backgroundColor: isHovered ? hoverColor : "#000000",
           color: isHovered ? "#000000" : "#ffffff",
