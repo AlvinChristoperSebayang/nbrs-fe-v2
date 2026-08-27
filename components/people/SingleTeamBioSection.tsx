@@ -7,8 +7,9 @@ export type SingleTeamBioProps = {
 };
 
 export function SingleTeamBioSection({ name, bioHtml, quote }: SingleTeamBioProps) {
-  const nameParts = name.split(" ");
-  const firstName = nameParts[0] || name;
+  const cleanName = name.split("|")[0].trim();
+  const nameParts = cleanName.split(" ");
+  const firstName = nameParts[0] || cleanName;
   const lastName = nameParts.slice(1).join(" ") || "";
 
   return (
@@ -16,7 +17,7 @@ export function SingleTeamBioSection({ name, bioHtml, quote }: SingleTeamBioProp
       <Container>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           {/* Left Column: Light Gray Watermark Name & Divider */}
-          <div data-aos="fade-up" className="lg:col-span-5 lg:sticky lg:top-28 hidden md:block lg:pr-6">
+          <div data-aos="fade-up" className="lg:col-span-5 hidden md:block lg:pr-6">
             <h2 className="font-heading text-4xl sm:text-5xl lg:text-[60px] font-bold uppercase text-zinc-200/90 leading-none tracking-wide">
               {lastName ? (
                 <span className="inline-flex flex-col items-start">

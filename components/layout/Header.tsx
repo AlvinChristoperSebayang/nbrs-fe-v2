@@ -24,12 +24,11 @@ export const NAV_STRUCTURE: NavItem[] = [
     href: "/about",
     subItems: [
       { label: "About NBRS", href: "/about" },
+      { label: "Design Approach", href: "/design-approach" },
+      { label: "Research", href: "/research" },
+      { label: "Awards", href: "/awards" },
       { label: "Sustainability", href: "/sustainability" },
       { label: "Social Responsibility", href: "/social-responsibility" },
-      // { label: "RAP", href: "/rap" },
-      { label: "Awards", href: "/awards" },
-      { label: "Insights", href: "/research" },
-      { label: "Design Approach", href: "/design-approach" },
     ],
   },
   {
@@ -96,6 +95,11 @@ export function Header() {
     pathname.replace(/\/$/, "") !== "/research"
   );
 
+  const isContactPage = Boolean(
+    pathname &&
+    (pathname === "/contact" || pathname.startsWith("/contact/"))
+  );
+
   useEffect(() => {
     let ticking = false;
 
@@ -137,7 +141,7 @@ export function Header() {
   }, [open]);
 
   const isScrolledHeader = scrolled && !open;
-  const useDarkElements = (scrolled || isResearchDetail) && !open;
+  const useDarkElements = (scrolled || isResearchDetail || isContactPage) && !open;
 
   const currentActiveItem = NAV_STRUCTURE.find(
     (item) => item.id === activeCategory

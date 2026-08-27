@@ -27,9 +27,9 @@ export default async function PrivacyPolicyPage() {
       <section className="bg-white py-16 lg:py-24">
         <Container>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-20 items-start">
-            {/* Left Sticky Sidebar (Desktop) */}
-            <div data-aos="fade-up" className="hidden lg:block lg:col-span-4 lg:sticky lg:top-28">
-              <h2 className="font-heading text-3xl lg:text-[40px] uppercase font-bold leading-none text-black border-b-4 border-black pb-4">
+            {/* Left Sidebar (Desktop) */}
+            <div data-aos="fade-up" className="hidden lg:block lg:col-span-4">
+              <h2 className="font-heading text-3xl lg:text-[40px] uppercase font-bold leading-none text-black inline-block w-fit border-b-4 border-black pb-3">
                 {page.title}
               </h2>
               <p className="font-sans text-sm text-zinc-500 mt-4">

@@ -30,6 +30,47 @@ export async function generateMetadata({
   });
 }
 
+function renderNewsHeading(title: string) {
+  let lines: string[];
+  if (title.includes("\n")) {
+    lines = title.split("\n").map((l) => l.trim()).filter(Boolean);
+  } else {
+    const words = title.trim().split(/\s+/);
+    if (words.length >= 4) {
+      const mid = Math.ceil(words.length / 2);
+      lines = [words.slice(0, mid).join(" "), words.slice(mid).join(" ")];
+    } else if (words.length >= 2) {
+      lines = [words.slice(0, -1).join(" "), words[words.length - 1]];
+    } else {
+      lines = [title];
+    }
+  }
+
+  if (lines.length <= 1) {
+    return (
+      <span className="inline-block w-fit border-b-[4px] sm:border-b-[5px] lg:border-b-[6px] border-black pb-1 sm:pb-2 leading-[1.05]">
+        {lines[0]}
+      </span>
+    );
+  }
+
+  const firstLines = lines.slice(0, -1);
+  const lastLine = lines[lines.length - 1];
+
+  return (
+    <span className="flex flex-col items-start w-fit">
+      {firstLines.map((line, idx) => (
+        <span key={idx} className="block leading-[1.05]">
+          {line}
+        </span>
+      ))}
+      <span className="inline-block w-fit border-b-[4px] sm:border-b-[5px] lg:border-b-[6px] border-black pb-1 sm:pb-2 leading-[1.05] mt-1">
+        {lastLine}
+      </span>
+    </span>
+  );
+}
+
 export default async function NewsDetailPage({
   params,
 }: {
@@ -78,8 +119,8 @@ export default async function NewsDetailPage({
         <Container>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-20 items-start">
             <div data-aos="fade-up" className="hidden lg:block lg:col-span-5 lg:sticky lg:top-28">
-              <h2 className="font-heading text-3xl sm:text-4xl lg:text-[40px] uppercase font-bold leading-tight text-black border-b-4 border-black pb-4">
-                {article.title}
+              <h2 className="font-heading text-3xl sm:text-4xl lg:text-[40px] uppercase font-bold leading-tight text-black flex flex-col items-start">
+                {renderNewsHeading(article.title)}
               </h2>
             </div>
 

@@ -17,6 +17,9 @@ export function QuoteSection({
   quoteIconColor?: string;
   boxBgClass?: string;
 }) {
+  const cleanAuthor = author ? author.split("|")[0].trim() : "";
+  const cleanRole = role ? role.split("|")[0].trim() : "";
+
   return (
     <section className="bg-white py-0 lg:py-20 text-black overflow-hidden">
       <Container className="max-lg:px-0 max-lg:max-w-none">
@@ -25,8 +28,8 @@ export function QuoteSection({
           <div data-aos="fade-up" suppressHydrationWarning className="w-full overflow-hidden lg:w-[65%] xl:w-[68%]">
             <ResponsiveImage
               src={image}
-              alt={author}
-              title={author}
+              alt={cleanAuthor || "Quote author"}
+              title={cleanAuthor || "Quote author"}
               className="h-[350px] w-full object-cover lg:h-[495px] max-lg:rounded-none rounded-sm"
             />
           </div>
@@ -63,8 +66,8 @@ export function QuoteSection({
 
             {/* Author */}
             <p className="font-sans text-base text-black lg:text-xl mt-2 font-normal">
-              - {author}
-              {role ? `, ${role}` : ""}
+              - {cleanAuthor}
+              {cleanRole ? `, ${cleanRole}` : ""}
             </p>
 
             {/* Bottom Right Quote Icon */}

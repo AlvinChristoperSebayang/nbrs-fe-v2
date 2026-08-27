@@ -74,40 +74,43 @@ function renderBodyTitle(title: React.ReactNode) {
     return title;
   }
 
-  const lines = title.includes("\n")
-    ? title.split("\n").map((l) => l.trim()).filter(Boolean)
-    : title.trim().split(/\s+/).length >= 3
-    ? [title.trim().split(/\s+/).slice(0, -2).join(" "), title.trim().split(/\s+/).slice(-2).join(" ")]
-    : [title.trim()];
+  const words = title.trim().split(/\s+/);
+  let lines: string[];
+
+  if (title.includes("\n")) {
+    lines = title.split("\n").map((l) => l.trim()).filter(Boolean);
+  } else if (words.length === 3) {
+    lines = words;
+  } else if (words.length >= 4) {
+    const mid = Math.ceil(words.length / 2);
+    lines = [words.slice(0, mid).join(" "), words.slice(mid).join(" ")];
+  } else if (words.length === 2) {
+    lines = words;
+  } else {
+    lines = [title.trim()];
+  }
 
   if (lines.length <= 1) {
     return (
-      <span className="inline-block border-b-4 border-zinc-200/50 pb-2 leading-none">
+      <span className="inline-block w-fit border-b-4 border-zinc-200/90 pb-2 leading-none">
         {lines[0]}
       </span>
     );
   }
 
+  const firstLines = lines.slice(0, -1);
+  const lastLine = lines[lines.length - 1];
+
   return (
-    <span className="inline-flex flex-col items-start">
-      {lines.map((line, idx) => {
-        const isLast = idx === lines.length - 1;
-        if (isLast) {
-          return (
-            <span
-              key={idx}
-              className="inline-block border-b-4 border-zinc-200/50 pb-2 leading-none mt-1"
-            >
-              {line}
-            </span>
-          );
-        }
-        return (
-          <span key={idx} className="block leading-[1.05]">
-            {line}
-          </span>
-        );
-      })}
+    <span className="inline-flex flex-col items-start w-fit">
+      {firstLines.map((line, idx) => (
+        <span key={idx} className="block leading-[1.05]">
+          {line}
+        </span>
+      ))}
+      <span className="inline-block w-fit border-b-4 border-zinc-200/90 pb-2 leading-none mt-1">
+        {lastLine}
+      </span>
     </span>
   );
 }
@@ -128,10 +131,10 @@ export function CareersAccordionSection({
   return (
     <section className="bg-white pb-16 lg:pb-24 text-black">
       <Container>
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-start">
           {/* Left Column: Light Gray Watermark Title */}
-          <div data-aos="fade-up" className="lg:col-span-4 lg:sticky lg:top-28">
-            <h2 className="hidden md:block font-heading whitespace-pre-line text-4xl sm:text-5xl lg:text-[64px] font-bold uppercase text-zinc-200/90 leading-none tracking-wide">
+          <div data-aos="fade-up" className="md:col-span-4 md:pr-4">
+            <h2 className="hidden md:block font-heading whitespace-pre-line text-3xl sm:text-4xl md:text-[38px] lg:text-[42px] xl:text-[52px] 2xl:text-[62px] font-bold uppercase text-zinc-200/90 leading-[1.05] tracking-tight">
               {renderBodyTitle(title)}
             </h2>
           </div>
@@ -140,7 +143,7 @@ export function CareersAccordionSection({
           <div
             data-aos="fade-up"
             data-aos-delay="150"
-            className="lg:col-span-8 flex flex-col gap-8 sm:gap-10"
+            className="md:col-span-8 flex flex-col gap-8 sm:gap-10"
           >
             {/* Custom Intro Paragraphs */}
             {introParagraphs && (

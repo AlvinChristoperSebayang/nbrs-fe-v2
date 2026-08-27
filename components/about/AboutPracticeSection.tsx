@@ -30,9 +30,8 @@ function renderPracticeHeading(heading: string) {
 
   if (lines.length <= 1) {
     return (
-      <span className="inline-block relative">
+      <span className="inline-block w-fit border-b-[4px] sm:border-b-[5px] lg:border-b-[6px] border-black pb-1 sm:pb-2 leading-[1.05]">
         {lines[0]}
-        <span className="block mt-3 h-1 w-full bg-black lg:hidden" />
       </span>
     );
   }
@@ -41,18 +40,16 @@ function renderPracticeHeading(heading: string) {
   const lastLine = lines[lines.length - 1];
 
   return (
-    <>
+    <span className="flex flex-col items-start w-fit">
       {firstLines.map((line, idx) => (
-        <span key={idx} className="block">
+        <span key={idx} className="block leading-[1.05]">
           {line}
         </span>
       ))}
-      <span className="inline-block relative">
+      <span className="inline-block w-fit border-b-[4px] sm:border-b-[5px] lg:border-b-[6px] border-black pb-1 sm:pb-2 leading-[1.05] mt-1">
         {lastLine}
-        {/* On mobile: underline matches the width of the bottom line */}
-        <span className="block lg:hidden mt-3 h-1 w-full bg-black" />
       </span>
-    </>
+    </span>
   );
 }
 
@@ -78,11 +75,9 @@ export function AboutPracticeSection({
             className="flex flex-col justify-center lg:col-span-2"
           >
             <div className="flex flex-col w-fit max-w-[569px]">
-              <h2 className="font-heading text-[#000000] text-[28px] uppercase leading-[1.05] tracking-tight sm:text-4xl lg:text-[60px]">
+              <h2 className="font-heading text-[#000000] text-[28px] sm:text-4xl md:text-[44px] lg:text-[52px] xl:text-[60px] uppercase leading-[1.05] tracking-tight flex flex-col items-start">
                 {renderPracticeHeading(heading)}
               </h2>
-              {/* On desktop: underline spans the full width of the heading container */}
-              <div className="hidden lg:block mt-4 h-1.5 w-full bg-black" />
               <p className="mt-6 text-sm text-black sm:text-base">
                 {description}
               </p>

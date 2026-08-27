@@ -74,12 +74,12 @@ export function ProjectFeaturesAlternatingSection({
                     {item.title}
                   </h3>
 
-                  {/* Desktop Divider Line penetrating into adjacent image */}
+                  {/* Desktop Divider Line ending exactly at the edge of the adjacent image */}
                   <div
-                    className={`hidden lg:block absolute bottom-0 h-[3px] bg-stone-300 z-20 pointer-events-none ${
+                    className={`hidden lg:block absolute bottom-0 h-[3px] bg-stone-300 z-10 pointer-events-none ${
                       item.reverse
-                        ? "left-[-140px] right-0"
-                        : "left-0 right-[-140px]"
+                        ? "left-[-64px] right-0"
+                        : "left-0 right-[-64px]"
                     }`}
                   />
                 </div>

@@ -11,12 +11,17 @@ export type CareersHeroProps = {
   imageSrc?: ImageSource;
 };
 
+function cleanTitleString(title: string): string {
+  return title.split("|")[0].trim();
+}
+
 function getDesktopTitleLines(title: string): string[] {
-  if (title.includes("\n")) {
-    return title.split("\n").map((l) => l.trim()).filter(Boolean);
+  const cleaned = cleanTitleString(title);
+  if (cleaned.includes("\n")) {
+    return cleaned.split("\n").map((l) => l.trim()).filter(Boolean);
   }
 
-  const words = title.trim().split(/\s+/);
+  const words = cleaned.split(/\s+/);
   if (words.length <= 2) {
     return words;
   }
@@ -29,15 +34,16 @@ function getDesktopTitleLines(title: string): string[] {
 }
 
 function getMobileTitleLines(title: string): string[] {
-  if (title.includes("\n")) {
-    const rawLines = title.split("\n").map((l) => l.trim()).filter(Boolean);
+  const cleaned = cleanTitleString(title);
+  if (cleaned.includes("\n")) {
+    const rawLines = cleaned.split("\n").map((l) => l.trim()).filter(Boolean);
     if (rawLines.length <= 3) return rawLines;
     return [rawLines.slice(0, 2).join(" "), ...rawLines.slice(2)];
   }
 
-  const words = title.trim().split(/\s+/);
+  const words = cleaned.split(/\s+/);
   if (words.length <= 3) {
-    return getDesktopTitleLines(title);
+    return getDesktopTitleLines(cleaned);
   }
 
   return [
