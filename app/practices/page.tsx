@@ -26,6 +26,8 @@ function formatPracticesIntroHeading(heading?: string | null): string {
   return heading;
 }
 
+export const revalidate = 60;
+
 export async function generateMetadata() {
   const page = await getPracticesPageContent();
   return createPageMetadata({
@@ -41,24 +43,22 @@ export default async function PracticesPage() {
   const content = await getPracticesPageContent();
 
   return (
-    <article className="bg-white text-black min-h-screen">
-      {/* 1. HERO SECTION */}
+    <article className="min-h-screen bg-white text-black">
       <Hero
         image={content.hero.image}
         title={content.hero.title}
         description={content.hero.description}
       />
 
-      {/* 2. ABOUT SECTION */}
-        <AboutSection
-          image_url={content.intro.image}
-          background_color="#FDD4B6"
-          heading={formatPracticesIntroHeading(content.intro.heading)}
-          description={content.intro.description}
-          description_class_name="max-w-[363px]"
-        /> 
-        <PracticesHoverSection items={content.practices} />
-      
+      <AboutSection
+        image_url={content.intro.image}
+        background_color="#FDD4B6"
+        heading={formatPracticesIntroHeading(content.intro.heading)}
+        description={content.intro.description}
+        description_class_name="max-w-[363px]"
+      />
+
+      <PracticesHoverSection items={content.practices} />
     </article>
   );
 }

@@ -4,6 +4,8 @@ import { SectorsSection } from "@/components/home/SectorsSection";
 import { Hero } from "@/components/ui/Hero";
 import { getSectorsPageContent } from "@/lib/sectors-page";
 
+export const revalidate = 60;
+
 export async function generateMetadata() {
   const page = await getSectorsPageContent();
   return createPageMetadata({

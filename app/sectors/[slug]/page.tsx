@@ -12,6 +12,8 @@ import { getSectorDetailContent } from "@/lib/sector-detail";
 import { SECTORS_DATA } from "@/lib/sectors-data";
 import { createPageMetadata } from "@/lib/seo";
 
+export const revalidate = 60;
+
 export function generateStaticParams() {
   return SECTORS_DATA.map((sector) => ({ slug: sector.slug }));
 }

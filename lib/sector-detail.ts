@@ -20,13 +20,12 @@ export type SectorDetailContent = {
 };
 
 const crop = (width: number, height: number, quality = 80) => `url @transform(width: ${width}, height: ${height}, mode: "crop", format: "webp", quality: ${quality}, immediately: true)`;
-const heroImage = `mobile: ${crop(600, 800)} tablet: ${crop(1440, 1000, 82)} desktop: ${crop(2400, 1200, 85)}`;
+const heroFit = (width: number, quality = 85) => `url @transform(width: ${width}, mode: "fit", format: "webp", quality: ${quality}, immediately: true)`;
+const heroImage = `mobile: ${heroFit(768, 80)} tablet: ${heroFit(1440, 82)} desktop: ${heroFit(2400, 85)}`;
 const landscapeImage = `mobile: ${crop(600, 480)} tablet: ${crop(1200, 760, 82)} desktop: ${crop(1800, 1100, 85)}`;
 const cardImage = `mobile: ${crop(600, 480)} tablet: ${crop(900, 720, 82)} desktop: ${crop(1200, 960, 85)}`;
-// The quote artwork is landscape (1570 × 990). Keep that aspect ratio so the
-// image is not cropped once by Craft and again by `object-cover` in the UI.
-const quoteImage = `mobile: ${crop(600, 378)} tablet: ${crop(900, 567, 82)} desktop: ${crop(1200, 756, 85)}`;
-const ctaImage = `mobile: ${crop(600, 900)} tablet: ${crop(1440, 900, 82)} desktop: ${crop(2400, 1000, 85)}`;
+const quoteImage = `mobile: url @transform(width: 768, mode: "fit", format: "webp", quality: 80, immediately: true) tablet: url @transform(width: 1200, mode: "fit", format: "webp", quality: 82, immediately: true) desktop: url @transform(width: 1800, mode: "fit", format: "webp", quality: 85, immediately: true)`;
+const ctaImage = `mobile: url @transform(width: 768, height: 900, position: "top-left", mode: "crop", format: "webp", quality: 80, immediately: true) tablet: ${heroFit(1440, 82)} desktop: ${heroFit(2400, 85)}`;
 
 const QUERY = /* GraphQL */ `
 query SectorDetail($slug: [String]!) {
@@ -35,7 +34,7 @@ query SectorDetail($slug: [String]!) {
       id title slug accentColor seoPageTitle seoMetaDescription seoImage { url width height title } catHdrHeading catHdrSubheading sectorServicesIntro sectorHeritageAdvisoryServices sectorHeritageConservationServices
       catHdrImage { url width height title ${heroImage} }
       catOvrHeading catOvrText
-      catOverImageText { ... on block3_Entry { image { url width height title } leftColumnHeading leftColumnText rightColumnHeading rightColumnText } }
+      catOverImageText { ... on block3_Entry { image { url width height title ${cardImage} } leftColumnHeading leftColumnText rightColumnHeading rightColumnText } }
       sectorFeatures { ... on sectorFeature_Entry { sectorFeatureHeading sectorFeatureText sectorFeatureImage { url width height title } } }
       catFeaturedProjects { ... on projects_Entry { id title slug uri proHdrHeading thumbnail { ${cardImage} } } }
       catSelectedProjects { ... on projects_Entry { id title slug uri proHdrHeading catStatus { ... on status_Category { title } } catDiscipline { ... on discipline_Category { title } } } }

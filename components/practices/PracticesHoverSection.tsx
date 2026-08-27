@@ -89,7 +89,7 @@ export function PracticesHoverSection({
                 title={item.title}
                 aria-label={item.title}
                 onMouseEnter={() => setHoveredId(item.id)}
-                className={`group relative flex flex-col justify-end overflow-hidden rounded-[5px] w-full lg:flex-1 lg:min-w-0 aspect-[16/10] sm:aspect-[21/9] lg:aspect-[370/320] xl:aspect-[370/300] min-h-[260px] lg:min-h-[340px] bg-zinc-900 shadow-md transition-all duration-500 ${
+                className={`group relative flex flex-col justify-end overflow-hidden rounded-[5px] w-full lg:flex-1 lg:min-w-0 aspect-[16/10] sm:aspect-[21/9] lg:aspect-[370/300] min-h-[240px] lg:min-h-0 bg-zinc-900 shadow-md transition-all duration-500 ${
                   isHovered
                     ? "lg:scale-[1.02] shadow-xl z-30"
                     : isOtherHovered
@@ -138,7 +138,7 @@ export function PracticesHoverSection({
                         strokeWidth="2.5"
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        className="w-8 h-8 sm:w-8 sm:h-8 text-white transition-transform duration-300 group-hover:translate-x-2"
+                        className="w-7 h-7 sm:w-8 sm:h-8 lg:w-8 lg:h-8 text-white transition-transform duration-300 group-hover:translate-x-2"
                       >
                         <path d="M5 12h14" />
                         <path d="m12 5 7 7-7 7" />

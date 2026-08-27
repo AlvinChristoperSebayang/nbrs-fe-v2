@@ -53,7 +53,7 @@ body {
 
   @media (min-width: 1024px) {
     .container {
-      padding-inline: 8.4375rem; /* 135px */
+      padding-inline: 55px;
     }
   }
   @media(min-width: 1280px) {

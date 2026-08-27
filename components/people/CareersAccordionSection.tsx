@@ -129,12 +129,12 @@ export function CareersAccordionSection({
   };
 
   return (
-    <section className="bg-white pb-16 lg:pb-24 text-black">
+    <section className="bg-white sm:pt-10 lg:pt-16 pb-16 lg:pb-24 text-black">
       <Container>
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-start">
           {/* Left Column: Light Gray Watermark Title */}
           <div data-aos="fade-up" className="md:col-span-4 md:pr-4">
-            <h2 className="hidden md:block font-heading whitespace-pre-line text-3xl sm:text-4xl md:text-[38px] lg:text-[42px] xl:text-[52px] 2xl:text-[62px] font-bold uppercase text-zinc-200/90 leading-[1.05] tracking-tight">
+            <h2 className="hidden md:block font-heading whitespace-pre-line text-3xl sm:text-4xl md:text-[48px] lg:text-[70px] font-bold uppercase text-zinc-200/90 leading-[1.05] tracking-tight">
               {renderBodyTitle(title)}
             </h2>
           </div>
@@ -147,13 +147,13 @@ export function CareersAccordionSection({
           >
             {/* Custom Intro Paragraphs */}
             {introParagraphs && (
-              <div className="font-sans text-sm sm:text-base text-black leading-relaxed flex flex-col gap-3 max-w-3xl pt-8 lg:pt-0">
+              <div className="font-sans text-sm sm:text-base text-black leading-relaxed flex flex-col gap-3 max-w-3xl sm:pt-0 lg:pt-0">
                 {introParagraphs}
               </div>
             )}
 
             {introText && (
-              <div className="font-sans text-sm sm:text-base text-black leading-relaxed flex flex-col gap-3 max-w-3xl pt-8 lg:pt-0">
+              <div className="font-sans text-sm sm:text-base text-black leading-relaxed flex flex-col gap-3 max-w-3xl sm:pt-0 lg:pt-0">
                 {introText.split(/\n\s*\n/).filter(Boolean).map((paragraph, index) => (
                   <p key={index}>{renderEmailLinks(paragraph)}</p>
                 ))}

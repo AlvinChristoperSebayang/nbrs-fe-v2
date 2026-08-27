@@ -83,7 +83,7 @@ export const PRACTICES_DATA: PracticeDetail[] = [
     heroImage: "/images/hero/hero4.png",
     introImage: "/images/about-us-about.png",
     introQuote:
-      "Landscape architecture bridges culture, ecology, and built forms to create living outdoor realms that respect country and restore natural ecosystems.",
+      "We shape landscapes that foster wellbeing, social connection,\nand ecological performance, from campuses and parks to\nwellness precincts. Sustainability and climate-responsive design\nunderpin every project.",
     tableProjects: [
       {
         id: "tp-6",

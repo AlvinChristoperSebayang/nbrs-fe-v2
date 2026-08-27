@@ -7,12 +7,16 @@ export function SectorQuoteSection({
   author,
   role,
   quoteIconColor = "#FFDAC6",
+  imageClassName,
+  imageContainerClassName,
 }: {
   image: ImageSource;
   quote: string;
   author: string;
   role?: string;
   quoteIconColor?: string;
+  imageClassName?: string;
+  imageContainerClassName?: string;
 }) {
   return (
     <QuoteSection
@@ -21,6 +25,8 @@ export function SectorQuoteSection({
       author={author}
       role={role}
       quoteIconColor={quoteIconColor}
+      imageClassName={`object-top ${imageClassName ?? ""}`}
+      imageContainerClassName={imageContainerClassName}
     />
   );
 }

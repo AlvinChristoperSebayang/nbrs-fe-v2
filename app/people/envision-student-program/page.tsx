@@ -6,16 +6,24 @@ import { CareersAccordionSection } from "@/components/people/CareersAccordionSec
 import { CtaSection } from "@/components/cta/CtaSection";
 import { getEnvisionContent } from "@/lib/envision";
 
+export const revalidate = 60;
+
 export async function generateMetadata() {
   const page = await getEnvisionContent();
-  return createPageMetadata({ pathname: "/people/envision-student-program", title: page.hero?.title || "Envision Student Program", cmsTitle: page.cmsSeoTitle, description: page.seoDescription || page.hero?.description, image: page.seoImage ?? page.hero?.image });
+  return createPageMetadata({
+    pathname: "/people/envision-student-program",
+    title: page.hero?.title || "Envision Student Program",
+    cmsTitle: page.cmsSeoTitle,
+    description: page.seoDescription || page.hero?.description,
+    image: page.seoImage ?? page.hero?.image,
+  });
 }
 
 export default async function EnvisionStudentProgramPage() {
   const page = await getEnvisionContent();
 
   return (
-    <article className="bg-white text-black min-h-screen">
+    <article className="min-h-screen bg-white text-black">
       {page.hero && <CareersHero title={page.hero.title} description={page.hero.description} imageSrc={page.hero.image} />}
 
       {page.research.length > 0 && (

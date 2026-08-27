@@ -16,14 +16,12 @@ export default async function PrivacyPolicyPage() {
 
   return (
     <article className="bg-white text-black min-h-screen">
-      {/* 1. HERO SECTION */}
       <Hero
         image={page.hero}
         title={page.title}
         description={page.description}
       />
 
-      {/* 2. CONTENT SECTION */}
       <section className="bg-white py-16 lg:py-24">
         <Container>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-20 items-start">
@@ -48,7 +46,6 @@ export default async function PrivacyPolicyPage() {
         </Container>
       </section>
 
-      {/* 3. CTA SECTION */}
       <CtaSection content={page.cta} />
     </article>
   );

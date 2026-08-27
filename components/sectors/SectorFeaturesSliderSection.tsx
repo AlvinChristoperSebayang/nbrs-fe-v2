@@ -167,7 +167,7 @@ export function SectorFeaturesSliderSection({
             </div>
 
             {/* Grid Cards Container */}
-            <div className="grid grid-cols-3 items-stretch gap-10 lg:gap-20 py-32 px-4 relative z-10">
+            <div className="grid grid-cols-3 items-stretch gap-6 lg:gap-8 xl:gap-14 2xl:gap-20 py-16 lg:py-24 xl:py-32 px-4 relative z-10">
               {items.map((item, index) => {
                 const isActive = index === activeIndex;
                 const hasHref = Boolean(item.href);

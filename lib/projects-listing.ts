@@ -104,9 +104,9 @@ const PROJECTS_LISTING_QUERY = /* GraphQL */ `
         seoMetaDescription
         seoImage {
           url
-          mobile: url @transform(width: 600, height: 800, mode: "crop", format: "webp", quality: 80, immediately: true)
-          tablet: url @transform(width: 1440, height: 1000, mode: "crop", format: "webp", quality: 82, immediately: true)
-          desktop: url @transform(width: 2400, height: 1200, mode: "crop", format: "webp", quality: 85, immediately: true)
+          mobile: url @transform(width: 768, mode: "fit", format: "webp", quality: 80, immediately: true)
+          tablet: url @transform(width: 1440, mode: "fit", format: "webp", quality: 82, immediately: true)
+          desktop: url @transform(width: 2400, mode: "fit", format: "webp", quality: 85, immediately: true)
           width
           height
           title

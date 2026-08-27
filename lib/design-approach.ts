@@ -149,8 +149,10 @@ export const DESIGN_APPROACH_FALLBACK: DesignApproachContent = {
 
 const crop = (width: number, height: number, quality = 80) =>
   `url @transform(width: ${width}, height: ${height}, mode: "crop", format: "webp", quality: ${quality}, immediately: true)`;
+const heroFit = (width: number, quality = 85) =>
+  `url @transform(width: ${width}, mode: "fit", format: "webp", quality: ${quality}, immediately: true)`;
 const landscape = `mobile: ${crop(600, 450)} tablet: ${crop(900, 675)} desktop: ${crop(1200, 900)}`;
-const hero = `mobile: ${crop(600, 800)} tablet: ${crop(1440, 1000, 82)} desktop: ${crop(2400, 1200, 85)}`;
+const hero = `mobile: ${heroFit(768, 80)} tablet: ${heroFit(1440, 82)} desktop: ${heroFit(2400, 85)}`;
 const cta = `mobile: ${crop(600, 900)} tablet: ${crop(1440, 900, 82)} desktop: ${crop(2400, 1000, 85)}`;
 
 const QUERY = /* GraphQL */ `
@@ -193,9 +195,9 @@ const QUERY = /* GraphQL */ `
           }
         }
         thumbnailImage {
-          mobile: ${crop(600, 750)}
-          tablet: ${crop(900, 900)}
-          desktop: ${crop(1200, 900)}
+          mobile: url @transform(width: 768, mode: "fit", format: "webp", quality: 80, immediately: true)
+          tablet: url @transform(width: 1200, mode: "fit", format: "webp", quality: 82, immediately: true)
+          desktop: url @transform(width: 1800, mode: "fit", format: "webp", quality: 85, immediately: true)
         }
         quote
         citation

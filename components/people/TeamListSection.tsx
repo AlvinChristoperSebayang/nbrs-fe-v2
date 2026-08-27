@@ -99,14 +99,14 @@ export function TeamListSection({ members }: TeamListSectionProps) {
         </div>
 
         {/* Team Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 xl:gap-10">
           {filteredMembers.map((member, index) => (
-            <div key={member.id} data-aos="fade-up" data-aos-delay={(index % 3) * 60}>
+            <div key={member.id} data-aos="fade-up" data-aos-delay={(index % 3) * 60} className="flex flex-col">
               <Link
                 href={`/people/team/${member.id}`}
                 title={member.name}
                 aria-label={member.name}
-                className="group flex flex-col overflow-hidden bg-white cursor-pointer"
+                className="group flex flex-col flex-1 h-full overflow-hidden bg-white cursor-pointer"
               >
                 {/* Member Photo */}
                 <div className="relative aspect-[370/300] overflow-hidden bg-zinc-200">
@@ -120,34 +120,32 @@ export function TeamListSection({ members }: TeamListSectionProps) {
 
                 {/* Member Details Box */}
                 <div
-                  className="relative flex flex-col justify-between gap-4 p-6 sm:p-7 min-h-[200px] bg-[#DEE1F2] text-black transition-colors duration-500 ease-out group-hover:brightness-[0.96]"
+                  className="relative flex-1 flex flex-col justify-between gap-3 sm:gap-4 p-4 sm:p-5 lg:p-6 min-h-[160px] sm:min-h-[180px] lg:min-h-[200px] bg-[#DEE1F2] text-black transition-colors duration-500 ease-out group-hover:brightness-[0.96]"
                 >
-                  <div className="flex flex-col gap-2 pr-6">
-                    <h2 className="font-heading text-2xl sm:text-3xl font-bold leading-tight text-black">
+                  <div className="flex flex-col gap-1.5 pr-8">
+                    <h2 className="font-sans text-base sm:text-lg lg:text-xl font-bold leading-snug text-black">
                       {member.name}
                     </h2>
-                    <p className="font-sans text-sm sm:text-base font-bold text-black/90">
+                    <p className="font-sans text-xs sm:text-xs lg:text-sm font-semibold text-black leading-snug">
                       {member.role}
                     </p>
                     {member.registration && (
-                      <p className="font-sans text-xs sm:text-sm text-zinc-700 mt-1">
+                      <p className="font-sans text-[11px] sm:text-xs text-zinc-700 mt-1 leading-tight">
                         Registration Number: {member.registration}
                       </p>
                     )}
                   </div>
 
                   {/* Arrow Icon */}
-                  <div className="absolute bottom-6 right-6">
+                  <div className="absolute bottom-4 right-4 sm:bottom-5 sm:right-5 lg:bottom-6 lg:right-6">
                     <svg
-                      width="24"
-                      height="24"
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
                       strokeWidth="2.5"
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      className="transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-2 text-black"
+                      className="w-5 h-5 lg:w-6 lg:h-6 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-2 text-black"
                     >
                       <path d="M5 12h14M12 5l7 7-7 7" />
                     </svg>

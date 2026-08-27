@@ -4,23 +4,26 @@ import { CareersAccordionSection } from "@/components/people/CareersAccordionSec
 import { CtaSection } from "@/components/cta/CtaSection";
 import { getCareersContent } from "@/lib/careers";
 
+export const revalidate = 60;
+
 export async function generateMetadata() {
   const page = await getCareersContent();
-  return createPageMetadata({ pathname: "/people/careers", title: page.hero?.title || "Careers", cmsTitle: page.cmsSeoTitle, description: page.seoDescription || page.hero?.description, image: page.seoImage ?? page.hero?.image });
+  return createPageMetadata({
+    pathname: "/people/careers",
+    title: page.hero?.title || "Careers",
+    cmsTitle: page.cmsSeoTitle,
+    description: page.seoDescription || page.hero?.description,
+    image: page.seoImage ?? page.hero?.image,
+  });
 }
 
 export default async function CareersPage() {
   const page = await getCareersContent();
 
   return (
-    <article className="bg-white text-black min-h-screen">
-      {/* 1. CUSTOM CAREERS HERO */}
+    <article className="min-h-screen bg-white text-black">
       {page.hero && <CareersHero title={page.hero.title} description={page.hero.description} imageSrc={page.hero.image} />}
-
-      {/* 2. OVERVIEW & INTERACTIVE ACCORDIONS SECTION */}
       {page.accordion && <CareersAccordionSection {...page.accordion} />}
-
-      {/* 3. CAREERS CTA SECTION */}
       {page.cta && <CtaSection content={page.cta} />}
     </article>
   );

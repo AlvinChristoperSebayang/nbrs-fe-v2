@@ -70,26 +70,25 @@ export function HeroSlider({ slides }: HeroSliderProps) {
               className={`font-heading font-bold uppercase text-white ${
                 isLastSlide
                   ? "text-[130px] lg:text-[264px] leading-[0.85] tracking-tighter whitespace-nowrap"
-                  : "text-[50px] lg:text-[132px] leading-none tracking-tight"
+                  : "text-[50px] lg:text-[132px] leading-none tracking-tight whitespace-nowrap"
               }`}
             >
-              <span
-                className={
-                  isLastSlide
-                    ? "inline-block whitespace-nowrap relative"
-                    : "inline-block border-b-[4px] sm:border-b-[6px] lg:border-b-[10px] border-white pb-1 sm:pb-2 lg:pb-3 leading-none"
-                }
-              >
-                {activeSlide.title}
-                {isLastSlide && (
+              {isLastSlide ? (
+                <span className="inline-block whitespace-nowrap relative">
+                  {activeSlide.title}
                   <span className="inline-block shrink-0 w-[0.22em] h-[0.22em] rounded-full bg-[#A0A0A0] ml-2 lg:ml-3 align-top mt-[0.06em]" />
-                )}
-              </span>
+                </span>
+              ) : (
+                <span className="inline-flex flex-col items-start leading-none">
+                  <span>{activeSlide.title}</span>
+                  <span className="block w-full lg:w-[354px] border-b-[4px] sm:border-b-[6px] lg:border-b-[10px] border-white mt-1 sm:mt-2 lg:mt-3" />
+                </span>
+              )}
             </h1>
             {!isLastSlide && activeSlide.headline && (
               <p
                 style={{ animation: "hero-fade-up 0.7s ease-out 0.2s both" }}
-                className="font-gothic font-trade-gothic text-lg uppercase tracking-[0%] text-white/90 sm:text-[40px] mt-2"
+                className="font-gothic font-trade-gothic text-lg uppercase tracking-[0%] text-white/90 sm:text-[40px] mt-2 whitespace-nowrap"
               >
                 {activeSlide.headline}
               </p>

@@ -6,16 +6,24 @@ import { FastFactsSection } from "@/components/people/FastFactsSection";
 import { getDesigningForPeoplePage } from "@/lib/designing-for-people";
 import { CtaSection } from "@/components/cta/CtaSection";
 
+export const revalidate = 60;
+
 export async function generateMetadata() {
   const page = await getDesigningForPeoplePage();
-  return createPageMetadata({ pathname: "/people", title: page.hero.title, cmsTitle: page.cmsSeoTitle, description: page.seoDescription, image: page.seoImage ?? page.hero.image });
+  return createPageMetadata({
+    pathname: "/people",
+    title: page.hero.title,
+    cmsTitle: page.cmsSeoTitle,
+    description: page.seoDescription,
+    image: page.seoImage ?? page.hero.image,
+  });
 }
 
 export default async function PeoplePage() {
   const page = await getDesigningForPeoplePage();
 
   return (
-    <article className="bg-white text-black min-h-screen">
+    <article className="min-h-screen bg-white text-black">
       <Hero
         image={page.hero.image}
         title={page.hero.title}
