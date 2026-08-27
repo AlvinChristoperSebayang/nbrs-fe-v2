@@ -1,5 +1,5 @@
 import { craftFetch } from "@/lib/craft";
-import { toImageSource } from "@/lib/media";
+import { toImageSource, toSeoImage, type SeoImage } from "@/lib/media";
 import type { ImageSource } from "@/lib/types";
 
 type CraftAsset = {
@@ -25,10 +25,8 @@ type CraftCtaSection = {
 type RapQueryData = {
   entries?: Array<{
     title?: string | null;
-    slug?: string | null;
     postDate?: string | null;
-    artHdrHeading?: string | null;
-    artHdrHeroImage?: CraftAsset[] | null;
+    heroImage?: CraftAsset[] | null;
     artIssuuUrl?: string | null;
     rapAuthor?: string | null;
     rapEndorsedBy?: string | null;
@@ -36,6 +34,9 @@ type RapQueryData = {
     rapDownloadBackground?: CraftAsset[] | null;
     ctaSection?: CraftCtaSection | null;
     artContent?: CraftBlock[] | null;
+    seoPageTitle?: string | null;
+    seoMetaDescription?: string | null;
+    seoImage?: CraftAsset[] | null;
   }>;
 };
 
@@ -47,9 +48,7 @@ export type RapPageData = {
   readTime: string;
   hero: ImageSource;
   artwork: ImageSource;
-  downloadBackground: ImageSource;
   bodyHtml: string;
-  issuuUrl: string;
   cta: {
     heading: string;
     description: string;
@@ -57,9 +56,11 @@ export type RapPageData = {
     buttonUrl: string;
     background: ImageSource;
   };
+  cmsSeoTitle: string | null;
+  seoDescription: string;
+  seoImage: SeoImage | null;
 };
 
-const RAP_SLUG = "reflect-reconciliation-action-plan";
 const FALLBACK_BODY = [
   "Place and Country are key design principles at NBRS. We support the cultural heritage of the land on which we design. We support Aboriginal and Torres Strait Islander peoples with initiatives that pay respect to Aboriginal culture. The newest initiative which has been endorsed by Reconciliation Australia is our own Reflect Reconciliation Action Plan (RAP).",
   "This plan is being spearheaded by the NBRS RAP working group; Convener Melanie Karaca, Andrew Duffin, Samantha Polkinghorne, Mengling Fu along with Olivia Ash and Saanya Parmar who will work through our RAP commitments.",
@@ -77,9 +78,7 @@ const FALLBACK_DATA: RapPageData = {
   readTime: "5 mins",
   hero: "/images/rap/reflect-hero.jpg",
   artwork: "/images/rap/reflect-artwork.png",
-  downloadBackground: "/images/rap/reflect-download-background.jpg",
   bodyHtml: FALLBACK_BODY.map((paragraph) => `<p>${paragraph}</p>`).join("\n"),
-  issuuUrl: "https://issuu.com/nbrsarchitecture/docs/nbrs_reflect_rap",
   cta: {
     heading: "Download full reflect RAP",
     description: "For insight into the implementation of each action",
@@ -87,22 +86,56 @@ const FALLBACK_DATA: RapPageData = {
     buttonUrl: "https://issuu.com/nbrsarchitecture/docs/nbrs_reflect_rap",
     background: "/images/rap/reflect-download-background.jpg",
   },
+  cmsSeoTitle: null,
+  seoDescription: "NBRS Reflect Reconciliation Action Plan",
+  seoImage: null,
 };
 
-const RAP_QUERY = /* GraphQL */ `
-  query RapPage($slug: [String]!) {
-    entries(section: "news", slug: $slug, limit: 1) {
+const RAP_SINGLE_QUERY = /* GraphQL */ `
+  query RapSinglePage {
+    entries(section: "rap", limit: 1) {
       title
-      slug
       postDate @formatDateTime(format: "Y")
-      ... on news_Entry {
-        artHdrHeading
-        artHdrHeroImage { url width height title }
-        artIssuuUrl
+      ... on rap_Entry {
+        heroImage: pageHeroImage { url width height title }
         rapAuthor
         rapEndorsedBy
         rapReadTime
+        artIssuuUrl
+        seoPageTitle
+        seoMetaDescription
+        seoImage { url width height title }
+        ctaSection {
+          ctaSectionHeading
+          ctaSectionDescription
+          ctaSectionButtonLabel
+          ctaSectionButtonUrl
+          ctaSectionBackgroundImage { url width height title }
+        }
+        artContent {
+          ... on text_Entry { text }
+          ... on image_Entry { image { url width height title } }
+        }
+      }
+    }
+  }
+`;
+
+const RAP_NEWS_QUERY = /* GraphQL */ `
+  query RapLegacyNewsPage {
+    entries(section: "news", slug: ["reflect-reconciliation-action-plan"], limit: 1) {
+      title
+      postDate @formatDateTime(format: "Y")
+      ... on news_Entry {
+        heroImage: artHdrHeroImage { url width height title }
+        rapAuthor
+        rapEndorsedBy
+        rapReadTime
+        artIssuuUrl
         rapDownloadBackground { url width height title }
+        seoPageTitle
+        seoMetaDescription
+        seoImage { url width height title }
         ctaSection {
           ctaSectionHeading
           ctaSectionDescription
@@ -128,23 +161,21 @@ function normalizeBody(blocks?: CraftBlock[] | null): string | null {
   return text?.trim() || null;
 }
 
-export async function getRapPage(): Promise<RapPageData> {
+async function getRapPageFrom(query: string): Promise<RapPageData> {
   try {
-    const data = await craftFetch<RapQueryData>(RAP_QUERY, { slug: [RAP_SLUG] });
+    const data = await craftFetch<RapQueryData>(query);
     const entry = data.entries?.[0];
     if (!entry) return FALLBACK_DATA;
 
     return {
-      title: entry.artHdrHeading || entry.title || FALLBACK_DATA.title,
+      title: entry.title || FALLBACK_DATA.title,
       publicationDate: entry.postDate || FALLBACK_DATA.publicationDate,
       author: entry.rapAuthor || FALLBACK_DATA.author,
       endorsedBy: entry.rapEndorsedBy || FALLBACK_DATA.endorsedBy,
       readTime: entry.rapReadTime || FALLBACK_DATA.readTime,
-      hero: toImageSource(firstAsset(entry.artHdrHeroImage)) || FALLBACK_DATA.hero,
+      hero: toImageSource(firstAsset(entry.heroImage)) || FALLBACK_DATA.hero,
       artwork: toImageSource(firstAsset(entry.artContent?.find((block) => block.image?.length)?.image)) || FALLBACK_DATA.artwork,
-      downloadBackground: toImageSource(firstAsset(entry.rapDownloadBackground)) || FALLBACK_DATA.downloadBackground,
       bodyHtml: normalizeBody(entry.artContent) || FALLBACK_DATA.bodyHtml,
-      issuuUrl: entry.artIssuuUrl || FALLBACK_DATA.issuuUrl,
       cta: {
         heading: entry.ctaSection?.ctaSectionHeading || FALLBACK_DATA.cta.heading,
         description: entry.ctaSection?.ctaSectionDescription || FALLBACK_DATA.cta.description,
@@ -154,8 +185,21 @@ export async function getRapPage(): Promise<RapPageData> {
           || toImageSource(firstAsset(entry.rapDownloadBackground))
           || FALLBACK_DATA.cta.background,
       },
+      cmsSeoTitle: entry.seoPageTitle?.trim() || null,
+      seoDescription: entry.seoMetaDescription?.trim() || FALLBACK_DATA.seoDescription,
+      seoImage: toSeoImage(firstAsset(entry.seoImage)),
     };
   } catch {
     return FALLBACK_DATA;
   }
+}
+
+/** Dedicated RAP Single used by the canonical /rap route. */
+export function getRapPage(): Promise<RapPageData> {
+  return getRapPageFrom(RAP_SINGLE_QUERY);
+}
+
+/** Legacy News source retained for /news/reflect-reconciliation-action-plan. */
+export function getRapNewsPage(): Promise<RapPageData> {
+  return getRapPageFrom(RAP_NEWS_QUERY);
 }

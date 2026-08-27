@@ -29,6 +29,7 @@ export const NAV_STRUCTURE: NavItem[] = [
       { label: "Awards", href: "/awards" },
       { label: "Sustainability", href: "/sustainability" },
       { label: "Social Responsibility", href: "/social-responsibility" },
+      { label: "Reflect Reconciliation Action Plan", href: "/rap" },
     ],
   },
   {

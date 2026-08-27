@@ -1,10 +1,20 @@
-import RapPage from "../news/reflect-reconciliation-action-plan/page";
+import { RapPage } from "@/components/rap/RapPage";
+import { getRapPage } from "@/lib/rap";
 import { createPageMetadata } from "@/lib/seo";
 
-export const metadata = createPageMetadata({
-  pathname: "/rap",
-  title: "Reflect Reconciliation Action Plan",
-  description: "NBRS Reflect Reconciliation Action Plan",
-});
 export const revalidate = 60;
-export default RapPage;
+
+export async function generateMetadata() {
+  const page = await getRapPage();
+  return createPageMetadata({
+    pathname: "/rap",
+    title: page.title,
+    cmsTitle: page.cmsSeoTitle,
+    description: page.seoDescription,
+    image: page.seoImage ?? page.hero,
+  });
+}
+
+export default async function ReflectRapPage() {
+  return <RapPage page={await getRapPage()} />;
+}
