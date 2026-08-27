@@ -491,6 +491,16 @@ export async function getProjectDetail(
       }
     }
   );
+  const splash = (entry.proHdrSplash ?? []).map((slide) => ({
+    imageUrl: toImageSource(slide.image?.[0]),
+    imageCropping: slide.imageCropping,
+    portraitImageUrl: toImageSource(slide.optionalPortraitImage?.[0]),
+    portraitImageCropping: slide.portraitImageCropping,
+  }));
+  const popupGalleryUrls = [
+    ...(entry.proHdrPopupGallery ?? []).map(toImageSource),
+    ...splash.map((slide) => slide.imageUrl),
+  ].filter((image): image is ImageSource => Boolean(image));
 
   return {
     id: entry.id,
@@ -501,13 +511,8 @@ export async function getProjectDetail(
     heading: entry.proHdrHeading,
     subheading: entry.proHdrSubheading,
     thumbnailUrl: toImageSource(entry.thumbnail?.[0]),
-    popupGalleryUrls: (entry.proHdrPopupGallery ?? []).map(toImageSource).filter((image): image is ImageSource => Boolean(image)),
-    splash: (entry.proHdrSplash ?? []).map((slide) => ({
-      imageUrl: toImageSource(slide.image?.[0]),
-      imageCropping: slide.imageCropping,
-      portraitImageUrl: toImageSource(slide.optionalPortraitImage?.[0]),
-      portraitImageCropping: slide.portraitImageCropping,
-    })),
+    popupGalleryUrls,
+    splash,
     useV2Body: entry.proV2Enabled === true,
     v2Content,
     impactText: entry.proImpText,
