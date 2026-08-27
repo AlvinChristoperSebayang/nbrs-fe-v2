@@ -110,7 +110,15 @@ const RAP_SINGLE_QUERY = /* GraphQL */ `
           ctaSectionDescription
           ctaSectionButtonLabel
           ctaSectionButtonUrl
-          ctaSectionBackgroundImage { url width height title }
+          ctaSectionBackgroundImage {
+            url
+            width
+            height
+            title
+            mobile: url @transform(width: 768, height: 900, position: "top-left", mode: "crop", format: "webp", quality: 80, immediately: true)
+            tablet: url @transform(width: 1440, mode: "fit", format: "webp", quality: 82, immediately: true)
+            desktop: url @transform(width: 2400, mode: "fit", format: "webp", quality: 85, immediately: true)
+          }
         }
         artContent {
           ... on text_Entry { text }
@@ -132,7 +140,15 @@ const RAP_NEWS_QUERY = /* GraphQL */ `
         rapEndorsedBy
         rapReadTime
         artIssuuUrl
-        rapDownloadBackground { url width height title }
+        rapDownloadBackground {
+          url
+          width
+          height
+          title
+          mobile: url @transform(width: 768, height: 900, position: "top-left", mode: "crop", format: "webp", quality: 80, immediately: true)
+          tablet: url @transform(width: 1440, mode: "fit", format: "webp", quality: 82, immediately: true)
+          desktop: url @transform(width: 2400, mode: "fit", format: "webp", quality: 85, immediately: true)
+        }
         seoPageTitle
         seoMetaDescription
         seoImage { url width height title }
@@ -141,7 +157,15 @@ const RAP_NEWS_QUERY = /* GraphQL */ `
           ctaSectionDescription
           ctaSectionButtonLabel
           ctaSectionButtonUrl
-          ctaSectionBackgroundImage { url width height title }
+          ctaSectionBackgroundImage {
+            url
+            width
+            height
+            title
+            mobile: url @transform(width: 768, height: 900, position: "top-left", mode: "crop", format: "webp", quality: 80, immediately: true)
+            tablet: url @transform(width: 1440, mode: "fit", format: "webp", quality: 82, immediately: true)
+            desktop: url @transform(width: 2400, mode: "fit", format: "webp", quality: 85, immediately: true)
+          }
         }
         artContent {
           ... on text_Entry { text }
