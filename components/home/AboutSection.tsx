@@ -120,6 +120,8 @@ export function AboutSection({
                 src={image_url}
                 alt={image_alt}
                 className="h-full w-full object-cover"
+                width={1200}
+                height={1200}
               />
             </div>
           </div>

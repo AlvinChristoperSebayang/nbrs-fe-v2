@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
 import type { Project } from "@/lib/types";
 
 export function ProjectCard({ project }: { project: Project }) {
@@ -11,7 +12,7 @@ export function ProjectCard({ project }: { project: Project }) {
         className="group block"
       >
         <div className="aspect-[4/3] w-full overflow-hidden">
-          <img
+          <ResponsiveImage
             // src={project.image}
             src="/images/placeholder-project.png"
             alt={project.title}

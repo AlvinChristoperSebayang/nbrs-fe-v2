@@ -145,6 +145,8 @@ export function GridEffect({
                   className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${
                     index === activeIndex ? "opacity-100" : "opacity-0"
                   }`}
+                  width={1200}
+                  height={900}
                 />
               ) : null
             )}

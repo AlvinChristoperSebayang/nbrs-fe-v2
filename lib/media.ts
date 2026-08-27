@@ -1,6 +1,15 @@
-import type { ImageSource, ResponsiveImage } from "./types";
+import type {
+  ImageSource,
+  ResponsiveImage,
+  ResponsiveImageDimensions,
+} from "./types";
+import { getImageDimensions } from "./static-image-dimensions";
 
-export type RawResponsiveAsset = Partial<ResponsiveImage> & { url?: string };
+export type RawResponsiveAsset = Partial<ResponsiveImage> & {
+  url?: string;
+  width?: number | null;
+  height?: number | null;
+};
 export type RawSeoAsset = {
   url?: string | null;
   width?: number | null;
@@ -14,13 +23,73 @@ export type SeoImage = {
   title?: string;
 };
 
-/** Keeps static-image fallbacks working while CMS assets expose three Craft crops. */
-export function toImageSource(asset?: RawResponsiveAsset | null): ImageSource | null {
+function inferResponsiveDimensions(asset: RawResponsiveAsset): ResponsiveImageDimensions | undefined {
+  const dimensions: ResponsiveImageDimensions = {};
+
+  for (const breakpoint of ["mobile", "tablet", "desktop"] as const) {
+    const source = asset[breakpoint];
+    if (!source) continue;
+
+    const dimension = getImageDimensions(source) ?? getAutoHeightTransformDimensions(source, asset);
+    if (dimension) dimensions[breakpoint] = dimension;
+  }
+
+  return Object.keys(dimensions).length ? dimensions : undefined;
+}
+
+/**
+ * Craft URLs such as `_1200xAUTO_*` retain the original aspect ratio. Their
+ * generated height is not encoded in the URL, so derive it from the asset
+ * metadata already returned by GraphQL.
+ */
+function getAutoHeightTransformDimensions(source: string, asset: RawResponsiveAsset) {
+  if (!asset.width || !asset.height || asset.width <= 0 || asset.height <= 0) return undefined;
+
+  try {
+    const match = new URL(source).pathname.match(/_(\d+)xAUTO(?:_|$)/i);
+    if (!match) return undefined;
+
+    const width = Number(match[1]);
+    return {
+      width,
+      height: Math.round((width * asset.height) / asset.width),
+    };
+  } catch {
+    return undefined;
+  }
+}
+
+/**
+ * Keeps static-image fallbacks working while CMS assets expose three Craft
+ * crops. Dimensions are inferred from explicit Craft transforms or the
+ * original asset metadata, and callers can override them for art direction.
+ */
+export function toImageSource(
+  asset?: RawResponsiveAsset | null,
+): ImageSource | null;
+export function toImageSource(
+  asset: RawResponsiveAsset | null | undefined,
+  dimensions: ResponsiveImageDimensions,
+): ImageSource | null;
+export function toImageSource(
+  asset?: RawResponsiveAsset | null,
+  dimensions?: ResponsiveImageDimensions,
+): ImageSource | null {
   const desktop = asset?.desktop ?? asset?.url;
   if (!desktop) return null;
 
   if (asset?.mobile && asset.tablet) {
-    return { mobile: asset.mobile, tablet: asset.tablet, desktop };
+    const inferredDimensions = inferResponsiveDimensions(asset);
+    const resolvedDimensions = inferredDimensions || dimensions
+      ? { ...inferredDimensions, ...dimensions }
+      : undefined;
+
+    return {
+      mobile: asset.mobile,
+      tablet: asset.tablet,
+      desktop,
+      ...(resolvedDimensions ? { dimensions: resolvedDimensions } : {}),
+    };
   }
 
   return desktop;

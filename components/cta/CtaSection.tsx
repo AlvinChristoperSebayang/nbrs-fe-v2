@@ -8,9 +8,17 @@ export type CtaSectionProps = {
   cta?: CtaContent;
   titleUppercase?: boolean;
   descriptionClassName?: string;
+  /** CTA sections are normally below the fold; opt in only when it is an LCP image. */
+  priority?: boolean;
 };
 
-export function CtaSection({ content, cta, titleUppercase = true, descriptionClassName }: CtaSectionProps) {
+export function CtaSection({
+  content,
+  cta,
+  titleUppercase = true,
+  descriptionClassName,
+  priority = false,
+}: CtaSectionProps) {
   const data = content || cta;
 
   if (!data) return null;
@@ -26,6 +34,9 @@ export function CtaSection({ content, cta, titleUppercase = true, descriptionCla
         alt={data.title || "NBRS Call to Action"}
         title={data.title || "NBRS Call to Action"}
         className="absolute inset-0 h-full w-full object-cover"
+        priority={priority}
+        width={2400}
+        height={1000}
       />
       <Container className="relative flex items-center justify-center py-24 sm:py-32 lg:py-[116px]">
         <div

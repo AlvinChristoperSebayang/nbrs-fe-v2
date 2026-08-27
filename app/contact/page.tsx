@@ -60,6 +60,8 @@ export default async function ContactPage() {
             src={content.heroImage.url}
             alt={content.heroImage.alt || "Contact Us"}
             title={content.heroImage.alt || "Contact Us"}
+            width={content.heroImage.width}
+            height={content.heroImage.height}
             className="h-full w-full object-cover"
           />
         )}

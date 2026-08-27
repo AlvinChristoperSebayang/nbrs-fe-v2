@@ -54,6 +54,8 @@ export function HeroSlider({ slides }: HeroSliderProps) {
             index === activeIndex ? "opacity-100" : "opacity-0"
           }`}
           priority={index === 0}
+          width={2400}
+          height={1200}
         />
       ))}
       <div className="absolute inset-0 top-0 left-0 z-20 h-full w-full bg-black/30" />
@@ -117,6 +119,8 @@ export function HeroSlider({ slides }: HeroSliderProps) {
                       alt={slide.title || "NBRS Architecture"}
                       title={slide.title || "NBRS Architecture"}
                       className="h-full w-full object-cover"
+                      width={2400}
+                      height={1200}
                     />
                   </SwiperSlide>
                 );
