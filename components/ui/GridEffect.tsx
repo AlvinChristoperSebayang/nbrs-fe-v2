@@ -178,7 +178,7 @@ export function GridEffect({
 
                     {item.description && (
                       <p
-                        className={`line-clamp-2 max-w-[231px] sm:max-w-none lg:max-w-[231px] text-sm text-white/90 transition-opacity duration-300 ${
+                        className={`max-w-57.75 sm:max-w-none lg:max-w-57.75 text-sm text-white/90 transition-opacity duration-300 ${
                           isActive ? "opacity-100" : "opacity-0"
                         }`}
                       >

@@ -56,15 +56,15 @@ export function RapPage({ page }: { page: RapPageData }) {
 
       <section className="bg-white py-20 sm:py-24 lg:py-32">
         <Container>
-          <div className="grid gap-6 lg:grid-cols-12 lg:gap-20">
-            <h2 className="order-1 font-heading text-[28px] uppercase leading-none md:text-[40px] lg:hidden">Insight</h2>
-            <div className="order-3 lg:order-none lg:col-span-7" data-aos="fade-up">
-              <h2 className="hidden font-heading text-[28px] uppercase leading-none md:text-[40px] lg:block">Insight</h2>
-              <div className="mt-8 max-w-[640px] space-y-5 font-sans text-base leading-[1.55] text-black/90 [&_a]:pb-4 [&_li]:pb-4 [&_p]:pb-4">
+          <div className="grid gap-6 xl:grid-cols-12 xl:gap-20">
+            <h2 className="order-1 font-heading text-[28px] uppercase leading-none xl:text-[40px] xl:hidden">Insight</h2>
+            <div className="order-3 xl:order-0 xl:col-span-7" data-aos="fade-up">
+              <h2 className="hidden font-heading text-[28px] uppercase leading-none xl:text-[40px] xl:block">Insight</h2>
+              <div className="mt-8 max-w-160 space-y-5 font-sans text-base leading-[1.55] text-black/90 [&_a]:pb-4 [&_li]:pb-4 [&_p]:pb-4">
                 <div dangerouslySetInnerHTML={{ __html: page.bodyHtml }} />
               </div>
             </div>
-            <div className="order-2 lg:order-none lg:col-span-5" data-aos="fade-up" data-aos-delay="150">
+            <div className="order-2 xl:order-0 xl:col-span-5" data-aos="fade-up" data-aos-delay="150">
               <ResponsiveImage src={page.artwork} alt="Shared Waterways artwork" className="h-full w-full object-cover" />
             </div>
           </div>
