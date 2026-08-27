@@ -5,8 +5,6 @@ import Link from "next/link";
 import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
 import type { ImageSource } from "@/lib/types";
 
-const STATIC_ARTICLE_CARD_IMAGE = "/images/articles/article-card-static.jpg";
-
 export type ArticleCardProps = {
   id?: string;
   slug: string;
@@ -61,7 +59,7 @@ export function ArticleCard({
       {/* Card Image (Subtle Scale Zoom on Hover) */}
       <div className="relative aspect-[370/300] w-full overflow-hidden bg-zinc-100 min-h-[180px] sm:min-h-[220px] lg:min-h-[280px]">
         <ResponsiveImage
-          src={STATIC_ARTICLE_CARD_IMAGE}
+          src={item.image}
           alt={item.title}
           title={item.title}
           className="h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
