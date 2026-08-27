@@ -67,7 +67,7 @@ export function TextGrid({
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-6">
           <div
             data-aos="fade-up"
-            className={`flex flex-col justify-center ${textColSpan}`}
+            className={`flex flex-col justify-start ${textColSpan}`}
           >
             <div className="flex flex-col w-fit max-w-[569px]">
               <h2 className="font-heading text-[#000000] text-[28px] sm:text-4xl md:text-[40px] lg:text-[42px] xl:text-[52px] 2xl:text-[60px] uppercase leading-[1.05] tracking-tight flex flex-col items-start">
@@ -84,9 +84,9 @@ export function TextGrid({
               key={`top-${index}`}
               data-aos="fade-up"
               data-aos-delay={100 + index * 100}
-              className="h-56 w-full overflow-hidden sm:h-48 lg:col-span-1 lg:h-[300px]"
+              className="h-56 w-full overflow-hidden sm:h-48 lg:col-span-1 rounded-[5px] lg:h-[300px]"
             >
-              <ResponsiveImage src={src} alt="NBRS Architecture project" title="NBRS Architecture project" className="h-full w-full object-cover" />
+              <ResponsiveImage src={src} alt="NBRS Architecture project" title="NBRS Architecture project" className="h-full w-full object-cover rounded-[5px]" />
             </div>
           ))}
         </div>
@@ -99,7 +99,7 @@ export function TextGrid({
               data-aos-delay={index * 100}
               className="h-56 w-full overflow-hidden sm:h-48 lg:h-[300px]"
             >
-              <ResponsiveImage src={src} alt="NBRS Architecture project gallery" title="NBRS Architecture project gallery" className="h-full w-full object-cover" />
+              <ResponsiveImage src={src} alt="NBRS Architecture project gallery" title="NBRS Architecture project gallery" className="h-full w-full object-cover rounded-[5px]" />
             </div>
           ))}
         </div>

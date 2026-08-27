@@ -18,10 +18,10 @@ export function SectorPrinciplesSection({
   return (
     <section className="bg-white py-16 lg:py-24 text-black">
       <Container>
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 items-stretch">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8 items-start">
           {/* Slot 1: Title & Description Text Block */}
-          <div data-aos="fade-up" suppressHydrationWarning className="flex flex-col justify-start pr-2">
-            <div className="mb-4">
+          <div data-aos="fade-up" suppressHydrationWarning className="flex flex-col justify-start pr-2 lg:pr-4">
+            <div className="mb-3 lg:mb-3 xl:mb-4">
               {/* Mobile (< lg): Single line */}
               <div className="lg:hidden">
                 <span className="inline-block font-heading text-3xl sm:text-4xl uppercase font-bold text-black leading-none border-b-4 border-black pb-1">
@@ -30,15 +30,15 @@ export function SectorPrinciplesSection({
               </div>
               {/* Desktop (>= lg): Two lines */}
               <div className="hidden lg:block">
-                <span className="block font-heading text-[60px] uppercase font-bold text-black leading-none">
+                <span className="block font-heading text-[26px] lg:text-[28px] xl:text-[44px] 2xl:text-[56px] uppercase font-bold text-black leading-none">
                   {prefix}
                 </span>
-                <span className="inline-block font-heading text-[60px] uppercase font-bold text-black leading-none mt-1 border-b-4 border-black pb-1">
+                <span className="inline-block font-heading text-[26px] lg:text-[28px] xl:text-[44px] 2xl:text-[56px] uppercase font-bold text-black leading-none mt-1 border-b-[3px] xl:border-b-4 border-black pb-1">
                   {mainTitle}
                 </span>
               </div>
             </div>
-            <p className="font-sans text-sm sm:text-base text-zinc-900 leading-relaxed">
+            <p className="font-sans text-xs sm:text-sm lg:text-[13px] xl:text-[15px] 2xl:text-base text-zinc-900 leading-relaxed lg:leading-[1.42] xl:leading-relaxed">
               {description}
             </p>
           </div>
@@ -50,7 +50,7 @@ export function SectorPrinciplesSection({
               data-aos="fade-up"
               data-aos-delay={100 + index * 100}
               suppressHydrationWarning
-              className="group relative block aspect-[5/4] w-full overflow-hidden rounded-[5px] bg-zinc-100"
+              className="group relative block aspect-[370/300] w-full overflow-hidden rounded-[5px] bg-zinc-100"
             >
               <ResponsiveImage
                 src={imgUrl}

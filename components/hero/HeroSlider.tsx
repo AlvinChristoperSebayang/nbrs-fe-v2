@@ -68,7 +68,7 @@ export function HeroSlider({ slides }: HeroSliderProps) {
               className={`font-heading font-bold uppercase text-white ${
                 isLastSlide
                   ? "text-[130px] lg:text-[264px] leading-[0.85] tracking-tighter whitespace-nowrap"
-                  : "text-[50px] lg:text-[132px] leading-none tracking-tight"
+                  : "text-[50px] lg:text-[132px] leading-none tracking-tight whitespace-nowrap"
               }`}
             >
               <span
@@ -81,8 +81,13 @@ export function HeroSlider({ slides }: HeroSliderProps) {
                 {activeSlide.title}
                 {isLastSlide && (
                   <span className="inline-block shrink-0 w-[0.22em] h-[0.22em] rounded-full bg-[#A0A0A0] ml-2 lg:ml-3 align-top mt-[0.06em]" />
-                )}
-              </span>
+                </span>
+              ) : (
+                <span className="inline-flex flex-col items-start leading-none">
+                  <span>{activeSlide.title}</span>
+                  <span className="block w-full lg:w-[354px] border-b-[4px] sm:border-b-[6px] lg:border-b-[10px] border-white mt-1 sm:mt-2 lg:mt-3" />
+                </span>
+              )}
             </h1>
             {!isLastSlide && activeSlide.headline && (
               <p

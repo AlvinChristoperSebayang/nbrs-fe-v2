@@ -100,7 +100,7 @@ export default async function ProjectsIndexPage(
   loadMoreParams.set("page", String(page + 1));
 
   return (
-    <main className="bg-white text-black min-h-screen">
+    <article className="bg-white text-black min-h-screen">
       <ProjectsHero
         image={pageHeroImageUrl}
         title={pageHeading}
@@ -133,7 +133,7 @@ export default async function ProjectsIndexPage(
           )}
         </PreserveScrollOnNavigate>
       </Container>
-    </main>
+    </article>
   );
 }
 

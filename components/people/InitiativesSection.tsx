@@ -90,37 +90,34 @@ export function InitiativesSection({
             >
               {/* Text Column */}
               <div
-                className={`lg:col-span-6 flex flex-col justify-center gap-4 order-2 ${
+                className={`lg:col-span-6 flex flex-col justify-center gap-3 lg:gap-4 order-2 ${
                   item.reverse ? "lg:order-last" : "lg:order-first"
                 }`}
               >
                 {/* Title Container with Overlapping Divider Line */}
-                <div className="relative md:pb-3 md:mb-2">
-                  <h3 className="font-heading text-2xl sm:text-3xl font-bold uppercase md:tracking-wide text-black md:leading-snug">
+                <div className="relative pb-2 lg:pb-3">
+                  <h3 className="font-heading text-2xl sm:text-3xl lg:text-[28px] xl:text-[32px] font-bold uppercase tracking-wide text-black leading-tight">
                     {item.title}
                   </h3>
 
                   {/* Desktop Divider Line ending exactly at the edge of the adjacent image */}
                   <div
-                    className={`hidden lg:block absolute bottom-0 h-[3px] bg-stone-300 z-10 pointer-events-none ${
+                    className={`hidden lg:block absolute bottom-0 h-[2px] bg-stone-300 z-10 pointer-events-none ${
                       item.reverse
-                        ? "left-[-64px] right-0" // Extends left exactly to the edge of the image
-                        : "left-0 right-[-64px]" // Extends right exactly to the edge of the image
+                        ? "left-[-48px] xl:left-[-64px] right-0"
+                        : "left-0 right-[-48px] xl:right-[-64px]"
                     }`}
                   />
-
-                  {/* Mobile Divider Line */}
-                  {/* <div className="lg:hidden border-b-2 border-stone-300 w-full mt-2" /> */}
                 </div>
 
-                <p className="font-sans text-base sm:text-lg text-zinc-800 leading-relaxed">
+                <p className="font-sans text-sm sm:text-base lg:text-[15px] xl:text-base text-zinc-800 leading-relaxed">
                   {item.description}
                 </p>
               </div>
 
               {/* Image Column */}
               <div
-                className={`lg:col-span-6 shadow-md aspect-[570/300] relative bg-zinc-100 overflow-hidden ${
+                className={`lg:col-span-6 shadow-sm rounded-[4px] aspect-[16/10] sm:aspect-[570/320] lg:aspect-[570/340] relative bg-zinc-100 overflow-hidden ${
                   item.reverse ? "lg:order-first" : "lg:order-last"
                 }`}
               >

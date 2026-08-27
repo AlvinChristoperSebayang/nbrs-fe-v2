@@ -16,6 +16,9 @@ export type AboutSectionProps = {
   heading_size?: string;
   description_class_name?: string;
   single_line_heading?: boolean;
+  image_height_class_name?: string;
+  image_container_class_name?: string;
+  image_class_name?: string;
 };
 
 function renderAboutHeading(heading: string, singleLine = false) {
@@ -50,6 +53,51 @@ function renderAboutHeading(heading: string, singleLine = false) {
   );
 }
 
+function renderAboutDescription(description: string, className?: string) {
+  const normalised = description.replace(/\\n/g, "\n").replace(/\r\n?/g, "\n");
+  const isRichText = /<\/?[a-z][\s\S]*>/i.test(normalised);
+  const baseClasses = className ? `text-white/90 ${className}` : "max-w-md text-white/90";
+  const richClasses = `${baseClasses} [&_p]:mb-3 [&_p:last-child]:mb-0 [&_a]:underline [&_a]:underline-offset-2 [&_li]:ml-5 [&_ol]:list-decimal [&_ul]:list-disc`;
+
+  if (isRichText) {
+    return (
+      <div
+        data-aos="fade-up"
+        data-aos-delay="150"
+        className={richClasses}
+        dangerouslySetInnerHTML={{ __html: normalised }}
+      />
+    );
+  }
+
+  const paragraphs = normalised.split(/\n\s*\n/).filter(Boolean);
+  if (paragraphs.length > 1) {
+    return (
+      <div
+        data-aos="fade-up"
+        data-aos-delay="150"
+        className={`${baseClasses} space-y-3`}
+      >
+        {paragraphs.map((p, idx) => (
+          <p key={idx} className="leading-relaxed">
+            {p}
+          </p>
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <p
+      data-aos="fade-up"
+      data-aos-delay="150"
+      className={baseClasses}
+    >
+      {normalised}
+    </p>
+  );
+}
+
 export function AboutSection({
   image_url,
   image_alt = "NBRS project — building exterior",
@@ -57,9 +105,12 @@ export function AboutSection({
   heading = "Designing Environments That Shape Lives",
   description = "Working collaboratively with clients and communities to create enduring, human-centred places",
   button,
-  heading_size = "text-[28px] sm:text-[40px]",
+  heading_size = "text-[28px] sm:text-[34px] xl:text-[40px]",
   description_class_name,
   single_line_heading = false,
+  image_height_class_name,
+  image_container_class_name,
+  image_class_name,
 }: AboutSectionProps) {
   const descriptionClassName = [
     "text-base leading-relaxed text-white/90",
@@ -72,11 +123,11 @@ export function AboutSection({
   ].join(" ");
 
   return (
-    <section className="section-about bg-white pb-5 lg:pb-24">
+    <section className="section-about bg-white pb-5 lg:pb-16 xl:pb-24">
       <div className="w-full bg-[#070F0F] relative">
         {background_color && <div className="h-3 w-full" style={{ backgroundColor: background_color }} />}
         <Container className="relative">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-[30px] items-start pt-12 pb-0 lg:pt-24 lg:pb-28">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-6 xl:gap-[30px] items-start pt-12 pb-0 lg:pt-16 xl:pt-24 lg:pb-20 xl:pb-28">
             <div className="lg:col-span-4 flex flex-col justify-center gap-6 text-white">
               <h2
                 data-aos="fade-up"
@@ -123,12 +174,14 @@ export function AboutSection({
             <div
               data-aos="fade-up"
               data-aos-delay="200"
-              className="lg:col-span-8 relative w-[calc(100%+2.5rem)] sm:w-[calc(100%+3rem)] lg:w-full -mx-5 sm:-mx-6 lg:mx-0 h-[320px] sm:h-[420px] lg:h-[580px] lg:-mt-24 lg:-mb-48 z-20 overflow-hidden"
+              className={`lg:col-span-8 relative w-[calc(100%+2.5rem)] sm:w-[calc(100%+3rem)] lg:w-full -mx-5 sm:-mx-6 lg:mx-0 ${
+                image_height_class_name ?? "h-[320px] sm:h-[420px] lg:h-[440px] xl:h-[580px] lg:-mt-16 xl:-mt-24 lg:-mb-32 xl:-mb-48"
+              } z-20 overflow-hidden ${image_container_class_name ?? ""}`}
             >
               <ResponsiveImage
                 src={image_url}
                 alt={image_alt}
-                className="h-full w-full object-cover"
+                className={`h-full w-full object-cover ${image_class_name ?? ""}`}
                 width={1200}
                 height={1200}
               />

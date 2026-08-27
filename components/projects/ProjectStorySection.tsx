@@ -3,7 +3,6 @@ import { Container } from "@/components/ui/Container";
 export function ProjectStorySection() {
   return (
     <section className="relative w-full bg-white text-black py-0 flex flex-col gap-16 lg:gap-24">
-      {/* 1. Top Right Aligned Method Text */}
       <Container>
         <div data-aos="fade-up" className="flex justify-end">
           <div className="max-w-[470px] flex flex-col gap-4 font-sans text-sm sm:text-base leading-relaxed text-black/90">
@@ -31,7 +30,6 @@ export function ProjectStorySection() {
         </div>
       </Container>
 
-      {/* 2. Full-Width Image */}
       <div data-aos="fade-up" className="w-full overflow-hidden">
         <img
           src="/images/about/creative-partnership.jpg"
@@ -43,7 +41,6 @@ export function ProjectStorySection() {
         />
       </div>
 
-      {/* 3. Text Paragraph below Full-Width Image */}
       <Container>
         <div data-aos="fade-up" className="max-w-[570px]">
           <p className="font-sans text-sm sm:text-base leading-relaxed text-black/80">
@@ -58,7 +55,6 @@ export function ProjectStorySection() {
         </div>
       </Container>
 
-      {/* 4. Large Image inside Container */}
       <Container>
         <div data-aos="fade-up" className="w-full max-w-[1168px] overflow-hidden">
           <img
@@ -72,7 +68,6 @@ export function ProjectStorySection() {
         </div>
       </Container>
 
-      {/* 5. Bottom Headline & Sub-paragraph */}
       <Container>
         <div data-aos="fade-up" className="flex flex-col gap-4 max-w-[838px]">
           <h2 className="font-heading text-2xl sm:text-3xl lg:text-[36px] font-normal uppercase leading-tight lg:leading-[1.1] text-black">

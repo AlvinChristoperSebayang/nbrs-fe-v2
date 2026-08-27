@@ -108,7 +108,6 @@ export default async function ProjectPage(
         />
       )}
 
-      {/* KEY PROJECTS SECTION */}
       <KeyProjectsSection title="KEY PROJECTS" projects={keyProjects} />
     </article>
   );

@@ -9,6 +9,8 @@ export function QuoteSection({
   role,
   quoteIconColor = "#B5B5B5",
   boxBgClass = "bg-[#D9D9D9] lg:bg-white/80 lg:backdrop-blur-md",
+  imageClassName,
+  imageContainerClassName,
 }: {
   image: ImageSource;
   quote: string;
@@ -16,6 +18,8 @@ export function QuoteSection({
   role?: string;
   quoteIconColor?: string;
   boxBgClass?: string;
+  imageClassName?: string;
+  imageContainerClassName?: string;
 }) {
   const cleanAuthor = author ? author.split("|")[0].trim() : "";
   const cleanRole = role ? role.split("|")[0].trim() : "";
@@ -25,12 +29,12 @@ export function QuoteSection({
       <Container className="max-lg:px-0 max-lg:max-w-none">
         <div className="relative flex flex-col items-center lg:block">
           {/* Image */}
-          <div data-aos="fade-up" suppressHydrationWarning className="w-full overflow-hidden lg:w-[65%] xl:w-[68%]">
+          <div data-aos="fade-up" suppressHydrationWarning className={`w-full overflow-hidden lg:w-[65%] xl:w-[68%] ${imageContainerClassName ?? ""}`}>
             <ResponsiveImage
               src={image}
               alt={cleanAuthor || "Quote author"}
               title={cleanAuthor || "Quote author"}
-              className="h-[350px] w-full object-cover lg:h-[495px] max-lg:rounded-none rounded-sm"
+              className={`h-[350px] w-full object-cover object-top sm:h-[420px] md:h-[480px] lg:h-[495px] max-lg:rounded-none rounded-sm ${imageClassName ?? ""}`}
             />
           </div>
 
@@ -39,7 +43,7 @@ export function QuoteSection({
             data-aos="fade-up"
             data-aos-delay="150"
             suppressHydrationWarning
-            className="flex flex-col justify-between bg-[#D9D9D9] lg:bg-white/75 lg:backdrop-blur-xs w-full p-8 sm:p-10 lg:absolute lg:top-1/2 lg:-translate-y-1/2 lg:left-[45%] xl:left-[48%] 2xl:left-[50%] lg:w-[55%] xl:w-[580px] 2xl:w-[630px] lg:min-h-[309px] lg:p-10 shadow-sm max-lg:border-none border border-white/80"
+            className="flex flex-col justify-between bg-[#D9D9D9] lg:bg-white/75 lg:backdrop-blur-xs w-full p-8 sm:p-10 lg:absolute lg:top-1/2 lg:-translate-y-1/2 lg:left-[45%] xl:left-[48%] 2xl:left-[50%] lg:w-[55%] xl:w-[580px] 2xl:w-[630px] lg:min-h-[309px] lg:p-10 max-lg:border-none border border-white/80"
           >
             {/* Top Quote Icon */}
             <span
@@ -60,7 +64,7 @@ export function QuoteSection({
             </span>
 
             {/* Quote Text - Exact Typography from Figma (Roboto, 400, Italic, 24px, 100% line-height, 0% letter-spacing) */}
-            <p className="font-sans text-[20px] sm:text-[24px] font-normal italic leading-[1.25] tracking-normal text-black my-3">
+            <p className="font-sans text-[20px] sm:text-[24px] lg:text-[32px] font-normal italic leading-[1.25] tracking-normal text-black my-3">
               {quote}
             </p>
 

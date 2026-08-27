@@ -1,15 +1,8 @@
 import { Container } from "@/components/ui/Container";
 import { Hero } from "@/components/ui/Hero";
 import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
+import { CtaSection } from "@/components/cta/CtaSection";
 import type { RapPageData } from "@/lib/rap";
-
-function Arrow() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-      <path d="M14 7.724H0M6.667 14.724 14 7.724 6.667.724" stroke="currentColor" strokeWidth="2" />
-    </svg>
-  );
-}
 
 function PublicationDetails({ page }: { page: RapPageData }) {
   return (
@@ -71,35 +64,16 @@ export function RapPage({ page }: { page: RapPageData }) {
         </Container>
       </section>
 
-      <section className="relative overflow-hidden">
-        <ResponsiveImage
-          src={page.cta.background}
-          alt={page.cta.heading || "Reconciliation Action Plan CTA"}
-          title={page.cta.heading || "Reconciliation Action Plan CTA"}
-          className="absolute inset-0 h-full w-full object-cover"
-          priority
-        />
-        <div className="absolute inset-0 bg-[#a34218]/35" />
-        <Container className="relative py-20 sm:py-28 lg:py-36">
-          <div className="border-t-[4px] border-white bg-[#71351f]/45 px-6 py-14 text-center text-white sm:px-12 lg:py-24" data-aos="fade-up">
-            <h2 className="font-heading text-4xl leading-none sm:text-5xl lg:text-[64px]">{page.cta.heading}</h2>
-            {page.cta.description && <p className="mx-auto mt-5 max-w-xl text-base text-white/90 sm:text-lg">{page.cta.description}</p>}
-            {page.cta.buttonLabel && page.cta.buttonUrl && (
-              <a
-                href={page.cta.buttonUrl}
-                target="_blank"
-                rel="noreferrer"
-                title={page.cta.buttonLabel}
-                aria-label={page.cta.buttonLabel}
-                className="mt-8 inline-flex items-center gap-3 rounded-full bg-white px-7 py-4 text-base uppercase text-[#D18148] transition hover:bg-white/90 sm:px-10 sm:py-5 sm:text-[20px]"
-              >
-                <span>{page.cta.buttonLabel}</span>
-                <Arrow />
-              </a>
-            )}
-          </div>
-        </Container>
-      </section>
+      <CtaSection
+        content={{
+          image: page.cta.background,
+          title: page.cta.heading,
+          description: page.cta.description,
+          buttonText: page.cta.buttonLabel,
+          buttonHref: page.cta.buttonUrl,
+        }}
+        titleUppercase={false}
+      />
     </article>
   );
 }

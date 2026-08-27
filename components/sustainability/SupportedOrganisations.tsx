@@ -53,7 +53,7 @@ export function SupportedOrganisations({
             className="relative inline-block bg-[#F0C7BD] py-8 lg:py-10 pr-8 lg:pr-16 max-w-[620px]"
           >
             <div className="absolute top-0 bottom-0 right-full w-[100vw] bg-[#F0C7BD]" />
-            <h2 className="relative z-10 font-heading text-3xl lg:text-[40px] uppercase font-bold text-black leading-tight">
+            <h2 className="relative z-10 font-heading text-2xl md:text-3xl lg:text-[34px] xl:text-[40px] uppercase font-bold text-black leading-tight">
               {heading}
             </h2>
           </div>

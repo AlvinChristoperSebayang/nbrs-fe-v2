@@ -9,6 +9,9 @@ export type CareersHeroProps = {
   registration?: string;
   description?: React.ReactNode;
   imageSrc?: ImageSource;
+  imagePosition?: string;
+  imageClassName?: string;
+  imageContainerClassName?: string;
 };
 
 function cleanTitleString(title: string): string {
@@ -121,30 +124,33 @@ export function CareersHero({
   registration,
   description,
   imageSrc = "/images/hero/hero4.png",
+  imagePosition = "object-top",
+  imageClassName = "",
+  imageContainerClassName = "",
 }: CareersHeroProps) {
   const altTitle = typeof title === "string" ? title : "NBRS Careers";
 
   return (
-    <section className="relative bg-[#0B131F] text-white h-full lg:h-[730px] mb-0 lg:mb-24 overflow-visible">
+    <section className="relative bg-[#0B131F] text-white h-full lg:h-[600px] xl:h-[730px] mb-8 sm:mb-12 lg:mb-20 xl:mb-28 overflow-visible">
       {/* Background Dimmed Image on Right Side */}
-      <div className="absolute top-0 right-0 w-full lg:w-[948px] h-full lg:h-[730px] overflow-hidden pointer-events-none z-0 hidden lg:block">
+      <div className="absolute top-0 right-0 w-full lg:w-[800px] xl:w-[948px] h-full lg:h-[600px] xl:h-[730px] overflow-hidden pointer-events-none z-0 hidden lg:block">
         <ResponsiveImage
           src={imageSrc}
           alt={altTitle}
           title={altTitle}
-          className="h-full w-full object-cover filter brightness-[0.35] contrast-[1.1]"
+          className={`h-full w-full object-cover ${imagePosition} filter brightness-[0.35] contrast-[1.1]`}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-[#0B131F] via-[#0B131F]/80 to-transparent" />
       </div>
 
       <Container className="relative z-10 h-full">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center lg:items-start min-h-[520px] lg:h-full relative lg:pt-36">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 xl:gap-12 items-center lg:items-start min-h-[520px] lg:h-full relative lg:pt-28 xl:pt-36">
           {/* Left Column: Title, White Bar, Attributes & Optional Description */}
           <div
             data-aos="fade-up"
-            className="lg:col-span-4 flex flex-col items-start gap-4 lg:gap-6 pt-24 pb-4 lg:pt-0 lg:pb-0"
+            className="lg:col-span-5 xl:col-span-4 flex flex-col items-start gap-4 lg:gap-5 xl:gap-6 pt-24 pb-4 lg:pt-0 lg:pb-0"
           >
-            <h1 className="font-heading whitespace-pre-line text-4xl sm:text-5xl lg:text-[65px] font-bold uppercase tracking-wide leading-none text-white">
+            <h1 className="font-heading whitespace-pre-line text-4xl sm:text-5xl lg:text-[42px] xl:text-[58px] 2xl:text-[70px] font-bold uppercase tracking-wide leading-none text-white">
               {renderCareersTitle(title)}
             </h1>
 
@@ -184,7 +190,7 @@ export function CareersHero({
             )}
 
             {description && (
-              <div className="font-sans whitespace-pre-line text-base sm:text-lg text-white/90 leading-relaxed max-w-xl">
+              <div className="font-sans whitespace-pre-line text-base lg:text-[15px] xl:text-lg text-white/90 leading-relaxed max-w-xl">
                 {description}
               </div>
             )}
@@ -194,14 +200,14 @@ export function CareersHero({
           <div
             data-aos="fade-up"
             data-aos-delay="150"
-            className="lg:col-span-8 flex justify-start w-full"
+            className="lg:col-span-7 xl:col-span-8 flex justify-start w-full"
           >
-            <div className="relative w-[calc(100%+1rem)] sm:w-[calc(100%+1.5rem)] lg:w-full min-h-[440px] h-[440px] sm:h-[500px] lg:h-[640px] overflow-hidden z-30 transform lg:transform-none border border-white/10 -mr-6 lg:mr-0">
+            <div className={`relative w-[calc(100%+1rem)] sm:w-[calc(100%+1.5rem)] lg:w-full min-h-[440px] h-[440px] sm:h-[500px] lg:h-[540px] xl:h-[640px] overflow-hidden z-30 transform lg:transform-none border border-white/10 -mr-6 lg:mr-0 ${imageContainerClassName}`}>
               <ResponsiveImage
                 src={imageSrc}
                 alt="NBRS Featured Hero"
                 title="NBRS Featured Hero"
-                className="h-full w-full object-cover"
+                className={`h-full w-full object-cover ${imagePosition} ${imageClassName}`}
               />
             </div>
           </div>
