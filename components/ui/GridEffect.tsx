@@ -169,7 +169,7 @@ export function GridEffect({
                     <h3
                       className={`font-heading text-2xl uppercase leading-tight duration-300 sm:text-3xl sm:max-w-none lg:max-w-[231px] ${
                         isActive
-                          ? "text-white lg:text-[36px]"
+                          ? "text-white lg:text-2xl xl:text-[36px]"
                           : `lg:text-[18px] ${titleClassNameNonHover}`
                       }`}
                     >

@@ -182,7 +182,7 @@ export function SectorFeaturesSliderSection({
                   <>
                     <div className="flex flex-col gap-2">
                       <h3
-                        className={`font-heading text-2xl uppercase leading-tight duration-300 max-w-[231px] ${
+                        className={`font-heading text-2xl uppercase leading-tight duration-300 max-w-57.75 ${
                           isActive
                             ? "text-white text-[32px]"
                             : "text-black text-[20px]"

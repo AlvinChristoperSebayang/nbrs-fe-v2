@@ -41,7 +41,7 @@ function CheckboxGroup({
   return (
     <fieldset className="flex flex-col gap-3">
       <span className="font-sans text-sm text-black pb-1">{legend}</span>
-      <div className={compact ? "grid grid-cols-2 sm:flex items-center gap-x-6 gap-y-3" : "grid grid-cols-2 gap-2.5"}>
+      <div className={compact ? "grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-6 xl:flex sm:flex-wrap items-center gap-x-4 xl:gap-x-6 gap-y-3" : "grid grid-cols-2 gap-2.5"}>
         {options.map((option) => {
           const slug = slugify(option);
           const id = `${prefix}-${slug}`;

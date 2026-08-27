@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { Container } from "@/components/ui/Container";
 import { getContactPageContent } from "@/lib/contact";
@@ -86,6 +87,12 @@ export default async function ContactPage() {
                 {studio.phone && <span className="font-sans text-base font-medium text-black">{studio.phone}</span>}
               </section>
             ))}
+            <Link
+              href="/9-day-fortnight"
+              className="font-sans text-base font-semibold leading-5 tracking-[0.02em] text-black hover:underline underline-offset-4"
+            >
+              NBRS operates on a 9-day fortnight schedule.
+            </Link>
           </div>
         </div>
       </Container>

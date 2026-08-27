@@ -39,7 +39,7 @@ export function PeopleNavigationGrid({ cards }: PeopleNavigationGridProps) {
             />
 
             {/* Left Text Box */}
-            <div className="lg:col-span-8 flex flex-col justify-between gap-6 p-6 sm:p-8 lg:p-8 xl:p-12 pt-8 sm:pt-10 lg:pt-10 xl:pt-14 min-h-[250px]">
+            <div className="lg:col-span-7 xl:col-span-8 flex flex-col justify-between gap-6 p-6 sm:p-8 lg:p-8 xl:p-12 pt-8 sm:pt-10 lg:pt-10 xl:pt-14 min-h-62.5">
               <div className="flex flex-col gap-3">
                 {/* Mobile Title (Team) vs Desktop Title (TEAM) */}
                 <span className="lg:hidden font-sans text-base font-medium text-white/80">
@@ -75,7 +75,7 @@ export function PeopleNavigationGrid({ cards }: PeopleNavigationGridProps) {
             </div>
 
             {/* Right Image Box (Desktop Only - Subtle Scale Zoom on Hover) */}
-            <div className="hidden lg:block lg:col-span-4 relative min-h-[280px] xl:min-h-[300px] overflow-hidden">
+            <div className="hidden lg:block lg:col-span-5 xl:col-span-4 relative min-h-[280px] xl:min-h-[300px] overflow-hidden">
               <ResponsiveImage
                 src={teamCard.image}
                 alt={teamCard.title}
