@@ -61,6 +61,16 @@ export function AboutSection({
   description_class_name,
   single_line_heading = false,
 }: AboutSectionProps) {
+  const descriptionClassName = [
+    "text-base leading-relaxed text-white/90",
+    "[&_p]:m-0 [&_p+p]:mt-4",
+    "[&_a]:underline [&_a]:underline-offset-2 hover:[&_a]:text-white",
+    "[&_strong]:font-semibold",
+    "[&_ul]:my-4 [&_ul]:list-disc [&_ul]:pl-5",
+    "[&_ol]:my-4 [&_ol]:list-decimal [&_ol]:pl-5",
+    description_class_name ?? "max-w-md",
+  ].join(" ");
+
   return (
     <section className="section-about bg-white pb-5 lg:pb-24">
       <div className="w-full bg-[#070F0F] relative">
@@ -74,13 +84,12 @@ export function AboutSection({
               >
                 {renderAboutHeading(heading, single_line_heading)}
               </h2>
-              <p
+              <div
                 data-aos="fade-up"
                 data-aos-delay="150"
-                className={description_class_name ? `text-white/90 ${description_class_name}` : "max-w-md text-white/90"}
-              >
-                {description}
-              </p>
+                className={descriptionClassName}
+                dangerouslySetInnerHTML={{ __html: description }}
+              />
               {button && (
                 <div data-aos="fade-up" data-aos-delay="200" className="mt-1">
                   <Link
@@ -130,4 +139,3 @@ export function AboutSection({
     </section>
   );
 }
-
