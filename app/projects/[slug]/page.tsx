@@ -83,8 +83,8 @@ export default async function ProjectPage(
         }))
       : FALLBACK_KEY_PROJECTS;
 
-  const heroImage =
-    project.splash.find((slide) => slide.imageUrl)?.imageUrl ?? project.thumbnailUrl;
+    const heroImage =
+    project.thumbnailUrl ?? project.splash.find((slide) => slide.imageUrl)?.imageUrl;
 
   return (
     <article className="bg-white text-black min-h-screen">
