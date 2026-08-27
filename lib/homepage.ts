@@ -9,6 +9,11 @@ import type {
 } from "./types";
 
 type RawAsset = { mobile?: string; tablet?: string; desktop?: string };
+type RawHeroBackgroundAsset = {
+  backgroundMobile?: string;
+  backgroundTablet?: string;
+  backgroundDesktop?: string;
+};
 type RawNewsArticle = {
   slug: string;
   artHdrHeading: string | null;
@@ -27,6 +32,12 @@ const HERO_IMAGE_DIMENSIONS = {
   mobile: { width: 600, height: 800 },
   tablet: { width: 1440, height: 1000 },
   desktop: { width: 2400, height: 1200 },
+} satisfies ResponsiveImageDimensions;
+
+const HERO_FOREGROUND_DIMENSIONS = {
+  mobile: { width: 600, height: 467 },
+  tablet: { width: 1080, height: 840 },
+  desktop: { width: 1600, height: 1245 },
 } satisfies ResponsiveImageDimensions;
 
 const ABOUT_IMAGE_DIMENSIONS = {
@@ -54,12 +65,13 @@ type HomepageResponse = {
       subheading: string | null;
       linkText: string | null;
       linkUrl: string | null;
-      image: RawAsset[];
+      image: RawHeroBackgroundAsset[];
+      foregroundImage?: RawAsset[];
     }>;
     whatWeDo: Array<{
       heading: string | null;
       subheading: string | null;
-      text: string | null;
+      descriptionHtml: string | null;
       buttonText: string | null;
       buttonUrl: string | null;
     }>;
@@ -157,9 +169,16 @@ const HOMEPAGE_QUERY = /* GraphQL */ `
             linkText
             linkUrl
             image {
-              mobile: url @transform(width: 600, height: 800, mode: "crop", format: "webp", quality: 80, immediately: true)
-              tablet: url @transform(width: 1440, height: 1000, mode: "crop", format: "webp", quality: 82, immediately: true)
-              desktop: url @transform(width: 2400, height: 1200, mode: "crop", format: "webp", quality: 85, immediately: true)
+              backgroundMobile: url @transform(format: "webp", quality: 80, immediately: true)
+              backgroundTablet: url @transform(format: "webp", quality: 82, immediately: true)
+              backgroundDesktop: url @transform(format: "webp", quality: 85, immediately: true)
+            }
+            foregroundImage {
+              # These are already the approved Figma panel crops. Do not crop
+              # them again in Craft, otherwise the white frame composition shifts.
+              mobile: url
+              tablet: url
+              desktop: url
             }
           }
         }
@@ -167,7 +186,7 @@ const HOMEPAGE_QUERY = /* GraphQL */ `
           ... on whatWeDo_Entry {
             heading
             subheading
-            text
+            descriptionHtml: text
             buttonText
             buttonUrl
           }
@@ -215,12 +234,6 @@ const HOMEPAGE_QUERY = /* GraphQL */ `
   }
 `;
 
-function plainText(value: string | null): string | null {
-  if (!value) return null;
-
-  return value.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim() || null;
-}
-
 function mapNewsArticles(articles: RawNewsArticle[]): NewsItem[] {
   return articles
     .filter(
@@ -267,19 +280,54 @@ export async function getHomepageContent(): Promise<HomepageContent> {
         .filter(
           (slide) =>
             slide.heading &&
-            toImageSource(slide.image[0], HERO_IMAGE_DIMENSIONS),
+            toImageSource(
+              {
+                mobile: slide.image[0]?.backgroundMobile,
+                tablet: slide.image[0]?.backgroundTablet,
+                desktop: slide.image[0]?.backgroundDesktop,
+              },
+              HERO_IMAGE_DIMENSIONS,
+            ) &&
+            toImageSource(
+              {
+                mobile: slide.foregroundImage?.[0]?.mobile ?? slide.image[0]?.backgroundMobile,
+                tablet: slide.foregroundImage?.[0]?.tablet ?? slide.image[0]?.backgroundTablet,
+                desktop: slide.foregroundImage?.[0]?.desktop ?? slide.image[0]?.backgroundDesktop,
+              },
+              HERO_FOREGROUND_DIMENSIONS,
+            ),
         )
-        .map((slide) => ({
-          title: slide.heading as string,
-          headline: slide.subheading ?? "",
-          image: toImageSource(slide.image[0], HERO_IMAGE_DIMENSIONS)!,
-        })),
+        .map((slide) => {
+          const asset = slide.image[0];
+
+          return {
+            title: slide.heading as string,
+            headline: slide.subheading ?? "",
+            backgroundImage: toImageSource(
+              {
+                mobile: asset.backgroundMobile,
+                tablet: asset.backgroundTablet,
+                desktop: asset.backgroundDesktop,
+              },
+              HERO_IMAGE_DIMENSIONS,
+            )!,
+            foregroundImage: toImageSource(
+              {
+                mobile: slide.foregroundImage?.[0]?.mobile ?? asset.backgroundMobile,
+                tablet: slide.foregroundImage?.[0]?.tablet ?? asset.backgroundTablet,
+                desktop: slide.foregroundImage?.[0]?.desktop ?? asset.backgroundDesktop,
+              },
+              HERO_FOREGROUND_DIMENSIONS,
+            )!,
+          };
+        }),
       about: homepage.whatWeDo?.[0]
         ? {
             heading: homepage.whatWeDo[0].heading,
             description:
-              plainText(homepage.whatWeDo[0].subheading) ??
-              plainText(homepage.whatWeDo[0].text),
+              homepage.whatWeDo[0].descriptionHtml?.trim() ||
+              homepage.whatWeDo[0].subheading?.trim() ||
+              null,
             button:
               homepage.whatWeDo[0].buttonText && homepage.whatWeDo[0].buttonUrl
                 ? {

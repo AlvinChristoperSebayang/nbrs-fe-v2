@@ -10,7 +10,6 @@ import "swiper/css/effect-fade";
 import "swiper/css/pagination";
 import type { HeroSlide } from "@/lib/hero";
 import type { ImageSource } from "@/lib/types";
-import { Container } from "@/components/ui/Container";
 
 const swiperVars = {
   "--swiper-pagination-color": "#FFFFFF",
@@ -43,14 +42,14 @@ export function HeroSlider({ slides }: HeroSliderProps) {
   const isLastSlide = activeIndex === slides.length - 1;
 
   return (
-    <section className="relative overflow-hidden hero-slider">
+    <section className="relative h-190 overflow-hidden bg-[#101420] hero-slider lg:h-227.5">
       {slides.map((slide, index) => (
         <ResponsiveImage
           key={`${slide.title}-${index}-bg`}
-          src={imageSource(slide.image)}
+          src={imageSource(slide.backgroundImage)}
           alt={slide.title || "NBRS Architecture"}
           title={slide.title || "NBRS Architecture"}
-          className={`absolute inset-0 z-10 h-full w-full scale-110 object-cover transition-opacity duration-1000 ease-in-out ${
+          className={`absolute inset-0 z-0 h-full w-full scale-110 object-cover transition-opacity duration-1000 ease-in-out ${
             index === activeIndex ? "opacity-100" : "opacity-0"
           }`}
           priority={index === 0}
@@ -58,12 +57,11 @@ export function HeroSlider({ slides }: HeroSliderProps) {
           height={1200}
         />
       ))}
-      <div className="absolute inset-0 top-0 left-0 z-20 h-full w-full bg-black/30" />
-      <Container className="relative z-30 pt-40 pb-10 lg:py-30">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-[30px] items-center relative">
+      <div className="absolute inset-0 z-10 h-full w-full bg-black/30 backdrop-blur-[2px]" />
+      <div className="relative z-20 h-full">
           <div
             key={activeIndex}
-            className="lg:col-span-4 z-20 flex flex-col justify-center gap-1 w-full pointer-events-none"
+            className="pointer-events-none absolute left-5 right-5 top-[43%] z-30 flex flex-col justify-center gap-1 sm:left-10 sm:right-10 lg:left-[5%] xl:left-[9.375%] lg:right-auto lg:top-[50%] xl:top-[37.5%] lg:w-[32%]"
           >
             <h1
               style={{ animation: "hero-fade-up 0.7s ease-out both" }}
@@ -88,14 +86,14 @@ export function HeroSlider({ slides }: HeroSliderProps) {
             {!isLastSlide && activeSlide.headline && (
               <p
                 style={{ animation: "hero-fade-up 0.7s ease-out 0.2s both" }}
-                className="font-gothic font-trade-gothic text-lg uppercase tracking-[0%] text-white/90 sm:text-[40px] mt-2 whitespace-nowrap"
+                className="font-gothic font-trade-gothic text-lg uppercase tracking-[0%] text-white/90 lg:text-2xl xl:text-[40px] mt-2"
               >
                 {activeSlide.headline}
               </p>
             )}
           </div>
 
-          <div className="lg:col-span-8 relative z-10 w-[calc(100%+1.25rem)] sm:w-[calc(100%+1.5rem)] -mr-5 sm:-mr-6 lg:mr-0 lg:w-full max-w-none lg:max-w-full overflow-hidden slider-area">
+          <div className="absolute left-5 right-0 top-10 z-20 aspect-769/599 overflow-hidden sm:left-10 sm:right-10 lg:left-auto lg:right-[9.44%] lg:top-[300px] xl:top-33.75 lg:w-[53.41vw] lg:max-w-192.25 slider-area">
             <Swiper
               modules={[Autoplay, EffectFade, Navigation, Pagination, A11y]}
               effect="fade"
@@ -106,10 +104,10 @@ export function HeroSlider({ slides }: HeroSliderProps) {
               navigation={{ prevEl: `#${prevId}`, nextEl: `#${nextId}` }}
               pagination={{ el: `#${paginationId}`, clickable: true }}
               onSlideChange={handleSlideChange}
-              className="h-64 w-full max-w-full overflow-hidden shadow-2xl ring-1 ring-white sm:h-96 lg:h-130 xl:h-160"
+              className="h-full w-full max-w-full overflow-hidden"
             >
               {slides.map((slide, index) => {
-                const src = imageSource(slide.image);
+                const src = imageSource(slide.foregroundImage);
 
                 return (
                   <SwiperSlide key={`${slide.title}-${index}`} className="relative">
@@ -118,15 +116,16 @@ export function HeroSlider({ slides }: HeroSliderProps) {
                       alt={slide.title || "NBRS Architecture"}
                       title={slide.title || "NBRS Architecture"}
                       className="h-full w-full object-cover"
-                      width={2400}
-                      height={1200}
+                      width={769}
+                      height={599}
                     />
                   </SwiperSlide>
                 );
               })}
             </Swiper>
 
-            <div style={swiperVars} className="mt-4 flex items-center justify-center md:justify-end gap-4 swipe-controls">
+          </div>
+          <div style={swiperVars} className="absolute bottom-8 left-5 right-5 z-30 flex items-center justify-center gap-4 sm:left-10 sm:right-10 lg:bottom-auto lg:left-[62.85%] lg:right-[9.44%] lg:top-192.5 lg:justify-between swipe-controls">
               <button
                 id={prevId}
                 type="button"
@@ -149,10 +148,8 @@ export function HeroSlider({ slides }: HeroSliderProps) {
                   <path d="M16.4141 8.70703L7.70703 17.4141L6.29297 16L12.5859 9.70703H0V7.70703H12.5859L6.29297 1.41406L7.70703 0L16.4141 8.70703Z" fill="white"/>
                 </svg>
               </button>
-            </div>
           </div>
-        </div>
-      </Container>
+      </div>
     </section>
   );
 }

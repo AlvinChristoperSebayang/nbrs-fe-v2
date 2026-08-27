@@ -112,6 +112,16 @@ export function AboutSection({
   image_container_class_name,
   image_class_name,
 }: AboutSectionProps) {
+  const descriptionClassName = [
+    "text-base leading-relaxed text-white/90",
+    "[&_p]:m-0 [&_p+p]:mt-4",
+    "[&_a]:underline [&_a]:underline-offset-2 hover:[&_a]:text-white",
+    "[&_strong]:font-semibold",
+    "[&_ul]:my-4 [&_ul]:list-disc [&_ul]:pl-5",
+    "[&_ol]:my-4 [&_ol]:list-decimal [&_ol]:pl-5",
+    description_class_name ?? "max-w-md",
+  ].join(" ");
+
   return (
     <section className="section-about bg-white pb-5 lg:pb-16 xl:pb-24">
       <div className="w-full bg-[#070F0F] relative">
@@ -177,4 +187,3 @@ export function AboutSection({
     </section>
   );
 }
-
