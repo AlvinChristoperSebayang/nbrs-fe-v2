@@ -84,7 +84,7 @@ export function TextGrid({
               key={`top-${index}`}
               data-aos="fade-up"
               data-aos-delay={100 + index * 100}
-              className="h-56 w-full overflow-hidden sm:h-48 lg:col-span-1 rounded-[5px] lg:h-[300px]"
+              className="h-56 w-full overflow-hidden xl:h-[300px] lg:col-span-1 rounded-[5px] lg:h-[250px]"
             >
               <ResponsiveImage src={src} alt="NBRS Architecture project" title="NBRS Architecture project" className="h-full w-full object-cover rounded-[5px]" />
             </div>
@@ -97,7 +97,7 @@ export function TextGrid({
               key={`gallery-${index}`}
               data-aos="fade-up"
               data-aos-delay={index * 100}
-              className="h-56 w-full overflow-hidden sm:h-48 lg:h-[300px]"
+              className="h-56 w-full overflow-hidden xl:h-[300px] lg:h-[250px]"
             >
               <ResponsiveImage src={src} alt="NBRS Architecture project gallery" title="NBRS Architecture project gallery" className="h-full w-full object-cover rounded-[5px]" />
             </div>

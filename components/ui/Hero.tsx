@@ -155,7 +155,7 @@ export function Hero({
   const hasExplicitLines = typeof title === "string" && title.includes("\n");
 
   return (
-    <section className="relative w-full flex flex-col justify-between h-[610px] lg:h-[85vh]">
+    <section className="relative w-full flex flex-col justify-between h-152.5 xl:min-h-[85vh] xl:h-227.5">
       {/* Background Image Container */}
       <div className="absolute inset-0 overflow-hidden">
         <ResponsiveImage
