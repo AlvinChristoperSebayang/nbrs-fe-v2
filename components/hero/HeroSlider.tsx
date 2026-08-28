@@ -69,8 +69,8 @@ export function HeroSlider({ slides }: HeroSliderProps) {
               style={{ animation: "hero-fade-up 0.7s ease-out both" }}
               className={`font-heading font-bold uppercase text-white ${
                 isLastSlide
-                  ? "text-[130px] lg:text-[264px] leading-[0.85] tracking-tighter whitespace-nowrap"
-                  : "text-[50px] lg:text-[132px] leading-none tracking-tight whitespace-nowrap"
+                  ? "text-[130px] lg:text-[264px] xl:text-[290px] leading-[0.85] tracking-tighter whitespace-nowrap"
+                  : "text-[50px] lg:text-[132px] xl:text-[142px] leading-none tracking-tight whitespace-nowrap"
               }`}
             >
               {isLastSlide ? (
