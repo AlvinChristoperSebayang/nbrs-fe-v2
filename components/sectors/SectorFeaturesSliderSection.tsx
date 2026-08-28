@@ -193,7 +193,7 @@ export function SectorFeaturesSliderSection({
 
                       {item.description && (
                         <p
-                          className={`line-clamp-3 max-w-[231px] text-sm text-white/90 transition-opacity duration-300 ${
+                          className={`max-w-[231px] text-sm text-white/90 transition-opacity duration-300 ${
                             isActive ? "opacity-100" : "opacity-0"
                           }`}
                         >

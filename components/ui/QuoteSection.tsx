@@ -43,7 +43,7 @@ export function QuoteSection({
             data-aos="fade-up"
             data-aos-delay="150"
             suppressHydrationWarning
-            className="flex flex-col justify-between bg-[#D9D9D9] lg:bg-white/75 lg:backdrop-blur-xs w-full p-8 sm:p-10 lg:absolute lg:top-1/2 lg:-translate-y-1/2 lg:left-[45%] xl:left-[48%] 2xl:left-[50%] lg:w-[55%] xl:w-[580px] 2xl:w-[630px] lg:min-h-[309px] lg:p-10 max-lg:border-none border border-white/80"
+            className="flex flex-col justify-between bg-[#D9D9D9] lg:bg-white/75 lg:backdrop-blur-xs w-full p-8 sm:p-10 lg:absolute lg:top-1/2 lg:-translate-y-1/2 lg:left-[45%] xl:left-[48%] 2xl:left-[50%] lg:w-[55%] xl:w-[580px] 2xl:w-[630px] lg:min-h-[309px] lg:max-h-[394px] lg:p-10 max-lg:border-none border border-white/80"
           >
             {/* Top Quote Icon */}
             <span
@@ -64,7 +64,7 @@ export function QuoteSection({
             </span>
 
             {/* Quote Text - Exact Typography from Figma (Roboto, 400, Italic, 24px, 100% line-height, 0% letter-spacing) */}
-            <p className="font-sans text-[20px] sm:text-[24px] lg:text-[28px] xl:text-[32px] font-normal italic leading-[1.25] tracking-normal text-black my-3">
+            <p className="font-sans text-[24px] font-normal italic leading-[1.25] tracking-normal text-black my-3">
               {quote}
             </p>
 
