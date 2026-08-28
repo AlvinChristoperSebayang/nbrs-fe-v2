@@ -169,16 +169,14 @@ const HOMEPAGE_QUERY = /* GraphQL */ `
             linkText
             linkUrl
             image {
-              backgroundMobile: url @transform(width: 600, height: 800, mode: "crop", format: "webp", quality: 80, immediately: true)
-              backgroundTablet: url @transform(width: 1440, height: 1000, mode: "crop", format: "webp", quality: 82, immediately: true)
-              backgroundDesktop: url @transform(format: "webp", quality: 85, immediately: true)
+              backgroundMobile: url @transform(width: 768, mode: "fit", format: "webp", quality: 80, immediately: true)
+              backgroundTablet: url @transform(width: 1440, mode: "fit", format: "webp", quality: 82, immediately: true)
+              backgroundDesktop: url @transform(width: 2400, mode: "fit", format: "webp", quality: 85, immediately: true)
             }
             foregroundImage {
-              # These are already the approved Figma panel crops. Do not crop
-              # them again in Craft, otherwise the white frame composition shifts.
-              mobile: url
-              tablet: url
-              desktop: url
+              mobile: url @transform(width: 768, mode: "fit", format: "webp", quality: 80, immediately: true)
+              tablet: url @transform(width: 1440, mode: "fit", format: "webp", quality: 82, immediately: true)
+              desktop: url @transform(width: 2400, mode: "fit", format: "webp", quality: 85, immediately: true)
             }
           }
         }
