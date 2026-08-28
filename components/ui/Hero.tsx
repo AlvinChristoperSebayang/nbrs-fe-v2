@@ -17,6 +17,7 @@ export type HeroProps = {
   containerClassName?: string;
   contentClassName?: string;
   overlayClassName?: string;
+  imageClassName?: string;
   showDivider?: boolean;
   children?: React.ReactNode;
 };
@@ -148,6 +149,7 @@ export function Hero({
   containerClassName = "",
   contentClassName = "",
   overlayClassName = "bg-black/40",
+  imageClassName = "",
   showDivider = true,
   children,
 }: HeroProps) {
@@ -162,7 +164,7 @@ export function Hero({
           src={image}
           alt={typeof title === "string" ? title.replace(/\n/g, " ") : "NBRS Architecture"}
           title={typeof title === "string" ? title.replace(/\n/g, " ") : "NBRS Architecture"}
-          className="h-full w-full object-cover"
+          className={`h-full w-full object-cover ${imageClassName}`}
           priority
         />
         <div className={`absolute inset-0 ${overlayClassName}`} />
