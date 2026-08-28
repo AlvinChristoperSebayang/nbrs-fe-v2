@@ -29,6 +29,7 @@ export default async function DesignApproachPage() {
         description={content.hero.description}
         button={content.hero.button}
         descriptionClassName="max-w-[430px]"
+        imageClassName="object-right md:object-center"
       />
       <div>
         <div className="bg-[#DEE1F2] h-1.5 md:h-0" />
