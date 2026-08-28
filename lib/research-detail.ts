@@ -90,7 +90,7 @@ type RelatedResearchFallbackResponse = {
 };
 
 type CategoryRelationCriteriaInput = {
-  group: "sector";
+  group: "sector" | "discipline";
   slug: string[];
 };
 
@@ -345,11 +345,26 @@ export const getResearchDetail = cache(async (slug: string): Promise<ResearchDet
   const ctaImage = toImageSource(cta?.ctaSectionBackgroundImage?.[0]);
   const manualRelated = entry.researchRelated ?? [];
   const sectorSlugs = (entry.catSector ?? []).map((sector) => sector.slug).filter(Boolean);
-  const fallbackRelated = manualRelated.length === 0 && sectorSlugs.length > 0
-    ? (await craftFetch<RelatedResearchFallbackResponse>(RELATED_RESEARCH_FALLBACK_QUERY, {
-        relatedToCategories: [{ group: "sector", slug: sectorSlugs }] satisfies CategoryRelationCriteriaInput[],
-      })).entries ?? []
-    : [];
+  const practiceSlugs = (entry.catDiscipline ?? []).map((practice) => practice.slug).filter(Boolean);
+  let fallbackRelated: RawRelatedResearch[] = [];
+
+  if (manualRelated.length === 0 && sectorSlugs.length > 0) {
+    const sectorRelated = (await craftFetch<RelatedResearchFallbackResponse>(RELATED_RESEARCH_FALLBACK_QUERY, {
+      relatedToCategories: [{ group: "sector", slug: sectorSlugs }] satisfies CategoryRelationCriteriaInput[],
+    })).entries ?? [];
+
+    // The query includes the current entry, so assess the filtered card result before
+    // considering Sector a successful match.
+    if (toRelatedResearchItems(sectorRelated, entry.slug).length > 0) {
+      fallbackRelated = sectorRelated;
+    }
+  }
+
+  if (manualRelated.length === 0 && fallbackRelated.length === 0 && practiceSlugs.length > 0) {
+    fallbackRelated = (await craftFetch<RelatedResearchFallbackResponse>(RELATED_RESEARCH_FALLBACK_QUERY, {
+      relatedToCategories: [{ group: "discipline", slug: practiceSlugs }] satisfies CategoryRelationCriteriaInput[],
+    })).entries ?? [];
+  }
   const downloadCta = cta && downloadTarget
     ? {
         image: ctaImage ?? "/images/contact-bg.png",
