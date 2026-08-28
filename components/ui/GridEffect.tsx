@@ -157,7 +157,7 @@ export function GridEffect({
               const isActive = index === activeIndex;
               const hasHref = Boolean(item.href);
 
-              const cardClassName = `lg:col-span-4 group flex h-64 flex-col justify-between gap-8 overflow-hidden p-5 sm:p-6 md:p-8 transition-colors duration-300 lg:h-80 lg:p-5 mx-0 md:mx-4 ${
+              const cardClassName = `lg:col-span-4 group flex h-64 flex-col justify-between gap-8 overflow-hidden p-5 sm:p-6 md:p-8 transition-colors duration-300 lg:h-72 xl:h-80 lg:p-5 mx-0 md:mx-4 ${
                 isActive
                   ? "bg-black/50 backdrop-blur-[5px] border-b-[5px] border-white"
                   : "bg-white/70 backdrop-blur-[0px] border-b-[5px] border-transparent"

@@ -120,7 +120,7 @@ export function TeamListSection({ members }: TeamListSectionProps) {
 
                 {/* Member Details Box */}
                 <div
-                  className="relative flex-1 flex flex-col justify-between gap-3 sm:gap-4 p-4 sm:p-5 lg:p-6 min-h-[160px] sm:min-h-[180px] lg:min-h-[200px] bg-[#DEE1F2] text-black transition-colors duration-500 ease-out group-hover:brightness-[0.96]"
+                  className="relative flex-1 flex flex-col justify-between gap-3 sm:gap-4 p-4 sm:p-5 lg:p-6 min-h-[160px] sm:min-h-[180px] xl:min-h-[200px] bg-[#DEE1F2] text-black transition-colors duration-500 ease-out group-hover:brightness-[0.96]"
                 >
                   <div className="flex flex-col gap-1.5 pr-8">
                     <h2 className="font-sans text-base sm:text-lg lg:text-xl font-bold leading-snug text-black">
