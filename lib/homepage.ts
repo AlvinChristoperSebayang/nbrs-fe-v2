@@ -169,15 +169,9 @@ const HOMEPAGE_QUERY = /* GraphQL */ `
             linkText
             linkUrl
             image {
-<<<<<<< HEAD
-              backgroundMobile: url @transform(width: 768, mode: "fit", format: "webp", quality: 80, immediately: true)
-              backgroundTablet: url @transform(width: 1440, mode: "fit", format: "webp", quality: 82, immediately: true)
-              backgroundDesktop: url @transform(width: 2400, mode: "fit", format: "webp", quality: 85, immediately: true)
-=======
               backgroundMobile: url @transform(width: 600, height: 800, mode: "crop", format: "webp", quality: 80, immediately: true)
               backgroundTablet: url @transform(width: 1440, height: 1000, mode: "crop", format: "webp", quality: 82, immediately: true)
               backgroundDesktop: url @transform(format: "webp", quality: 85, immediately: true)
->>>>>>> 6b9b98f (feat : fixing homepage slider)
             }
             foregroundImage {
               mobile: url @transform(width: 768, mode: "fit", format: "webp", quality: 80, immediately: true)
