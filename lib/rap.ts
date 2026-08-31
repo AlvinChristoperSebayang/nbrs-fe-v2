@@ -28,6 +28,7 @@ type RapQueryData = {
     postDate?: string | null;
     heroImage?: CraftAsset[] | null;
     artIssuuUrl?: string | null;
+    rapPdfFile?: CraftAsset[] | null;
     rapAuthor?: string | null;
     rapEndorsedBy?: string | null;
     rapReadTime?: string | null;
@@ -110,6 +111,7 @@ const RAP_SINGLE_QUERY = /* GraphQL */ `
         rapEndorsedBy
         rapReadTime
         artIssuuUrl
+        rapPdfFile { url }
         seoPageTitle
         seoMetaDescription
         seoImage { url width height title }
@@ -230,7 +232,7 @@ async function getRapPageFrom(query: string): Promise<RapPageData> {
         heading: entry.ctaSection?.ctaSectionHeading || FALLBACK_DATA.cta.heading,
         description: entry.ctaSection?.ctaSectionDescription || FALLBACK_DATA.cta.description,
         buttonLabel: entry.ctaSection?.ctaSectionButtonLabel || FALLBACK_DATA.cta.buttonLabel,
-        buttonUrl: entry.ctaSection?.ctaSectionButtonUrl || entry.artIssuuUrl || FALLBACK_DATA.cta.buttonUrl,
+        buttonUrl: firstAsset(entry.rapPdfFile)?.url || entry.artIssuuUrl || entry.ctaSection?.ctaSectionButtonUrl || FALLBACK_DATA.cta.buttonUrl,
         background: toImageSource(firstAsset(entry.ctaSection?.ctaSectionBackgroundImage))
           || toImageSource(firstAsset(entry.rapDownloadBackground))
           || FALLBACK_DATA.cta.background,

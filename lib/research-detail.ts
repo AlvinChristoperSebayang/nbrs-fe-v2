@@ -340,7 +340,6 @@ export const getResearchDetail = cache(async (slug: string): Promise<ResearchDet
   const configuredInsight = entry.researchInsight?.trim() || null;
   const downloadUrl = entry.artFileDownload?.[0]?.url ?? null;
   const issuuUrl = entry.artIssuuUrl?.trim() || null;
-  const downloadTarget = downloadUrl ?? issuuUrl;
   const cta = entry.ctaSection;
   const ctaImage = toImageSource(cta?.ctaSectionBackgroundImage?.[0]);
   const manualRelated = entry.researchRelated ?? [];
@@ -365,13 +364,13 @@ export const getResearchDetail = cache(async (slug: string): Promise<ResearchDet
       relatedToCategories: [{ group: "discipline", slug: practiceSlugs }] satisfies CategoryRelationCriteriaInput[],
     })).entries ?? [];
   }
-  const downloadCta = cta && downloadTarget
+  const downloadCta = cta && downloadUrl
     ? {
         image: ctaImage ?? "/images/contact-bg.png",
-        title: cta.ctaSectionHeading?.trim() || (downloadUrl ? "DOWNLOAD THE FULL PAPER" : "READ THE FULL PAPER"),
+        title: cta.ctaSectionHeading?.trim() || "DOWNLOAD THE FULL PAPER",
         description: cta.ctaSectionDescription?.trim() || undefined,
-        buttonText: cta.ctaSectionButtonLabel?.trim() || (downloadUrl ? "DOWNLOAD FULL PAPER" : "READ FULL PAPER"),
-        buttonHref: downloadTarget,
+        buttonText: cta.ctaSectionButtonLabel?.trim() || "DOWNLOAD FULL PAPER",
+        buttonHref: downloadUrl,
       }
     : null;
 
