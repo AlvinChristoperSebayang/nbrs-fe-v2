@@ -21,7 +21,11 @@ export function AwardsSection({ heading, description, items }: AwardsSectionProp
       </div>
 
       {/* Grid of Award Cards */}
-      <div data-aos="fade-up" data-aos-delay="150" className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      <div
+        data-aos="fade-up"
+        data-aos-delay="150"
+        className="grid grid-cols-1 gap-4 lg:gap-6 xl:gap-8 min-[768px]:grid-cols-2 min-[1020px]:grid-cols-3 "
+      >
         {items.map((item) => (
           <AwardCard key={item.id} item={item} />
         ))}
