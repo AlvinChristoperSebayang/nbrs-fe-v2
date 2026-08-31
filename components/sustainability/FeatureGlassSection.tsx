@@ -23,23 +23,23 @@ export function FeatureGlassSection({
   buttonHref,
 }: FeatureGlassSectionProps) {
   return (
-    <section className="bg-white pb-12 lg:py-0 text-black lg:pb-[149px]">
+    <section className="bg-white pb-12 lg:py-0 text-black lg:pb-24 xl:pb-[149px]">
       <Container>
         <div className="relative flex flex-col lg:flex-row items-center">
           {/* Overlapping Glass Card */}
           <div
             data-aos="fade-up"
             data-aos-delay="100"
-            className={`z-10 w-full lg:w-[50%] bg-white/80 backdrop-blur-xs border border-[#FDFFEA] px-0 lg:px-6 p-6 lg:p-10 max-lg:mb-6 ${
+            className={`z-10 w-full lg:w-[54%] xl:w-[50%] bg-white/80 backdrop-blur-xs border border-[#FDFFEA] p-6 sm:p-8 lg:p-8 xl:p-10 max-lg:mb-6 ${
               reverse
                 ? "lg:absolute lg:right-0 lg:top-1/2 lg:-translate-y-1/2"
                 : "lg:absolute lg:left-0 lg:top-1/2 lg:-translate-y-1/2"
             }`}
           >
-            <h2 className="font-heading text-3xl lg:text-4xl uppercase font-bold text-black leading-tight mb-4">
+            <h2 className="font-heading text-2xl sm:text-3xl lg:text-[32px] xl:text-4xl uppercase font-bold text-black leading-tight mb-3 lg:mb-1 xl:mb-4">
               {title}
             </h2>
-            <div className="flex flex-col gap-4 text-base text-zinc-900 leading-relaxed font-sans">
+            <div className="flex flex-col gap-3 lg:gap-4 text-sm sm:text-base lg:text-sm xl:text-base text-zinc-900 leading-relaxed font-sans">
               {paragraphs.map((paragraph, index) => (
                 <p key={index}>{paragraph}</p>
               ))}
@@ -47,7 +47,7 @@ export function FeatureGlassSection({
 
             {/* Optional Action Button */}
             {buttonText && buttonHref && (
-              <div className="mt-6">
+              <div className="mt-5 lg:mt-4 xl:mt-6">
                 <Link
                   href={buttonHref}
                   title={buttonText}

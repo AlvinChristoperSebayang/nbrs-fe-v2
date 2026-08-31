@@ -37,7 +37,9 @@ const crop = (width: number, height: number, quality = 80) =>
 const heroFit = (width: number, quality = 85) =>
   `url @transform(width: ${width}, mode: "fit", format: "webp", quality: ${quality}, immediately: true)`;
 const hero = `mobile: ${heroFit(768, 80)} tablet: ${heroFit(1440, 82)} desktop: ${heroFit(2400, 85)}`;
-const landscape = `mobile: ${crop(600, 450)} tablet: ${crop(900, 675)} desktop: ${crop(1200, 900, 85)}`;
+const landscapeFit = (width: number, quality = 80) =>
+  `url @transform(width: ${width}, mode: "fit", format: "webp", quality: ${quality}, immediately: true)`;
+const landscape = `mobile: ${landscapeFit(600)} tablet: ${landscapeFit(900, 82)} desktop: ${landscapeFit(1200, 85)}`;
 
 const QUERY = /* GraphQL */ `
   query SocialSustainabilityPage {

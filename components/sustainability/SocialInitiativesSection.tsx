@@ -32,13 +32,13 @@ export function SocialInitiativesSection({ initiatives }: SocialInitiativesSecti
         <AboutSection
           background_color="#F0C7BD"
           heading={teKworo.title}
-          heading_size="!max-w-full text-[28px] sm:text-[36px] xl:text-[40px]"
+          heading_size="!max-w-full text-[26px] sm:text-[32px] lg:text-[28px] xl:text-[40px]"
           single_line_heading={true}
           description={teKworo.description}
           image_url={teKworo.image}
           image_alt={teKworo.title}
-          description_class_name="max-w-full lg:max-w-[341px]"
-          image_height_class_name="h-[320px] sm:h-[520px] lg:h-[660px] lg:-mt-24 lg:-mb-48"
+          description_class_name="max-w-full lg:max-w-[341px] text-sm sm:text-base lg:text-[13.5px] xl:text-base leading-relaxed lg:leading-[1.45] xl:leading-relaxed [&_p+p]:mt-3 xl:[&_p+p]:mt-4"
+          image_height_class_name="h-[320px] sm:h-[460px] lg:h-[560px] xl:h-[620px] lg:-mt-16 xl:-mt-24 lg:-mb-36 xl:-mb-48"
         />
       )}
 
@@ -73,10 +73,10 @@ export function SocialInitiativesSection({ initiatives }: SocialInitiativesSecti
                 </div>
 
                 {/* Desktop View (>= lg): Overlapping Image + Glass Card */}
-                <div className="hidden lg:relative lg:flex lg:flex-col lg:items-center lg:min-h-[410px]">
+                <div className="hidden lg:relative lg:flex lg:flex-col lg:items-center lg:min-h-[340px] xl:min-h-[410px]">
                   <div
                     data-aos="fade-up"
-                    className={`absolute top-0 h-[410px] w-[66%] overflow-hidden bg-zinc-100 ${
+                    className={`absolute top-0 h-[340px] xl:h-[410px] w-[66%] overflow-hidden bg-zinc-100 ${
                       imageLeft ? "left-0" : "right-0"
                     }`}
                   >
@@ -90,16 +90,16 @@ export function SocialInitiativesSection({ initiatives }: SocialInitiativesSecti
                   <article
                     data-aos="fade-up"
                     data-aos-delay="150"
-                    className={`absolute top-1/2 z-10 w-[55%] xl:w-1/2 -translate-y-1/2 border-2 border-[#FDFFEA] bg-white/75 p-6 xl:p-8 backdrop-blur-md ${
+                    className={`absolute top-1/2 z-10 w-[56%] xl:w-1/2 -translate-y-1/2 border-2 border-[#FDFFEA] bg-white/35 p-5 xl:p-8 backdrop-blur-xs ${
                       imageLeft ? "right-0" : "left-0"
                     }`}
                   >
-                    <h2 className="font-heading text-2xl lg:text-[26px] xl:text-[32px] uppercase leading-tight font-bold text-black">
+                    <h2 className="font-heading text-2xl lg:text-[24px] xl:text-[32px] uppercase leading-tight font-bold text-black">
                       {initiative.title}
                     </h2>
                     <InitiativeDescription
                       description={initiative.description}
-                      className="mt-3 xl:mt-5 font-sans text-xs lg:text-sm leading-relaxed text-black"
+                      className="mt-3 xl:mt-5 font-sans text-xs lg:text-[13px] xl:text-sm leading-relaxed text-black"
                     />
                   </article>
                 </div>

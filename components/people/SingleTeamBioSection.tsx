@@ -17,8 +17,8 @@ export function SingleTeamBioSection({ name, bioHtml, quote }: SingleTeamBioProp
       <Container>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           {/* Left Column: Light Gray Watermark Name & Divider */}
-          <div data-aos="fade-up" className="lg:col-span-5 hidden md:block lg:pr-6">
-            <h2 className="font-heading text-4xl sm:text-5xl lg:text-[60px] font-bold uppercase text-zinc-200/90 leading-none tracking-wide">
+          <div data-aos="fade-up" className="lg:col-span-4 hidden md:block lg:pr-6">
+            <h2 className="font-heading text-4xl sm:text-5xl lg:text-[46px] xl:text-[60px] font-bold uppercase text-zinc-200/90 leading-none tracking-wide">
               {lastName ? (
                 <span className="inline-flex flex-col items-start">
                   <span className="block">{firstName}</span>
@@ -38,12 +38,12 @@ export function SingleTeamBioSection({ name, bioHtml, quote }: SingleTeamBioProp
           <div
             data-aos="fade-up"
             data-aos-delay="150"
-            className="lg:col-span-7 flex flex-col gap-10 lg:gap-14"
+            className="lg:col-span-8 flex flex-col gap-10 lg:gap-14"
           >
             {/* Top Bio Text Paragraphs */}
             {bioHtml && (
               <div
-                className="font-sans text-base sm:text-lg text-zinc-800 leading-relaxed max-w-3xl [&_a]:underline [&_a]:underline-offset-4 [&_p]:mb-5 [&_p:last-child]:mb-0"
+                className="font-sans text-sm sm:text-base lg:text-[15px] xl:text-lg text-zinc-800 leading-relaxed max-w-3xl [&_a]:underline [&_a]:underline-offset-4 [&_p]:mb-5 [&_p:last-child]:mb-0"
                 dangerouslySetInnerHTML={{ __html: bioHtml }}
               />
             )}
@@ -68,7 +68,7 @@ export function SingleTeamBioSection({ name, bioHtml, quote }: SingleTeamBioProp
                 </div>
 
                 {/* Quote Text */}
-                <blockquote className="font-sans italic text-2xl sm:text-3xl lg:text-[32px] text-black leading-snug font-normal py-2">
+                <blockquote className="font-sans italic text-xl sm:text-2xl lg:text-[26px] xl:text-[32px] text-black leading-snug font-normal py-2">
                   {quote}
                 </blockquote>
 

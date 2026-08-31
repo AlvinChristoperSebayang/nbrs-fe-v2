@@ -170,24 +170,24 @@ const RESEARCH_DETAIL_QUERY = /* GraphQL */ `
           width
           height
           title
-          mobile: url @transform(width: 768, immediately: true)
-          tablet: url @transform(width: 1440, immediately: true)
-          desktop: url @transform(width: 1920, immediately: true)
+          mobile: url @transform(width: 768, mode: "fit", format: "webp", quality: 80, immediately: true)
+          tablet: url @transform(width: 1440, mode: "fit", format: "webp", quality: 82, immediately: true)
+          desktop: url @transform(width: 1920, mode: "fit", format: "webp", quality: 85, immediately: true)
         }
         artHdrHeroImage {
           url
           width
           height
           title
-          mobile: url @transform(width: 768, immediately: true)
-          tablet: url @transform(width: 1440, immediately: true)
-          desktop: url @transform(width: 1920, immediately: true)
+          mobile: url @transform(width: 768, mode: "fit", format: "webp", quality: 80, immediately: true)
+          tablet: url @transform(width: 1440, mode: "fit", format: "webp", quality: 82, immediately: true)
+          desktop: url @transform(width: 1920, mode: "fit", format: "webp", quality: 85, immediately: true)
         }
         artHdrPortraitImage {
           url
-          mobile: url @transform(width: 768, immediately: true)
-          tablet: url @transform(width: 1440, immediately: true)
-          desktop: url @transform(width: 1920, immediately: true)
+          mobile: url @transform(width: 768, mode: "fit", format: "webp", quality: 80, immediately: true)
+          tablet: url @transform(width: 1440, mode: "fit", format: "webp", quality: 82, immediately: true)
+          desktop: url @transform(width: 1920, mode: "fit", format: "webp", quality: 85, immediately: true)
         }
         artIssuuUrl
         artFileDownload { url }
@@ -197,9 +197,9 @@ const RESEARCH_DETAIL_QUERY = /* GraphQL */ `
           ctaSectionButtonLabel
           ctaSectionBackgroundImage {
             url
-            mobile: url @transform(width: 768, immediately: true)
-            tablet: url @transform(width: 1440, immediately: true)
-            desktop: url @transform(width: 1920, immediately: true)
+            mobile: url @transform(width: 768, height: 900, position: "top-left", mode: "crop", format: "webp", quality: 80, immediately: true)
+            tablet: url @transform(width: 1440, mode: "fit", format: "webp", quality: 82, immediately: true)
+            desktop: url @transform(width: 2400, mode: "fit", format: "webp", quality: 85, immediately: true)
           }
         }
         researchPublicationDate
@@ -229,9 +229,9 @@ const RESEARCH_DETAIL_QUERY = /* GraphQL */ `
             artHdrHeading
             thumbnail {
               url
-              mobile: url @transform(width: 600, immediately: true)
-              tablet: url @transform(width: 900, immediately: true)
-              desktop: url @transform(width: 1200, immediately: true)
+              mobile: url @transform(width: 600, mode: "fit", format: "webp", quality: 80, immediately: true)
+              tablet: url @transform(width: 900, mode: "fit", format: "webp", quality: 82, immediately: true)
+              desktop: url @transform(width: 1200, mode: "fit", format: "webp", quality: 85, immediately: true)
             }
             catSector { ... on sector_Category { title slug accentColor } }
             catDiscipline { ... on discipline_Category { title slug accentColor } }
@@ -340,7 +340,6 @@ export const getResearchDetail = cache(async (slug: string): Promise<ResearchDet
   const configuredInsight = entry.researchInsight?.trim() || null;
   const downloadUrl = entry.artFileDownload?.[0]?.url ?? null;
   const issuuUrl = entry.artIssuuUrl?.trim() || null;
-  const downloadTarget = downloadUrl ?? issuuUrl;
   const cta = entry.ctaSection;
   const ctaImage = toImageSource(cta?.ctaSectionBackgroundImage?.[0]);
   const manualRelated = entry.researchRelated ?? [];
@@ -365,13 +364,13 @@ export const getResearchDetail = cache(async (slug: string): Promise<ResearchDet
       relatedToCategories: [{ group: "discipline", slug: practiceSlugs }] satisfies CategoryRelationCriteriaInput[],
     })).entries ?? [];
   }
-  const downloadCta = cta && downloadTarget
+  const downloadCta = cta && downloadUrl
     ? {
         image: ctaImage ?? "/images/contact-bg.png",
-        title: cta.ctaSectionHeading?.trim() || (downloadUrl ? "DOWNLOAD THE FULL PAPER" : "READ THE FULL PAPER"),
+        title: cta.ctaSectionHeading?.trim() || "DOWNLOAD THE FULL PAPER",
         description: cta.ctaSectionDescription?.trim() || undefined,
-        buttonText: cta.ctaSectionButtonLabel?.trim() || (downloadUrl ? "DOWNLOAD FULL PAPER" : "READ FULL PAPER"),
-        buttonHref: downloadTarget,
+        buttonText: cta.ctaSectionButtonLabel?.trim() || "DOWNLOAD FULL PAPER",
+        buttonHref: downloadUrl,
       }
     : null;
 

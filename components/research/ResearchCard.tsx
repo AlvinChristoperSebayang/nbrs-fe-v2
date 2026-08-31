@@ -31,15 +31,15 @@ function renderFormattedTitle(title: string) {
     const prefix = formatted.slice(0, colonIndex + 1);
     const suffix = formatted.slice(colonIndex + 1).trim();
     return (
-      <div className="font-sans leading-snug md:max-w-56">
-        <span className="block font-bold text-[18px] md:text-xl">{prefix}</span>
-        {suffix && <span className="block font-normal text-[16px] md:text-xl">{suffix}</span>}
+      <div className="font-sans leading-snug">
+        <span className="block font-bold text-base sm:text-lg lg:text-[17px] xl:text-xl">{prefix}</span>
+        {suffix && <span className="block font-normal text-sm sm:text-base lg:text-[15px] xl:text-lg mt-0.5">{suffix}</span>}
       </div>
     );
   }
 
   return (
-    <div className="font-sans text-[18px] md:text-xl font-bold leading-snug">
+    <div className="font-sans text-base sm:text-lg lg:text-[17px] xl:text-xl font-bold leading-snug">
       {formatted}
     </div>
   );
@@ -53,12 +53,12 @@ export function ResearchCard({ item }: { item: ResearchCardItem }) {
       href={`/research/${item.slug}`}
       title={item.title}
       aria-label={item.title}
-      className="group flex flex-col w-full overflow-hidden transition-all duration-300"
+      className="group flex flex-col w-full h-full overflow-hidden transition-all duration-300 rounded-[3px]"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Card Image */}
-      <div className="relative aspect-[370/300] w-full overflow-hidden bg-zinc-100 min-h-[150px] max-h-[150px] md:min-h-[300px] md:max-h-[300px]">
+      <div className="relative aspect-[370/300] w-full overflow-hidden bg-zinc-100">
         <ResponsiveImage
           src={item.image}
           alt={item.title}
@@ -69,7 +69,7 @@ export function ResearchCard({ item }: { item: ResearchCardItem }) {
 
       {/* Card Info Box */}
       <div
-        className="flex min-h-[200px]  flex-col justify-between px-5 py-[22px] transition-colors duration-300 h-full"
+        className="flex flex-1 flex-col justify-between p-5 lg:p-5 xl:p-6 transition-colors duration-300 min-h-[170px] lg:min-h-[180px] xl:min-h-[200px]"
         style={{
           backgroundColor: isHovered ? item.hoverColor : "#000000",
           color: isHovered ? "#000000" : "#ffffff",
@@ -77,11 +77,11 @@ export function ResearchCard({ item }: { item: ResearchCardItem }) {
       >
         {renderFormattedTitle(item.title)}
 
-        <div className="mt-6 flex items-end justify-between">
-          <span className="text-base font-normal">Read more</span>
+        <div className="mt-5 flex items-end justify-between">
+          <span className="text-sm sm:text-base font-normal">Read more</span>
           <svg
-            width="34"
-            height="34"
+            width="28"
+            height="28"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"

@@ -165,7 +165,7 @@ export function ResearchSection({
 
       <div data-aos="fade-up" data-aos-delay="200" className="mt-6">
         {filteredItems.length > 0 ? (
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 xl:grid-cols-3">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6 xl:gap-8 items-stretch">
             {filteredItems.map((item) => (
               <ResearchCard key={item.id} item={item} />
             ))}

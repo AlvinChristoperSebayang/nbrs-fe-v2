@@ -57,12 +57,13 @@ const NEWS_LISTING_QUERY = /* GraphQL */ `
         seoMetaDescription
         seoImage { url width height title }
         pageHeroImage {
-          mobile: url @transform(width: 768, immediately: true)
-          tablet: url @transform(width: 1440, immediately: true)
-          desktop: url @transform(width: 1920, immediately: true)
+          url
           width
           height
           title
+          mobile: url @transform(width: 768, mode: "fit", format: "webp", quality: 80, immediately: true)
+          tablet: url @transform(width: 1440, mode: "fit", format: "webp", quality: 82, immediately: true)
+          desktop: url @transform(width: 1920, mode: "fit", format: "webp", quality: 85, immediately: true)
         }
       }
     }
@@ -77,12 +78,13 @@ const NEWS_LISTING_QUERY = /* GraphQL */ `
         slug
         artHdrHeading
         thumbnail {
-          mobile: url @transform(width: 600, immediately: true)
-          tablet: url @transform(width: 900, immediately: true)
-          desktop: url @transform(width: 1200, immediately: true)
+          url
           width
           height
           title
+          mobile: url @transform(width: 600, mode: "fit", format: "webp", quality: 80, immediately: true)
+          tablet: url @transform(width: 900, mode: "fit", format: "webp", quality: 82, immediately: true)
+          desktop: url @transform(width: 1200, mode: "fit", format: "webp", quality: 85, immediately: true)
         }
       }
     }
