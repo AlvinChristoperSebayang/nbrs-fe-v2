@@ -18,13 +18,13 @@ export function AtAGlanceSection({
   if (items.length === 0) return null;
 
   return (
-    <section className="bg-white pt-12 pb-6 text-black lg:pt-20 lg:pb-6">
+    <section className="bg-white pt-12 pb-6 text-black lg:pt-16 xl:pt-20 lg:pb-6">
       <Container>
-        <h2 data-aos="fade-up" className="mb-8 font-heading text-3xl font-bold leading-none text-black uppercase sm:text-4xl lg:mb-12">
+        <h2 data-aos="fade-up" className="mb-6 lg:mb-8 xl:mb-12 font-heading text-3xl font-bold leading-none text-black uppercase sm:text-4xl lg:text-[36px] xl:text-[40px]">
           {title}
         </h2>
 
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5 xl:gap-8 items-stretch">
           {items.map((item, index) => (
             <div
               key={`${item.text}-${index}`}
@@ -33,27 +33,27 @@ export function AtAGlanceSection({
               className="group h-full w-full pt-2"
             >
               <div
-                className="relative flex h-full min-h-[224px] flex-col items-center overflow-hidden rounded-[2px] bg-black px-6 pt-10 pb-8 text-center shadow-md transition-all duration-500 ease-out group-hover:-translate-y-2 group-hover:bg-[#181B22] group-hover:shadow-xl will-change-transform"
+                className="relative flex h-full min-h-[200px] lg:min-h-[210px] xl:min-h-[224px] flex-col items-center overflow-hidden rounded-[2px] bg-black px-4 sm:px-5 lg:px-4.5 xl:px-6 pt-8 lg:pt-9 xl:pt-10 pb-6 lg:pb-7 xl:pb-8 text-center shadow-md transition-all duration-500 ease-out group-hover:-translate-y-2 group-hover:bg-[#181B22] group-hover:shadow-xl will-change-transform"
               >
                 <div
                   className="absolute top-0 right-0 left-0 h-2.5 transition-all duration-300 group-hover:h-3"
                   style={{ backgroundColor: item.accentColor }}
                 />
 
-                <div className="mb-5 flex h-10 w-10 shrink-0 items-center justify-center transition-transform duration-500 ease-out group-hover:scale-110">
+                <div className="mb-4 lg:mb-4 xl:mb-5 flex h-9 w-9 lg:h-9 lg:w-9 xl:h-10 xl:w-10 shrink-0 items-center justify-center transition-transform duration-500 ease-out group-hover:scale-110">
                   {item.icon ? (
                     <ResponsiveImage
                       src={item.icon}
                       alt={item.text || "Research metric icon"}
                       title={item.text || "Research metric icon"}
-                      className="h-10 w-10 object-contain"
+                      className="h-full w-full object-contain"
                     />
                   ) : (
                     <div className="h-8 w-8 rounded-sm border-2 border-white/60 transition-colors group-hover:border-white" />
                   )}
                 </div>
 
-                <p className="max-w-[210px] font-sans text-base font-normal text-white transition-colors duration-300 sm:text-[18px]">
+                <p className="max-w-[210px] font-sans text-sm sm:text-base lg:text-[15px] xl:text-[18px] font-normal leading-snug text-white transition-colors duration-300">
                   {item.text}
                 </p>
               </div>

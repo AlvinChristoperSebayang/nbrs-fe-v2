@@ -69,8 +69,8 @@ export default async function ContactPage() {
         <div className="absolute inset-0 bg-white/70" />
       </div>
 
-      <Container className="-mt-[360px] sm:-mt-[280px] lg:-mt-68 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+      <Container className="-mt-[360px] sm:-mt-[280px] lg:-mt-72 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 xl:gap-16 items-start">
           <ContactForm
             title={content.title}
             serviceOptions={content.serviceOptions}
@@ -79,17 +79,17 @@ export default async function ContactPage() {
             privacyNotice={content.privacyNotice}
           />
 
-          <div data-aos="fade-up" className="order-2 lg:order-1 lg:col-span-4 flex flex-col gap-10 lg:gap-18 pt-4">
+          <div data-aos="fade-up" className="order-2 lg:order-1 lg:col-span-3 xl:col-span-4 flex flex-col gap-6 lg:gap-24 pt-2 lg:pt-4">
             {content.studios.map((studio) => (
-              <section key={studio.title} className="flex flex-col gap-2">
-                <h2 className="font-heading text-3xl sm:text-4xl font-bold uppercase text-black tracking-wide leading-none">{studio.title}</h2>
-                <div className="font-sans text-base text-zinc-900 leading-snug flex flex-col gap-1 [&_p]:m-0 [&_p:first-child]:font-semibold [&_p:last-child]:mb-1" dangerouslySetInnerHTML={{ __html: formatStudioAddress(studio.address) }} />
-                {studio.phone && <span className="font-sans text-base font-medium text-black">{studio.phone}</span>}
+              <section key={studio.title} className="flex flex-col gap-1 lg:gap-1.5">
+                <h2 className="font-heading text-2xl sm:text-3xl lg:text-[22px] xl:text-3xl 2xl:text-4xl font-bold uppercase text-black tracking-wide leading-none">{studio.title}</h2>
+                <div className="font-sans text-xs sm:text-sm lg:text-[13px] xl:text-[15px] 2xl:text-base text-zinc-900 leading-snug flex flex-col gap-0.5 lg:gap-1 [&_p]:m-0 [&_p:first-child]:font-semibold [&_p:last-child]:mb-0.5" dangerouslySetInnerHTML={{ __html: formatStudioAddress(studio.address) }} />
+                {studio.phone && <span className="font-sans text-xs sm:text-sm lg:text-[13px] xl:text-[15px] 2xl:text-base font-medium text-black">{studio.phone}</span>}
               </section>
             ))}
             <Link
               href="/9-day-fortnight"
-              className="font-sans text-base font-semibold leading-5 tracking-[0.02em] text-black hover:underline underline-offset-4"
+              className="font-sans text-xs sm:text-sm lg:text-[13px] xl:text-[15px] 2xl:text-base font-semibold leading-snug tracking-[0.01em] text-black hover:underline underline-offset-4"
             >
               NBRS operates on a 9-day fortnight schedule.
             </Link>

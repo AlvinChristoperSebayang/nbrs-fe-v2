@@ -20,15 +20,15 @@ function renderFormattedTitle(title: string) {
     const prefix = title.slice(0, colonIndex + 1);
     const suffix = title.slice(colonIndex + 1).trim();
     return (
-      <div className="font-sans text-lg md:text-base lg:text-xl leading-snug md:max-w-56">
-        <span className="block font-bold">{prefix}</span>
-        {suffix && <span className="block font-normal">{suffix}</span>}
+      <div className="font-sans leading-snug">
+        <span className="block font-bold text-base sm:text-lg lg:text-[17px] xl:text-xl">{prefix}</span>
+        {suffix && <span className="block font-normal text-sm sm:text-base lg:text-[15px] xl:text-lg mt-0.5">{suffix}</span>}
       </div>
     );
   }
 
   return (
-    <div className="font-sans text-lg md:text-base lg:text-xl font-bold leading-snug">
+    <div className="font-sans text-base sm:text-lg lg:text-[17px] xl:text-xl font-bold leading-snug">
       {title}
     </div>
   );
@@ -57,18 +57,18 @@ export function ArticleCard({
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Card Image (Subtle Scale Zoom on Hover) */}
-      <div className="relative aspect-[370/300] w-full overflow-hidden bg-zinc-100 min-h-[180px] sm:min-h-[220px] xl:min-h-[300px]">
+      <div className="relative aspect-[1200/840] w-full overflow-hidden bg-zinc-100">
         <ResponsiveImage
           src={item.image}
           alt={item.title}
           title={item.title}
-          className="h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
+          className="h-full w-full object-cover object-center transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
         />
       </div>
 
       {/* Card Info Box */}
       <div
-        className="flex min-h-[140px] sm:min-h-[160px] xl:min-h-[200px] flex-col justify-between p-4 sm:p-5 lg:p-6 lg:py-[22px] transition-colors duration-500 ease-out h-full flex-1"
+        className="flex min-h-[160px] lg:min-h-[180px] xl:min-h-[200px] flex-col justify-between p-4 sm:p-5 lg:p-5 xl:p-6 transition-colors duration-500 ease-out h-full flex-1"
         style={{
           backgroundColor: isHovered ? hoverColor : "#000000",
           color: isHovered ? "#000000" : "#ffffff",
@@ -77,7 +77,7 @@ export function ArticleCard({
         {renderFormattedTitle(item.title)}
 
         <div className="mt-4 sm:mt-6 flex items-end justify-between">
-          <span className="text-sm md:text-xs lg:text-base font-normal">{readMoreText}</span>
+          <span className="text-sm sm:text-base font-normal">{readMoreText}</span>
           <svg
             viewBox="0 0 24 24"
             fill="none"
@@ -85,7 +85,7 @@ export function ArticleCard({
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="w-6 h-6 lg:w-8 lg:h-8 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-2"
+            className="w-6 h-6 lg:w-6 lg:h-6 xl:w-8 xl:h-8 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-2"
           >
             <path d="M5 12h14M12 5l7 7-7 7" />
           </svg>

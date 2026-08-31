@@ -26,7 +26,7 @@ function CheckboxGroup({
   options,
   selected,
   onToggle,
-  compact = false,
+  gridClassName = "grid grid-cols-2 gap-x-4 gap-y-2.5",
 }: {
   legend: string;
   name: string;
@@ -34,21 +34,21 @@ function CheckboxGroup({
   options: string[];
   selected: string[];
   onToggle: (value: string) => void;
-  compact?: boolean;
+  gridClassName?: string;
 }) {
   if (options.length === 0) return null;
 
   return (
     <fieldset className="flex flex-col gap-3">
-      <span className="font-sans text-sm text-black pb-1">{legend}</span>
-      <div className={compact ? "grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-6 xl:flex sm:flex-wrap items-center gap-x-4 xl:gap-x-6 gap-y-3" : "grid grid-cols-2 gap-2.5"}>
+      <span className="font-sans text-sm lg:text-sm xl:text-base font-medium text-black pb-0.5 lg:pb-1">{legend}</span>
+      <div className={gridClassName}>
         {options.map((option) => {
           const slug = slugify(option);
           const id = `${prefix}-${slug}`;
           const checked = selected.includes(slug);
 
           return (
-            <label key={slug} htmlFor={id} className="inline-flex items-center gap-3 cursor-pointer group">
+            <label key={slug} htmlFor={id} className="inline-flex items-center gap-1.5 sm:gap-2 xl:gap-2.5 cursor-pointer group min-w-0">
               <input
                 id={id}
                 name={name}
@@ -60,15 +60,15 @@ function CheckboxGroup({
               />
               <span
                 aria-hidden="true"
-                className="w-6 h-6 rounded-sm border border-zinc-300 bg-white transition-colors flex items-center justify-center shrink-0 peer-focus-visible:ring-2 peer-focus-visible:ring-black peer-focus-visible:ring-offset-2 peer-checked:bg-black peer-checked:border-black peer-checked:text-white group-hover:border-black"
+                className="w-4.5 h-4.5 lg:w-[18px] lg:h-[18px] xl:w-5 xl:h-5 rounded-sm border border-zinc-300 bg-white transition-colors flex items-center justify-center shrink-0 peer-focus-visible:ring-2 peer-focus-visible:ring-black peer-focus-visible:ring-offset-2 peer-checked:bg-black peer-checked:border-black peer-checked:text-white group-hover:border-black"
               >
                 {checked && (
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="w-2.5 h-2.5 lg:w-3 lg:h-3 xl:w-3.5 xl:h-3.5">
                     <polyline points="20 6 9 17 4 12" />
                   </svg>
                 )}
               </span>
-              <span className="font-sans text-xs text-stone-700 font-normal">{option}</span>
+              <span className="font-sans text-[11px] sm:text-xs lg:text-[11.5px] xl:text-[13px] 2xl:text-sm text-stone-700 font-normal whitespace-nowrap">{option}</span>
             </label>
           );
         })}
@@ -98,14 +98,14 @@ export function ContactForm({ title, serviceOptions, sectorOptions, referralSour
     const form = event.currentTarget;
     const formData = new FormData(form);
     const missingGroups = [
-      selectedServices.length === 0 ? "Service type" : null,
-      selectedSectors.length === 0 ? "Sector" : null,
-      selectedSources.length === 0 ? "How did you hear about us?" : null,
-    ].filter((label): label is string => label !== null);
+      { name: "Service type", count: selectedServices.length },
+      { name: "Sector", count: selectedSectors.length },
+      { name: "How did you hear about us", count: selectedSources.length },
+    ].filter((group) => group.count === 0);
 
     if (missingGroups.length > 0) {
       setSubmissionState("error");
-      setSubmissionMessage(`Please select at least one option for: ${missingGroups.join(", ")}.`);
+      setSubmissionMessage(`Please select at least one option for ${missingGroups.map((group) => group.name).join(", ")}.`);
       return;
     }
 
@@ -113,28 +113,32 @@ export function ContactForm({ title, serviceOptions, sectorOptions, referralSour
     setSubmissionMessage("");
 
     try {
+      const payload = {
+        firstName: String(formData.get("firstName") || ""),
+        lastName: String(formData.get("lastName") || ""),
+        company: String(formData.get("company") || ""),
+        role: String(formData.get("role") || ""),
+        phoneCountryCode: String(formData.get("phoneCountryCode") || "+61"),
+        phone: String(formData.get("phone") || ""),
+        email: String(formData.get("email") || ""),
+        serviceTypes: selectedServices,
+        sectors: selectedSectors,
+        message: String(formData.get("message") || ""),
+        hearAbout: selectedSources,
+        website: String(formData.get("website") || ""),
+        elapsedMs: Date.now() - formStartedAt.current,
+      };
+
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          firstName: formData.get("firstName"),
-          lastName: formData.get("lastName"),
-          company: formData.get("company"),
-          role: formData.get("role"),
-          phoneCountryCode: formData.get("phoneCountryCode"),
-          phone: formData.get("phone"),
-          email: formData.get("email"),
-          serviceTypes: formData.getAll("serviceTypes[]"),
-          sectors: formData.getAll("sectors[]"),
-          message: formData.get("message"),
-          hearAbout: formData.getAll("hearAbout[]"),
-          website: formData.get("website"),
-          formStartedAt: formStartedAt.current,
-        }),
+        body: JSON.stringify(payload),
       });
-      const result = await response.json().catch(() => null);
-      if (!response.ok || !result?.success) {
-        throw new Error(result?.message || "We could not send your enquiry. Please try again.");
+
+      const data = await response.json().catch(() => null);
+
+      if (!response.ok) {
+        throw new Error(data?.message || "We could not send your enquiry. Please try again.");
       }
 
       form.reset();
@@ -151,9 +155,9 @@ export function ContactForm({ title, serviceOptions, sectorOptions, referralSour
   };
 
   return (
-    <div data-aos="fade-up" className="order-1 lg:order-2 lg:col-span-8 w-full">
-      <div className="bg-white rounded-[5px] shadow-[0px_0px_25px_rgba(0,0,0,0.12)] border border-zinc-100 p-6 sm:p-10 lg:p-12">
-        <h1 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold uppercase text-black tracking-wide mb-8">{title}</h1>
+    <div data-aos="fade-up" className="order-1 lg:order-2 lg:col-span-9 xl:col-span-8 w-full">
+      <div className="bg-white rounded-[5px] shadow-[0px_0px_25px_rgba(0,0,0,0.12)] border border-zinc-100 p-6 sm:p-8 lg:p-7 xl:p-12">
+        <h1 className="font-heading text-3xl sm:text-4xl lg:text-[40px] xl:text-5xl font-bold uppercase text-black tracking-wide mb-6 sm:mb-8">{title}</h1>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-6 sm:gap-8">
           <div className="absolute -left-[10000px] h-px w-px overflow-hidden" aria-hidden="true">
@@ -262,9 +266,29 @@ export function ContactForm({ title, serviceOptions, sectorOptions, referralSour
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 pt-2">
-            <CheckboxGroup legend="Service type" name="serviceTypes[]" prefix="service-type" options={serviceOptions} selected={selectedServices} onToggle={(value) => toggle(value, setSelectedServices)} />
-            <CheckboxGroup legend="Sector" name="sectors[]" prefix="sector" options={sectorOptions} selected={selectedSectors} onToggle={(value) => toggle(value, setSelectedSectors)} />
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-4 lg:gap-4 xl:gap-8 pt-2">
+            <div className="md:col-span-5 lg:col-span-5">
+              <CheckboxGroup
+                legend="Service type"
+                name="serviceTypes[]"
+                prefix="service-type"
+                options={serviceOptions}
+                selected={selectedServices}
+                onToggle={(value) => toggle(value, setSelectedServices)}
+                gridClassName="grid grid-cols-2 gap-x-2 sm:gap-x-3 lg:gap-x-2.5 xl:gap-x-4 gap-y-2 lg:gap-y-2.5"
+              />
+            </div>
+            <div className="md:col-span-7 lg:col-span-7">
+              <CheckboxGroup
+                legend="Sector"
+                name="sectors[]"
+                prefix="sector"
+                options={sectorOptions}
+                selected={selectedSectors}
+                onToggle={(value) => toggle(value, setSelectedSectors)}
+                gridClassName="grid grid-cols-2 sm:grid-cols-3 gap-x-2 sm:gap-x-3 lg:gap-x-2 xl:gap-x-4 gap-y-2 lg:gap-y-2.5"
+              />
+            </div>
           </div>
 
           <div className="pt-2">
@@ -281,7 +305,15 @@ export function ContactForm({ title, serviceOptions, sectorOptions, referralSour
           </div>
 
           <div className="pt-2">
-            <CheckboxGroup legend="How did you hear about us?" name="hearAbout[]" prefix="hear-about" options={referralSources} selected={selectedSources} onToggle={(value) => toggle(value, setSelectedSources)} compact />
+            <CheckboxGroup
+              legend="How did you hear about us?"
+              name="hearAbout[]"
+              prefix="hear-about"
+              options={referralSources}
+              selected={selectedSources}
+              onToggle={(value) => toggle(value, setSelectedSources)}
+              gridClassName="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-6 gap-x-3 sm:gap-x-4 lg:gap-x-4 xl:gap-x-6 gap-y-2.5 lg:gap-y-3"
+            />
           </div>
 
           <div className="pt-4">

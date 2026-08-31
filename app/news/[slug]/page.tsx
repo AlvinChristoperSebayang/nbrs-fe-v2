@@ -110,6 +110,8 @@ export default async function NewsDetailPage({
       <Hero
         image={article.hero ?? "/images/hero/hero6.png"}
         title={article.title}
+        imageClassName="object-cover object-center"
+        className="lg:!h-auto lg:!min-h-0 lg:aspect-[1200/840]"
         description={
           meta ? <p className="mt-2 font-sans text-sm font-normal text-white/90 sm:text-base">{meta}</p> : undefined
         }
@@ -118,7 +120,7 @@ export default async function NewsDetailPage({
       <section className="bg-white py-16 lg:py-24">
         <Container>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-20 items-start">
-            <div data-aos="fade-up" className="hidden lg:block lg:col-span-5 lg:sticky lg:top-28">
+            <div data-aos="fade-up" className="hidden lg:block lg:col-span-5">
               <h2 className="font-heading text-3xl sm:text-4xl lg:text-[40px] uppercase font-bold leading-tight text-black flex flex-col items-start">
                 {renderNewsHeading(article.title)}
               </h2>

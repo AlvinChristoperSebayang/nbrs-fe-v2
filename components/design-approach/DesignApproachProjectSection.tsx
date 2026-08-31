@@ -105,12 +105,12 @@ export function DesignApproachProjectSection({
           <div
             data-aos="fade-up"
             data-aos-delay="100"
-            className="z-10 w-[50%] bg-white/80 backdrop-blur-xs border border-[#FDFFEA] p-10 absolute left-0 top-1/2 -translate-y-1/2"
+            className="z-10 w-[50%] xl:w-[480px] 2xl:w-[520px] bg-white/80 backdrop-blur-xs border border-[#FDFFEA] p-8 xl:p-10 absolute left-0 top-1/2 -translate-y-1/2"
           >
-            <h2 className="font-heading text-3xl lg:text-[32px] uppercase font-bold text-black leading-tight mb-4">
+            <h2 className="font-heading text-2xl lg:text-[28px] xl:text-[34px] 2xl:text-[36px] uppercase font-bold text-black leading-tight mb-3 xl:mb-4">
               {heading}
             </h2>
-            <p className="text-base text-zinc-900 leading-relaxed font-sans mb-6 max-w-[359px]">
+            <p className="text-sm lg:text-[15px] xl:text-base text-zinc-900 leading-relaxed font-sans mb-5 xl:mb-6 max-w-[359px]">
               {description}
             </p>
             {buttonText && buttonHref && (
@@ -118,7 +118,7 @@ export function DesignApproachProjectSection({
                 href={buttonHref}
                 title={buttonText}
                 aria-label={buttonText}
-                className="group inline-flex items-center gap-2 rounded-[5px] border border-black bg-white px-6 py-2.5 text-base font-sans font-medium text-black transition hover:bg-black hover:text-white"
+                className="group inline-flex items-center gap-2 rounded-[5px] border border-black bg-white px-5 py-2 xl:px-6 xl:py-2.5 text-sm xl:text-base font-sans font-medium text-black transition hover:bg-black hover:text-white"
               >
                 <span>{buttonText}</span>
                 <svg
@@ -139,17 +139,17 @@ export function DesignApproachProjectSection({
             )}
           </div>
 
-          {/* Desktop Image Banner (max-h 410px) */}
+          {/* Desktop Image Banner (aspect 770/410) */}
           <div
             data-aos="fade-up"
             data-aos-delay="150"
-            className="w-[65%] ml-auto overflow-hidden h-[410px] max-h-[410px]"
+            className="w-[65%] xl:w-[770px] ml-auto overflow-hidden aspect-[770/410] rounded-sm"
           >
             <ResponsiveImage
               src={image}
               alt={heading || "Design Approach"}
               title={heading || "Design Approach"}
-              className="h-[410px] max-h-[410px] w-full object-cover"
+              className="h-full w-full object-cover object-center"
             />
           </div>
         </div>

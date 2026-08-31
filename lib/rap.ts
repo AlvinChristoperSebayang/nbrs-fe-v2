@@ -97,7 +97,15 @@ const RAP_SINGLE_QUERY = /* GraphQL */ `
       title
       postDate @formatDateTime(format: "Y")
       ... on rap_Entry {
-        heroImage: pageHeroImage { url width height title }
+        heroImage: pageHeroImage {
+          url
+          width
+          height
+          title
+          mobile: url @transform(width: 768, mode: "fit", format: "webp", quality: 80, immediately: true)
+          tablet: url @transform(width: 1440, mode: "fit", format: "webp", quality: 82, immediately: true)
+          desktop: url @transform(width: 1920, mode: "fit", format: "webp", quality: 85, immediately: true)
+        }
         rapAuthor
         rapEndorsedBy
         rapReadTime
@@ -122,7 +130,17 @@ const RAP_SINGLE_QUERY = /* GraphQL */ `
         }
         artContent {
           ... on text_Entry { text }
-          ... on image_Entry { image { url width height title } }
+          ... on image_Entry {
+            image {
+              url
+              width
+              height
+              title
+              mobile: url @transform(width: 768, mode: "fit", format: "webp", quality: 80, immediately: true)
+              tablet: url @transform(width: 1440, mode: "fit", format: "webp", quality: 82, immediately: true)
+              desktop: url @transform(width: 1920, mode: "fit", format: "webp", quality: 85, immediately: true)
+            }
+          }
         }
       }
     }
@@ -135,7 +153,15 @@ const RAP_NEWS_QUERY = /* GraphQL */ `
       title
       postDate @formatDateTime(format: "Y")
       ... on news_Entry {
-        heroImage: artHdrHeroImage { url width height title }
+        heroImage: artHdrHeroImage {
+          url
+          width
+          height
+          title
+          mobile: url @transform(width: 768, mode: "fit", format: "webp", quality: 80, immediately: true)
+          tablet: url @transform(width: 1440, mode: "fit", format: "webp", quality: 82, immediately: true)
+          desktop: url @transform(width: 1920, mode: "fit", format: "webp", quality: 85, immediately: true)
+        }
         rapAuthor
         rapEndorsedBy
         rapReadTime

@@ -24,7 +24,14 @@ export default async function EnvisionStudentProgramPage() {
 
   return (
     <article className="min-h-screen bg-white text-black">
-      {page.hero && <CareersHero title={page.hero.title} description={page.hero.description} imageSrc={page.hero.image} />}
+      {page.hero && (
+        <CareersHero
+          title={page.hero.title}
+          description={page.hero.description}
+          imageSrc={page.hero.image}
+          titleColumnClassName="lg:pt-0 xl:pt-0"
+        />
+      )}
 
       {page.research.length > 0 && (
         <section className="bg-white pt-20 pb-16 lg:pt-16 lg:pb-24">

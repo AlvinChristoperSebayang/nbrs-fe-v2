@@ -67,15 +67,15 @@ export function GridEffect({
   }, [items]);
 
   return (
-    <section className="lg:py-24" style={{ backgroundColor }}>
+    <section className="py-12 sm:py-16 lg:py-20 xl:py-24" style={{ backgroundColor }}>
       <Container className="overflow-hidden">
         <div data-aos="fade-up" className="mb-6 lg:flex hidden items-start justify-between gap-6">
           <div className="flex flex-col gap-2">
-            <h2 className="font-heading text-[28px] lg:text-[24px] uppercase text-black">
+            <h2 className="font-heading text-[28px] lg:text-[24px] xl:text-[28px] uppercase text-black">
               {title}
             </h2>
             {description && (
-              <p className="max-w-3xl text-base text-black">{description}</p>
+              <p className="max-w-3xl text-sm lg:text-base text-black">{description}</p>
             )}
           </div>
           {showViewAll && (
@@ -83,7 +83,7 @@ export function GridEffect({
               href={viewAllUrl}
               title={viewAllLabel}
               aria-label={viewAllLabel}
-              className={`group items-center gap-2 font-heading text-lg lg:text-[22px] uppercase text-black lg:flex hidden`}
+              className={`group items-center gap-2 font-heading text-lg lg:text-[20px] xl:text-[22px] uppercase text-black lg:flex hidden`}
             >
               {viewAllLabel}
               <svg
@@ -152,12 +152,12 @@ export function GridEffect({
             )}
           </div>
 
-          <div data-aos="fade-up" data-aos-delay="150" className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-[30px] items-stretch sm:inset-x-0 pb-20 sm:px-6 md:px-8 lg:py-40 lg:px-0 relative z-10">
+          <div data-aos="fade-up" data-aos-delay="150" className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-6 xl:gap-[30px] items-stretch sm:inset-x-0 pb-16 px-4 sm:px-6 md:px-8 lg:py-16 xl:py-24 lg:px-8 xl:px-12 relative z-10">
             {items.map((item, index) => {
               const isActive = index === activeIndex;
               const hasHref = Boolean(item.href);
 
-              const cardClassName = `lg:col-span-4 group flex h-64 flex-col justify-between gap-8 overflow-hidden p-5 sm:p-6 md:p-8 transition-colors duration-300 lg:h-72 xl:h-80 lg:p-5 mx-0 md:mx-4 ${
+              const cardClassName = `lg:col-span-4 group flex h-64 flex-col justify-between gap-6 overflow-hidden p-5 sm:p-6 transition-colors duration-300 lg:h-[290px] xl:h-[330px] lg:p-6 xl:p-8 ${
                 isActive
                   ? "bg-black/50 backdrop-blur-[5px] border-b-[5px] border-white"
                   : "bg-white/70 backdrop-blur-[0px] border-b-[5px] border-transparent"
@@ -167,10 +167,10 @@ export function GridEffect({
                 <>
                   <div className="flex flex-col gap-2">
                     <h3
-                      className={`font-heading text-2xl uppercase leading-tight duration-300 sm:text-3xl sm:max-w-none lg:max-w-[231px] ${
+                      className={`font-heading uppercase leading-tight duration-300 sm:max-w-none lg:max-w-[260px] ${
                         isActive
-                          ? "text-white lg:text-2xl xl:text-[36px]"
-                          : `lg:text-[18px] ${titleClassNameNonHover}`
+                          ? "text-white text-2xl sm:text-3xl lg:text-[22px] xl:text-[32px] 2xl:text-[36px]"
+                          : `text-2xl sm:text-3xl lg:text-[18px] xl:text-[20px] ${titleClassNameNonHover}`
                       }`}
                     >
                       {item.title}

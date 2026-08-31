@@ -84,9 +84,9 @@ const RESEARCH_LISTING_QUERY = /* GraphQL */ `
           width
           height
           title
-          mobile: url @transform(width: 768, immediately: true)
-          tablet: url @transform(width: 1440, immediately: true)
-          desktop: url @transform(width: 1920, immediately: true)
+          mobile: url @transform(width: 768, mode: "fit", format: "webp", quality: 80, immediately: true)
+          tablet: url @transform(width: 1440, mode: "fit", format: "webp", quality: 82, immediately: true)
+          desktop: url @transform(width: 1920, mode: "fit", format: "webp", quality: 85, immediately: true)
         }
         seoImage {
           url
@@ -105,9 +105,9 @@ const RESEARCH_LISTING_QUERY = /* GraphQL */ `
             artHdrHeading
             thumbnail {
               url
-              mobile: url @transform(width: 600, immediately: true)
-              tablet: url @transform(width: 900, immediately: true)
-              desktop: url @transform(width: 1200, immediately: true)
+              mobile: url @transform(width: 600, mode: "fit", format: "webp", quality: 80, immediately: true)
+              tablet: url @transform(width: 900, mode: "fit", format: "webp", quality: 82, immediately: true)
+              desktop: url @transform(width: 1200, mode: "fit", format: "webp", quality: 85, immediately: true)
             }
             catDiscipline {
               ... on discipline_Category { id title slug accentColor }

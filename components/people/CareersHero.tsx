@@ -12,6 +12,8 @@ export type CareersHeroProps = {
   imagePosition?: string;
   imageClassName?: string;
   imageContainerClassName?: string;
+  titleColumnClassName?: string;
+  titleClassName?: string;
 };
 
 function cleanTitleString(title: string): string {
@@ -124,16 +126,18 @@ export function CareersHero({
   registration,
   description,
   imageSrc = "/images/hero/hero4.png",
-  imagePosition = "object-top",
+  imagePosition = "object-center",
   imageClassName = "",
   imageContainerClassName = "",
+  titleColumnClassName,
+  titleClassName,
 }: CareersHeroProps) {
   const altTitle = typeof title === "string" ? title : "NBRS Careers";
 
   return (
-    <section className="relative bg-[#0B131F] text-white h-full lg:h-[600px] xl:h-[730px] mb-8 sm:mb-12 lg:mb-20 xl:mb-28 overflow-visible">
+    <section className="relative bg-[#0B131F] text-white h-full lg:h-[520px] xl:h-[660px] mb-8 sm:mb-12 lg:mb-20 xl:mb-28 overflow-visible">
       {/* Background Dimmed Image on Right Side */}
-      <div className="absolute top-0 right-0 w-full lg:w-[800px] xl:w-[948px] h-full lg:h-[600px] xl:h-[730px] overflow-hidden pointer-events-none z-0 hidden lg:block">
+      <div className="absolute top-0 right-0 w-full lg:w-[800px] xl:w-[948px] h-full lg:h-[520px] xl:h-[660px] overflow-hidden pointer-events-none z-0 hidden lg:block">
         <ResponsiveImage
           src={imageSrc}
           alt={altTitle}
@@ -144,31 +148,33 @@ export function CareersHero({
       </div>
 
       <Container className="relative z-10 h-full">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 xl:gap-12 items-center lg:items-start min-h-[520px] lg:h-full relative lg:pt-28 xl:pt-36">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-6 xl:gap-12 items-center lg:items-start min-h-[480px] lg:h-full relative lg:pt-24 xl:pt-28">
           {/* Left Column: Title, White Bar, Attributes & Optional Description */}
           <div
             data-aos="fade-up"
-            className="lg:col-span-5 xl:col-span-4 flex flex-col items-start gap-4 lg:gap-5 xl:gap-6 pt-24 pb-4 lg:pt-0 lg:pb-0"
+            className={`lg:col-span-4 flex flex-col items-start gap-4 lg:gap-4 xl:gap-6 pt-24 pb-4 ${titleColumnClassName ?? "lg:pt-24 xl:pt-20"} lg:pb-0`}
           >
-            <h1 className="font-heading whitespace-pre-line text-4xl sm:text-5xl lg:text-[58px] 2xl:text-[70px] font-bold uppercase tracking-wide leading-none text-white">
+            <h1 className={`font-heading whitespace-pre-line ${titleClassName ?? "text-4xl sm:text-5xl lg:text-[38px] xl:text-[58px] 2xl:text-[70px]"} font-bold uppercase tracking-wide leading-none text-white`}>
               {renderCareersTitle(title)}
             </h1>
 
             {/* Additional Attributes: Jabatan, Location/Tempat, Registration */}
             {(role || location || registration) && (
-              <div className="flex flex-col gap-y-4 font-sans text-[#C9E5D2]">
+              <div className="flex flex-col gap-y-3 font-sans text-[#C9E5D2]">
                 {role && (
-                  <span className="text-xl sm:text-xl font-bold tracking-wide">
+                  <span className="text-lg sm:text-xl lg:text-lg xl:text-xl font-bold tracking-wide">
                     {role}
                   </span>
                 )}
              
-                <span className="text-xs sm:text-xl mt-0.5">
-                  {registration && `Registration: ${registration}`}
-                </span>
+                {registration && (
+                  <span className="text-xs sm:text-sm lg:text-sm xl:text-base mt-0.5">
+                    Registration: {registration}
+                  </span>
+                )}
 
                 {location && (
-                  <div className="flex items-center gap-2 text-base sm:text-base text-white/80 font-medium">
+                  <div className="flex items-center gap-2 text-sm sm:text-base lg:text-sm xl:text-base text-white/80 font-medium">
                     <svg
                       width="18"
                       height="18"
@@ -190,7 +196,7 @@ export function CareersHero({
             )}
 
             {description && (
-              <div className="font-sans whitespace-pre-line text-base lg:text-[15px] xl:text-lg text-white/90 leading-relaxed max-w-xl">
+              <div className="font-sans whitespace-pre-line text-base lg:text-[13.5px] xl:text-[16px] 2xl:text-lg text-white/90 leading-relaxed max-w-xl">
                 {description}
               </div>
             )}
@@ -200,9 +206,9 @@ export function CareersHero({
           <div
             data-aos="fade-up"
             data-aos-delay="150"
-            className="lg:col-span-7 xl:col-span-8 flex justify-start w-full"
+            className="lg:col-span-8 flex justify-start w-full"
           >
-            <div className={`relative w-[calc(100%+1rem)] sm:w-[calc(100%+1.5rem)] lg:w-full min-h-[440px] h-[440px] sm:h-[500px] lg:h-[540px] xl:h-[640px] overflow-hidden z-30 transform lg:transform-none border border-white/10 -mr-6 lg:mr-0 ${imageContainerClassName}`}>
+            <div className={`relative w-[calc(100%+1rem)] sm:w-[calc(100%+1.5rem)] lg:w-full min-h-[380px] sm:min-h-[440px] h-[380px] sm:h-[480px] lg:h-[460px] xl:h-[580px] overflow-hidden z-30 transform lg:transform-none border border-white/10 -mr-6 lg:mr-0 ${imageContainerClassName}`}>
               <ResponsiveImage
                 src={imageSrc}
                 alt="NBRS Featured Hero"
