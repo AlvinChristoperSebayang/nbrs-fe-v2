@@ -60,7 +60,7 @@ function CheckboxGroup({
               />
               <span
                 aria-hidden="true"
-                className="w-4.5 h-4.5 lg:w-[18px] lg:h-[18px] xl:w-5 xl:h-5 rounded-sm border border-zinc-300 bg-white transition-colors flex items-center justify-center shrink-0 peer-focus-visible:ring-2 peer-focus-visible:ring-black peer-focus-visible:ring-offset-2 peer-checked:bg-black peer-checked:border-black peer-checked:text-white group-hover:border-black"
+                className="w-4.5 h-4.5 lg:w-[30px] lg:h-[30px] rounded-sm border border-zinc-300 bg-white transition-colors flex items-center justify-center shrink-0 peer-focus-visible:ring-2 peer-focus-visible:ring-black peer-focus-visible:ring-offset-2 peer-checked:bg-black peer-checked:border-black peer-checked:text-white group-hover:border-black"
               >
                 {checked && (
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="w-2.5 h-2.5 lg:w-3 lg:h-3 xl:w-3.5 xl:h-3.5">
@@ -156,7 +156,7 @@ export function ContactForm({ title, serviceOptions, sectorOptions, referralSour
 
   return (
     <div data-aos="fade-up" className="order-1 lg:order-2 lg:col-span-9 xl:col-span-8 w-full">
-      <div className="bg-white rounded-[5px] shadow-[0px_0px_25px_rgba(0,0,0,0.12)] border border-zinc-100 p-6 sm:p-8 lg:p-7 xl:p-12">
+      <div className="bg-white p-6 sm:p-8 lg:p-7 xl:p-12 shadow-[0px_0px_10px_rgba(0,0,0,0.12)] border border-zinc-100">
         <h1 className="font-heading text-3xl sm:text-4xl lg:text-[40px] xl:text-5xl font-bold uppercase text-black tracking-wide mb-6 sm:mb-8">{title}</h1>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-6 sm:gap-8">
@@ -223,7 +223,7 @@ export function ContactForm({ title, serviceOptions, sectorOptions, referralSour
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
-            <div className="flex gap-2">
+            <div className="flex gap-0">
               <label htmlFor="contact-phone-country-code" className="sr-only">Country code</label>
               <select
                 id="contact-phone-country-code"
@@ -248,7 +248,7 @@ export function ContactForm({ title, serviceOptions, sectorOptions, referralSour
                 aria-required="true"
                 autoComplete="tel"
                 placeholder="Phone number"
-                className="w-full h-11 px-4 rounded-sm border border-zinc-300 font-sans text-sm text-black placeholder:text-stone-500 focus:outline-none focus:border-black transition-colors"
+                className="w-full h-11 px-4 rounded-sm border !border-l-0 -ml-0.5 border-zinc-300 font-sans text-sm text-black placeholder:text-stone-500 focus:outline-none focus:border-black transition-colors"
               />
             </div>
             <div>
