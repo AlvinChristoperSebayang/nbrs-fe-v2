@@ -131,7 +131,7 @@ export function CareersAccordionSection({
   return (
     <section className="bg-white sm:pt-10 lg:pt-16 pb-16 lg:pb-24 text-black">
       <Container>
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-12 lg:grid-cols-12 gap-8 lg:gap-6 xl:gap-12 items-start">
           {/* Left Column: Light Gray Watermark Title */}
           <div data-aos="fade-up" className="md:col-span-4 md:pr-4">
             <h2 className="hidden md:block font-heading whitespace-pre-line text-3xl sm:text-4xl md:text-[48px] lg:text-[70px] font-bold uppercase text-zinc-200/90 leading-[1.05] tracking-tight">
