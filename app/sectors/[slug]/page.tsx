@@ -48,12 +48,21 @@ export default async function SingleSectorPage({
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  const sector = await getSectorDetailContent((await params).slug);
+  const { slug } = await params;
+  const sector = await getSectorDetailContent(slug);
   if (!sector) notFound();
+
+  const isSmallerQuoteText = ["heritage", "community", "secure-spaces"].includes(slug);
 
   return (
     <article className="min-h-screen bg-white text-black">
-      <Hero image={sector.image} title={sector.title.toUpperCase()} description={sector.description} descriptionClassName="max-w-[334px]"/>
+      <Hero
+        image={sector.image}
+        title={sector.title.toUpperCase()}
+        description={sector.description}
+        descriptionClassName="max-w-[334px]"
+        imageClassName={slug === "community" ? "!object-[18%_center]" : ""}
+      />
       <SectorPrinciplesSection title={sector.principlesTitle} description={sector.principlesDescription} images={sector.principlesImages} />
       {sector.heritageServices ? (
         <HeritageServicesSection
@@ -65,7 +74,14 @@ export default async function SingleSectorPage({
         <SectorFeaturesSliderSection title="FEATURES" items={sector.features} backgroundColor={sector.backgroundColor} />
       )}
       <KeyProjectsSection projects={sector.keyProjects} />
-      {sector.quote && <SectorQuoteSection image={sector.quote.image} quote={sector.quote.text} author={sector.quote.author} />}
+      {sector.quote && (
+        <SectorQuoteSection
+          image={sector.quote.image}
+          quote={sector.quote.text}
+          author={sector.quote.author}
+          quoteTextClassName={isSmallerQuoteText ? "lg:text-[18px] xl:text-[24px]" : "lg:text-[24px] xl:text-[32px]"}
+        />
+      )}
       <ProjectListTableSection title="" sectorHeaderLabel="Practices" rows={sector.tableProjects} />
       <CtaSection content={sector.cta} titleUppercase={false} />
     </article>

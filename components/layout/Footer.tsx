@@ -81,56 +81,37 @@ function FooterLinkGroup({
         type="button"
         onClick={() => setOpen((prev) => !prev)}
         aria-expanded={open}
-        className="flex items-center gap-3 font-heading text-[26px] leading-[27px] font-normal uppercase tracking-normal text-white lg:pointer-events-none lg:text-2xl lg:leading-tight cursor-pointer lg:cursor-default"
+        className="flex items-center gap-4 font-heading text-[26px] leading-[27px] font-bold uppercase tracking-normal text-white lg:pointer-events-none cursor-pointer lg:cursor-default"
       >
         <span>{heading}</span>
-        <span className="shrink-0 lg:hidden text-white ml-0.5">
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 16 16"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-          >
-            {/* Horizontal Line (-) */}
-            <path
-              d="M3 8H13"
-              stroke="white"
-              strokeWidth="2"
-              strokeLinecap="round"
-            />
-            {/* Vertical Line (|) -> rotates & fades out when open */}
-            <path
-              d="M8 3V13"
-              stroke="white"
-              strokeWidth="2"
-              strokeLinecap="round"
-              className={`origin-[8px_8px] transition-all duration-300 ${
-                open ? "rotate-90 opacity-0" : "rotate-0 opacity-100"
-              }`}
-            />
+        <span
+          className={`w-[26px] h-[26px] rounded-full bg-white text-[#181D33] flex items-center justify-center shrink-0 lg:hidden ml-1 transition-transform duration-300 ${
+            open ? "rotate-180" : "rotate-0"
+          }`}
+        >
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6.99196 1.4458L6.99197 13.9458M0.722659 7.9929L6.99196 1.4458L13.2617 7.9929" stroke="#181D33" strokeWidth="2"/>
           </svg>
         </span>
       </button>
 
       {/* Smooth Grid Accordion Expansion */}
       <div
-        className={`grid transition-all duration-500 ease-in-out lg:!grid lg:!grid-rows-[1fr] lg:!opacity-100 lg:!mt-4 ${
+        className={`grid transition-all duration-500 ease-in-out lg:!grid lg:!grid-rows-[1fr] lg:!opacity-100 lg:!mt-5 ${
           open
-            ? "grid-rows-[1fr] opacity-100 mt-4"
+            ? "grid-rows-[1fr] opacity-100 mt-4 sm:mt-5"
             : "grid-rows-[0fr] opacity-0 mt-0"
         }`}
       >
         <div className="overflow-hidden">
-          <ul className="flex flex-col gap-3">
+          <ul className="flex flex-col gap-3.5">
             {links.map((link) => (
               <li key={link.label}>
                 <Link
                   href={link.href}
                   title={link.label}
                   aria-label={link.label}
-                  className="text-sm lg:text-lg text-white/70 transition-colors duration-200 hover:text-white"
+                  className="text-[18px] lg:text-lg text-white/70 transition-colors duration-200 hover:text-white"
                 >
                   {link.label}
                 </Link>
@@ -157,9 +138,9 @@ export function Footer({ content }: { content: FooterContent }) {
   return (
     <footer className="bg-[#181D33] py-20 lg:pt-[85px] lg:pb-[60px]">
       <Container>
-        <div className="grid grid-cols-1 gap-[35px] sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-[35px] sm:grid-cols-2 lg:grid-cols-3 lg:gap-12">
           {/* Column 1: Business Info & Logo */}
-          <div data-aos="fade-up" className="flex flex-col gap-8 order-1 lg:order-1">
+          <div data-aos="fade-up" className="flex flex-col gap-[65px] lg:gap-8 order-1 lg:order-1 mb-[30px] lg:mb-0">
             <Link href="/" aria-label="NBRS Home" title="NBRS Home" className="inline-block w-fit">
               <img
                 src="/images/logo/logo-white-2.svg"
@@ -171,7 +152,7 @@ export function Footer({ content }: { content: FooterContent }) {
               />
             </Link>
             {content.businessDetailsHtml && (
-              <div className="mt-4">
+              <div>
                 <h3 className="text-sm lg:text-lg tracking-wide text-white">
                   Business Details
                 </h3>
@@ -184,25 +165,46 @@ export function Footer({ content }: { content: FooterContent }) {
 
             {(content.contactMessage || socialLinks.length > 0) && (
               <div>
-                <h3 className="font-heading text-sm lg:text-2xl uppercase tracking-wide text-white">
-                  Contact Us
-                </h3>
+                <Link
+                  href="/contact"
+                  title="Contact Us"
+                  aria-label="Contact Us"
+                  className="group font-heading text-[26px] leading-[27px] uppercase font-bold tracking-normal text-white inline-flex items-center gap-3.5 hover:text-white/80 transition-colors"
+                >
+                  <span>Contact Us</span>
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="shrink-0 lg:hidden transition-transform group-hover:translate-x-1"
+                  >
+                    <path
+                      d="M1 8H15M15 8L8 1M15 8L8 15"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </Link>
                 {content.contactMessage && content.contactLink ? (
                   <a
                     href={content.contactLink}
                     title={content.contactMessage}
                     aria-label={content.contactMessage}
-                    className="mt-4 inline-block whitespace-pre-line text-sm lg:text-lg text-white/70 transition-colors hover:text-white"
+                    className="mt-3.5 inline-block whitespace-pre-line text-[16px] lg:text-lg text-white/70 transition-colors hover:text-white"
                   >
                     {content.contactMessage}
                   </a>
                 ) : content.contactMessage ? (
-                  <p className="mt-4 whitespace-pre-line text-sm lg:text-lg text-white/70">
+                  <p className="mt-3.5 whitespace-pre-line text-[16px] lg:text-lg text-white/70">
                     {content.contactMessage}
                   </p>
                 ) : null}
                 {socialLinks.length > 0 && (
-                  <div className="mt-4 flex items-center gap-4">
+                  <div className="mt-5 flex items-center gap-4">
                     {socialLinks.map((social) => (
                       <a
                         key={social.label}

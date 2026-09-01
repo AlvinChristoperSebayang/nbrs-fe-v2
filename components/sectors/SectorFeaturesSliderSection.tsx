@@ -37,20 +37,13 @@ export function SectorFeaturesSliderSection({
   };
 
   return (
-    <section className="py-12 lg:py-24 text-black" style={{ backgroundColor }}>
+    <section className="py-0 lg:py-24 text-black" style={{ backgroundColor }}>
       {/* ------------------------------------------------------------- */}
       {/* MOBILE DISPLAY (< lg): Interactive Image Slider & Glass Card  */}
       {/* ------------------------------------------------------------- */}
       <div className="block lg:hidden w-full">
-        {/* Mobile Header Title */}
-        <Container>
-          <h2 className="font-heading text-2xl uppercase font-bold text-black mb-4">
-            {title}
-          </h2>
-        </Container>
-
         {/* Mobile Slider Stage */}
-        <div className="relative w-full h-[460px] sm:h-[500px] overflow-hidden">
+        <div className="relative w-full h-[450px] overflow-hidden">
           {/* Background Images */}
           {items.map((item, index) => (
             <ResponsiveImage
@@ -63,15 +56,12 @@ export function SectorFeaturesSliderSection({
             />
           ))}
 
-          {/* Dark Overlay Tint */}
-          <div className="absolute inset-0 bg-black/30" />
-
           {/* Centered Frosted Glass Card */}
           <div className="absolute inset-0 flex items-center justify-center p-4">
-            <div className="relative w-[88%] max-w-[340px] bg-black/55 backdrop-blur-xs px-8 py-10 text-center border border-white/20 flex flex-col items-center justify-center">
+            <div className="relative w-[94%] max-w-[380px] bg-black/55 backdrop-blur-md px-8 py-6 sm:px-10 sm:py-8 text-center border border-white/20 flex flex-col items-center justify-center rounded-none">
               {/* Category Top Accent Line */}
               <div
-                className="absolute top-0 left-0 right-0 h-1.5"
+                className="absolute top-0 left-0 right-0 h-1"
                 style={{ backgroundColor: backgroundColor !== "#FFFFFF" ? backgroundColor : "#EDE3F0" }}
               />
 
@@ -80,7 +70,7 @@ export function SectorFeaturesSliderSection({
                 type="button"
                 onClick={handlePrev}
                 aria-label="Previous Feature"
-                className="absolute left-2.5 top-1/2 -translate-y-1/2 p-1.5 text-white hover:text-zinc-300 transition-transform active:scale-95"
+                className="absolute left-1.5 sm:left-2 top-1/2 -translate-y-1/2 p-2 text-white hover:text-zinc-300 transition-transform active:scale-95 cursor-pointer"
               >
                 <svg
                   className="w-6 h-6"
@@ -94,10 +84,10 @@ export function SectorFeaturesSliderSection({
               </button>
 
               {/* Card Content */}
-              <h3 className="font-heading text-2xl sm:text-2xl uppercase font-bold text-white tracking-wide mb-3 leading-tight px-3">
+              <h3 className="font-heading text-[22px] sm:text-[24px] uppercase font-bold text-white tracking-wide mb-2 leading-none max-w-[240px] px-1">
                 {currentItem.title}
               </h3>
-              <p className="font-sans text-xs sm:text-sm text-white/90 leading-relaxed max-w-[240px] px-2">
+              <p className="font-sans text-xs sm:text-sm text-white/95 leading-snug max-w-[230px] px-1">
                 {currentItem.description}
               </p>
 
@@ -106,7 +96,7 @@ export function SectorFeaturesSliderSection({
                 type="button"
                 onClick={handleNext}
                 aria-label="Next Feature"
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 p-1.5 text-white hover:text-zinc-300 transition-transform active:scale-95"
+                className="absolute right-1.5 sm:right-2 top-1/2 -translate-y-1/2 p-2 text-white hover:text-zinc-300 transition-transform active:scale-95 cursor-pointer"
               >
                 <svg
                   className="w-6 h-6"
@@ -118,23 +108,6 @@ export function SectorFeaturesSliderSection({
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                 </svg>
               </button>
-
-              {/* Slide Indicators Dots */}
-              <div className="flex items-center justify-center gap-1.5 mt-6">
-                {items.map((_, idx) => (
-                  <button
-                    key={idx}
-                    type="button"
-                    onClick={() => setActiveIndex(idx)}
-                    aria-label={`Go to slide ${idx + 1}`}
-                    className={`h-1.5 rounded-full transition-all duration-300 ${
-                      idx === activeIndex
-                        ? "w-5 bg-white"
-                        : "w-1.5 bg-white/40 hover:bg-white/70"
-                    }`}
-                  />
-                ))}
-              </div>
             </div>
           </div>
         </div>
@@ -182,7 +155,7 @@ export function SectorFeaturesSliderSection({
                   <>
                     <div className="flex flex-col gap-2">
                       <h3
-                        className={`font-heading text-2xl uppercase leading-tight duration-300 max-w-57.75 ${
+                        className={`font-heading text-2xl uppercase leading-tight duration-300 max-w-57.75 lg:max-w-full ${
                           isActive
                             ? "text-white text-[32px]"
                             : "text-black text-[20px]"
@@ -193,7 +166,7 @@ export function SectorFeaturesSliderSection({
 
                       {item.description && (
                         <p
-                          className={`max-w-[231px] text-sm text-white/90 transition-opacity duration-300 ${
+                          className={`max-w-[231px] lg:max-w-full text-sm text-white/90 transition-opacity duration-300 ${
                             isActive ? "opacity-100" : "opacity-0"
                           }`}
                         >

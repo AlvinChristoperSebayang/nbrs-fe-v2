@@ -27,10 +27,10 @@ export function PracticeIntroSection({
       <Container>
         <div
           data-aos="fade-up"
-          className="relative w-full min-h-none lg:min-h-[340px] xl:min-h-[410px] flex flex-col-reverse lg:flex-col lg:block justify-center gap-6 lg:gap-0"
+          className="grid grid-cols-1 lg:grid-cols-12 items-center gap-6 lg:gap-0"
         >
-          {/* Main Left Image (770px x 410px aspect ratio) */}
-          <div className="w-[calc(100%+1rem)] sm:w-[calc(100%+1.5rem)] lg:w-[66%] xl:w-[770px] -mr-4 sm:-mr-6 lg:mr-0 aspect-[770/410] relative lg:absolute lg:left-0 lg:top-0 overflow-hidden">
+          {/* Main Left Image (Cols 1 - 8) */}
+          <div className="order-2 lg:order-1 w-[calc(100%+1rem)] sm:w-[calc(100%+1.5rem)] lg:w-full -mr-4 sm:-mr-6 lg:mr-0 aspect-[770/410] lg:col-start-1 lg:col-end-9 lg:row-start-1 lg:row-end-2 overflow-hidden rounded-none">
             <ResponsiveImage
               src={image}
               alt={alt}
@@ -38,13 +38,13 @@ export function PracticeIntroSection({
             />
           </div>
 
-          {/* Overlapping Frosted Glass Box (585px wide, overlapping right side of image) */}
+          {/* Overlapping Frosted Glass Box (Cols 6 - 12, overlapping cols 6, 7, 8 of image) */}
           <div
             data-aos="fade-up"
             data-aos-delay="150"
-            className="w-full lg:w-[56%] xl:w-[585px] relative lg:absolute lg:right-0 lg:top-1/2 lg:-translate-y-1/2 z-10 bg-transparent lg:bg-white/75 lg:backdrop-blur-sm p-0 sm:p-8 lg:p-6 xl:p-10 flex items-center border-none lg:border lg:border-white/70 rounded-[2px]"
+            className="order-1 lg:order-2 w-full lg:col-start-7 lg:col-end-13 lg:row-start-1 lg:row-end-2 z-10 bg-transparent lg:bg-white/75 lg:backdrop-blur-sm p-0 sm:p-8 lg:p-8 xl:p-10 flex items-center border-none lg:border lg:border-white/70 rounded-none"
           >
-            <div className="font-sans text-base sm:text-base lg:text-[13.5px] xl:text-base text-black font-normal leading-relaxed xl:leading-[1.5] max-w-[464px]">
+            <div className="font-sans text-base sm:text-base lg:text-[13.5px] xl:text-[15px] 2xl:text-base text-black font-normal leading-relaxed xl:leading-[1.5] max-w-[464px]">
               {renderPracticeQuote(quote)}
             </div>
           </div>

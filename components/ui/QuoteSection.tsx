@@ -9,6 +9,7 @@ export function QuoteSection({
   role,
   quoteIconColor = "#B5B5B5",
   boxBgClass = "bg-[#D9D9D9] lg:bg-white/80 lg:backdrop-blur-md",
+  quoteTextClassName,
   imageClassName,
   imageContainerClassName,
 }: {
@@ -18,6 +19,7 @@ export function QuoteSection({
   role?: string;
   quoteIconColor?: string;
   boxBgClass?: string;
+  quoteTextClassName?: string;
   imageClassName?: string;
   imageContainerClassName?: string;
 }) {
@@ -27,23 +29,23 @@ export function QuoteSection({
   return (
     <section className="bg-white py-0 lg:py-20 text-black overflow-hidden">
       <Container className="max-lg:px-0 max-lg:max-w-none">
-        <div className="relative flex flex-col items-center lg:block">
-          {/* Image */}
-          <div data-aos="fade-up" suppressHydrationWarning className={`w-full overflow-hidden aspect-[770/495] lg:w-[65%] xl:w-[770px] ${imageContainerClassName ?? ""}`}>
+        <div className="grid grid-cols-1 lg:grid-cols-12 items-center">
+          {/* Image (Cols 1 - 8) */}
+          <div data-aos="fade-up" suppressHydrationWarning className={`w-full overflow-hidden aspect-[770/495] lg:col-start-1 lg:col-end-9 lg:row-start-1 lg:row-end-2 ${imageContainerClassName ?? ""}`}>
             <ResponsiveImage
               src={image}
               alt={cleanAuthor || "Quote author"}
               title={cleanAuthor || "Quote author"}
-              className={`h-full w-full object-cover object-center max-lg:rounded-none rounded-sm ${imageClassName ?? ""}`}
+              className={`h-full w-full object-cover object-center max-lg:rounded-none ${imageClassName ?? ""}`}
             />
           </div>
 
-          {/* Quote Box Overlay using exact Figma dimensions */}
+          {/* Quote Box Overlay using CSS Grid (Cols 7 - 12, overlapping cols 7 & 8 of image) */}
           <div
             data-aos="fade-up"
             data-aos-delay="150"
             suppressHydrationWarning
-            className="flex flex-col justify-between bg-[#D9D9D9] lg:bg-white/75 lg:backdrop-blur-xs w-full p-8 sm:p-10 lg:absolute lg:top-1/2 lg:-translate-y-1/2 lg:left-[45%] xl:left-[48%] 2xl:left-[50%] lg:w-[500px] xl:w-[580px] 2xl:w-[630px] lg:p-8 xl:p-10 max-lg:border-none border border-white/80"
+            className={`flex flex-col justify-between ${boxBgClass} w-full p-8 sm:p-10 lg:col-start-7 lg:col-end-13 lg:row-start-1 lg:row-end-2 z-10 lg:p-8 xl:p-10 max-lg:border-none border border-white/80 lg:ml-3`}
           >
             {/* Top Quote Icon */}
             <span
@@ -63,12 +65,12 @@ export function QuoteSection({
             </span>
 
             {/* Quote Text */}
-            <p className="font-sans text-[18px] sm:text-[20px] lg:text-[20px] xl:text-[24px] font-normal italic leading-[1.3] tracking-normal text-black my-2 lg:my-3">
+            <p className={`font-sans text-[18px] sm:text-[20px] ${quoteTextClassName ?? "lg:text-[24px] xl:text-[32px]"} font-normal italic leading-[1.3] tracking-normal text-black my-2 lg:my-3`}>
               {quote}
             </p>
 
             {/* Author */}
-            <p className="font-sans text-sm sm:text-base lg:text-base xl:text-lg text-black mt-1 lg:mt-2 font-medium">
+            <p className="font-sans text-sm sm:text-base lg:text-[18px] xl:text-[24px] text-black mt-1 lg:mt-2 font-medium">
               - {cleanAuthor}
               {cleanRole ? `, ${cleanRole}` : ""}
             </p>

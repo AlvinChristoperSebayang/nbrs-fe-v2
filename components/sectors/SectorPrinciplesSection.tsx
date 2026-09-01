@@ -22,18 +22,18 @@ export function SectorPrinciplesSection({
           {/* Slot 1: Title & Description Text Block */}
           <div data-aos="fade-up" suppressHydrationWarning className="flex flex-col justify-start pr-2 lg:pr-4">
             <div className="mb-3 lg:mb-3 xl:mb-4">
-              {/* Mobile (< lg): Single line */}
-              <div className="lg:hidden">
-                <span className="inline-block font-heading text-3xl sm:text-4xl uppercase font-bold text-black leading-none border-b-4 border-black pb-1">
+              {/* Mobile (< sm): Single line */}
+              <div className="sm:hidden">
+                <span className="inline-block font-heading text-[24px] uppercase font-bold text-black leading-none border-b-4 border-black pb-1 whitespace-nowrap">
                   {prefix} {mainTitle}
                 </span>
               </div>
-              {/* Desktop (>= lg): Two lines */}
-              <div className="hidden lg:block">
-                <span className="block font-heading text-[26px] lg:text-[28px] xl:text-[44px] 2xl:text-[56px] uppercase font-bold text-black leading-none">
+              {/* Tablet & Desktop (>= sm): Two lines */}
+              <div className="hidden sm:block">
+                <span className="block font-heading text-[26px] sm:text-[28px] xl:text-[44px] 2xl:text-[56px] uppercase font-bold text-black leading-none">
                   {prefix}
                 </span>
-                <span className="inline-block font-heading text-[26px] lg:text-[28px] xl:text-[44px] 2xl:text-[56px] uppercase font-bold text-black leading-none mt-1 border-b-[3px] xl:border-b-4 border-black pb-1">
+                <span className="inline-block font-heading text-[26px] sm:text-[28px] xl:text-[44px] 2xl:text-[56px] uppercase font-bold text-black leading-none mt-1 border-b-[3px] xl:border-b-4 border-black pb-1">
                   {mainTitle}
                 </span>
               </div>

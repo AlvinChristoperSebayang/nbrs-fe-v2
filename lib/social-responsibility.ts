@@ -51,7 +51,7 @@ const QUERY = /* GraphQL */ `
         socialSusHeroHeading
         socialSusHeroDescription
         socialSusHeroImage { url ${hero} }
-        whatWeDoV2 { ... on whatWeDoContent_Entry { title description2 image { url ${landscape} } } }
+        whatWeDoV2 { ... on whatWeDoContent_Entry { title description2 image { url width height title ${landscape} } } }
         socialSusSupportingHeading
         socialSusSupportingOrganisations { ... on socialSupportingOrganisation_Entry { socialSupportingOrganisationName socialSupportingOrganisationLogo { url } } }
       }

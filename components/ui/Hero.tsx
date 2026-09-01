@@ -62,7 +62,11 @@ function getTitleLines(title: string): string[] {
   return [line1Words.join(" "), line2Words.join(" ")];
 }
 
-export function renderTitleWithUnderline(title: React.ReactNode, showDivider: boolean = true) {
+export function renderTitleWithUnderline(
+  title: React.ReactNode,
+  showDivider: boolean = true,
+  borderColor: string = "border-white"
+) {
   if (typeof title !== "string") {
     return title;
   }
@@ -87,7 +91,7 @@ export function renderTitleWithUnderline(title: React.ReactNode, showDivider: bo
   // Single line condition (3 words or fewer)
   if (lines.length === 1) {
     return (
-      <span className="inline-block border-b-[4px] sm:border-b-[5px] lg:border-b-[6px] border-white pb-1 sm:pb-2 leading-[1.05]">
+      <span className={`inline-block border-b-[4px] sm:border-b-[5px] lg:border-b-[6px] ${borderColor} pb-1 sm:pb-2 leading-[1.05]`}>
         {lines[0]}
       </span>
     );
@@ -106,13 +110,13 @@ export function renderTitleWithUnderline(title: React.ReactNode, showDivider: bo
             return (
               <span key={idx} className="w-full flex flex-col items-start">
                 {/* Desktop: single inline-block with full underline */}
-                <span className="hidden sm:inline-block border-b-[4px] sm:border-b-[5px] lg:border-b-[6px] border-white pb-1 sm:pb-2 leading-none mt-1">
+                <span className={`hidden sm:inline-block border-b-[4px] sm:border-b-[5px] lg:border-b-[6px] ${borderColor} pb-1 sm:pb-2 leading-none mt-1`}>
                   {line}
                 </span>
                 {/* Mobile: split only if line is excessively long */}
                 <span className="sm:hidden flex flex-col items-start">
                   <span className="block leading-[1.05]">{firstPart}</span>
-                  <span className="inline-block border-b-[4px] border-white pb-1 leading-none mt-1">
+                  <span className={`inline-block border-b-[4px] ${borderColor} pb-1 leading-none mt-1`}>
                     {lastWord}
                   </span>
                 </span>
@@ -123,7 +127,7 @@ export function renderTitleWithUnderline(title: React.ReactNode, showDivider: bo
           return (
             <span
               key={idx}
-              className="inline-block max-w-full border-b-[4px] sm:border-b-[5px] lg:border-b-[6px] border-white pb-1 sm:pb-2 leading-none mt-1"
+              className={`inline-block max-w-full border-b-[4px] sm:border-b-[5px] lg:border-b-[6px] ${borderColor} pb-1 sm:pb-2 leading-none mt-1`}
             >
               {line}
             </span>

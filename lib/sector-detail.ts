@@ -36,10 +36,10 @@ query SectorDetail($slug: [String]!) {
       catOvrHeading catOvrText
       catOverImageText { ... on block3_Entry { image { url width height title ${cardImage} } leftColumnHeading leftColumnText rightColumnHeading rightColumnText } }
       sectorFeatures { ... on sectorFeature_Entry { sectorFeatureHeading sectorFeatureText sectorFeatureImage { url width height title } } }
-      catFeaturedProjects { ... on projects_Entry { id title slug uri proHdrHeading thumbnail { ${cardImage} } } }
+      catFeaturedProjects { ... on projects_Entry { id title slug uri proHdrHeading thumbnail { url width height title ${cardImage} } } }
       catSelectedProjects { ... on projects_Entry { id title slug uri proHdrHeading catStatus { ... on status_Category { title } } catDiscipline { ... on discipline_Category { title } } } }
-      catPclPerson { ... on block2_Entry { quote person { ... on people_Entry { title PplName pplProfileImage { ${quoteImage} } } } } }
-      ctaSection { ctaSectionBackgroundImage { ${ctaImage} } ctaSectionHeading ctaSectionDescription ctaSectionButtonLabel ctaSectionButtonUrl }
+      catPclPerson { ... on block2_Entry { quote person { ... on people_Entry { title PplName pplProfileImage { url width height title ${quoteImage} } } } } }
+      ctaSection { ctaSectionBackgroundImage { url width height title ${ctaImage} } ctaSectionHeading ctaSectionDescription ctaSectionButtonLabel ctaSectionButtonUrl }
     }
   }
 }`;

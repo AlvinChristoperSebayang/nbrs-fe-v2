@@ -151,9 +151,9 @@ const fitTransform = (width: number, quality = 80) =>
   `url @transform(width: ${width}, mode: "fit", format: "webp", quality: ${quality}, immediately: true)`;
 const heroFit = (width: number, quality = 85) =>
   `url @transform(width: ${width}, mode: "fit", format: "webp", quality: ${quality}, immediately: true)`;
-const landscape = `mobile: ${fitTransform(600, 80)} tablet: ${fitTransform(900, 82)} desktop: ${fitTransform(1200, 85)}`;
-const hero = `mobile: url @transform(width: 768, mode: "fit", format: "webp", quality: 80, immediately: true) tablet: ${heroFit(1440, 82)} desktop: ${heroFit(2400, 85)}`;
-const cta = `mobile: ${fitTransform(768, 80)} tablet: ${fitTransform(1440, 82)} desktop: ${fitTransform(2400, 85)}`;
+const landscape = `url mobile: ${fitTransform(600, 80)} tablet: ${fitTransform(900, 82)} desktop: ${fitTransform(1200, 85)} width height title`;
+const hero = `url mobile: ${heroFit(768, 80)} tablet: ${heroFit(1440, 82)} desktop: ${heroFit(2400, 85)} width height title`;
+const cta = `url mobile: ${fitTransform(768, 80)} tablet: ${fitTransform(1440, 82)} desktop: ${fitTransform(2400, 85)} width height title`;
 
 const QUERY = /* GraphQL */ `
   query DesignApproachPage {
@@ -195,9 +195,13 @@ const QUERY = /* GraphQL */ `
           }
         }
         thumbnailImage {
+          url
           mobile: url @transform(width: 768, mode: "fit", format: "webp", quality: 80, immediately: true)
           tablet: url @transform(width: 1200, mode: "fit", format: "webp", quality: 82, immediately: true)
           desktop: url @transform(width: 1800, mode: "fit", format: "webp", quality: 85, immediately: true)
+          width
+          height
+          title
         }
         quote
         citation
