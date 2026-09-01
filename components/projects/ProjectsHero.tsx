@@ -20,7 +20,7 @@ export function ProjectsHero({
           src={image || "/images/hero/hero3.png"}
           alt={headingText}
           title={headingText}
-          className="h-full w-full object-cover 2xl:object-top"
+          className="h-full w-full object-cover lg:object-top"
           priority
         />
         <div className="absolute inset-0 bg-black/40" />
