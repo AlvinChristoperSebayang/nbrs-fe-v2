@@ -8,6 +8,9 @@ import { getHomepageContent } from "@/lib/homepage";
 import { createPageMetadata } from "@/lib/seo";
 import type { Sector, NewsItem, CtaContent } from "@/lib/types";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 60;
+
 const FALLBACK_SECTORS: Sector[] = [
   {
     label: "Community",
@@ -112,6 +115,7 @@ export default async function Home() {
         heading={homepage?.sectorsHeading || "Designing spaces bespoke to their needs"}
       />
       <GridEffect
+        className="mt-8"
         items={news}
         title={homepage?.latestNewsHeading ?? undefined}
         backgroundColor="#EEEEEE"

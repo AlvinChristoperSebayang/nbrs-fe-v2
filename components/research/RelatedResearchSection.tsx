@@ -15,19 +15,19 @@ export function RelatedResearchSection({ items }: { items: RelatedResearchItem[]
           Related research
         </h2>
 
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+        <div className="grid grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
           {items.map((item, index) => (
             <div
               key={item.id}
               data-aos="fade-up"
               data-aos-delay={index * 100}
-              className="group h-full w-full pt-2"
+              className="group flex h-full w-full flex-col pt-2"
             >
               <Link
                 href={`/research/${item.slug}`}
-                className="flex w-full flex-col overflow-hidden rounded-[2px] bg-black shadow-md transition-all duration-500 ease-out group-hover:-translate-y-2 group-hover:shadow-2xl will-change-transform"
+                className="flex h-full w-full flex-1 flex-col overflow-hidden rounded-[2px] bg-black shadow-md transition-all duration-500 ease-out group-hover:-translate-y-2 group-hover:shadow-2xl will-change-transform"
               >
-                <div className="relative aspect-[370/200] w-full overflow-hidden bg-zinc-800">
+                <div className="relative aspect-[370/300] w-full shrink-0 overflow-hidden bg-zinc-800">
                   {item.image ? (
                     <ResponsiveImage
                       src={item.image}
@@ -39,14 +39,14 @@ export function RelatedResearchSection({ items }: { items: RelatedResearchItem[]
                   )}
                 </div>
 
-                <div className="flex min-h-[220px] flex-col justify-between bg-black p-6 text-white transition-colors duration-500 ease-out group-hover:bg-[#1C1F26] sm:p-7">
+                <div className="flex flex-1 flex-col justify-between bg-black p-6 text-white transition-colors duration-500 ease-out group-hover:bg-[#1C1F26] sm:p-7">
                   <div className="flex flex-col gap-2">
                     {(item.sector || item.practice) && (
                       <span className="font-sans text-sm text-[#F0C7BD]">
                         {[item.sector, item.practice].filter(Boolean).join(" • ")}
                       </span>
                     )}
-                    <h3 className="line-clamp-3 font-sans text-lg leading-snug font-bold text-white transition-colors duration-300">
+                    <h3 className="font-sans text-lg leading-snug font-bold text-white transition-colors duration-300">
                       {item.title}
                     </h3>
                   </div>

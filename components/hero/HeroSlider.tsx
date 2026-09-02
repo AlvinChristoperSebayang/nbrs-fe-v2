@@ -102,7 +102,7 @@ export function HeroSlider({ slides }: HeroSliderProps) {
               fadeEffect={{ crossFade: true }}
               speed={900}
               loop
-              autoplay={{ delay: 5000, disableOnInteraction: false }}
+              autoplay={{ delay: 3000, disableOnInteraction: false }}
               navigation={{ prevEl: `#${prevId}`, nextEl: `#${nextId}` }}
               pagination={{ el: `#${paginationId}`, clickable: true }}
               onSlideChange={handleSlideChange}

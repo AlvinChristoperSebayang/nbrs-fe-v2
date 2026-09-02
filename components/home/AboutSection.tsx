@@ -53,57 +53,12 @@ function renderAboutHeading(heading: string, singleLine = false) {
   );
 }
 
-function renderAboutDescription(description: string, className?: string) {
-  const normalised = description.replace(/\\n/g, "\n").replace(/\r\n?/g, "\n");
-  const isRichText = /<\/?[a-z][\s\S]*>/i.test(normalised);
-  const baseClasses = className ? `text-white/90 ${className}` : "max-w-md text-white/90";
-  const richClasses = `${baseClasses} [&_p]:mb-3 [&_p:last-child]:mb-0 [&_a]:underline [&_a]:underline-offset-2 [&_li]:ml-5 [&_ol]:list-decimal [&_ul]:list-disc`;
-
-  if (isRichText) {
-    return (
-      <div
-        data-aos="fade-up"
-        data-aos-delay="150"
-        className={richClasses}
-        dangerouslySetInnerHTML={{ __html: normalised }}
-      />
-    );
-  }
-
-  const paragraphs = normalised.split(/\n\s*\n/).filter(Boolean);
-  if (paragraphs.length > 1) {
-    return (
-      <div
-        data-aos="fade-up"
-        data-aos-delay="150"
-        className={`${baseClasses} space-y-3`}
-      >
-        {paragraphs.map((p, idx) => (
-          <p key={idx} className="leading-relaxed">
-            {p}
-          </p>
-        ))}
-      </div>
-    );
-  }
-
-  return (
-    <p
-      data-aos="fade-up"
-      data-aos-delay="150"
-      className={baseClasses}
-    >
-      {normalised}
-    </p>
-  );
-}
-
 export function AboutSection({
   image_url,
   image_alt = "NBRS project — building exterior",
   background_color,
   heading = "Designing Environments That Shape Lives",
-  description = "Working collaboratively with clients and communities to create enduring, human-centred places",
+  description = "Working collaboratively with clients and communities to create enduring, human centred places",
   button,
   heading_size = "text-[28px] sm:text-[34px] xl:text-[40px]",
   description_class_name,
@@ -112,6 +67,14 @@ export function AboutSection({
   image_container_class_name,
   image_class_name,
 }: AboutSectionProps) {
+  const formattedDescription = (description || "")
+    .replace(/&#92;n/g, "<br />")
+    .replace(/&bsol;n/g, "<br />")
+    .replace(/\\r\\n/g, "<br />")
+    .replace(/\\n/g, "<br />")
+    .replace(/\r\n/g, "<br />")
+    .replace(/\n/g, "<br />");
+
   const descriptionClassName = [
     "text-base leading-relaxed text-white/90",
     "[&_p]:m-0 [&_p+p]:mt-4",
@@ -131,6 +94,7 @@ export function AboutSection({
             <div className="lg:col-span-4 flex flex-col justify-center gap-6 text-white">
               <h2
                 data-aos="fade-up"
+                suppressHydrationWarning
                 className={`font-heading ${heading_size} leading-[1.05] uppercase text-white`}
               >
                 {renderAboutHeading(heading, single_line_heading)}
@@ -138,11 +102,12 @@ export function AboutSection({
               <div
                 data-aos="fade-up"
                 data-aos-delay="150"
+                suppressHydrationWarning
                 className={descriptionClassName}
-                dangerouslySetInnerHTML={{ __html: description }}
+                dangerouslySetInnerHTML={{ __html: formattedDescription }}
               />
               {button && (
-                <div data-aos="fade-up" data-aos-delay="200" className="mt-1">
+                <div data-aos="fade-up" data-aos-delay="200" suppressHydrationWarning className="mt-1">
                   <Link
                     href={button.href}
                     title={button.text}
@@ -174,6 +139,7 @@ export function AboutSection({
             <div
               data-aos="fade-up"
               data-aos-delay="200"
+              suppressHydrationWarning
               className={`lg:col-span-8 relative w-[calc(100%+2.5rem)] sm:w-[calc(100%+3rem)] lg:w-full -mx-5 sm:-mx-6 lg:mx-0 ${
                 image_height_class_name ?? "h-[320px] sm:h-[420px] lg:h-[440px] xl:h-[580px] lg:-mt-16 xl:-mt-24 lg:-mb-32 xl:-mb-48"
               } z-20 overflow-hidden ${image_container_class_name ?? ""}`}

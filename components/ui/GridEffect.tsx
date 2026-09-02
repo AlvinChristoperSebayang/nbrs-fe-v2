@@ -15,6 +15,13 @@ export function GridEffect({
   backgroundColor = "#FFFFFF",
   titleClassNameNonHover = "text-black",
   descriptionClassName = "",
+  hasBlur = true,
+  hasOverlay = false,
+  showDescriptionOnMobile = false,
+  showCardDescriptionOnMobile = false,
+  stageClassName = "",
+  imageClassName = "object-cover object-top",
+  className = "",
 }: {
   items: NewsItem[];
   title?: string;
@@ -24,6 +31,13 @@ export function GridEffect({
   backgroundColor?: string;
   titleClassNameNonHover?: string;
   descriptionClassName?: string;
+  hasBlur?: boolean;
+  hasOverlay?: boolean;
+  showDescriptionOnMobile?: boolean;
+  showCardDescriptionOnMobile?: boolean;
+  stageClassName?: string;
+  imageClassName?: string;
+  className?: string;
 }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const cardRefs = useRef<(HTMLAnchorElement | HTMLDivElement | null)[]>([]);
@@ -67,9 +81,9 @@ export function GridEffect({
   }, [items]);
 
   return (
-    <section className="py-12 sm:py-16 lg:py-20 xl:py-24" style={{ backgroundColor }}>
+    <section className={`py-0 sm:py-16 lg:py-20 xl:py-24 ${className}`} style={{ backgroundColor }}>
       <Container className="overflow-hidden">
-        <div data-aos="fade-up" className="mb-6 lg:flex hidden items-start justify-between gap-6">
+        <div data-aos="fade-up" suppressHydrationWarning className="mb-6 lg:flex hidden items-start justify-between gap-6">
           <div className="flex flex-col gap-2">
             <h2 className="font-heading text-[28px] lg:text-[24px] xl:text-[28px] uppercase text-black">
               {title}
@@ -104,17 +118,24 @@ export function GridEffect({
           )}
         </div>
 
-        <div className="relative w-full">
-          <div data-aos="fade-up" className="mb-6 lg:hidden flex lg:flex-row flex-col lg:items-center items-start justify-between relative z-10 px-0 sm:px-6 md:px-8 pt-12">
-            <h2 className="font-heading text-[28px] lg:text-[22px] uppercase text-white">
-              {title}
-            </h2>
+        <div className={`relative w-full ${stageClassName}`}>
+          <div data-aos="fade-up" suppressHydrationWarning className="mb-6 lg:hidden flex flex-col items-start gap-3 relative z-10 px-0 sm:px-6 md:px-8 pt-12">
+            <div className="flex flex-col gap-2">
+              <h2 className="font-heading text-[28px] uppercase text-white leading-tight">
+                {title}
+              </h2>
+              {showDescriptionOnMobile && description && (
+                <p className={`text-sm text-white/90 leading-relaxed ${descriptionClassName}`}>
+                  {description}
+                </p>
+              )}
+            </div>
             {showViewAll && (
               <Link
                 href={viewAllUrl}
                 title={viewAllLabel}
                 aria-label={viewAllLabel}
-                className="group items-center gap-2 font-heading text-lg lg:text-[22px] uppercase text-white flex"
+                className="group items-center gap-2 font-heading text-lg uppercase text-white flex mt-1"
               >
                 {viewAllLabel}
                 <svg
@@ -142,7 +163,7 @@ export function GridEffect({
                   src={item.image}
                   alt={item.title || "NBRS Architecture"}
                   title={item.title || "NBRS Architecture"}
-                  className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${
+                  className={`absolute inset-0 h-full w-full ${imageClassName} transition-opacity duration-500 ${
                     index === activeIndex ? "opacity-100" : "opacity-0"
                   }`}
                   width={1200}
@@ -150,17 +171,21 @@ export function GridEffect({
                 />
               ) : null
             )}
+            {/* Subtle dark overlay when enabled */}
+            {hasOverlay && (
+              <div className="absolute inset-0 bg-black/25 z-[6] pointer-events-none" />
+            )}
           </div>
 
-          <div data-aos="fade-up" data-aos-delay="150" className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-6 xl:gap-[30px] items-stretch sm:inset-x-0 pb-16 px-4 sm:px-6 md:px-8 lg:py-16 xl:py-24 lg:px-8 xl:px-12 relative z-10">
+          <div data-aos="fade-up" data-aos-delay="150" suppressHydrationWarning className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-6 xl:gap-[30px] items-stretch sm:inset-x-0 pb-16 px-0 sm:px-6 md:px-8 lg:py-16 xl:py-24 lg:px-8 xl:px-12 relative z-10">
             {items.map((item, index) => {
               const isActive = index === activeIndex;
               const hasHref = Boolean(item.href);
 
-              const cardClassName = `lg:col-span-4 group flex h-64 flex-col justify-between gap-6 overflow-hidden p-5 sm:p-6 transition-colors duration-300 lg:h-[290px] xl:h-[330px] lg:p-6 xl:p-8 ${
+              const cardClassName = `lg:col-span-4 group flex h-64 flex-col justify-between gap-4 sm:gap-6 overflow-hidden p-5 sm:p-6 transition-colors duration-300 lg:h-[245px] xl:h-[320px] lg:p-5 xl:p-8 ${
                 isActive
-                  ? "bg-black/50 backdrop-blur-[5px] border-b-[5px] border-white"
-                  : "bg-white/70 backdrop-blur-[0px] border-b-[5px] border-transparent"
+                  ? `bg-black/50 ${hasBlur ? "backdrop-blur-[5px]" : "backdrop-blur-none"} border-b-[5px] border-white`
+                  : `bg-white/70 ${hasBlur ? "backdrop-blur-[0px]" : "backdrop-blur-none"} border-b-[5px] border-transparent`
               }`;
 
               const cardContent = (
@@ -169,8 +194,8 @@ export function GridEffect({
                     <h3
                       className={`font-heading uppercase leading-tight duration-300 sm:max-w-none lg:max-w-[260px] ${
                         isActive
-                          ? "text-white text-2xl sm:text-3xl lg:text-[22px] xl:text-[32px] 2xl:text-[36px]"
-                          : `text-2xl sm:text-3xl lg:text-[18px] xl:text-[20px] ${titleClassNameNonHover}`
+                          ? "text-white text-2xl sm:text-3xl lg:text-[20px] xl:text-[30px] 2xl:text-[34px]"
+                          : `text-2xl sm:text-3xl lg:text-[17px] xl:text-[20px] ${titleClassNameNonHover}`
                       }`}
                     >
                       {item.title}
@@ -179,7 +204,11 @@ export function GridEffect({
                     {item.description && (
                       <p
                         className={`max-w-57.75 sm:max-w-none lg:max-w-57.75 text-sm text-white/90 transition-opacity duration-300 ${
-                          isActive ? "opacity-100" : "opacity-0"
+                          isActive
+                            ? "opacity-100"
+                            : showCardDescriptionOnMobile
+                              ? "opacity-100 lg:opacity-0"
+                              : "opacity-0"
                         }`}
                       >
                         {item.description}
@@ -190,7 +219,11 @@ export function GridEffect({
                   {hasHref && (
                     <div
                       className={`flex flex-col gap-4 transition-opacity duration-300 ${
-                        isActive ? "opacity-100" : "opacity-0"
+                        isActive
+                          ? "opacity-100"
+                          : showCardDescriptionOnMobile
+                            ? "opacity-100 lg:opacity-0"
+                            : "opacity-0"
                       }`}
                     >
                       <svg

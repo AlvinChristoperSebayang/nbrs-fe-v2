@@ -42,6 +42,13 @@ export default async function DesignApproachPage() {
           viewAllUrl=""
           backgroundColor="#DEE1F2"
           titleClassNameNonHover="text-[#BFBFBF]"
+          hasBlur={false}
+          hasOverlay={true}
+          showDescriptionOnMobile={true}
+          showCardDescriptionOnMobile={true}
+          stageClassName="min-h-[600px] lg:h-[600px] flex flex-col justify-center"
+          imageClassName="object-cover object-[65%_center] lg:object-top"
+          className="pt-2"
         />
       </div>
       <TextGrid

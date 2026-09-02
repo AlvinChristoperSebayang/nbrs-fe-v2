@@ -323,8 +323,8 @@ export async function getHomepageContent(): Promise<HomepageContent> {
         ? {
             heading: homepage.whatWeDo[0].heading,
             description:
-              homepage.whatWeDo[0].descriptionHtml?.trim() ||
               homepage.whatWeDo[0].subheading?.trim() ||
+              homepage.whatWeDo[0].descriptionHtml?.trim() ||
               null,
             button:
               homepage.whatWeDo[0].buttonText && homepage.whatWeDo[0].buttonUrl

@@ -103,7 +103,7 @@ export function SectorsSection({
     <section className="bg-white py-8 lg:py-24">
       <Container>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-6 lg:gap-x-[30px] lg:gap-y-[35px]">
-          <div data-aos="fade-up" className="lg:col-span-4 flex flex-col justify-center">
+          <div data-aos="fade-up" suppressHydrationWarning className="lg:col-span-4 flex flex-col justify-center">
             <h2 className="font-heading text-[28px] sm:text-[34px] md:text-[38px] lg:text-[42px] xl:text-[54px] 2xl:text-[70px] leading-[1.05] uppercase text-black flex flex-col items-start">
               {renderSectorsHeading(heading)}
             </h2>
@@ -117,6 +117,7 @@ export function SectorsSection({
               aria-label={sector.label}
               data-aos="fade-up"
               data-aos-delay={100 + index * 100}
+              suppressHydrationWarning
               className="group relative block aspect-[5/4] overflow-hidden rounded-[5px] lg:aspect-[37/30] lg:col-span-4"
             >
               <div

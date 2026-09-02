@@ -68,7 +68,7 @@ function CheckboxGroup({
                   </svg>
                 )}
               </span>
-              <span className="font-sans text-[11px] sm:text-xs lg:text-[11.5px] xl:text-[13px] 2xl:text-sm text-stone-700 font-normal whitespace-nowrap">{option}</span>
+              <span className="font-sans text-[11px] sm:text-xs lg:text-[10px] xl:text-[12px] 2xl:text-sm text-stone-700 font-normal whitespace-nowrap">{option}</span>
             </label>
           );
         })}
@@ -312,7 +312,7 @@ export function ContactForm({ title, serviceOptions, sectorOptions, referralSour
               options={referralSources}
               selected={selectedSources}
               onToggle={(value) => toggle(value, setSelectedSources)}
-              gridClassName="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-6 gap-x-3 sm:gap-x-4 lg:gap-x-4 xl:gap-x-6 gap-y-2.5 lg:gap-y-3"
+              gridClassName="grid grid-cols-2 md:grid-cols-4 lg:flex lg:flex-wrap lg:justify-between gap-x-3 sm:gap-x-4 lg:gap-x-4 xl:gap-x-6 gap-y-2.5 lg:gap-y-3"
             />
           </div>
 

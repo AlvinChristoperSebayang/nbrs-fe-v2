@@ -34,12 +34,16 @@ export function AosInit() {
     };
 
     // Run after React has fully completed hydration for the current page
-    const timer = setTimeout(() => {
-      void initialize();
-    }, 100);
+    let timer: NodeJS.Timeout;
+    const raf = requestAnimationFrame(() => {
+      timer = setTimeout(() => {
+        void initialize();
+      }, 200);
+    });
 
     return () => {
       cancelled = true;
+      cancelAnimationFrame(raf);
       clearTimeout(timer);
     };
   }, [pathname]);
