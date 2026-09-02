@@ -22,6 +22,8 @@ export type HeroProps = {
   imageClassName?: string;
   showDivider?: boolean;
   singleLine?: boolean;
+  mobileLines?: string[];
+  desktopLines?: string[];
   children?: React.ReactNode;
 };
 
@@ -43,6 +45,8 @@ export function Hero({
   imageClassName = "",
   showDivider = true,
   singleLine = false,
+  mobileLines,
+  desktopLines,
   children,
 }: HeroProps) {
   const isShortTitle = typeof title === "string" && !title.includes("\n") && title.trim().split(/\s+/).length <= 3;
@@ -78,7 +82,7 @@ export function Hero({
                   : "max-w-2xl lg:max-w-none"
               } ${titleClassName}`}
             >
-              {renderTitleWithUnderline(title, showDivider, "border-white", singleLine)}
+              {renderTitleWithUnderline(title, showDivider, "border-white", singleLine, mobileLines, desktopLines)}
             </h1>
           ) : (
             <h1

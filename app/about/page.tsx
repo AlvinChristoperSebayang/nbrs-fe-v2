@@ -24,6 +24,19 @@ function formatAboutIntroHeading(heading?: string | null): string {
   return "PEOPLE-CENTRED\nDESIGN FOR GOOD";
 }
 
+function formatAboutMobileLines(title: string): string[] {
+  const cleaned = title.replace(/\n/g, " ").trim();
+  const words = cleaned.split(/\s+/).filter(Boolean);
+  if (words.length >= 4) {
+    return [
+      words[0],
+      `${words[1]} ${words[2]}`,
+      words.slice(3).join(" "),
+    ];
+  }
+  return words;
+}
+
 export default async function AboutPage() {
   const about = await getAboutContent().catch(() => ABOUT_FALLBACK);
 
@@ -33,6 +46,7 @@ export default async function AboutPage() {
         image={about.hero.image}
         title={about.hero.title}
         description={about.hero.description}
+        mobileLines={formatAboutMobileLines(about.hero.title)}
       />
       <div className="bg-[#FFFFFF] lg:pb-20">
         <AboutSection

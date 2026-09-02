@@ -62,6 +62,7 @@ export function AboutTimelineSection({
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const checkScroll = useCallback(() => {
     const el = scrollContainerRef.current;
@@ -69,6 +70,23 @@ export function AboutTimelineSection({
     const { scrollLeft, scrollWidth, clientWidth } = el;
     setCanScrollLeft(scrollLeft > 10);
     setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
+
+    // Calculate which item is currently closest to the left edge of container
+    const containerLeft = el.getBoundingClientRect().left;
+    let closestIndex = 0;
+    let minDistance = Infinity;
+
+    itemRefs.current.forEach((itemEl, idx) => {
+      if (!itemEl) return;
+      const itemLeft = itemEl.getBoundingClientRect().left;
+      const distance = Math.abs(itemLeft - containerLeft);
+      if (distance < minDistance) {
+        minDistance = distance;
+        closestIndex = idx;
+      }
+    });
+
+    setCurrentIndex(closestIndex);
   }, []);
 
   useEffect(() => {
@@ -85,21 +103,29 @@ export function AboutTimelineSection({
     };
   }, [checkScroll, items]);
 
-  const scrollByOffset = (offset: number) => {
-    const el = scrollContainerRef.current;
-    if (!el) return;
-    el.scrollBy({ left: offset, behavior: "smooth" });
+  const scrollToIndex = (index: number) => {
+    const clampedIndex = Math.max(0, Math.min(index, items.length - 1));
+    const itemEl = itemRefs.current[clampedIndex];
+    if (itemEl && scrollContainerRef.current) {
+      const container = scrollContainerRef.current;
+      const containerLeft = container.getBoundingClientRect().left;
+      const itemLeft = itemEl.getBoundingClientRect().left;
+      const targetScrollLeft = container.scrollLeft + (itemLeft - containerLeft);
+      container.scrollTo({ left: targetScrollLeft, behavior: "smooth" });
+      setCurrentIndex(clampedIndex);
+    }
+  };
+
+  const handlePrev = () => {
+    scrollToIndex(currentIndex > 0 ? currentIndex - 1 : 0);
+  };
+
+  const handleNext = () => {
+    scrollToIndex(currentIndex < items.length - 1 ? currentIndex + 1 : items.length - 1);
   };
 
   const handleItemClick = (index: number) => {
-    const itemEl = itemRefs.current[index];
-    if (itemEl) {
-      itemEl.scrollIntoView({
-        behavior: "smooth",
-        inline: "center",
-        block: "nearest",
-      });
-    }
+    scrollToIndex(index);
   };
 
   return (
@@ -117,7 +143,7 @@ export function AboutTimelineSection({
           <div className="flex items-center gap-2">
             <button
               type="button"
-              onClick={() => scrollByOffset(-280)}
+              onClick={handlePrev}
               disabled={!canScrollLeft}
               aria-label="Scroll timeline left"
               className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 text-white transition hover:border-white hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
@@ -143,7 +169,7 @@ export function AboutTimelineSection({
             </button>
             <button
               type="button"
-              onClick={() => scrollByOffset(280)}
+              onClick={handleNext}
               disabled={!canScrollRight}
               aria-label="Scroll timeline right"
               className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 text-white transition hover:border-white hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
@@ -173,7 +199,7 @@ export function AboutTimelineSection({
         <div className="relative mt-4">
           <div
             ref={scrollContainerRef}
-            className="scrollbar-hide flex overflow-x-auto gap-2 lg:gap-4 pb-4 scroll-smooth"
+            className="scrollbar-hide flex overflow-x-auto gap-3 lg:gap-4 px-1 pb-4 scroll-smooth snap-x snap-mandatory"
           >
             {items.map((item, index) => (
               <div
@@ -187,7 +213,7 @@ export function AboutTimelineSection({
                 style={{
                   borderLeftColor: BORDER_COLORS[index % BORDER_COLORS.length],
                 }}
-                className="group w-[230px] sm:w-[260px] lg:w-[280px] flex-shrink-0 border-l-[1.5px] pl-5 pr-3 cursor-pointer select-none transition-opacity hover:opacity-100"
+                className="snap-start group w-[240px] sm:w-[260px] lg:w-[280px] flex-shrink-0 border-l-[1.5px] pl-5 pr-3 cursor-pointer select-none transition-opacity hover:opacity-100"
               >
                 <div className="flex items-center gap-7">
                   <span className="font-heading text-3xl sm:text-4xl lg:text-[40px] uppercase tracking-tight text-white leading-none">
@@ -217,14 +243,9 @@ export function AboutTimelineSection({
             ))}
           </div>
 
-          {/* Left Fade Gradient Mask */}
-          {canScrollLeft && (
-            <div className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-[#131722] via-[#131722]/80 to-transparent transition-opacity duration-300" />
-          )}
-
           {/* Right Fade Gradient Mask */}
           {canScrollRight && (
-            <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#131722] via-[#131722]/80 to-transparent transition-opacity duration-300" />
+            <div className="pointer-events-none absolute inset-y-0 right-0 w-12 sm:w-20 bg-gradient-to-l from-[#131722] to-transparent transition-opacity duration-300" />
           )}
         </div>
       </Container>

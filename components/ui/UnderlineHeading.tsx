@@ -7,6 +7,8 @@ export type UnderlineHeadingProps = {
   borderColor?: string;
   className?: string;
   singleLine?: boolean;
+  mobileLines?: string[];
+  desktopLines?: string[];
 };
 
 export function getTitleLinesForLength(words: string[], maxLen: number): string[] {
@@ -121,7 +123,9 @@ export function renderTitleWithUnderline(
   title: React.ReactNode,
   showDivider: boolean = true,
   borderColor: string = "border-white",
-  singleLine: boolean = false
+  singleLine: boolean = false,
+  customMobileLines?: string[],
+  customDesktopLines?: string[]
 ) {
   if (typeof title !== "string") {
     return title;
@@ -132,7 +136,7 @@ export function renderTitleWithUnderline(
 
   // If explicit single line requested OR 3 words or fewer within 22 chars without explicit \n
   const words = normalized.split(/\s+/).filter(Boolean);
-  if (singleLine || (!normalized.includes("\n") && words.length <= 3 && normalized.length <= 22)) {
+  if (singleLine || (!normalized.includes("\n") && !customMobileLines && words.length <= 3 && normalized.length <= 22)) {
     return renderLinesBlock([normalized], showDivider, borderColor);
   }
 
@@ -140,8 +144,13 @@ export function renderTitleWithUnderline(
     ? normalized.split("\n").map((l) => l.trim()).filter(Boolean)
     : [normalized];
 
-  const mobileLines = splitLinesToMaxLen(rawLines, 16);
-  const desktopLines = splitLinesToMaxLen(rawLines, 30);
+  const mobileLines = customMobileLines && customMobileLines.length > 0
+    ? customMobileLines
+    : splitLinesToMaxLen(rawLines, 18);
+
+  const desktopLines = customDesktopLines && customDesktopLines.length > 0
+    ? customDesktopLines
+    : splitLinesToMaxLen(rawLines, 30);
 
   if (JSON.stringify(mobileLines) === JSON.stringify(desktopLines)) {
     return renderLinesBlock(desktopLines, showDivider, borderColor);
@@ -165,12 +174,14 @@ export function UnderlineHeading({
   borderColor = "border-white",
   className = "",
   singleLine = false,
+  mobileLines,
+  desktopLines,
 }: UnderlineHeadingProps) {
   if (!title) return null;
 
   return (
     <span className={className}>
-      {renderTitleWithUnderline(title, showDivider, borderColor, singleLine)}
+      {renderTitleWithUnderline(title, showDivider, borderColor, singleLine, mobileLines, desktopLines)}
     </span>
   );
 }
