@@ -31,10 +31,10 @@ export function ProjectOverviewSection({
       <div className="bg-[#EEEEEE] pt-16 pb-32 lg:pt-20 lg:pb-44">
         <Container>
           <div data-aos="fade-up" className="max-w-[786px]">
-            <h2 className="font-heading text-2xl sm:text-3xl lg:text-[36px] font-normal uppercase leading-tight lg:leading-[1.1] text-black">
+            <h2 className="font-heading text-2xl sm:text-3xl lg:text-[36px] font-bold uppercase leading-tight lg:leading-[1.15] text-black">
               {displayHeadline}
             </h2>
-            <p className="mt-6 font-sans text-sm sm:text-base leading-relaxed text-black/80 max-w-[771px]">
+            <p className="mt-6 font-sans text-base sm:text-lg leading-relaxed text-black/90 max-w-[771px]">
               {displayDescription}
             </p>
           </div>

@@ -11,6 +11,7 @@ type ResponsiveImageProps = {
   width?: number;
   height?: number;
   onError?: () => void;
+  onLoad?: React.ReactEventHandler<HTMLImageElement>;
 };
 
 /** Renders CMS-provided Craft crops; static image paths continue to work as-is with SEO alt & title. */
@@ -23,6 +24,7 @@ export function ResponsiveImage({
   width,
   height,
   onError,
+  onLoad,
 }: ResponsiveImageProps) {
   const computedAlt = (alt && alt.trim()) ? alt.trim() : (title && title.trim()) ? title.trim() : "NBRS Architecture";
   const computedTitle = (title && title.trim()) ? title.trim() : computedAlt;
@@ -41,6 +43,7 @@ export function ResponsiveImage({
       ? { width: intrinsicWidth, height: intrinsicHeight }
       : {}),
     onError,
+    onLoad,
   };
 
   if (typeof src === "string") return <img src={src} alt={computedAlt} {...imageProps} />;

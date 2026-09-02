@@ -2,13 +2,15 @@ import { Container } from "@/components/ui/Container";
 import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
 import type { ProjectV2Block } from "@/lib/project-detail";
 
+import { formatCmsHtml } from "@/lib/text";
+
 function RichText({ html, className = "" }: { html: string | null; className?: string }) {
   if (!html) return null;
 
   return (
     <div
-      className={`font-sans text-base leading-relaxed text-black [&_a]:underline [&_a]:underline-offset-4 [&_li]:mb-3 [&_ol]:my-5 [&_ol]:list-decimal [&_ol]:pl-6 [&_p]:mb-5 [&_p:last-child]:mb-0 [&_ul]:my-5 [&_ul]:list-disc [&_ul]:pl-6 ${className}`}
-      dangerouslySetInnerHTML={{ __html: html }}
+      className={`font-sans text-base sm:text-lg leading-relaxed text-black/90 [&_a]:underline [&_a]:underline-offset-4 [&_h1]:font-heading [&_h1]:text-2xl [&_h1]:sm:text-3xl [&_h1]:uppercase [&_h1]:font-bold [&_h1]:my-4 [&_h2]:font-heading [&_h2]:text-xl [&_h2]:sm:text-2xl [&_h2]:uppercase [&_h2]:font-bold [&_h2]:my-4 [&_h3]:font-heading [&_h3]:text-lg [&_h3]:sm:text-xl [&_h3]:uppercase [&_h3]:font-bold [&_h3]:my-3 [&_h4]:font-sans [&_h4]:text-base [&_h4]:font-bold [&_h4]:my-2 [&_li]:mb-2 [&_ol]:my-4 [&_ol]:list-decimal [&_ol]:pl-6 [&_p]:mb-4 [&_p:last-child]:mb-0 [&_strong]:font-bold [&_strong]:text-black [&_ul]:my-4 [&_ul]:list-disc [&_ul]:pl-6 ${className}`}
+      dangerouslySetInnerHTML={{ __html: formatCmsHtml(html) }}
     />
   );
 }
@@ -35,7 +37,7 @@ export function ProjectDetailV2Body({ blocks }: { blocks: ProjectV2Block[] }) {
                 </Container>
                 {block.image && (
                   <Container className="relative z-10 translate-y-8 lg:translate-y-12">
-                    <ResponsiveImage src={block.image} alt={block.heading || "Project image"} title={block.heading || "Project image"} className="aspect-[1170/650] h-full w-full object-cover" />
+                    <ResponsiveImage src={block.image} alt={block.heading || "Project image"} title={block.heading || "Project image"} className="w-full h-auto max-md:aspect-auto lg:aspect-[1170/650] object-cover" />
                   </Container>
                 )}
               </section>
@@ -82,7 +84,7 @@ export function ProjectDetailV2Body({ blocks }: { blocks: ProjectV2Block[] }) {
               <RichText html={block.textHtml} className={block.heading ? "mt-4" : ""} />
             </div>
           );
-          const image = block.image ? <ResponsiveImage src={block.image} alt={block.heading || "Project image"} title={block.heading || "Project image"} className="aspect-[570/300] h-full w-full object-cover" /> : null;
+          const image = block.image ? <ResponsiveImage src={block.image} alt={block.heading || "Project image"} title={block.heading || "Project image"} className="w-full h-auto max-md:aspect-auto lg:aspect-[570/300] object-cover" /> : null;
 
           return (
             <Container key={index}>

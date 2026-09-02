@@ -2,13 +2,15 @@ import Link from "next/link";
 import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
 import { Container } from "@/components/ui/Container";
 import type { Sector } from "@/lib/types";
+import { normalizeNewlines, formatCmsHtml } from "@/lib/text";
 
 function getDesktopSectorsLines(heading: string): string[] {
-  if (heading.includes("\n")) {
-    return heading.split("\n").map((l) => l.trim()).filter(Boolean);
+  const normalized = normalizeNewlines(heading);
+  if (normalized.includes("\n")) {
+    return normalized.split("\n").map((l) => l.trim()).filter(Boolean);
   }
 
-  const words = heading.trim().split(/\s+/);
+  const words = normalized.trim().split(/\s+/);
   if (words.length >= 5) {
     return [
       words[0],
@@ -24,18 +26,19 @@ function getDesktopSectorsLines(heading: string): string[] {
       words[words.length - 1],
     ];
   }
-  return [heading];
+  return [normalized];
 }
 
 function getMobileSectorsLines(heading: string): string[] {
-  if (heading.includes("\n")) {
-    const raw = heading.split("\n").map((l) => l.trim()).filter(Boolean);
+  const normalized = normalizeNewlines(heading);
+  if (normalized.includes("\n")) {
+    const raw = normalized.split("\n").map((l) => l.trim()).filter(Boolean);
     if (raw.length <= 2) return raw;
     const mid = Math.ceil(raw.length / 2);
     return [raw.slice(0, mid).join(" "), raw.slice(mid).join(" ")];
   }
 
-  const words = heading.trim().split(/\s+/);
+  const words = normalized.trim().split(/\s+/);
   if (words.length <= 2) return words;
 
   if (words.length >= 4) {
@@ -129,9 +132,10 @@ export function SectorsSection({
                     <span className="font-heading text-[26px] lg:text-[30px] uppercase text-black">
                       {sector.label}
                     </span>
-                    <span className="font-heading text-base uppercase text-black">
-                      {sector.description}
-                    </span>
+                    <span
+                      className="font-heading text-base uppercase text-black"
+                      dangerouslySetInnerHTML={{ __html: formatCmsHtml(sector.description) }}
+                    />
                   </div>
                   <svg
                     className="self-end"

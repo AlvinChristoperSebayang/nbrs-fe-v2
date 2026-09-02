@@ -1,5 +1,7 @@
 import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
+import { MasonryGallery } from "@/components/ui/MasonryGallery";
 import type { NewsContentBlock } from "@/lib/news-detail";
+import { formatCmsHtml } from "@/lib/text";
 
 export function NewsArticleContent({ blocks }: { blocks: NewsContentBlock[] }) {
   return (
@@ -10,7 +12,7 @@ export function NewsArticleContent({ blocks }: { blocks: NewsContentBlock[] }) {
             <div
               key={index}
               className="[&_a]:underline [&_a]:underline-offset-4 [&_figure]:my-8 [&_figcaption]:mt-2 [&_figcaption]:text-sm [&_figcaption]:text-zinc-600 [&_img]:h-auto [&_img]:max-w-full [&_img]:rounded-[3px] [&_p]:mb-5 [&_p:last-child]:mb-0"
-              dangerouslySetInnerHTML={{ __html: block.html }}
+              dangerouslySetInnerHTML={{ __html: formatCmsHtml(block.html) }}
             />
           );
         }
@@ -21,11 +23,11 @@ export function NewsArticleContent({ blocks }: { blocks: NewsContentBlock[] }) {
 
         if (block.type === "gallery") {
           return (
-            <div key={index} className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              {block.images.map((image, imageIndex) => (
-                <ResponsiveImage key={imageIndex} src={image} alt={`News article image ${imageIndex + 1}`} title={`News article image ${imageIndex + 1}`} className="h-auto w-full rounded-[3px] object-cover object-center" />
-              ))}
-            </div>
+            <MasonryGallery
+              key={index}
+              images={block.images}
+              altPrefix="News article image"
+            />
           );
         }
 

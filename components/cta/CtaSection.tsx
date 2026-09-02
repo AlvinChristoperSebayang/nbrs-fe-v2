@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
 import { Container } from "@/components/ui/Container";
 import type { CtaContent } from "@/lib/types";
+import { formatCmsHtml } from "@/lib/text";
 
 export type CtaSectionProps = {
   content?: CtaContent;
@@ -46,14 +47,16 @@ export function CtaSection({
           suppressHydrationWarning
           className="w-full min-h-[340px] flex flex-col items-center justify-center border-t-[4px] border-white bg-black/35 px-4 py-8 sm:px-8 md:px-12 text-center rounded-[5px] backdrop-blur-[2px]"
         >
-          <h2 className={`font-heading text-[28px] sm:text-3xl lg:text-[40px] tracking-tight text-white ${titleUppercase ? "uppercase" : ""}`}>
-            {data.title}
-          </h2>
+          <h2
+            className={`font-heading text-[28px] sm:text-3xl lg:text-[40px] tracking-tight text-white ${titleUppercase ? "uppercase" : ""}`}
+            dangerouslySetInnerHTML={{ __html: formatCmsHtml(data.title) }}
+          />
 
           {descriptionText && (
-            <p className={`mx-auto mt-2 max-w-xl text-white/90 text-sm sm:text-base ${descriptionClassName ?? ""}`}>
-              {descriptionText}
-            </p>
+            <p
+              className={`mx-auto mt-2 max-w-xl text-white/90 text-sm sm:text-base ${descriptionClassName ?? ""}`}
+              dangerouslySetInnerHTML={{ __html: formatCmsHtml(descriptionText) }}
+            />
           )}
 
           <div className="flex flex-col items-center justify-center gap-3 sm:gap-4 mt-5 sm:mt-6">

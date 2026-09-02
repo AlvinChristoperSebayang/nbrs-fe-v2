@@ -2,6 +2,7 @@ import { Container } from "@/components/ui/Container";
 import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
 import Link from "next/link";
 import type { ImageSource } from "@/lib/types";
+import { normalizeNewlines, formatCmsHtml } from "@/lib/text";
 
 export type AboutSectionProps = {
   image_url: ImageSource;
@@ -26,8 +27,9 @@ function renderAboutHeading(heading: string, singleLine = false) {
     return <span className="block leading-[1.05] whitespace-nowrap">{heading}</span>;
   }
 
-  if (heading.includes("\n")) {
-    const lines = heading.split("\n").map((l) => l.trim()).filter(Boolean);
+  const normalized = normalizeNewlines(heading);
+  if (normalized.includes("\n")) {
+    const lines = normalized.split("\n").map((l) => l.trim()).filter(Boolean);
     return (
       <span className="inline-flex flex-col items-start">
         {lines.map((line, idx) => (
@@ -39,7 +41,7 @@ function renderAboutHeading(heading: string, singleLine = false) {
     );
   }
 
-  const words = heading.trim().split(/\s+/);
+  const words = normalized.trim().split(/\s+/);
   const lines = words.length >= 4 ? [words[0], words[1], words.slice(2).join(" ")] : words;
 
   return (
@@ -67,13 +69,7 @@ export function AboutSection({
   image_container_class_name,
   image_class_name,
 }: AboutSectionProps) {
-  const formattedDescription = (description || "")
-    .replace(/&#92;n/g, "<br />")
-    .replace(/&bsol;n/g, "<br />")
-    .replace(/\\r\\n/g, "<br />")
-    .replace(/\\n/g, "<br />")
-    .replace(/\r\n/g, "<br />")
-    .replace(/\n/g, "<br />");
+  const formattedDescription = formatCmsHtml(description);
 
   const descriptionClassName = [
     "text-base leading-relaxed text-white/90",

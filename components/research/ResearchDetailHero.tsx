@@ -1,6 +1,7 @@
 import { Container } from "@/components/ui/Container";
 import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
 import type { ImageSource } from "@/lib/types";
+import { normalizeNewlines, formatCmsHtml } from "@/lib/text";
 
 export type ResearchDetailHeroProps = {
   title: string;
@@ -19,82 +20,10 @@ const CATEGORY_BG_COLORS: Record<string, string> = {
   heritage: "#F0C7BD",
 };
 
-function getTitleLines(title: string): string[] {
-  if (title.includes("\n")) {
-    return title.split("\n").map((line) => line.trim()).filter(Boolean);
-  }
+import { renderTitleWithUnderline } from "@/components/ui/UnderlineHeading";
 
-  const words = title.trim().split(/\s+/);
-  if (words.length <= 3) return [title.trim()];
-
-  const MAX_LINE_LENGTH = 26;
-  const lines: string[] = [];
-  let currentWords: string[] = [];
-  let currentLength = 0;
-
-  for (const word of words) {
-    const wordLength = word.length;
-    const nextLength = currentLength === 0 ? wordLength : currentLength + 1 + wordLength;
-
-    if (nextLength <= MAX_LINE_LENGTH || currentWords.length === 0) {
-      currentWords.push(word);
-      currentLength = nextLength;
-    } else {
-      lines.push(currentWords.join(" "));
-      currentWords = [word];
-      currentLength = wordLength;
-    }
-  }
-
-  if (currentWords.length > 0) {
-    lines.push(currentWords.join(" "));
-  }
-
-  if (lines.length > 1) {
-    const lastLineWords = lines[lines.length - 1].split(" ");
-    if (lastLineWords.length === 1 && lastLineWords[0].length < 10) {
-      const prevLineWords = lines[lines.length - 2].split(" ");
-      if (prevLineWords.length > 1) {
-        const movedWord = prevLineWords.pop()!;
-        lines[lines.length - 2] = prevLineWords.join(" ");
-        lines[lines.length - 1] = `${movedWord} ${lastLineWords[0]}`;
-      }
-    }
-  }
-
-  return lines;
-}
-
-export function renderResearchTitleWithUnderline(title: string) {
-  const lines = getTitleLines(title);
-
-  if (lines.length === 1) {
-    return (
-      <span className="inline-block border-b-[4px] border-black pb-1 leading-[1.05] sm:border-b-[5px] sm:pb-2 lg:border-b-[6px]">
-        {lines[0]}
-      </span>
-    );
-  }
-
-  return (
-    <span className="inline-flex flex-col items-start">
-      {lines.map((line, index) =>
-        index === lines.length - 1 ? (
-          <span
-            key={`${line}-${index}`}
-            className="mt-1 inline-block border-b-[4px] border-black pb-1 leading-none sm:border-b-[5px] sm:pb-2 lg:border-b-[6px]"
-          >
-            {line}
-          </span>
-        ) : (
-          <span key={`${line}-${index}`} className="block leading-[1.05]">
-            {line}
-          </span>
-        ),
-      )}
-    </span>
-  );
-}
+export const renderResearchTitleWithUnderline = (title: string) =>
+  renderTitleWithUnderline(title, true, "border-black");
 
 export function ResearchDetailHero({
   title,
@@ -140,9 +69,8 @@ export function ResearchDetailHero({
               data-aos="fade-up"
               data-aos-delay="200"
               className="max-w-2xl font-sans text-base leading-relaxed font-normal text-black sm:text-lg"
-            >
-              {description}
-            </p>
+              dangerouslySetInnerHTML={{ __html: formatCmsHtml(description) }}
+            />
           )}
         </div>
       </Container>

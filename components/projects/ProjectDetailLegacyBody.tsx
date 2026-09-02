@@ -1,6 +1,7 @@
 import { Container } from "@/components/ui/Container";
-import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
+import { MasonryGallery } from "@/components/ui/MasonryGallery";
 import type { ImageSource } from "@/lib/types";
+import { formatCmsHtml } from "@/lib/text";
 
 type ProjectDetailLegacyBodyProps = {
   storyHtml: string | null;
@@ -19,25 +20,18 @@ export function ProjectDetailLegacyBody({
       {storyHtml && (
         <Container>
           <div
-            className="max-w-[770px] font-sans text-base leading-relaxed text-black [&_a]:underline [&_a]:underline-offset-4 [&_li]:mb-3 [&_ol]:my-5 [&_ol]:list-decimal [&_ol]:pl-6 [&_p]:mb-5 [&_p:last-child]:mb-0 [&_ul]:my-5 [&_ul]:list-disc [&_ul]:pl-6"
-            dangerouslySetInnerHTML={{ __html: storyHtml }}
+            className="max-w-[770px] font-sans text-base sm:text-lg leading-relaxed text-black/90 [&_a]:underline [&_a]:underline-offset-4 [&_h1]:font-heading [&_h1]:text-2xl [&_h1]:sm:text-3xl [&_h1]:uppercase [&_h1]:font-bold [&_h1]:my-4 [&_h2]:font-heading [&_h2]:text-xl [&_h2]:sm:text-2xl [&_h2]:uppercase [&_h2]:font-bold [&_h2]:my-4 [&_h3]:font-heading [&_h3]:text-lg [&_h3]:sm:text-xl [&_h3]:uppercase [&_h3]:font-bold [&_h3]:my-3 [&_h4]:font-sans [&_h4]:text-base [&_h4]:font-bold [&_h4]:my-2 [&_li]:mb-2 [&_ol]:my-4 [&_ol]:list-decimal [&_ol]:pl-6 [&_p]:mb-4 [&_p:last-child]:mb-0 [&_strong]:font-bold [&_strong]:text-black [&_ul]:my-4 [&_ul]:list-disc [&_ul]:pl-6"
+            dangerouslySetInnerHTML={{ __html: formatCmsHtml(storyHtml) }}
           />
         </Container>
       )}
 
       {popupGallery.length > 0 && (
         <Container className="mt-10 lg:mt-14">
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-            {popupGallery.map((image, index) => (
-              <ResponsiveImage
-                key={index}
-                src={image}
-                alt={`Project gallery image ${index + 1}`}
-                title={`Project gallery image ${index + 1}`}
-                className="aspect-[16/10] h-full w-full object-cover"
-              />
-            ))}
-          </div>
+          <MasonryGallery
+            images={popupGallery}
+            altPrefix="Project gallery image"
+          />
         </Container>
       )}
     </section>

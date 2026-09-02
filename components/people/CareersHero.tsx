@@ -14,6 +14,7 @@ export type CareersHeroProps = {
   imageContainerClassName?: string;
   titleColumnClassName?: string;
   titleClassName?: string;
+  singleLine?: boolean;
 };
 
 function cleanTitleString(title: string): string {
@@ -91,10 +92,18 @@ function renderTitleLines(lines: string[]) {
   );
 }
 
-export function renderCareersTitle(title: React.ReactNode) {
+export function renderCareersTitle(title: React.ReactNode, singleLine = false) {
   if (typeof title !== "string") {
     return (
       <span className="inline-block border-b-4 border-white pb-2 leading-none">
+        {title}
+      </span>
+    );
+  }
+
+  if (singleLine) {
+    return (
+      <span className="inline-block border-b-4 border-white pb-2 leading-none whitespace-nowrap">
         {title}
       </span>
     );
@@ -131,6 +140,7 @@ export function CareersHero({
   imageContainerClassName = "",
   titleColumnClassName,
   titleClassName,
+  singleLine = false,
 }: CareersHeroProps) {
   const altTitle = typeof title === "string" ? title : "NBRS Careers";
 
@@ -155,7 +165,7 @@ export function CareersHero({
             className={`lg:col-span-4 flex flex-col items-start gap-4 lg:gap-4 xl:gap-6 pt-24 pb-4 ${titleColumnClassName ?? "lg:pt-24 xl:pt-20"} lg:pb-0`}
           >
             <h1 className={`font-heading whitespace-pre-line ${titleClassName ?? "text-4xl sm:text-5xl lg:text-[38px] xl:text-[58px] 2xl:text-[70px]"} font-bold uppercase tracking-wide leading-none text-white`}>
-              {renderCareersTitle(title)}
+              {renderCareersTitle(title, singleLine)}
             </h1>
 
             {/* Additional Attributes: Jabatan, Location/Tempat, Registration */}

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
 import type { ImageSource } from "@/lib/types";
 import { Container } from "@/components/ui/Container";
+import { normalizeNewlines, formatCmsHtml } from "@/lib/text";
 
 export type HeroProps = {
   image: ImageSource;
@@ -20,128 +21,12 @@ export type HeroProps = {
   overlayClassName?: string;
   imageClassName?: string;
   showDivider?: boolean;
+  singleLine?: boolean;
   children?: React.ReactNode;
 };
 
-function getTitleLines(title: string): string[] {
-  if (title.includes("\n")) {
-    return title.split("\n").map((l) => l.trim()).filter(Boolean);
-  }
-
-  const words = title.trim().split(/\s+/);
-
-  // Condition: If title has 3 words or fewer (<= 3 words, e.g. "A SUSTAINABLE FUTURE"), keep on ONE single line
-  if (words.length <= 3) {
-    return [title.trim()];
-  }
-
-  const totalLength = title.trim().length;
-  const targetMid = totalLength / 2;
-
-  let currentLine = "";
-  const line1Words: string[] = [];
-  const line2Words: string[] = [];
-
-  for (let i = 0; i < words.length; i++) {
-    const word = words[i];
-    if (line1Words.length === 0) {
-      line1Words.push(word);
-      currentLine = word;
-    } else if (currentLine.length < targetMid && i < words.length - 1) {
-      line1Words.push(word);
-      currentLine += " " + word;
-    } else {
-      line2Words.push(word);
-    }
-  }
-
-  if (line2Words.length === 0) {
-    return [title];
-  }
-
-  return [line1Words.join(" "), line2Words.join(" ")];
-}
-
-export function renderTitleWithUnderline(
-  title: React.ReactNode,
-  showDivider: boolean = true,
-  borderColor: string = "border-white"
-) {
-  if (typeof title !== "string") {
-    return title;
-  }
-
-  const lines = getTitleLines(title);
-
-  if (!showDivider) {
-    if (lines.length > 1) {
-      return (
-        <span className="inline-flex flex-col items-start">
-          {lines.map((line, i) => (
-            <span key={i} className="block leading-[1.05]">
-              {line}
-            </span>
-          ))}
-        </span>
-      );
-    }
-    return title;
-  }
-
-  // Single line condition (3 words or fewer)
-  if (lines.length === 1) {
-    return (
-      <span className={`inline-block border-b-[4px] sm:border-b-[5px] lg:border-b-[6px] ${borderColor} pb-1 sm:pb-2 leading-[1.05]`}>
-        {lines[0]}
-      </span>
-    );
-  }
-
-  return (
-    <span className="inline-flex flex-col items-start">
-      {lines.map((line, idx) => {
-        const isLast = idx === lines.length - 1;
-        if (isLast) {
-          const words = line.trim().split(/\s+/);
-          if (words.length > 1 && line.length >= 18) {
-            const firstPart = words.slice(0, -1).join(" ");
-            const lastWord = words[words.length - 1];
-
-            return (
-              <span key={idx} className="w-full flex flex-col items-start">
-                {/* Desktop: single inline-block with full underline */}
-                <span className={`hidden sm:inline-block border-b-[4px] sm:border-b-[5px] lg:border-b-[6px] ${borderColor} pb-1 sm:pb-2 leading-none mt-1`}>
-                  {line}
-                </span>
-                {/* Mobile: split only if line is excessively long */}
-                <span className="sm:hidden flex flex-col items-start">
-                  <span className="block leading-[1.05]">{firstPart}</span>
-                  <span className={`inline-block border-b-[4px] ${borderColor} pb-1 leading-none mt-1`}>
-                    {lastWord}
-                  </span>
-                </span>
-              </span>
-            );
-          }
-
-          return (
-            <span
-              key={idx}
-              className={`inline-block max-w-full border-b-[4px] sm:border-b-[5px] lg:border-b-[6px] ${borderColor} pb-1 sm:pb-2 leading-none mt-1`}
-            >
-              {line}
-            </span>
-          );
-        }
-        return (
-          <span key={idx} className="block leading-[1.05]">
-            {line}
-          </span>
-        );
-      })}
-    </span>
-  );
-}
+export { renderTitleWithUnderline, UnderlineHeading } from "@/components/ui/UnderlineHeading";
+import { renderTitleWithUnderline } from "@/components/ui/UnderlineHeading";
 
 export function Hero({
   image,
@@ -157,6 +42,7 @@ export function Hero({
   overlayClassName = "bg-black/40",
   imageClassName = "",
   showDivider = true,
+  singleLine = false,
   children,
 }: HeroProps) {
   const isShortTitle = typeof title === "string" && !title.includes("\n") && title.trim().split(/\s+/).length <= 3;
@@ -187,12 +73,12 @@ export function Hero({
               data-aos="fade-up"
               suppressHydrationWarning
               className={`font-heading text-[36px] sm:text-[38px] uppercase leading-[1.05] text-white lg:text-[70px] ${
-                isShortTitle
+                isShortTitle || singleLine
                   ? "max-w-none w-auto whitespace-nowrap"
                   : "max-w-2xl lg:max-w-none"
               } ${titleClassName}`}
             >
-              {renderTitleWithUnderline(title, showDivider)}
+              {renderTitleWithUnderline(title, showDivider, "border-white", singleLine)}
             </h1>
           ) : (
             <h1
@@ -212,9 +98,8 @@ export function Hero({
                 data-aos-delay="200"
                 suppressHydrationWarning
                 className={`mt-6 text-white text-base ${descriptionClassName ? descriptionClassName : "max-w-xl"} ${descriptionClassName && !descriptionClassName.includes("max-w-") ? "max-w-xl" : ""}`}
-              >
-                {description}
-              </p>
+                dangerouslySetInnerHTML={{ __html: formatCmsHtml(description) }}
+              />
             ) : (
               <div
                 data-aos="fade-up"

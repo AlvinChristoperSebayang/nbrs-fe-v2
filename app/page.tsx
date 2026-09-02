@@ -115,10 +115,11 @@ export default async function Home() {
         heading={homepage?.sectorsHeading || "Designing spaces bespoke to their needs"}
       />
       <GridEffect
-        className="mt-8"
+        className="mt-8 "
         items={news}
         title={homepage?.latestNewsHeading ?? undefined}
         backgroundColor="#EEEEEE"
+        imageClassName="object-cover"
       />
       <CtaSection content={cta} />
     </>

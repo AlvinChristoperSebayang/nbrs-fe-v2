@@ -4,6 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
 import type { ImageSource } from "@/lib/types";
+import { normalizeNewlines, formatCmsHtml } from "@/lib/text";
+
 type ResearchCardItem = {
   id: string;
   slug: string;
@@ -12,36 +14,33 @@ type ResearchCardItem = {
   hoverColor: string;
 };
 
-function toTitleCase(str: string): string {
-  if (!str) return str;
-  if (str === str.toUpperCase() && /[A-Z]/.test(str)) {
-    return str
-      .toLowerCase()
-      .split(" ")
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(" ");
-  }
-  return str;
-}
-
 function renderFormattedTitle(title: string) {
-  const formatted = toTitleCase(title);
-  const colonIndex = formatted.indexOf(":");
+  const normalized = normalizeNewlines(title || "").trim();
+  const colonIndex = normalized.indexOf(":");
   if (colonIndex !== -1) {
-    const prefix = formatted.slice(0, colonIndex + 1);
-    const suffix = formatted.slice(colonIndex + 1).trim();
+    const prefix = normalized.slice(0, colonIndex + 1);
+    const suffix = normalized.slice(colonIndex + 1).trim();
     return (
       <div className="font-sans leading-snug">
-        <span className="block font-bold text-base sm:text-lg lg:text-[17px] xl:text-xl">{prefix}</span>
-        {suffix && <span className="block font-normal text-sm sm:text-base lg:text-[15px] xl:text-lg mt-0.5">{suffix}</span>}
+        <span
+          className="block font-bold text-base sm:text-lg lg:text-[17px] xl:text-xl uppercase"
+          dangerouslySetInnerHTML={{ __html: formatCmsHtml(prefix) }}
+        />
+        {suffix && (
+          <span
+            className="block font-normal text-sm sm:text-base lg:text-[15px] xl:text-lg mt-0.5 uppercase"
+            dangerouslySetInnerHTML={{ __html: formatCmsHtml(suffix) }}
+          />
+        )}
       </div>
     );
   }
 
   return (
-    <div className="font-sans text-base sm:text-lg lg:text-[17px] xl:text-xl font-bold leading-snug">
-      {formatted}
-    </div>
+    <div
+      className="font-sans text-base sm:text-lg lg:text-[17px] xl:text-xl font-bold leading-snug uppercase"
+      dangerouslySetInnerHTML={{ __html: formatCmsHtml(normalized) }}
+    />
   );
 }
 

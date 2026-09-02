@@ -31,6 +31,7 @@ export default async function PeopleCulturePage() {
               imageSrc={page.hero.image}
               title={page.hero.title}
               description={page.hero.description}
+              singleLine
             />
           </div>
           <div className="hidden lg:block">
@@ -38,6 +39,7 @@ export default async function PeopleCulturePage() {
               image={page.hero.image}
               title={page.hero.title}
               description={page.hero.description}
+              singleLine
             />
           </div>
         </>

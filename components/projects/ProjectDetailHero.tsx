@@ -1,6 +1,7 @@
 import { Container } from "@/components/ui/Container";
 import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
 import type { ImageSource } from "@/lib/types";
+import { normalizeNewlines, formatCmsHtml } from "@/lib/text";
 
 export type ProjectDetailHeroProps = {
   title: string;
@@ -13,55 +14,10 @@ export type ProjectDetailHeroProps = {
   collaborators?: string | null;
 };
 
-function getProjectTitleLines(title: string): string[] {
-  if (title.includes("\n")) {
-    return title.split("\n").map((l) => l.trim()).filter(Boolean);
-  }
+import { renderTitleWithUnderline } from "@/components/ui/UnderlineHeading";
 
-  const words = title.trim().split(/\s+/);
-  if (words.length <= 3) {
-    return [title.trim()];
-  }
-
-  if (words.length <= 5) {
-    const mid = Math.ceil(words.length / 2);
-    return [words.slice(0, mid).join(" "), words.slice(mid).join(" ")];
-  }
-
-  return [
-    words.slice(0, 2).join(" "),
-    words.slice(2, 4).join(" "),
-    words.slice(4).join(" "),
-  ];
-}
-
-function renderProjectTitle(title: string) {
-  const lines = getProjectTitleLines(title);
-
-  if (lines.length <= 1) {
-    return (
-      <span className="inline-block w-fit border-b-[4px] sm:border-b-[6px] lg:border-b-[8px] border-white pb-1 sm:pb-2 leading-none">
-        {lines[0]}
-      </span>
-    );
-  }
-
-  const firstLines = lines.slice(0, -1);
-  const lastLine = lines[lines.length - 1];
-
-  return (
-    <span className="inline-flex flex-col items-start w-fit">
-      {firstLines.map((line, idx) => (
-        <span key={idx} className="block leading-[1.05]">
-          {line}
-        </span>
-      ))}
-      <span className="inline-block w-fit border-b-[4px] sm:border-b-[6px] lg:border-b-[8px] border-white pb-1 sm:pb-2 leading-none mt-1">
-        {lastLine}
-      </span>
-    </span>
-  );
-}
+export const renderProjectTitle = (title: string) =>
+  renderTitleWithUnderline(title, true, "border-white");
 
 export function ProjectDetailHero({
   title,
@@ -90,9 +46,8 @@ export function ProjectDetailHero({
               data-aos="fade-up"
               data-aos-delay="200"
               className="mt-5 lg:text-[20px] text-[16px] font-semibold"
-            >
-              {subheading}
-            </p>
+              dangerouslySetInnerHTML={{ __html: formatCmsHtml(subheading) }}
+            />
           )}
 
           {(sectorLabel || practiceLabel) && (
@@ -117,7 +72,7 @@ export function ProjectDetailHero({
               src={image}
               alt={title}
               title={title}
-              className="lg:aspect-[16/10] max-md:min-h-[438px] w-full object-cover"
+              className="w-full h-auto max-md:min-h-0 lg:aspect-[16/10] object-cover"
             />
           </figure>
         )}

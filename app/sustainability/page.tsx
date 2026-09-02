@@ -39,7 +39,7 @@ export default async function SustainabilityPage() {
 
   return (
     <article className="min-h-screen bg-white text-black">
-      <Hero image={page.hero} title={page.title} description={page.description} />
+      <Hero image={page.hero} title={page.title} description={page.description} singleLine />
 
       <AboutSection
         background_color="#FDD4B6"

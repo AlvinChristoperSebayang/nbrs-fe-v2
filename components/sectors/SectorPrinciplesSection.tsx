@@ -1,6 +1,7 @@
 import { Container } from "@/components/ui/Container";
 import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
 import type { ImageSource } from "@/lib/types";
+import { formatCmsHtml } from "@/lib/text";
 
 export function SectorPrinciplesSection({
   title,
@@ -38,9 +39,10 @@ export function SectorPrinciplesSection({
                 </span>
               </div>
             </div>
-            <p className="font-sans text-xs sm:text-sm lg:text-[13px] xl:text-[15px] 2xl:text-base text-zinc-900 leading-relaxed lg:leading-[1.42] xl:leading-relaxed">
-              {description}
-            </p>
+            <p
+              className="font-sans text-xs sm:text-sm lg:text-[13px] xl:text-[15px] 2xl:text-base text-zinc-900 leading-relaxed lg:leading-[1.42] xl:leading-relaxed"
+              dangerouslySetInnerHTML={{ __html: formatCmsHtml(description) }}
+            />
           </div>
 
           {/* Slots 2 to 6: 5 Gallery Images matching SectorsSection 3-column layout */}

@@ -5,13 +5,13 @@ export function ProjectStorySection() {
     <section className="relative w-full bg-white text-black py-0 flex flex-col gap-16 lg:gap-24">
       <Container>
         <div data-aos="fade-up" className="flex justify-end">
-          <div className="max-w-[470px] flex flex-col gap-4 font-sans text-sm sm:text-base leading-relaxed text-black/90">
-            <p className="font-bold text-black">
+          <div className="max-w-[470px] flex flex-col gap-4 font-sans text-base sm:text-lg leading-relaxed text-black/90">
+            <p className="font-bold text-black text-base sm:text-lg">
               As part of the creative thought process, the NBRS team wanted to
               provide students with a sense of orientation and a strong
               connection to Country. This is achieved via 3 methods:
             </p>
-            <ul className="flex flex-col gap-2.5 list-disc pl-5 text-black/80">
+            <ul className="flex flex-col gap-2.5 list-disc pl-5 text-black/80 text-base sm:text-lg">
               <li>
                 The design is a perimeter model broken down into a series of
                 blocks and pods reflecting the seed pods found in the local
@@ -43,7 +43,7 @@ export function ProjectStorySection() {
 
       <Container>
         <div data-aos="fade-up" className="max-w-[570px]">
-          <p className="font-sans text-sm sm:text-base leading-relaxed text-black/80">
+          <p className="font-sans text-base sm:text-lg leading-relaxed text-black/80">
             Students will be encouraged to pursue their dreams and aspirations
             with all new state-of-the-art modern flexible classrooms and
             facilities including: science labs, wood and metal workshop rooms,
@@ -70,12 +70,12 @@ export function ProjectStorySection() {
 
       <Container>
         <div data-aos="fade-up" className="flex flex-col gap-4 max-w-[838px]">
-          <h2 className="font-heading text-2xl sm:text-3xl lg:text-[36px] font-normal uppercase leading-tight lg:leading-[1.1] text-black">
+          <h2 className="font-heading text-2xl sm:text-3xl lg:text-[32px] font-bold uppercase leading-tight lg:leading-[1.15] text-black">
             Melonba has been designed to be mindful of different learning stages
             and provide a supportive learning experience suited to a range of
             learning styles.
           </h2>
-          <p className="font-sans text-sm sm:text-base leading-relaxed text-black/80 max-w-[770px]">
+          <p className="font-sans text-base sm:text-lg leading-relaxed text-black/80 max-w-[770px]">
             The design which features a 1000 primary, and 2000 high school space
             is based on the standard hub format, embodying the Modern Method of
             Construction (MMoC) principles:
