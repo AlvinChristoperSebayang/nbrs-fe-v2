@@ -38,7 +38,7 @@ export default async function ResearchPage() {
         title={listing?.pageHeading ?? "Ideas that shape better places"}
         description={listing?.pageSubheading ?? "NBRS research translates real-world insights into design strategies that elevate outcomes for clients, partners, and communities."}
         descriptionClassName="max-w-[289px] md:max-w-[393px]"
-        imageClassName="min-2xl:object-top"
+        imageClassName="min-lg:object-top"
       />
       <section className="bg-white py-16 lg:py-24">
         <Container className="flex flex-col gap-16 lg:gap-24">

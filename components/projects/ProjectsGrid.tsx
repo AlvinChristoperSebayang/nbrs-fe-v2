@@ -43,7 +43,7 @@ export function ProjectsGrid({ projects }: { projects: ProjectListItem[] }) {
   }
 
   return (
-    <ul className="grid grid-cols-1 gap-x-7 gap-y-10 md:gap-y-20 sm:grid-cols-2 lg:grid-cols-3">
+    <ul className="grid grid-cols-1 gap-x-7 gap-y-10 xl:gap-y-17.5 sm:grid-cols-2 lg:grid-cols-3">
       {projects.map((project, index) => (
         <li
           key={project.id}
