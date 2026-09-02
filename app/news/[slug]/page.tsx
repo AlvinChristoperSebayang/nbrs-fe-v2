@@ -70,11 +70,11 @@ export default async function NewsDetailPage({
         image={article.hero ?? "/images/hero/hero6.png"}
         title={article.title}
         imageClassName="object-cover object-center"
-        className="lg:!h-auto lg:!min-h-0 lg:aspect-[1200/840]"
+        className="lg:!h-auto lg:!min-h-0 lg:aspect-[16/9]"
+        // lg:aspect-[1200/840]
         description={
           meta ? <p className="mt-2 font-sans text-sm font-normal text-white/90 sm:text-base">{meta}</p> : undefined
         }
-        // imageClassName="lg:object-contain lg:bg-[#121a2e]"
       />
 
       <section className="bg-white py-16 lg:py-24">

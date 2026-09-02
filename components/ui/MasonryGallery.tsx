@@ -51,6 +51,21 @@ export function MasonryGallery({
     }
   };
 
+  if (images.length === 0) return null;
+
+  if (images.length === 1) {
+    return (
+      <div className={`grid grid-cols-1 w-full overflow-hidden rounded-[3px] ${className}`}>
+        <ResponsiveImage
+          src={images[0]}
+          alt={`${altPrefix} 1`}
+          title={`${altPrefix} 1`}
+          className="h-auto w-full rounded-[3px] object-cover object-center"
+        />
+      </div>
+    );
+  }
+
   return (
     <div className={`grid grid-cols-1 gap-4 sm:grid-cols-2 items-start ${className}`}>
       {columns.map((colItems, colIdx) => (
