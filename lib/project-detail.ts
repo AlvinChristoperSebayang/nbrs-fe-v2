@@ -238,9 +238,9 @@ const PROJECT_DETAIL_QUERY = /* GraphQL */ `
         proHdrSubheading
         thumbnail {
           url
-          mobile: url @transform(width: 600, height: 750, mode: "crop", format: "webp", quality: 80, immediately: true)
-          tablet: url @transform(width: 1440, height: 900, mode: "crop", format: "webp", quality: 82, immediately: true)
-          desktop: url @transform(width: 2400, height: 1500, mode: "crop", format: "webp", quality: 85, immediately: true)
+          mobile: url @transform(format: "webp", quality: 80, immediately: true)
+          tablet: url @transform(width: 1440, height: 900, format: "webp", quality: 82, immediately: true)
+          desktop: url @transform(width: 2400, height: 1500, format: "webp", quality: 85, immediately: true)
           width
           height
           title
