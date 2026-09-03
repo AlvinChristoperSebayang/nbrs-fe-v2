@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
 import { Container } from "@/components/ui/Container";
 import type { NewsItem } from "@/lib/types";
-import { formatCmsHtml } from "@/lib/text";
+import { formatCmsHtml, cleanCardTitle } from "@/lib/text";
 
 export function GridEffect({
   items,
@@ -198,8 +198,9 @@ export function GridEffect({
                           ? "text-white text-2xl sm:text-3xl lg:text-[20px] xl:text-[30px] 2xl:text-[34px]"
                           : `text-2xl sm:text-3xl lg:text-[17px] xl:text-[20px] ${titleClassNameNonHover}`
                       }`}
-                      dangerouslySetInnerHTML={{ __html: formatCmsHtml(item.title) }}
-                    />
+                    >
+                      {cleanCardTitle(item.title)}
+                    </h3>
 
                     {item.description && (
                       <p

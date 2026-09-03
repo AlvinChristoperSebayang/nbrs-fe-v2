@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { SecondaryResearchItem } from "@/lib/research-listing";
-import { formatCmsHtml } from "@/lib/text";
+import { cleanCardTitle } from "@/lib/text";
 
 export function TextResearchCard({ item }: { item: SecondaryResearchItem }) {
   return (
@@ -12,10 +12,9 @@ export function TextResearchCard({ item }: { item: SecondaryResearchItem }) {
     >
       {/* Top Title Section */}
       <div className="flex h-[94px] w-full items-start bg-[#E7E7E7] p-5 transition-colors duration-300 group-hover:bg-black">
-        <span
-          className="font-sans text-base font-normal text-black transition-colors duration-300 group-hover:text-white leading-snug md:max-w-[167px] uppercase"
-          dangerouslySetInnerHTML={{ __html: formatCmsHtml(item.title) }}
-        />
+        <span className="font-sans text-base font-normal text-black transition-colors duration-300 group-hover:text-white leading-snug md:max-w-[167px] uppercase">
+          {cleanCardTitle(item.title)}
+        </span>
       </div>
 
       {/* Bottom Read More Section */}

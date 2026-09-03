@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
 import type { ImageSource } from "@/lib/types";
-import { normalizeNewlines, formatCmsHtml } from "@/lib/text";
+import { cleanCardTitle } from "@/lib/text";
 
 type ResearchCardItem = {
   id: string;
@@ -15,32 +15,29 @@ type ResearchCardItem = {
 };
 
 function renderFormattedTitle(title: string) {
-  const normalized = normalizeNewlines(title || "").trim();
-  const colonIndex = normalized.indexOf(":");
+  const clean = cleanCardTitle(title);
+  const colonIndex = clean.indexOf(":");
   if (colonIndex !== -1) {
-    const prefix = normalized.slice(0, colonIndex + 1);
-    const suffix = normalized.slice(colonIndex + 1).trim();
+    const prefix = clean.slice(0, colonIndex + 1);
+    const suffix = clean.slice(colonIndex + 1).trim();
     return (
       <div className="font-sans leading-snug">
-        <span
-          className="block font-bold text-base sm:text-lg lg:text-[17px] xl:text-xl uppercase"
-          dangerouslySetInnerHTML={{ __html: formatCmsHtml(prefix) }}
-        />
+        <span className="block font-bold text-base sm:text-lg lg:text-[17px] xl:text-xl uppercase">
+          {prefix}
+        </span>
         {suffix && (
-          <span
-            className="block font-normal text-sm sm:text-base lg:text-[15px] xl:text-lg mt-0.5 uppercase"
-            dangerouslySetInnerHTML={{ __html: formatCmsHtml(suffix) }}
-          />
+          <span className="block font-normal text-sm sm:text-base lg:text-[15px] xl:text-lg mt-0.5 uppercase">
+            {suffix}
+          </span>
         )}
       </div>
     );
   }
 
   return (
-    <div
-      className="font-sans text-base sm:text-lg lg:text-[17px] xl:text-xl font-bold leading-snug uppercase"
-      dangerouslySetInnerHTML={{ __html: formatCmsHtml(normalized) }}
-    />
+    <div className="font-sans text-base sm:text-lg lg:text-[17px] xl:text-xl font-bold leading-snug uppercase">
+      {clean}
+    </div>
   );
 }
 

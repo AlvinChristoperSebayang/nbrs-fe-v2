@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
 import { Container } from "@/components/ui/Container";
 import type { Sector } from "@/lib/types";
-import { normalizeNewlines, formatCmsHtml } from "@/lib/text";
+import { normalizeNewlines, formatCmsHtml, cleanCardTitle } from "@/lib/text";
 
 function getDesktopSectorsLines(heading: string): string[] {
   const normalized = normalizeNewlines(heading);
@@ -138,12 +138,11 @@ export function SectorsSection({
                 <div className="relative h-full w-full flex flex-col items-start justify-between gap-4 p-8">
                   <div className="flex flex-col gap-2 text-left">
                     <span className="font-heading text-[26px] lg:text-[30px] uppercase text-black">
-                      {sector.label}
+                      {cleanCardTitle(sector.label)}
                     </span>
-                    <span
-                      className="font-heading text-base uppercase text-black"
-                      dangerouslySetInnerHTML={{ __html: formatCmsHtml(sector.description) }}
-                    />
+                    <span className="font-heading text-base uppercase text-black">
+                      {cleanCardTitle(sector.description)}
+                    </span>
                   </div>
                   <svg
                     className="self-end"

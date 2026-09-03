@@ -68,7 +68,7 @@ export function Hero({
 
       {/* Main Title & Content Container */}
       <Container
-        className={`relative z-10 flex h-full flex-col justify-center my-auto pt-16 pb-8 lg:pt-20 lg:pb-12 ${containerClassName}`}
+        className={`relative z-10 flex h-full flex-col justify-center my-auto pt-20 sm:pt-24 md:pt-28 pb-8 lg:pt-20 lg:pb-12 ${containerClassName}`}
       >
         <div className={`flex flex-col items-start ${hasExplicitLines ? "max-w-[850px] lg:max-w-none" : "max-w-[650px] lg:max-w-none"} ${contentClassName}`}>
           {/* Title with Underline on Last Line matching exact text width of that line */}

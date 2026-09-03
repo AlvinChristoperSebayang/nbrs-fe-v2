@@ -29,3 +29,13 @@ export function splitCmsLines(text?: string | null): string[] {
     .map((l) => l.trim())
     .filter(Boolean);
 }
+
+export function cleanCardTitle(text?: string | null): string {
+  if (!text) return "";
+  const normalized = normalizeNewlines(text);
+  return normalized
+    .replace(/<[^>]*>/g, "")
+    .replace(/\n/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}

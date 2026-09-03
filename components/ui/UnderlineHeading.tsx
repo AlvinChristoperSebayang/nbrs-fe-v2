@@ -134,9 +134,15 @@ export function renderTitleWithUnderline(
   const normalized = normalizeNewlines(title).trim();
   if (!normalized) return null;
 
-  // If explicit single line requested OR 3 words or fewer within 22 chars without explicit \n
+  // If explicit single line requested
+  if (singleLine) {
+    return renderLinesBlock([normalized], showDivider, borderColor);
+  }
+
   const words = normalized.split(/\s+/).filter(Boolean);
-  if (singleLine || (!normalized.includes("\n") && !customMobileLines && words.length <= 3 && normalized.length <= 22)) {
+
+  // If 1 or 2 short words without explicit \n, keep as single line on both
+  if (!normalized.includes("\n") && !customMobileLines && words.length <= 2 && normalized.length <= 20) {
     return renderLinesBlock([normalized], showDivider, borderColor);
   }
 
@@ -144,9 +150,15 @@ export function renderTitleWithUnderline(
     ? normalized.split("\n").map((l) => l.trim()).filter(Boolean)
     : [normalized];
 
-  const mobileLines = customMobileLines && customMobileLines.length > 0
-    ? customMobileLines
-    : splitLinesToMaxLen(rawLines, 18);
+  let mobileLines: string[];
+  if (customMobileLines && customMobileLines.length > 0) {
+    mobileLines = customMobileLines;
+  } else if (!normalized.includes("\n") && words.length === 3) {
+    // 3 words: exactly 2 lines on mobile (e.g. "WORD1 WORD2", "WORD3")
+    mobileLines = [words.slice(0, 2).join(" "), words[2]];
+  } else {
+    mobileLines = splitLinesToMaxLen(rawLines, 16);
+  }
 
   const desktopLines = customDesktopLines && customDesktopLines.length > 0
     ? customDesktopLines

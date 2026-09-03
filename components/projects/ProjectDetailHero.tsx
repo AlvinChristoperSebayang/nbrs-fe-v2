@@ -31,12 +31,12 @@ export function ProjectDetailHero({
 }: ProjectDetailHeroProps) {
   return (
     <section>
-      <div className="bg-black text-white pt-16 sm:pt-0 lg:pt-[140px]">
-        <Container className="pt-4 sm:pt-8 pb-12 sm:pb-24 lg:pb-28">
+      <div className="bg-black text-white pt-24 sm:pt-32 md:pt-36 lg:pt-[140px]">
+        <Container className="pt-2 sm:pt-4 pb-12 sm:pb-24 lg:pb-28">
           <div className="flex flex-col w-fit">
             <h1
               data-aos="fade-up"
-              className="font-heading mt-6 sm:mt-12 text-[38px] uppercase tracking-tight sm:text-[38px] lg:text-[70px] leading-[1]"
+              className="font-heading mt-2 sm:mt-4 text-[38px] uppercase tracking-tight sm:text-[44px] lg:text-[70px] leading-[1]"
             >
               {renderProjectTitle(title)}
             </h1>

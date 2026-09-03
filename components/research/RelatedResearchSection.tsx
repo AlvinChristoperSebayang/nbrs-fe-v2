@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
 import type { RelatedResearchItem } from "@/lib/research-detail";
-import { formatCmsHtml } from "@/lib/text";
+import { cleanCardTitle } from "@/lib/text";
 
 export function RelatedResearchSection({ items }: { items: RelatedResearchItem[] }) {
   if (items.length === 0) return null;
@@ -47,10 +47,9 @@ export function RelatedResearchSection({ items }: { items: RelatedResearchItem[]
                         {[item.sector, item.practice].filter(Boolean).join(" • ")}
                       </span>
                     )}
-                    <h3
-                      className="font-sans text-lg leading-snug font-bold text-white transition-colors duration-300 uppercase"
-                      dangerouslySetInnerHTML={{ __html: formatCmsHtml(item.title) }}
-                    />
+                    <h3 className="font-sans text-lg leading-snug font-bold text-white transition-colors duration-300 uppercase">
+                      {cleanCardTitle(item.title)}
+                    </h3>
                   </div>
 
                   <div className="flex items-center justify-between pt-6 text-sm font-medium text-white">
