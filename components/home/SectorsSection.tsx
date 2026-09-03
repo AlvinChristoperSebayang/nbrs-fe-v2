@@ -11,12 +11,20 @@ function getDesktopSectorsLines(heading: string): string[] {
   }
 
   const words = normalized.trim().split(/\s+/);
-  if (words.length >= 5) {
+  if (words.length >= 6) {
     return [
       words[0],
       words[1],
-      words.slice(2, 4).join(" "),
+      `${words[2]} ${words[3]}`,
       words.slice(4).join(" "),
+    ];
+  }
+  if (words.length === 5) {
+    return [
+      words[0],
+      words[1],
+      `${words[2]} ${words[3]}`,
+      words[4],
     ];
   }
   if (words.length >= 3) {
@@ -50,7 +58,7 @@ function getMobileSectorsLines(heading: string): string[] {
 function renderSectorsLines(lines: string[]) {
   if (lines.length === 1) {
     return (
-      <span className="inline-block w-fit border-b-[4px] sm:border-b-[5px] lg:border-b-[6px] border-black pb-1 sm:pb-2 leading-[1.05]">
+      <span className="inline-block w-fit border-b-[4px] sm:border-b-[5px] lg:border-b-[6px] border-black pb-1 sm:pb-2 leading-[1.05] whitespace-nowrap">
         {lines[0]}
       </span>
     );
@@ -62,11 +70,11 @@ function renderSectorsLines(lines: string[]) {
   return (
     <span className="inline-flex flex-col items-start w-fit">
       {allExceptLast.map((line, idx) => (
-        <span key={idx} className="block leading-[1.05]">
+        <span key={idx} className="block leading-[1.05] whitespace-nowrap">
           {line}
         </span>
       ))}
-      <span className="inline-block w-fit border-b-[4px] sm:border-b-[5px] lg:border-b-[6px] border-black pb-1 sm:pb-2 leading-[1.05] mt-1">
+      <span className="inline-block w-fit border-b-[4px] sm:border-b-[5px] lg:border-b-[6px] border-black pb-1 sm:pb-2 leading-[1.05] mt-1 whitespace-nowrap">
         {lastLine}
       </span>
     </span>
@@ -107,7 +115,7 @@ export function SectorsSection({
       <Container>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-6 lg:gap-x-[30px] lg:gap-y-[35px]">
           <div data-aos="fade-up" suppressHydrationWarning className="lg:col-span-4 flex flex-col justify-center">
-            <h2 className="font-heading text-[28px] sm:text-[34px] md:text-[38px] lg:text-[42px] xl:text-[54px] 2xl:text-[70px] leading-[1.05] uppercase text-black flex flex-col items-start">
+            <h2 className="font-heading text-[28px] sm:text-[34px] md:text-[38px] lg:text-[36px] xl:text-[46px] 2xl:text-[56px] leading-[1.05] uppercase text-black flex flex-col items-start">
               {renderSectorsHeading(heading)}
             </h2>
           </div>

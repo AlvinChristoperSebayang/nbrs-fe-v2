@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useState, useEffect, useTransition } from "react";
 import type { ProjectCategory } from "@/lib/projects-listing";
 
 function ArrowIcon() {
@@ -49,7 +50,7 @@ function ChipRow({
               type="button"
               onClick={() => onToggle(option.slug)}
               aria-pressed={isActive}
-              className={`inline-flex items-center gap-2 rounded-full border px-5 py-1.75 text-sm transition cursor-pointer ${
+              className={`inline-flex items-center gap-2 rounded-full border px-5 py-1.75 text-sm transition-all duration-150 cursor-pointer active:scale-95 ${
                 isActive
                   ? "border-black bg-black text-white"
                   : "border-black/20 text-black hover:border-black"
@@ -81,6 +82,20 @@ export function ProjectsFilters({
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const [, startTransition] = useTransition();
+
+  // Optimistic local state for immediate button toggle response (0ms latency)
+  const [localSectors, setLocalSectors] = useState<string[]>(selectedSectors);
+  const [localPractices, setLocalPractices] = useState<string[]>(selectedPractices);
+
+  // Sync with server state whenever incoming props change
+  useEffect(() => {
+    setLocalSectors(selectedSectors);
+  }, [selectedSectors]);
+
+  useEffect(() => {
+    setLocalPractices(selectedPractices);
+  }, [selectedPractices]);
 
   // Exclude Heritage from practice list if present
   const filteredPractices = practices.filter(
@@ -88,6 +103,10 @@ export function ProjectsFilters({
   );
 
   const updateFilters = (newSectors: string[], newPractices: string[]) => {
+    // Immediately update visual state for 0ms tactile feedback
+    setLocalSectors(newSectors);
+    setLocalPractices(newPractices);
+
     const params = new URLSearchParams(searchParams.toString());
     params.delete("page");
 
@@ -105,29 +124,36 @@ export function ProjectsFilters({
 
     const queryString = params.toString();
     const targetUrl = queryString ? `${pathname}?${queryString}` : pathname;
-    router.push(targetUrl, { scroll: false });
+
+    startTransition(() => {
+      router.push(targetUrl, { scroll: false });
+    });
   };
 
   const toggleSector = (slug: string) => {
-    const next = selectedSectors.includes(slug)
-      ? selectedSectors.filter((s) => s !== slug)
-      : [...selectedSectors, slug];
-    updateFilters(next, selectedPractices);
+    const next = localSectors.includes(slug)
+      ? localSectors.filter((s) => s !== slug)
+      : [...localSectors, slug];
+    updateFilters(next, localPractices);
   };
 
   const togglePractice = (slug: string) => {
-    const next = selectedPractices.includes(slug)
-      ? selectedPractices.filter((s) => s !== slug)
-      : [...selectedPractices, slug];
-    updateFilters(selectedSectors, next);
+    const next = localPractices.includes(slug)
+      ? localPractices.filter((s) => s !== slug)
+      : [...localPractices, slug];
+    updateFilters(localSectors, next);
   };
 
   const resetFilters = () => {
-    router.push(pathname, { scroll: false });
+    setLocalSectors([]);
+    setLocalPractices([]);
+    startTransition(() => {
+      router.push(pathname, { scroll: false });
+    });
   };
 
   const hasActiveFilters =
-    selectedSectors.length > 0 || selectedPractices.length > 0;
+    localSectors.length > 0 || localPractices.length > 0;
 
   return (
     <div className="flex flex-col gap-8">
@@ -136,17 +162,16 @@ export function ProjectsFilters({
         <ChipRow
           label="Sectors"
           options={sectors}
-          selected={selectedSectors}
+          selected={localSectors}
           onToggle={toggleSector}
         />
         {hasActiveFilters && (
           <button
             type="button"
             onClick={resetFilters}
-            className="inline-flex shrink-0 items-center justify-center rounded-full border border-black px-6 py-1.75 text-sm font-sans text-black hover:bg-black hover:text-white transition-colors duration-300 ease-out cursor-pointer self-start sm:self-auto"
+            className="inline-flex shrink-0 items-center justify-center rounded-full border border-black px-6 py-1.75 text-sm font-sans text-black hover:bg-black hover:text-white transition-colors duration-300 ease-out cursor-pointer self-start sm:self-auto active:scale-95"
           >
             Reset Filters 
-            {/* ({selectedSectors.length + selectedPractices.length}) */}
           </button>
         )}
       </div>
@@ -154,7 +179,7 @@ export function ProjectsFilters({
       <ChipRow
         label="Practice"
         options={filteredPractices}
-        selected={selectedPractices}
+        selected={localPractices}
         onToggle={togglePractice}
         aosDelay={100}
       />
