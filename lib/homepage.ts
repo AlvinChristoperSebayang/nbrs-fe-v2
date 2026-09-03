@@ -29,15 +29,15 @@ type RawHomepageCta = {
 };
 
 const HERO_IMAGE_DIMENSIONS = {
-  mobile: { width: 600, height: 800 },
-  tablet: { width: 1440, height: 1000 },
-  desktop: { width: 2400, height: 1200 },
+  mobile: { width: 768, height: 1024 },
+  tablet: { width: 1920, height: 1200 },
+  desktop: { width: 2560, height: 1440 },
 } satisfies ResponsiveImageDimensions;
 
 const HERO_FOREGROUND_DIMENSIONS = {
-  mobile: { width: 600, height: 467 },
-  tablet: { width: 1080, height: 840 },
-  desktop: { width: 1600, height: 1245 },
+  mobile: { width: 1080, height: 840 },
+  tablet: { width: 1920, height: 1494 },
+  desktop: { width: 2560, height: 1992 },
 } satisfies ResponsiveImageDimensions;
 
 const ABOUT_IMAGE_DIMENSIONS = {
@@ -119,20 +119,10 @@ function path(value: string | null | undefined): string | null {
 
   try {
     const url = new URL(value);
-    if (
-      url.hostname === "127.0.0.1" ||
-      url.hostname === "localhost" ||
-      /(^|\.)nbrs(-staging)?\.test$/.test(url.hostname) ||
-      /(^|\.)nbrs\.com\.au$/.test(url.hostname)
-    ) {
-      const pathname = url.pathname === "/who-we-are" ? "/about" : url.pathname;
-      return `${pathname}${url.search}${url.hash}`;
-    }
+    return `${url.pathname}${url.search}${url.hash}`;
   } catch {
-    return value;
+    return value.startsWith("/") ? value : `/${value}`;
   }
-
-  return value;
 }
 
 function homepageCta(cta: RawHomepageCta | null): CtaContent | null {
@@ -169,14 +159,14 @@ const HOMEPAGE_QUERY = /* GraphQL */ `
             linkText
             linkUrl
             image {
-              backgroundMobile: url @transform(width: 600, height: 800, mode: "crop", format: "webp", quality: 80, immediately: true)
-              backgroundTablet: url @transform(width: 1440, height: 1000, mode: "crop", format: "webp", quality: 82, immediately: true)
-              backgroundDesktop: url @transform(format: "webp", quality: 85, immediately: true)
+              backgroundMobile: url @transform(width: 768, height: 1024, mode: "crop", format: "webp", quality: 90)
+              backgroundTablet: url @transform(width: 1920, height: 1200, mode: "crop", format: "webp", quality: 92)
+              backgroundDesktop: url @transform(width: 2560, height: 1440, mode: "crop", format: "webp", quality: 95)
             }
             foregroundImage {
-              mobile: url @transform(width: 768, mode: "fit", format: "webp", quality: 80, immediately: true)
-              tablet: url @transform(width: 1440, mode: "fit", format: "webp", quality: 82, immediately: true)
-              desktop: url @transform(width: 2400, mode: "fit", format: "webp", quality: 85, immediately: true)
+              mobile: url @transform(width: 1080, mode: "fit", format: "webp", quality: 90)
+              tablet: url @transform(width: 1920, mode: "fit", format: "webp", quality: 92)
+              desktop: url @transform(width: 2560, mode: "fit", format: "webp", quality: 95)
             }
           }
         }

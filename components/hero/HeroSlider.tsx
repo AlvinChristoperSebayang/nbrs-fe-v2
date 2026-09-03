@@ -50,10 +50,10 @@ export function HeroSlider({ slides }: HeroSliderProps) {
           src={imageSource(slide.backgroundImage)}
           alt={slide.title || "NBRS Architecture"}
           title={slide.title || "NBRS Architecture"}
-          className={`absolute inset-0 z-10 h-full w-full object-cover transition-opacity duration-1000 ease-in-out ${
+          className={`absolute inset-0 z-10 h-full w-full object-cover transition-opacity duration-700 ease-in-out ${
             index === activeIndex ? "opacity-100" : "opacity-0"
           }`}
-          priority={index === 0}
+          priority
           width={2400}
           height={1200}
         />
@@ -66,7 +66,7 @@ export function HeroSlider({ slides }: HeroSliderProps) {
             className="lg:col-span-4 z-20 flex flex-col justify-center gap-1 w-full pointer-events-none"
           >
             <h1
-              style={{ animation: "hero-fade-up 0.7s ease-out both" }}
+              style={{ animation: "hero-fade-up 0.5s ease-out both" }}
               className={`font-heading font-bold uppercase text-white ${
                 isLastSlide
                   ? "text-[130px] lg:text-[264px] xl:text-[290px] leading-[0.85] tracking-tighter whitespace-nowrap"
@@ -87,7 +87,7 @@ export function HeroSlider({ slides }: HeroSliderProps) {
             </h1>
             {!isLastSlide && activeSlide.headline && (
               <p
-                style={{ animation: "hero-fade-up 0.7s ease-out 0.2s both" }}
+                style={{ animation: "hero-fade-up 0.5s ease-out 0.05s both" }}
                 className="font-gothic font-trade-gothic text-lg uppercase tracking-[0%] text-white/90 sm:text-[40px] mt-2 whitespace-nowrap"
               >
                 {activeSlide.headline}
@@ -100,12 +100,13 @@ export function HeroSlider({ slides }: HeroSliderProps) {
               modules={[Autoplay, EffectFade, Navigation, Pagination, A11y]}
               effect="fade"
               fadeEffect={{ crossFade: true }}
-              speed={900}
+              speed={700}
               loop
               autoplay={{ delay: 3000, disableOnInteraction: false }}
               navigation={{ prevEl: `#${prevId}`, nextEl: `#${nextId}` }}
               pagination={{ el: `#${paginationId}`, clickable: true }}
-              onSlideChange={handleSlideChange}
+              onSlideChangeTransitionStart={handleSlideChange}
+              onRealIndexChange={handleSlideChange}
               className="h-64 w-full max-w-full overflow-hidden shadow-2xl border border-white sm:h-96 lg:h-130 xl:h-160"
             >
               {slides.map((slide, index) => {
@@ -118,6 +119,7 @@ export function HeroSlider({ slides }: HeroSliderProps) {
                       alt={slide.title || "NBRS Architecture"}
                       title={slide.title || "NBRS Architecture"}
                       className="h-full w-full object-cover"
+                      priority
                       width={2400}
                       height={1200}
                     />
