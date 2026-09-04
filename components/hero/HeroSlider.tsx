@@ -23,11 +23,21 @@ function imageSource(image: ImageSource): ImageSource {
   return image.startsWith("http") || image.startsWith("/") ? image : `/images/hero/${image}`;
 }
 
+const envDelay = process.env.NEXT_PUBLIC_HERO_SLIDER_DELAY;
+const parsedDelay = envDelay ? Number(envDelay) : NaN;
+const DEFAULT_HERO_DELAY =
+  !isNaN(parsedDelay) && parsedDelay > 0
+    ? parsedDelay < 100
+      ? parsedDelay * 1000
+      : parsedDelay
+    : 2500;
+
 export type HeroSliderProps = {
   slides: HeroSlide[];
+  autoplayDelay?: number;
 };
 
-export function HeroSlider({ slides }: HeroSliderProps) {
+export function HeroSlider({ slides, autoplayDelay = DEFAULT_HERO_DELAY }: HeroSliderProps) {
   const uid = useId().replace(/[^a-zA-Z0-9]/g, "");
   const paginationId = `hero-pagination-${uid}`;
   const prevId = `hero-prev-${uid}`;
@@ -102,7 +112,7 @@ export function HeroSlider({ slides }: HeroSliderProps) {
               fadeEffect={{ crossFade: true }}
               speed={700}
               loop
-              autoplay={{ delay: 3000, disableOnInteraction: false }}
+              autoplay={{ delay: autoplayDelay, disableOnInteraction: false }}
               navigation={{ prevEl: `#${prevId}`, nextEl: `#${nextId}` }}
               pagination={{ el: `#${paginationId}`, clickable: true }}
               onSlideChangeTransitionStart={handleSlideChange}
