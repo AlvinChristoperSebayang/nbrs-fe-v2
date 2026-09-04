@@ -22,6 +22,7 @@ export function GridEffect({
   showCardDescriptionOnMobile = false,
   stageClassName = "min-h-[500px] lg:min-h-[560px] xl:min-h-[620px] flex flex-col justify-center",
   imageClassName = "object-cover object-center",
+  firstImageClassName,
   className = "",
 }: {
   items: NewsItem[];
@@ -37,7 +38,8 @@ export function GridEffect({
   showDescriptionOnMobile?: boolean;
   showCardDescriptionOnMobile?: boolean;
   stageClassName?: string;
-  imageClassName?: string;
+  firstImageClassName?: string;
+  imageClassName?: string | string[];
   className?: string;
 }) {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -157,21 +159,30 @@ export function GridEffect({
             )}
           </div>
           <div className="absolute w-full h-full overflow-hidden top-0 left-0 z-[5] uncontainer-mobile">
-            {items.map((item, index) =>
-              item.image ? (
+            {items.map((item, index) => {
+              if (!item.image) return null;
+
+              const resolvedImageClassName =
+                index === 0 && firstImageClassName
+                  ? firstImageClassName
+                  : Array.isArray(imageClassName)
+                    ? imageClassName[index] ?? imageClassName[imageClassName.length - 1] ?? "object-cover object-center"
+                    : imageClassName;
+
+              return (
                 <ResponsiveImage
                   key={item.title}
                   src={item.image}
                   alt={item.title || "NBRS Architecture"}
                   title={item.title || "NBRS Architecture"}
-                  className={`absolute inset-0 h-full w-full ${imageClassName} transition-opacity duration-500 ${
+                  className={`absolute inset-0 h-full w-full ${resolvedImageClassName} transition-opacity duration-500 ${
                     index === activeIndex ? "opacity-100" : "opacity-0"
                   }`}
                   width={1200}
                   height={900}
                 />
-              ) : null
-            )}
+              );
+            })}
             {/* Subtle dark overlay when enabled */}
             {hasOverlay && (
               <div className="absolute inset-0 bg-black/25 z-[6] pointer-events-none" />
