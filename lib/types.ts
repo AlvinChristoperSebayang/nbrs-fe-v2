@@ -40,12 +40,18 @@ export type Sector = {
   hoverColor: string;
 };
 
-export type NewsItem = {
+/** An item rendered by GridEffect with optional viewport-specific imagery. */
+export type GridEffectItem = {
   title: string;
   href?: string;
   image?: ImageSource;
+  mobileImage?: ImageSource;
+  desktopImage?: ImageSource;
   description?: string;
 };
+
+/** @deprecated Use GridEffectItem for new GridEffect data sources. */
+export type NewsItem = GridEffectItem;
 
 export type Project = {
   slug: string;

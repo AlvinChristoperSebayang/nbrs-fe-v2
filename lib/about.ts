@@ -1,7 +1,7 @@
 import { craftFetch } from "./craft";
 import { mapCta } from "./cta";
 import { toImageSource, toSeoImage, type RawSeoAsset, type SeoImage } from "./media";
-import type { CtaContent, ImageSource } from "./types";
+import type { CtaContent, GridEffectItem, ImageSource } from "./types";
 
 type Asset = { mobile?: string; tablet?: string; desktop?: string };
 type Entry = {
@@ -15,7 +15,13 @@ type Entry = {
   aboutIntroText: string | null;
   aboutIntroImage: Asset[];
   heroTitle: string | null;
-  whatWeDoV2: Array<{ title: string | null; description2: string | null; image: Asset[] }>;
+  whatWeDoV2: Array<{
+    title: string | null;
+    description2: string | null;
+    image: Asset[];
+    slideshowDesktop: Asset[];
+    slideShowMobile: Asset[];
+  }>;
   ctaElement: { label: string | null; url_1: { url: string | null } | null } | null;
   aboutPracticeHeading: string | null;
   aboutPracticeText: string | null;
@@ -40,7 +46,7 @@ export type AboutContent = {
   hero: { title: string; description: string; image: ImageSource };
   intro: { heading: string; description: string; image: ImageSource };
   approachHeading: string;
-  approachItems: Array<{ title: string; description?: string; image: ImageSource }>;
+  approachItems: GridEffectItem[];
   viewAll: { label: string; href: string } | null;
   practice: { heading: string; description: string; images: [ImageSource, ImageSource, ImageSource, ImageSource] };
   timeline: { heading: string; items: Array<{ year: string; description: string }> };
@@ -139,6 +145,8 @@ const CTA_QUERY = /* GraphQL */ `
           title
           description2
           image { ${landscape} }
+          slideshowDesktop { ${landscape} }
+          slideShowMobile { ${landscape} }
           }
         }
         ctaElement {
@@ -180,6 +188,8 @@ export async function getAboutContent(): Promise<AboutContent> {
         title: item.title!.replace(/\n/g, " "),
         description: item.description2?.trim() || undefined,
         image: toImageSource(item.image[0])!,
+        mobileImage: toImageSource(item.slideShowMobile?.[0]) ?? undefined,
+        desktopImage: toImageSource(item.slideshowDesktop?.[0]) ?? undefined,
       }));
     const ctaLabel = about.ctaElement?.label?.trim();
     const ctaUrl = about.ctaElement?.url_1?.url?.trim();

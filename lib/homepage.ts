@@ -3,7 +3,7 @@ import type { HeroSlide } from "./hero";
 import { toImageSource, toSeoImage, type RawSeoAsset, type SeoImage } from "./media";
 import type {
   CtaContent,
-  NewsItem,
+  GridEffectItem,
   ResponsiveImageDimensions,
   Sector,
 } from "./types";
@@ -18,6 +18,8 @@ type RawNewsArticle = {
   slug: string;
   artHdrHeading: string | null;
   thumbnail: RawAsset[];
+  slideshowDesktop: RawAsset[];
+  slideShowMobile: RawAsset[];
 };
 
 type RawHomepageCta = {
@@ -107,7 +109,7 @@ export type HomepageContent = {
   sectors: Sector[];
   sectorsHeading: string | null;
   latestNewsHeading: string | null;
-  latestNews: NewsItem[];
+  latestNews: GridEffectItem[];
   cta: CtaContent | null;
   cmsSeoTitle: string | null;
   seoDescription: string | null;
@@ -198,6 +200,8 @@ const HOMEPAGE_QUERY = /* GraphQL */ `
             slug
             artHdrHeading
             thumbnail { mobile: url @transform(width: 600, height: 450, mode: "crop", format: "webp", quality: 80, immediately: true) tablet: url @transform(width: 900, height: 675, mode: "crop", format: "webp", quality: 80, immediately: true) desktop: url @transform(width: 1200, height: 900, mode: "crop", format: "webp", quality: 80, immediately: true) }
+            slideshowDesktop { mobile: url @transform(width: 600, height: 450, mode: "crop", format: "webp", quality: 80, immediately: true) tablet: url @transform(width: 900, height: 675, mode: "crop", format: "webp", quality: 80, immediately: true) desktop: url @transform(width: 1200, height: 900, mode: "crop", format: "webp", quality: 80, immediately: true) }
+            slideShowMobile { mobile: url @transform(width: 600, height: 450, mode: "crop", format: "webp", quality: 80, immediately: true) tablet: url @transform(width: 900, height: 675, mode: "crop", format: "webp", quality: 80, immediately: true) desktop: url @transform(width: 1200, height: 900, mode: "crop", format: "webp", quality: 80, immediately: true) }
           }
         }
         ctaSection {
@@ -217,12 +221,14 @@ const HOMEPAGE_QUERY = /* GraphQL */ `
         slug
         artHdrHeading
         thumbnail { mobile: url @transform(width: 600, height: 450, mode: "crop", format: "webp", quality: 80, immediately: true) tablet: url @transform(width: 900, height: 675, mode: "crop", format: "webp", quality: 80, immediately: true) desktop: url @transform(width: 1200, height: 900, mode: "crop", format: "webp", quality: 80, immediately: true) }
+        slideshowDesktop { mobile: url @transform(width: 600, height: 450, mode: "crop", format: "webp", quality: 80, immediately: true) tablet: url @transform(width: 900, height: 675, mode: "crop", format: "webp", quality: 80, immediately: true) desktop: url @transform(width: 1200, height: 900, mode: "crop", format: "webp", quality: 80, immediately: true) }
+        slideShowMobile { mobile: url @transform(width: 600, height: 450, mode: "crop", format: "webp", quality: 80, immediately: true) tablet: url @transform(width: 900, height: 675, mode: "crop", format: "webp", quality: 80, immediately: true) desktop: url @transform(width: 1200, height: 900, mode: "crop", format: "webp", quality: 80, immediately: true) }
       }
     }
   }
 `;
 
-function mapNewsArticles(articles: RawNewsArticle[]): NewsItem[] {
+function mapNewsArticles(articles: RawNewsArticle[]): GridEffectItem[] {
   return articles
     .filter(
       (article) =>
@@ -233,6 +239,8 @@ function mapNewsArticles(articles: RawNewsArticle[]): NewsItem[] {
       title: article.artHdrHeading as string,
       href: `/news/${article.slug}`,
       image: toImageSource(article.thumbnail[0], CARD_IMAGE_DIMENSIONS)!,
+      mobileImage: toImageSource(article.slideShowMobile?.[0], CARD_IMAGE_DIMENSIONS) ?? undefined,
+      desktopImage: toImageSource(article.slideshowDesktop?.[0], CARD_IMAGE_DIMENSIONS) ?? undefined,
     }));
 }
 

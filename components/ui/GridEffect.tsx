@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
 import { Container } from "@/components/ui/Container";
-import type { NewsItem } from "@/lib/types";
+import type { GridEffectItem } from "@/lib/types";
 import { formatCmsHtml, cleanCardTitle } from "@/lib/text";
 
 export function GridEffect({
@@ -24,7 +24,7 @@ export function GridEffect({
   imageClassName = "object-cover object-top",
   className = "",
 }: {
-  items: NewsItem[];
+  items: GridEffectItem[];
   title?: string;
   description?: string;
   viewAllLabel?: string;
@@ -157,11 +157,16 @@ export function GridEffect({
             )}
           </div>
           <div className="absolute w-full h-full overflow-hidden top-0 left-0 z-[5] uncontainer-mobile">
-            {items.map((item, index) =>
-              item.image ? (
+            {items.map((item, index) => {
+              const mobileSrc = item.mobileImage ?? item.image ?? item.desktopImage;
+              const desktopSrc = item.desktopImage ?? item.image ?? item.mobileImage;
+              if (!mobileSrc || !desktopSrc) return null;
+
+              return (
                 <ResponsiveImage
                   key={item.title}
-                  src={item.image}
+                  src={mobileSrc}
+                  desktopSrc={desktopSrc}
                   alt={item.title || "NBRS Architecture"}
                   title={item.title || "NBRS Architecture"}
                   className={`absolute inset-0 h-full w-full ${imageClassName} transition-opacity duration-500 ${
@@ -170,8 +175,8 @@ export function GridEffect({
                   width={1200}
                   height={900}
                 />
-              ) : null
-            )}
+              );
+            })}
             {/* Subtle dark overlay when enabled */}
             {hasOverlay && (
               <div className="absolute inset-0 bg-black/25 z-[6] pointer-events-none" />

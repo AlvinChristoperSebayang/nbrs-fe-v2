@@ -1,7 +1,7 @@
 import { craftFetch } from "./craft";
 import { mapCta } from "./cta";
 import { toImageSource, toSeoImage, type RawSeoAsset, type SeoImage } from "./media";
-import type { CtaContent, ImageSource, NewsItem } from "./types";
+import type { CtaContent, GridEffectItem, ImageSource } from "./types";
 
 type Asset = {
   mobile?: string;
@@ -20,7 +20,13 @@ type Entry = {
   designApproachHeroCtaUrl: string | null;
   designApproachPillarsHeading: string | null;
   designApproachPillarsDescription: string | null;
-  thumbnailGrid: Array<{ heading: string | null; text: string | null; image: Asset[] }>;
+  thumbnailGrid: Array<{
+    heading: string | null;
+    text: string | null;
+    image: Asset[];
+    slideshowDesktop: Asset[];
+    slideShowMobile: Asset[];
+  }>;
   designApproachCommunitiesHeading: string | null;
   designApproachCommunitiesDescription: string | null;
   gallery: Array<{ image: Asset[] }>;
@@ -54,7 +60,7 @@ export type DesignApproachContent = {
   pillars: {
     title: string;
     description: string;
-    items: NewsItem[];
+    items: GridEffectItem[];
   };
   communities: {
     heading: string;
@@ -183,6 +189,12 @@ const QUERY = /* GraphQL */ `
             image {
               ${landscape}
             }
+            slideshowDesktop {
+              ${landscape}
+            }
+            slideShowMobile {
+              ${landscape}
+            }
           }
         }
         designApproachCommunitiesHeading
@@ -259,6 +271,8 @@ export async function getDesignApproachContent(): Promise<DesignApproachContent>
         title: item.heading!.trim(),
         description: item.text?.trim() || undefined,
         image: toImageSource(item.image[0])!,
+        mobileImage: toImageSource(item.slideShowMobile?.[0]) ?? undefined,
+        desktopImage: toImageSource(item.slideshowDesktop?.[0]) ?? undefined,
       }));
 
     const images = entry.gallery
@@ -315,4 +329,3 @@ export async function getDesignApproachContent(): Promise<DesignApproachContent>
     return DESIGN_APPROACH_FALLBACK;
   }
 }
-
