@@ -39,7 +39,7 @@ export function PeopleNavigationGrid({ cards }: PeopleNavigationGridProps) {
             />
 
             {/* Left Text Box */}
-            <div className="lg:col-span-7 xl:col-span-8 flex flex-col justify-between gap-6 p-6 sm:p-8 lg:p-8 xl:p-12 pt-8 sm:pt-10 lg:pt-10 xl:pt-14 min-h-62.5">
+            <div className="lg:col-span-7 xl:col-span-8 flex flex-col justify-between gap-6 p-6 sm:p-8 lg:p-8 xl:p-12 pt-8 sm:pt-10 lg:pt-10 xl:pt-14 min-h-[210px] sm:min-h-[230px] lg:min-h-62.5">
               <div className="flex flex-col gap-3">
                 {/* Mobile Title (Team) vs Desktop Title (TEAM) */}
                 <span className="lg:hidden font-sans text-base font-medium text-white/80">
@@ -74,6 +74,16 @@ export function PeopleNavigationGrid({ cards }: PeopleNavigationGridProps) {
               </div>
             </div>
 
+            {/* Mobile Image Box — follows the text panel as a full-width card footer. */}
+            <div className="lg:hidden relative aspect-[4/3] sm:aspect-[3/2] overflow-hidden">
+              <ResponsiveImage
+                src={teamCard.image}
+                alt={teamCard.title}
+                title={teamCard.title}
+                className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
+              />
+            </div>
+
             {/* Right Image Box (Desktop Only - Subtle Scale Zoom on Hover) */}
             <div className="hidden lg:block lg:col-span-5 xl:col-span-4 relative min-h-[280px] xl:min-h-[300px] overflow-hidden">
               <ResponsiveImage
@@ -94,7 +104,7 @@ export function PeopleNavigationGrid({ cards }: PeopleNavigationGridProps) {
                 href={card.href}
                 title={card.title}
                 aria-label={card.title}
-                className="group relative flex flex-col justify-between overflow-hidden bg-black text-white p-6 sm:p-7 lg:p-6 xl:p-7 pt-8 min-h-[250px] lg:aspect-[370/290] lg:min-h-0 cursor-pointer"
+                className="group relative flex flex-col overflow-hidden bg-black text-white lg:justify-between lg:p-6 lg:pt-8 xl:p-7 lg:aspect-[370/290] lg:min-h-0 cursor-pointer"
               >
                 {/* Top Colored Accent Bar on Mobile */}
                 <div
@@ -112,34 +122,45 @@ export function PeopleNavigationGrid({ cards }: PeopleNavigationGridProps) {
                 {/* Desktop Dark Gradient Overlay */}
                 <div className="hidden lg:block absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent pointer-events-none transition-opacity duration-500 group-hover:opacity-85" />
 
-                {/* Mobile Top Header (Small Title + Description) */}
-                <div className="relative z-10 flex flex-col gap-3 lg:hidden">
-                  <span className="font-sans text-base text-white/80 font-medium">
-                    {card.title}
-                  </span>
-                  <p className="font-sans text-xl text-white/90 leading-relaxed">
-                    {card.description}
-                  </p>
+                {/* Mobile Text Panel */}
+                <div className="relative z-10 flex min-h-[210px] sm:min-h-[230px] flex-col justify-between gap-6 p-6 pt-8 sm:p-7 lg:hidden">
+                  <div className="flex flex-col gap-3 lg:hidden">
+                    <span className="font-sans text-base text-white/80 font-medium">
+                      {card.title}
+                    </span>
+                    <p className="font-sans text-xl text-white/90 leading-relaxed">
+                      {card.description}
+                    </p>
+                  </div>
+
+                  <div className="flex lg:hidden items-center justify-between text-white">
+                    <span className="font-sans text-base font-medium">
+                      {card.actionText}
+                    </span>
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="shrink-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-2"
+                    >
+                      <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                  </div>
                 </div>
 
-                {/* Mobile Action Link & Arrow */}
-                <div className="relative z-10 flex lg:hidden items-center justify-between text-white pt-4 mt-2 border-t border-white/20">
-                  <span className="font-sans text-base font-medium">
-                    {card.actionText}
-                  </span>
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="shrink-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-2"
-                  >
-                    <path d="M5 12h14M12 5l7 7-7 7" />
-                  </svg>
+                {/* Mobile Image Box */}
+                <div className="lg:hidden relative aspect-[4/3] sm:aspect-[3/2] overflow-hidden">
+                  <ResponsiveImage
+                    src={card.image}
+                    alt={card.title}
+                    title={card.title}
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
+                  />
                 </div>
 
                 {/* Desktop Bottom Header (Uppercase Title + Arrow side-by-side) */}
