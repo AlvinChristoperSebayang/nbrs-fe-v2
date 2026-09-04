@@ -6,7 +6,7 @@ import { GridEffect } from "@/components/ui/GridEffect";
 import { CtaSection } from "@/components/cta/CtaSection";
 import { getHomepageContent } from "@/lib/homepage";
 import { createPageMetadata } from "@/lib/seo";
-import type { Sector, NewsItem, CtaContent } from "@/lib/types";
+import type { Sector, GridEffectItem, CtaContent } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 60;
@@ -49,7 +49,7 @@ const FALLBACK_SECTORS: Sector[] = [
   },
 ];
 
-const FALLBACK_NEWS: NewsItem[] = [
+const FALLBACK_NEWS: GridEffectItem[] = [
   {
     title: "Happy 56th Birthday NBRS",
     href: "/blog/happy-56th-birthday-nbrs",
@@ -126,4 +126,3 @@ export default async function Home() {
     </>
   );
 }
-

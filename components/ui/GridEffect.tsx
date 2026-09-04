@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
 import { Container } from "@/components/ui/Container";
-import type { NewsItem } from "@/lib/types";
+import type { GridEffectItem } from "@/lib/types";
 import { formatCmsHtml, cleanCardTitle } from "@/lib/text";
 
 export function GridEffect({
@@ -25,7 +25,7 @@ export function GridEffect({
   firstImageClassName,
   className = "",
 }: {
-  items: NewsItem[];
+  items: GridEffectItem[];
   title?: string;
   description?: string;
   viewAllLabel?: string;
@@ -160,22 +160,18 @@ export function GridEffect({
           </div>
           <div className="absolute w-full h-full overflow-hidden top-0 left-0 z-[5] uncontainer-mobile">
             {items.map((item, index) => {
-              if (!item.image) return null;
-
-              const resolvedImageClassName =
-                index === 0 && firstImageClassName
-                  ? firstImageClassName
-                  : Array.isArray(imageClassName)
-                    ? imageClassName[index] ?? imageClassName[imageClassName.length - 1] ?? "object-cover object-center"
-                    : imageClassName;
+              const mobileSrc = item.mobileImage ?? item.image ?? item.desktopImage;
+              const desktopSrc = item.desktopImage ?? item.image ?? item.mobileImage;
+              if (!mobileSrc || !desktopSrc) return null;
 
               return (
                 <ResponsiveImage
                   key={item.title}
-                  src={item.image}
+                  src={mobileSrc}
+                  desktopSrc={desktopSrc}
                   alt={item.title || "NBRS Architecture"}
                   title={item.title || "NBRS Architecture"}
-                  className={`absolute inset-0 h-full w-full ${resolvedImageClassName} transition-opacity duration-500 ${
+                  className={`absolute inset-0 h-full w-full transition-opacity duration-500 ${
                     index === activeIndex ? "opacity-100" : "opacity-0"
                   }`}
                   width={1200}
