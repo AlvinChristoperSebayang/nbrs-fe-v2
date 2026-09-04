@@ -63,6 +63,7 @@ export default async function AboutPage() {
         viewAllLabel=""
         viewAllUrl=""
         backgroundColor="#EDEDED"
+        imageClassName="object-cover object-top lg:object-contain"
       />
       <AboutPracticeSection
         heading={about.practice.heading}
@@ -78,4 +79,3 @@ export default async function AboutPage() {
     </article>
   );
 }
-
