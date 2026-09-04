@@ -20,8 +20,9 @@ export function GridEffect({
   hasOverlay = false,
   showDescriptionOnMobile = false,
   showCardDescriptionOnMobile = false,
-  stageClassName = "",
-  imageClassName = "object-cover object-top",
+  stageClassName = "min-h-[500px] lg:min-h-[560px] xl:min-h-[620px] flex flex-col justify-center",
+  imageClassName = "object-cover object-center",
+  firstImageClassName,
   className = "",
 }: {
   items: GridEffectItem[];
@@ -37,7 +38,8 @@ export function GridEffect({
   showDescriptionOnMobile?: boolean;
   showCardDescriptionOnMobile?: boolean;
   stageClassName?: string;
-  imageClassName?: string;
+  firstImageClassName?: string;
+  imageClassName?: string | string[];
   className?: string;
 }) {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -169,7 +171,7 @@ export function GridEffect({
                   desktopSrc={desktopSrc}
                   alt={item.title || "NBRS Architecture"}
                   title={item.title || "NBRS Architecture"}
-                  className={`absolute inset-0 h-full w-full ${imageClassName} transition-opacity duration-500 ${
+                  className={`absolute inset-0 h-full w-full transition-opacity duration-500 ${
                     index === activeIndex ? "opacity-100" : "opacity-0"
                   }`}
                   width={1200}
@@ -183,7 +185,7 @@ export function GridEffect({
             )}
           </div>
 
-          <div data-aos="fade-up" data-aos-delay="150" suppressHydrationWarning className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-6 xl:gap-[30px] items-stretch sm:inset-x-0 pb-16 px-0 sm:px-6 md:px-8 lg:py-16 xl:py-24 lg:px-8 xl:px-12 relative z-10">
+          <div data-aos="fade-up" data-aos-delay="150" suppressHydrationWarning className="grid w-full grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-6 xl:gap-[30px] items-stretch sm:inset-x-0 pb-16 px-0 sm:px-6 md:px-8 lg:py-16 xl:py-24 lg:px-8 xl:px-12 relative z-10">
             {items.map((item, index) => {
               const isActive = index === activeIndex;
               const hasHref = Boolean(item.href);

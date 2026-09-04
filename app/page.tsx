@@ -119,7 +119,8 @@ export default async function Home() {
         items={news}
         title={homepage?.latestNewsHeading ?? undefined}
         backgroundColor="#EEEEEE"
-        imageClassName="object-cover"
+        firstImageClassName="object-cover object-top"
+        imageClassName="object-cover object-center"
       />
       <CtaSection content={cta} />
     </>
