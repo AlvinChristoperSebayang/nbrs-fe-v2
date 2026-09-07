@@ -54,6 +54,20 @@ const CARD_IMAGE_DIMENSIONS = {
   desktop: { width: 1200, height: 900 },
 } satisfies ResponsiveImageDimensions;
 
+/** GridEffect desktop stage crop (`slideshowDesktop`). */
+const GRID_EFFECT_DESKTOP_IMAGE_DIMENSIONS = {
+  mobile: { width: 1266, height: 620 },
+  tablet: { width: 1266, height: 620 },
+  desktop: { width: 1266, height: 620 },
+} satisfies ResponsiveImageDimensions;
+
+/** GridEffect mobile stage crop (`slideShowMobile`). */
+const GRID_EFFECT_MOBILE_IMAGE_DIMENSIONS = {
+  mobile: { width: 640, height: 1031 },
+  tablet: { width: 768, height: 1031 },
+  desktop: { width: 768, height: 1031 },
+} satisfies ResponsiveImageDimensions;
+
 const CTA_IMAGE_DIMENSIONS = {
   mobile: { width: 600, height: 900 },
   tablet: { width: 1440, height: 900 },
@@ -199,9 +213,20 @@ const HOMEPAGE_QUERY = /* GraphQL */ `
           ... on news_Entry {
             slug
             artHdrHeading
-            thumbnail { mobile: url @transform(width: 600, height: 450, mode: "crop", format: "webp", quality: 80, immediately: true) tablet: url @transform(width: 900, height: 675, mode: "crop", format: "webp", quality: 80, immediately: true) desktop: url @transform(width: 1200, height: 900, mode: "crop", format: "webp", quality: 80, immediately: true) }
-            slideshowDesktop { mobile: url @transform(width: 600, height: 450, mode: "crop", format: "webp", quality: 80, immediately: true) tablet: url @transform(width: 900, height: 675, mode: "crop", format: "webp", quality: 80, immediately: true) desktop: url @transform(width: 1200, height: 900, mode: "crop", format: "webp", quality: 80, immediately: true) }
-            slideShowMobile { mobile: url @transform(width: 600, height: 450, mode: "crop", format: "webp", quality: 80, immediately: true) tablet: url @transform(width: 900, height: 675, mode: "crop", format: "webp", quality: 80, immediately: true) desktop: url @transform(width: 1200, height: 900, mode: "crop", format: "webp", quality: 80, immediately: true) }
+
+            thumbnail { 
+              mobile: url @transform(width: 600, height: 450, mode: "crop", format: "webp", quality: 80, immediately: true) tablet: url @transform(width: 900, height: 675, mode: "crop", format: "webp", quality: 80, immediately: true) desktop: url @transform(width: 1200, height: 900, mode: "crop", format: "webp", quality: 80, immediately: true) }
+            
+            slideshowDesktop { 
+              mobile: url @transform(width: 1266, height: 620, mode: "crop", format: "webp", quality: 80, immediately: true) 
+              tablet: url @transform(width: 1266, height: 620, mode: "crop", format: "webp", quality: 80, immediately: true) 
+              desktop: url @transform(width: 1266, height: 620, mode: "crop", format: "webp", quality: 95, immediately: true) 
+            }
+           
+            slideShowMobile { 
+                mobile: url @transform(width: 640, height: 1031, mode: "crop", format: "webp", quality: 80, immediately: true) 
+                tablet: url @transform(width: 640, height: 1031, mode: "crop", format: "webp", quality: 80, immediately: true) 
+                desktop: url @transform(width: 640, height: 1031, mode: "crop", format: "webp", quality: 80, immediately: true) }
           }
         }
         ctaSection {
@@ -221,8 +246,16 @@ const HOMEPAGE_QUERY = /* GraphQL */ `
         slug
         artHdrHeading
         thumbnail { mobile: url @transform(width: 600, height: 450, mode: "crop", format: "webp", quality: 80, immediately: true) tablet: url @transform(width: 900, height: 675, mode: "crop", format: "webp", quality: 80, immediately: true) desktop: url @transform(width: 1200, height: 900, mode: "crop", format: "webp", quality: 80, immediately: true) }
-        slideshowDesktop { mobile: url @transform(width: 600, height: 450, mode: "crop", format: "webp", quality: 80, immediately: true) tablet: url @transform(width: 900, height: 675, mode: "crop", format: "webp", quality: 80, immediately: true) desktop: url @transform(width: 1200, height: 900, mode: "crop", format: "webp", quality: 80, immediately: true) }
-        slideShowMobile { mobile: url @transform(width: 600, height: 450, mode: "crop", format: "webp", quality: 80, immediately: true) tablet: url @transform(width: 900, height: 675, mode: "crop", format: "webp", quality: 80, immediately: true) desktop: url @transform(width: 1200, height: 900, mode: "crop", format: "webp", quality: 80, immediately: true) }
+        slideshowDesktop {
+          mobile: url @transform(width: 1266, height: 620, mode: "crop", format: "webp", quality: 80, immediately: true)
+          tablet: url @transform(width: 1266, height: 620, mode: "crop", format: "webp", quality: 80, immediately: true)
+          desktop: url @transform(width: 1266, height: 620, mode: "crop", format: "webp", quality: 95, immediately: true)
+        }
+        slideShowMobile {
+          mobile: url @transform(width: 640, height: 1031, mode: "crop", format: "webp", quality: 80, immediately: true)
+          tablet: url @transform(width: 768, height: 1031, mode: "crop", format: "webp", quality: 80, immediately: true)
+          desktop: url @transform(width: 768, height: 1031, mode: "crop", format: "webp", quality: 80, immediately: true)
+        }
       }
     }
   }
@@ -239,8 +272,12 @@ function mapNewsArticles(articles: RawNewsArticle[]): GridEffectItem[] {
       title: article.artHdrHeading as string,
       href: `/news/${article.slug}`,
       image: toImageSource(article.thumbnail[0], CARD_IMAGE_DIMENSIONS)!,
-      mobileImage: toImageSource(article.slideShowMobile?.[0], CARD_IMAGE_DIMENSIONS) ?? undefined,
-      desktopImage: toImageSource(article.slideshowDesktop?.[0], CARD_IMAGE_DIMENSIONS) ?? undefined,
+      mobileImage:
+        toImageSource(article.slideShowMobile?.[0], GRID_EFFECT_MOBILE_IMAGE_DIMENSIONS) ??
+        undefined,
+      desktopImage:
+        toImageSource(article.slideshowDesktop?.[0], GRID_EFFECT_DESKTOP_IMAGE_DIMENSIONS) ??
+        undefined,
     }));
 }
 
