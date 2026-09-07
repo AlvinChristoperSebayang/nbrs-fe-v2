@@ -63,7 +63,7 @@ const GRID_EFFECT_DESKTOP_IMAGE_DIMENSIONS = {
 
 /** GridEffect mobile stage crop (`slideShowMobile`). */
 const GRID_EFFECT_MOBILE_IMAGE_DIMENSIONS = {
-  mobile: { width: 640, height: 1031 },
+  mobile: { width: 480, height: 1031 },
   tablet: { width: 768, height: 1031 },
   desktop: { width: 768, height: 1031 },
 } satisfies ResponsiveImageDimensions;
@@ -252,7 +252,7 @@ const HOMEPAGE_QUERY = /* GraphQL */ `
           desktop: url @transform(width: 1266, height: 620, mode: "crop", format: "webp", quality: 95, immediately: true)
         }
         slideShowMobile {
-          mobile: url @transform(width: 640, height: 1031, mode: "crop", format: "webp", quality: 80, immediately: true)
+          mobile: url @transform(width: 480, height: 1031, mode: "crop", format: "webp", quality: 80, immediately: true)
           tablet: url @transform(width: 768, height: 1031, mode: "crop", format: "webp", quality: 80, immediately: true)
           desktop: url @transform(width: 768, height: 1031, mode: "crop", format: "webp", quality: 80, immediately: true)
         }
