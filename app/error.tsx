@@ -6,7 +6,6 @@ import { Container } from "@/components/ui/Container";
 
 export default function ErrorBoundary({
   error,
-  reset,
 }: {
   error: Error & { digest?: string };
   reset: () => void;
@@ -31,7 +30,7 @@ export default function ErrorBoundary({
         <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
           <button
             type="button"
-            onClick={() => reset()}
+            onClick={() => window.location.reload()}
             className="cursor-pointer rounded-full bg-white px-8 py-3.5 font-heading text-sm font-semibold uppercase tracking-wider text-[#181D33] transition-all duration-300 hover:bg-[#FFD6CD] hover:scale-105"
           >
             Try Again
