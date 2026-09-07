@@ -153,11 +153,14 @@ export const DESIGN_APPROACH_FALLBACK: DesignApproachContent = {
   },
 };
 
+const crop = (width: number, height: number, quality = 80) =>
+  `url @transform(width: ${width}, height: ${height}, mode: "crop", format: "webp", quality: ${quality}, immediately: true)`;
 const fitTransform = (width: number, quality = 80) =>
   `url @transform(width: ${width}, mode: "fit", format: "webp", quality: ${quality}, immediately: true)`;
 const heroFit = (width: number, quality = 85) =>
   `url @transform(width: ${width}, mode: "fit", format: "webp", quality: ${quality}, immediately: true)`;
-const landscape = `url mobile: ${fitTransform(600, 80)} tablet: ${fitTransform(900, 82)} desktop: ${fitTransform(1200, 85)} width height title`;
+const landscape = `url mobile: ${fitTransform(480, 80)} tablet: ${fitTransform(768, 82)} desktop: ${fitTransform(1200, 85)} width height title`;
+const gridEffectDesktopFit = `mobile: ${crop(640, 1024)} tablet: ${crop(768, 1024)} desktop: ${fitTransform(1200, 85)}`;
 const hero = `url mobile: ${heroFit(768, 80)} tablet: ${heroFit(1440, 82)} desktop: ${heroFit(2400, 85)} width height title`;
 const cta = `url mobile: ${fitTransform(768, 80)} tablet: ${fitTransform(1440, 82)} desktop: ${fitTransform(2400, 85)} width height title`;
 
@@ -193,7 +196,7 @@ const QUERY = /* GraphQL */ `
               ${landscape}
             }
             slideShowMobile {
-              ${landscape}
+              ${gridEffectDesktopFit}
             }
           }
         }
