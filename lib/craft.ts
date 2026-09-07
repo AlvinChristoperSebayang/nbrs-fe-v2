@@ -1,6 +1,6 @@
 const CRAFT_GRAPHQL_URL =
   process.env.CRAFT_GRAPHQL_URL ??
-  "https://phpstack-1082258-6573734.cloudwaysapps.com/api/";
+  "https://new.cms.nbrs.com.au/api/";
 
 if (
   process.env.NODE_ENV === "development" ||
