@@ -27,42 +27,22 @@ function getDesktopTitleLines(title: string): string[] {
     return cleaned.split("\n").map((l) => l.trim()).filter(Boolean);
   }
 
-  const words = cleaned.split(/\s+/);
-  if (words.length <= 2) {
+  const words = cleaned.split(/\s+/).filter(Boolean);
+  if (words.length <= 1) {
     return words;
   }
 
-  if (words.length === 3) {
-    return [words[0], words.slice(1).join(" ")];
-  }
-
-  return words;
+  return [words.slice(0, -1).join(" "), words[words.length - 1]];
 }
 
 function getMobileTitleLines(title: string): string[] {
-  const cleaned = cleanTitleString(title);
-  if (cleaned.includes("\n")) {
-    const rawLines = cleaned.split("\n").map((l) => l.trim()).filter(Boolean);
-    if (rawLines.length <= 3) return rawLines;
-    return [rawLines.slice(0, 2).join(" "), ...rawLines.slice(2)];
-  }
-
-  const words = cleaned.split(/\s+/);
-  if (words.length <= 3) {
-    return getDesktopTitleLines(cleaned);
-  }
-
-  return [
-    words.slice(0, words.length - 2).join(" "),
-    words[words.length - 2],
-    words[words.length - 1],
-  ];
+  return getDesktopTitleLines(title);
 }
 
 function renderTitleLines(lines: string[]) {
   if (lines.length === 1) {
     return (
-      <span className="inline-block border-b-4 border-white pb-2 leading-none">
+      <span className="inline-block border-b-4 border-white pb-2 leading-none whitespace-nowrap">
         {lines[0]}
       </span>
     );
@@ -76,14 +56,14 @@ function renderTitleLines(lines: string[]) {
           return (
             <span
               key={idx}
-              className="inline-block border-b-4 border-white pb-2 leading-none mt-1"
+              className="inline-block border-b-4 border-white pb-2 leading-none mt-1 whitespace-nowrap"
             >
               {line}
             </span>
           );
         }
         return (
-          <span key={idx} className="block leading-[1.05]">
+          <span key={idx} className="block leading-[1.05] whitespace-nowrap">
             {line}
           </span>
         );
@@ -164,7 +144,7 @@ export function CareersHero({
             data-aos="fade-up"
             className={`lg:col-span-4 flex flex-col items-start gap-4 lg:gap-4 xl:gap-6 pt-24 pb-4 ${titleColumnClassName ?? "lg:pt-24 xl:pt-20"} lg:pb-0`}
           >
-            <h1 className={`font-heading whitespace-pre-line ${titleClassName ?? "text-4xl sm:text-5xl lg:text-[38px] xl:text-[58px] 2xl:text-[70px]"} font-bold uppercase tracking-wide leading-none text-white`}>
+            <h1 className={`font-heading whitespace-pre-line ${titleClassName ?? "text-[38px] sm:text-[42px] md:text-[44px] lg:text-[46px] xl:text-[60px]"} font-bold uppercase tracking-wide leading-none text-white`}>
               {renderCareersTitle(title, singleLine)}
             </h1>
 

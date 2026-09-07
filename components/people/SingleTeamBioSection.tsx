@@ -8,27 +8,29 @@ export type SingleTeamBioProps = {
 
 export function SingleTeamBioSection({ name, bioHtml, quote }: SingleTeamBioProps) {
   const cleanName = name.split("|")[0].trim();
-  const nameParts = cleanName.split(" ");
-  const firstName = nameParts[0] || cleanName;
-  const lastName = nameParts.slice(1).join(" ") || "";
+  const nameParts = cleanName.split(/\s+/).filter(Boolean);
+  const firstLine = nameParts.length > 1 ? nameParts.slice(0, -1).join(" ") : "";
+  const lastLine = nameParts.length > 0 ? nameParts[nameParts.length - 1] : cleanName;
 
   return (
     <section className="bg-white pt-6 pb-16 lg:pt-10 lg:pb-24 text-black">
       <Container>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           {/* Left Column: Light Gray Watermark Name & Divider */}
-          <div data-aos="fade-up" className="lg:col-span-4 hidden md:block lg:pr-6">
-            <h2 className="font-heading text-4xl sm:text-5xl lg:text-[46px] xl:text-[60px] font-bold uppercase text-zinc-200/90 leading-none tracking-wide">
-              {lastName ? (
+          <div data-aos="fade-up" className="lg:col-span-4 hidden lg:block lg:pr-6">
+            <h2 className="font-heading lg:text-[46px] xl:text-[60px] font-bold uppercase text-zinc-200/90 leading-none tracking-wide">
+              {firstLine ? (
                 <span className="inline-flex flex-col items-start">
-                  <span className="block">{firstName}</span>
-                  <span className="inline-block border-b-4 border-zinc-200/90 pb-2 mt-1">
-                    {lastName}
+                  <span className="block leading-[1.05] whitespace-nowrap">
+                    {firstLine}
+                  </span>
+                  <span className="inline-block border-b-4 border-zinc-200/90 pb-2 mt-1 leading-none whitespace-nowrap">
+                    {lastLine}
                   </span>
                 </span>
               ) : (
-                <span className="inline-block border-b-4 border-zinc-200/90 pb-2">
-                  {firstName}
+                <span className="inline-block border-b-4 border-zinc-200/90 pb-2 leading-none whitespace-nowrap">
+                  {lastLine}
                 </span>
               )}
             </h2>
