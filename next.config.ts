@@ -17,6 +17,16 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
+        hostname: "new.cms.nbrs.com.au",
+        pathname: "/web/media/**",
+      },
+      {
+        protocol: "https",
+        hostname: "staging.cms.nbrs.com.au",
+        pathname: "/web/media/**",
+      },
+      {
+        protocol: "https",
         hostname: "cms.nbrs.com.au",
         pathname: "/web/media/**",
       },
