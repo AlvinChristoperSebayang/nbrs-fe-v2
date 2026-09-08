@@ -65,6 +65,8 @@ export type NewsDetail = {
   date: string | null;
   category: string | null;
   hero: ImageSource | null;
+  heroWidth?: number | null;
+  heroHeight?: number | null;
   description: string | null;
   seoTitle: string | null;
   seoDescription: string | null;
@@ -210,12 +212,16 @@ export const getNewsDetail = cache(async (slug: string): Promise<NewsDetail | nu
   const entry = data.entries?.[0];
   if (!entry) return null;
 
+  const heroAsset = entry.artHdrHeroImage?.[0] ?? entry.thumbnail?.[0];
+
   return {
     slug: entry.slug,
     title: entry.artHdrHeading ?? entry.title,
     date: entry.dateCreated,
     category: entry.catDiscipline?.[0]?.title ?? entry.newsType?.[0]?.title ?? null,
-    hero: toImageSource(entry.artHdrHeroImage?.[0]) ?? toImageSource(entry.thumbnail?.[0]),
+    hero: toImageSource(heroAsset),
+    heroWidth: heroAsset?.width ?? null,
+    heroHeight: heroAsset?.height ?? null,
     description: entry.artHdrSubheading ?? null,
     seoTitle: entry.seoPageTitle,
     seoDescription: entry.seoMetaDescription?.trim() || entry.artHdrSubheading?.trim() || null,

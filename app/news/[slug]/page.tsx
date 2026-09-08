@@ -63,17 +63,23 @@ export default async function NewsDetailPage({
     },
   };
 
+  const heroWidth = article.heroWidth || 16;
+  const heroHeight = article.heroHeight || 9;
+  const aspectRatio = `${heroWidth} / ${heroHeight}`;
+
   return (
     <article className="bg-white text-black min-h-screen">
       <JsonLd data={articleSchema} />
       <Hero
         image={article.hero ?? "/images/hero/hero6.png"}
         title={article.title}
-        imageClassName="object-cover object-center"
-        className="lg:!h-auto lg:!min-h-0 lg:aspect-[16/9]"
-        // lg:aspect-[1200/840]
+        imageClassName="object-contain object-center"
+        style={{ aspectRatio }}
+        className="!h-auto min-h-[350px] sm:min-h-0 bg-[#181d33]"
+        containerClassName="!pt-24 sm:!pt-24 md:!pt-28 lg:!pt-20 !pb-6 sm:!pb-8 lg:!pb-12"
+        titleClassName="!text-[34px] sm:!text-[36px] lg:!text-[70px]"
         description={
-          meta ? <p className="mt-2 font-sans text-sm font-normal text-white/90 sm:text-base">{meta}</p> : undefined
+          meta ? <p className="mt-2 font-sans text-xs sm:text-sm font-normal text-white/90 md:text-base">{meta}</p> : undefined
         }
       />
 
