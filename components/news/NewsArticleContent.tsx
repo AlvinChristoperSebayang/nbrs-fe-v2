@@ -10,7 +10,7 @@ export function NewsArticleContent({ blocks }: { blocks: NewsContentBlock[] }) {
           return (
             <div
               key={index}
-              className="[&_a]:underline [&_a]:underline-offset-4 [&_figure]:my-8 [&_figcaption]:mt-2 [&_figcaption]:text-sm [&_figcaption]:text-zinc-600 [&_img]:h-auto [&_img]:max-w-full [&_img]:rounded-[3px] [&_p]:mb-5 [&_p:last-child]:mb-0"
+              className="body-copy [&_a]:underline [&_a]:underline-offset-4 [&_figure]:my-8 [&_figcaption]:mt-2 [&_figcaption]:text-sm [&_figcaption]:text-zinc-600 [&_img]:h-auto [&_img]:max-w-full [&_img]:rounded-[3px] [&_p]:mb-5 [&_p:last-child]:mb-0"
               dangerouslySetInnerHTML={{ __html: block.html }}
             />
           );
