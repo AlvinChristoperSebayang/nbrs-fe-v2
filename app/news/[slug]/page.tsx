@@ -76,7 +76,7 @@ export default async function NewsDetailPage({
         imageClassName="object-contain object-center"
         style={{ aspectRatio }}
         className="!h-auto min-h-[350px] sm:min-h-0 bg-[#181d33]"
-        containerClassName="!pt-24 sm:!pt-24 md:!pt-28 lg:!pt-20 !pb-6 sm:!pb-8 lg:!pb-12"
+        containerClassName="!pt-16 sm:!pt-20 md:!pt-24 lg:!pt-20 !pb-6 sm:!pb-8 lg:!pb-12"
         titleClassName="!text-[34px] sm:!text-[36px] lg:!text-[70px]"
         description={
           meta ? <p className="mt-2 font-sans text-xs sm:text-sm font-normal text-white/90 md:text-base">{meta}</p> : undefined
