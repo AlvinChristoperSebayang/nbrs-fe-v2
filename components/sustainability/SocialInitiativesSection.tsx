@@ -18,7 +18,7 @@ export function SocialInitiativesSection({ initiatives }: SocialInitiativesSecti
           description={teKworo.description}
           image_url={teKworo.image}
           image_alt={teKworo.title}
-          description_class_name="max-w-full lg:max-w-[341px] text-sm sm:text-base lg:text-[13.5px] xl:text-base leading-relaxed lg:leading-[1.45] xl:leading-relaxed [&_p+p]:mt-3 xl:[&_p+p]:mt-4"
+          description_class_name="max-w-full lg:max-w-[341px] text-base lg:text-[13.5px] xl:text-base leading-relaxed lg:leading-[1.45] xl:leading-relaxed [&_p+p]:mt-3 xl:[&_p+p]:mt-4"
           image_height_class_name="h-[320px] sm:h-[460px] lg:h-[560px] xl:h-[620px] lg:-mt-16 xl:-mt-24 lg:-mb-36 xl:-mb-48"
         />
       )}

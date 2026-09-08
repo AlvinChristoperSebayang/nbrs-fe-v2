@@ -56,6 +56,7 @@ export default async function PracticeDetailPage({
         image={practice.image}
         title={practice.title}
         description={practice.description}
+        className="max-sm:h-[40vh]"
       />
 
       <PracticeIntroSection

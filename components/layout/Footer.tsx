@@ -143,7 +143,7 @@ export function Footer({ content }: { content: FooterContent }) {
           <div data-aos="fade-up" className="flex flex-col gap-[65px] lg:gap-8 order-1 lg:order-1 mb-[30px] lg:mb-0">
             <Link href="/" aria-label="NBRS Home" title="NBRS Home" className="inline-block w-fit">
               <img
-                src="/images/logo/logo-white-2.svg"
+                src="/images/logo/logo-white.png"
                 alt="NBRS"
                 title="NBRS"
                 width={180}
@@ -194,12 +194,12 @@ export function Footer({ content }: { content: FooterContent }) {
                     href={content.contactLink}
                     title={content.contactMessage}
                     aria-label={content.contactMessage}
-                    className="mt-3.5 inline-block whitespace-pre-line text-[16px] lg:text-lg text-white/70 transition-colors hover:text-white"
+                    className="mt-3.5 inline-block whitespace-pre-line text-base lg:text-lg text-white/70 transition-colors hover:text-white"
                   >
                     {content.contactMessage}
                   </a>
                 ) : content.contactMessage ? (
-                  <p className="mt-3.5 whitespace-pre-line text-[16px] lg:text-lg text-white/70">
+                  <p className="mt-3.5 whitespace-pre-line text-base lg:text-lg text-white/70">
                     {content.contactMessage}
                   </p>
                 ) : null}

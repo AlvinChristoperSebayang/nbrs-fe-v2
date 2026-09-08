@@ -70,7 +70,7 @@ export function DesignApproachProjectSection({
           <h2 className="font-heading text-[36px] sm:text-3xl uppercase font-bold text-white leading-[1.05] tracking-tight mb-3">
             {renderMobileHeading(heading)}
           </h2>
-          <p className="text-sm text-white/95 font-sans leading-relaxed mb-6 max-w-[280px] sm:max-w-xs">
+          <p className="text-base text-white/95 font-sans leading-relaxed mb-6 max-w-[280px] sm:max-w-xs">
             {description}
           </p>
           {buttonText && buttonHref && (
@@ -78,7 +78,7 @@ export function DesignApproachProjectSection({
               href={buttonHref}
               title={buttonText}
               aria-label={buttonText}
-              className="group inline-flex items-center gap-2 rounded-[5px] bg-white/25 backdrop-blur-md border border-white/30 px-5 py-2 text-xs sm:text-sm font-sans font-medium text-white transition hover:bg-white/40"
+              className="group inline-flex items-center gap-2 rounded-[5px] bg-white/25 backdrop-blur-md border border-white/30 px-5 py-2 text-sm font-sans font-medium text-white transition hover:bg-white/40"
             >
               <span>{buttonText}</span>
               <svg

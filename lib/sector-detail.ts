@@ -19,11 +19,11 @@ export type SectorDetailContent = {
   title: string; description: string; image: ImageSource; principlesTitle: string; principlesDescription: string; principlesImages: ImageSource[]; features: FeatureItem[]; backgroundColor: string; heritageServices?: { intro: string; advisory: string[]; conservation: string[] }; keyProjects: KeyProjectItem[]; tableProjects: ProjectTableRow[]; quote?: { image: ImageSource; text: string; author: string }; cta: CtaContent; cmsSeoTitle: string | null; seoDescription: string; seoImage: Asset | null;
 };
 
-const crop = (width: number, height: number, quality = 80) => `url @transform(width: ${width}, height: ${height}, mode: "crop", format: "webp", quality: ${quality}, immediately: true)`;
+const crop = (width: number, height: number, quality = 85) => `url @transform(width: ${width}, height: ${height}, mode: "crop", format: "webp", quality: ${quality}, immediately: true)`;
 const heroFit = (width: number, quality = 85) => `url @transform(width: ${width}, mode: "fit", format: "webp", quality: ${quality}, immediately: true)`;
-const heroImage = `mobile: ${heroFit(768, 80)} tablet: ${heroFit(1440, 82)} desktop: ${heroFit(2400, 85)}`;
+const heroImage = `mobile: url @transform(width: 2400, format: "webp", quality: 90, immediately: true) tablet: ${heroFit(1440, 82)} desktop: ${heroFit(2400, 85)}`;
 const landscapeImage = `mobile: ${crop(600, 480)} tablet: ${crop(1200, 760, 82)} desktop: ${crop(1800, 1100, 85)}`;
-const cardImage = `mobile: ${crop(600, 480)} tablet: ${crop(900, 720, 82)} desktop: ${crop(1200, 960, 85)}`;
+const cardImage = `mobile: ${crop(900, 720)} tablet: ${crop(900, 720, 82)} desktop: ${crop(1200, 960, 85)}`;
 const quoteImage = `mobile: url @transform(width: 768, mode: "fit", format: "webp", quality: 80, immediately: true) tablet: url @transform(width: 1200, mode: "fit", format: "webp", quality: 82, immediately: true) desktop: url @transform(width: 1800, mode: "fit", format: "webp", quality: 85, immediately: true)`;
 const ctaImage = `mobile: url @transform(width: 768, height: 900, position: "top-left", mode: "crop", format: "webp", quality: 80, immediately: true) tablet: ${heroFit(1440, 82)} desktop: ${heroFit(2400, 85)}`;
 

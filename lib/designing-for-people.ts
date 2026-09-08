@@ -96,8 +96,8 @@ const DESIGNING_FOR_PEOPLE_QUERY = /* GraphQL */ `
           width
           height
           title
-          mobile: url @transform(width: 600, height: 800, mode: "crop", format: "webp", quality: 80, immediately: true)
-          tablet: url @transform(width: 1440, height: 1000, mode: "crop", format: "webp", quality: 82, immediately: true)
+          mobile: url @transform(width: 1024, height: 800, mode: "crop", format: "webp", quality: 85, immediately: true)
+          tablet: url @transform(width: 1440, height: 1024, mode: "crop", format: "webp", quality: 82, immediately: true)
           desktop: url @transform(width: 2400, height: 1200, mode: "crop", format: "webp", quality: 85, immediately: true)
         }
         blocks {

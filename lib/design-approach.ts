@@ -153,12 +153,15 @@ export const DESIGN_APPROACH_FALLBACK: DesignApproachContent = {
   },
 };
 
+const crop = (width: number, height: number, quality = 80) =>
+  `url @transform(width: ${width}, height: ${height}, mode: "crop", format: "webp", quality: ${quality}, immediately: true)`;
 const fitTransform = (width: number, quality = 80) =>
   `url @transform(width: ${width}, mode: "fit", format: "webp", quality: ${quality}, immediately: true)`;
-const heroFit = (width: number, quality = 85) =>
+const heroFit = (width: number, quality = 90) =>
   `url @transform(width: ${width}, mode: "fit", format: "webp", quality: ${quality}, immediately: true)`;
-const landscape = `url mobile: ${fitTransform(600, 80)} tablet: ${fitTransform(900, 82)} desktop: ${fitTransform(1200, 85)} width height title`;
-const hero = `url mobile: ${heroFit(768, 80)} tablet: ${heroFit(1440, 82)} desktop: ${heroFit(2400, 85)} width height title`;
+const landscape = `url mobile: ${fitTransform(640, 80)} tablet: ${fitTransform(1440, 82)} desktop: ${fitTransform(1920, 85)} width height title`;
+const gridEffectDesktopFit = `mobile: ${crop(640, 1024)} tablet: ${crop(768, 1024)} desktop: ${fitTransform(1200, 85)}`;
+const hero = `url mobile: ${heroFit(1440, 90)} tablet: ${heroFit(1440, 85)} desktop: ${heroFit(2400, 85)} width height title`;
 const cta = `url mobile: ${fitTransform(768, 80)} tablet: ${fitTransform(1440, 82)} desktop: ${fitTransform(2400, 85)} width height title`;
 
 const QUERY = /* GraphQL */ `
@@ -193,7 +196,7 @@ const QUERY = /* GraphQL */ `
               ${landscape}
             }
             slideShowMobile {
-              ${landscape}
+              ${gridEffectDesktopFit}
             }
           }
         }
@@ -221,7 +224,13 @@ const QUERY = /* GraphQL */ `
         sectionHeading
         text
         image {
-          ${landscape}
+          url
+          mobile: url @transform(width: 1920, mode: "fit", format: "webp", quality: 85, immediately: true)
+          tablet: url @transform(width: 1920, mode: "fit", format: "webp", quality: 85, immediately: true)
+          desktop: url @transform(width: 1920, mode: "fit", format: "webp", quality: 85, immediately: true)
+          width
+          height
+          title
         }
         links {
           ... on links_Entry {

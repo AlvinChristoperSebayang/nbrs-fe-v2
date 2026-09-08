@@ -58,7 +58,7 @@ const PEOPLE_DETAIL_QUERY = /* GraphQL */ `
         }
         pplProfileImage {
           url
-          mobile: url @transform(width: 768, mode: "fit", format: "webp", quality: 80, immediately: true)
+          mobile: url @transform(width: 1440, mode: "fit", format: "webp", quality: 82, immediately: true)
           tablet: url @transform(width: 1440, mode: "fit", format: "webp", quality: 82, immediately: true)
           desktop: url @transform(width: 1920, mode: "fit", format: "webp", quality: 85, immediately: true)
           width

@@ -15,6 +15,9 @@ export function normalizeNewlines(text?: string | null): string {
 export function formatCmsHtml(text?: string | null): string {
   if (!text) return "";
   const normalized = normalizeNewlines(text);
+  if (/<(p|div|ul|ol|li|blockquote|h[1-6]|table|figure)[^>]*>/i.test(normalized)) {
+    return normalized;
+  }
   return normalized.replace(/\n/g, "<br />");
 }
 

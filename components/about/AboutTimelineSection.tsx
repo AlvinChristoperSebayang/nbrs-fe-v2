@@ -236,7 +236,7 @@ export function AboutTimelineSection({
                     />
                   </svg>
                 </div>
-                <p className="mt-3 text-xs sm:text-sm text-white/85 leading-relaxed font-sans max-w-[220px]">
+                <p className="mt-3 text-sm text-white/85 leading-relaxed font-sans max-w-[220px]">
                   {item.description}
                 </p>
               </div>
