@@ -129,7 +129,7 @@ export function Hero({
               aria-label={button.text}
               data-aos="fade-up"
               data-aos-delay="300"
-              className="group mt-8 inline-flex items-center gap-2 rounded-[5px] bg-white/30 px-6 py-2 text-xs text-white transition sm:text-base font-medium"
+              className="group mt-8 inline-flex items-center gap-2 rounded-[5px] bg-white/30 px-6 py-2 text-sm text-white transition sm:text-base font-medium"
             >
               {button.text}
               <svg

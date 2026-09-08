@@ -54,7 +54,7 @@ export function CtaSection({
 
           {descriptionText && (
             <p
-              className={`mx-auto mt-2 max-w-xl text-white/90 text-sm sm:text-base ${descriptionClassName ?? ""}`}
+              className={`mx-auto mt-2 max-w-xl text-white/90 text-base ${descriptionClassName ?? ""}`}
               dangerouslySetInnerHTML={{ __html: formatCmsHtml(descriptionText) }}
             />
           )}
@@ -91,7 +91,7 @@ export function CtaSection({
                 href={data.secondaryButtonHref}
                 title={data.secondaryButtonText}
                 aria-label={data.secondaryButtonText}
-                className="group inline-flex items-center justify-center gap-2 text-xs sm:text-[20px] uppercase tracking-wider text-white/90 transition-opacity hover:opacity-100 font-medium mt-1"
+                className="group inline-flex items-center justify-center gap-2 text-sm sm:text-base uppercase tracking-wider text-white/90 transition-opacity hover:opacity-100 font-medium mt-1"
               >
                 <span>{data.secondaryButtonText}</span>
                 <svg

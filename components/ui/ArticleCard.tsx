@@ -28,7 +28,7 @@ function renderFormattedTitle(title: string) {
           {prefix}
         </span>
         {suffix && (
-          <span className="block font-normal text-sm sm:text-base lg:text-[15px] xl:text-lg mt-0.5 uppercase">
+          <span className="block font-normal text-base lg:text-[15px] xl:text-lg mt-0.5 uppercase">
             {suffix}
           </span>
         )}

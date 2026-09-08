@@ -40,7 +40,7 @@ export function SectorPrinciplesSection({
               </div>
             </div>
             <p
-              className="font-sans text-xs sm:text-sm lg:text-[13px] xl:text-[15px] 2xl:text-base text-zinc-900 leading-relaxed lg:leading-[1.42] xl:leading-relaxed"
+              className="font-sans text-base text-zinc-900 leading-relaxed lg:leading-[1.42] xl:leading-relaxed"
               dangerouslySetInnerHTML={{ __html: formatCmsHtml(description) }}
             />
           </div>

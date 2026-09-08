@@ -158,7 +158,7 @@ export function CareersHero({
                 )}
              
                 {registration && (
-                  <span className="text-xs sm:text-sm lg:text-sm xl:text-base mt-0.5">
+                  <span className="text-sm xl:text-base mt-0.5">
                     Registration: {registration}
                   </span>
                 )}
@@ -186,7 +186,7 @@ export function CareersHero({
             )}
 
             {description && (
-              <div className="font-sans whitespace-pre-line text-base lg:text-[13.5px] xl:text-[16px] 2xl:text-lg text-white/90 leading-relaxed max-w-xl">
+              <div className="font-sans whitespace-pre-line text-base lg:text-[13.5px] xl:text-base 2xl:text-lg text-white/90 leading-relaxed max-w-xl">
                 {description}
               </div>
             )}

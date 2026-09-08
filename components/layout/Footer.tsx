@@ -194,12 +194,12 @@ export function Footer({ content }: { content: FooterContent }) {
                     href={content.contactLink}
                     title={content.contactMessage}
                     aria-label={content.contactMessage}
-                    className="mt-3.5 inline-block whitespace-pre-line text-[16px] lg:text-lg text-white/70 transition-colors hover:text-white"
+                    className="mt-3.5 inline-block whitespace-pre-line text-base lg:text-lg text-white/70 transition-colors hover:text-white"
                   >
                     {content.contactMessage}
                   </a>
                 ) : content.contactMessage ? (
-                  <p className="mt-3.5 whitespace-pre-line text-[16px] lg:text-lg text-white/70">
+                  <p className="mt-3.5 whitespace-pre-line text-base lg:text-lg text-white/70">
                     {content.contactMessage}
                   </p>
                 ) : null}

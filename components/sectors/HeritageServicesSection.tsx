@@ -25,7 +25,7 @@ export function HeritageServicesSection({
           <h2 className="font-heading text-[40px] uppercase leading-none">Our heritage services</h2>
           {intro && (
             <div
-              className="mt-5 text-sm leading-relaxed text-zinc-800 sm:text-base [&_a]:underline [&_a]:underline-offset-4 [&_a:hover]:text-rose-600 [&_p]:mb-4 [&_p:last-child]:mb-0 [&_li]:ml-5 [&_ol]:list-decimal [&_ul]:list-disc"
+              className="mt-5 leading-relaxed text-zinc-800 text-base [&_a]:underline [&_a]:underline-offset-4 [&_a:hover]:text-rose-600 [&_p]:mb-4 [&_p:last-child]:mb-0 [&_li]:ml-5 [&_ol]:list-decimal [&_ul]:list-disc"
               dangerouslySetInnerHTML={{ __html: intro }}
             />
           )}

@@ -11,20 +11,20 @@ function PublicationDetails({ page }: { page: RapPageData }) {
       <div className="mt-4 h-px bg-black/20" />
       <dl className="mt-6 grid gap-6 text-sm sm:grid-cols-2 lg:grid-cols-4 lg:gap-6 xl:gap-8">
         <div>
-          <dt className="font-bold text-black text-xs sm:text-sm">Publication Date:</dt>
-          <dd className="mt-1 text-xs sm:text-sm text-black">{page.publicationDate}</dd>
+          <dt className="font-bold text-black text-sm">Publication Date:</dt>
+          <dd className="mt-1 text-sm text-black">{page.publicationDate}</dd>
         </div>
         <div>
-          <dt className="font-bold text-black text-xs sm:text-sm">Author:</dt>
-          <dd className="mt-1 max-w-[280px] text-xs sm:text-sm text-black">{page.author}</dd>
+          <dt className="font-bold text-black text-sm">Author:</dt>
+          <dd className="mt-1 max-w-[280px] text-sm text-black">{page.author}</dd>
         </div>
         <div>
-          <dt className="font-bold text-black text-xs sm:text-sm">Endorsed by:</dt>
-          <dd className="mt-1 text-xs sm:text-sm text-black">{page.endorsedBy}</dd>
+          <dt className="font-bold text-black text-sm">Endorsed by:</dt>
+          <dd className="mt-1 text-sm text-black">{page.endorsedBy}</dd>
         </div>
         <div>
-          <dt className="font-bold text-black text-xs sm:text-sm">Read time:</dt>
-          <dd className="mt-1 text-xs sm:text-sm text-black">{page.readTime}</dd>
+          <dt className="font-bold text-black text-sm">Read time:</dt>
+          <dd className="mt-1 text-sm text-black">{page.readTime}</dd>
         </div>
       </dl>
     </section>
@@ -61,7 +61,7 @@ export function RapPage({ page }: { page: RapPageData }) {
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-12 xl:gap-16 items-start">
             {/* Left Column: Description Paragraphs */}
             <div className="order-2 lg:order-1 lg:col-span-6 flex flex-col items-start" data-aos="fade-up">
-              <div className="space-y-4 font-sans text-sm sm:text-base lg:text-[14.5px] xl:text-[15.5px] leading-[1.65] text-black max-w-xl [&_a]:underline [&_p]:mb-4 [&_p:last-child]:mb-0">
+              <div className="space-y-4 font-sans text-base lg:text-[14.5px] xl:text-[15.5px] leading-[1.65] text-black max-w-xl [&_a]:underline [&_p]:mb-4 [&_p:last-child]:mb-0">
                 <div dangerouslySetInnerHTML={{ __html: page.bodyHtml }} />
               </div>
             </div>

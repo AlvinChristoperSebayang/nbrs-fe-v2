@@ -128,7 +128,7 @@ export function GridEffect({
                 {title}
               </h2>
               {showDescriptionOnMobile && description && (
-                <p className={`text-sm text-white/90 leading-relaxed ${descriptionClassName}`}>
+                <p className={`text-base text-white/90 leading-relaxed ${descriptionClassName}`}>
                   {description}
                 </p>
               )}
@@ -209,7 +209,7 @@ export function GridEffect({
 
                     {item.description && (
                       <p
-                        className={`max-w-57.75 sm:max-w-none lg:max-w-57.75 text-sm text-white/90 transition-opacity duration-300 ${
+                        className={`max-w-57.75 sm:max-w-none lg:max-w-57.75 text-base text-white/90 transition-opacity duration-300 ${
                           isActive
                             ? "opacity-100"
                             : showCardDescriptionOnMobile
