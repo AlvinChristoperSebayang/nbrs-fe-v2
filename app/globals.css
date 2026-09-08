@@ -11,6 +11,8 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-roboto);
   --font-heading: var(--font-trade-gothic);
+  --text-base: 1.125rem;
+  --text-base--line-height: calc(1.75 / 1.125);
 }
 
 @keyframes hero-fade-up {
