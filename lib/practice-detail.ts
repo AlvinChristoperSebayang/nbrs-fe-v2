@@ -72,7 +72,7 @@ const fit = (width: number, quality = 80) =>
   `url @transform(width: ${width}, mode: "fit", format: "webp", quality: ${quality}, immediately: true)`;
 const heroFit = (width: number, quality = 85) =>
   `url @transform(width: ${width}, mode: "fit", format: "webp", quality: ${quality}, immediately: true)`;
-const heroImage = `mobile: ${heroFit(768, 80)} tablet: ${heroFit(1440, 82)} desktop: ${heroFit(2400, 85)}`;
+const heroImage = `mobile: url @transform(width: 2880, height: 1800, format: "webp", quality: 80, immediately: true) tablet: ${heroFit(1440, 82)} desktop: ${heroFit(2400, 85)}`;
 const introImage = `mobile: ${fit(768, 80)} tablet: ${fit(1440, 82)} desktop: ${fit(1920, 85)}`;
 const sectorCardImage = `mobile: ${fit(600, 80)} tablet: ${fit(900, 82)} desktop: ${fit(1200, 85)}`;
 const ctaImage = `mobile: url @transform(width: 768, height: 900, position: "top-left", mode: "crop", format: "webp", quality: 80, immediately: true) tablet: ${heroFit(1440, 82)} desktop: ${heroFit(2400, 85)}`;
