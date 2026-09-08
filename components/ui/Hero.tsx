@@ -13,6 +13,7 @@ export type HeroProps = {
     href: string;
   };
   className?: string;
+  style?: React.CSSProperties;
   titleClassName?: string;
   descriptionClassName?: string;
   dividerClassName?: string;
@@ -36,6 +37,7 @@ export function Hero({
   description,
   button,
   className = "",
+  style,
   titleClassName = "",
   descriptionClassName = "",
   dividerClassName = "",
@@ -53,14 +55,17 @@ export function Hero({
   const hasExplicitLines = typeof title === "string" && title.includes("\n");
 
   return (
-    <section className={`relative w-full flex flex-col justify-between h-152.5 xl:min-h-[85vh] xl:h-227.5 ${className}`}>
+    <section
+      style={style}
+      className={`relative w-full flex flex-col justify-between bg-[#181d33] h-152.5 xl:min-h-[85vh] xl:h-227.5 ${className}`}
+    >
       {/* Background Image Container */}
       <div className="absolute inset-0 overflow-hidden">
         <ResponsiveImage
           src={image}
           alt={typeof title === "string" ? title.replace(/\n/g, " ") : "NBRS Architecture"}
           title={typeof title === "string" ? title.replace(/\n/g, " ") : "NBRS Architecture"}
-          className={`h-full w-full object-cover ${imageClassName}`}
+          className={`h-full w-full ${/object-(contain|cover|fill|none|scale-down)/.test(imageClassName) ? "" : "object-cover"} ${imageClassName}`.trim()}
           priority
         />
         <div className={`absolute inset-0 ${overlayClassName}`} />
