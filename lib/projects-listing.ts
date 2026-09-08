@@ -148,7 +148,7 @@ const PROJECTS_LISTING_QUERY = /* GraphQL */ `
         proHdrSubheading
         thumbnail {
           url
-          mobile: url @transform(width: 600, mode: "fit", format: "webp", quality: 80, immediately: true)
+          mobile: url @transform(width: 900, mode: "fit", format: "webp", quality: 85, immediately: true)
           tablet: url @transform(width: 900, mode: "fit", format: "webp", quality: 82, immediately: true)
           desktop: url @transform(width: 1200, mode: "fit", format: "webp", quality: 85, immediately: true)
           width
