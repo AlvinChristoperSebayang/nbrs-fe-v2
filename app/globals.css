@@ -106,3 +106,88 @@ body {
     display: none;
   }
 }
+
+
+.body-copy strong {
+  font-weight: 500
+}
+
+.body-copy iframe {
+  width: 100%;
+  aspect-ratio: 16/9;
+  height: auto;
+  margin: 2.5rem 0
+}
+
+.body-copy a {
+  transition: .3s;
+  color: inherit
+}
+
+.body-copy a:hover {
+  opacity: .8
+}
+
+.body-copy ol,.body-copy ul {
+  padding-left: 0
+}
+
+.body-copy ul {
+  list-style: none;
+  margin: 2rem 0 2rem 1rem
+}
+
+.body-copy li {
+  margin-left: 1.5rem;
+  position: relative;
+  margin-bottom: 8px;
+  line-height: 1.35
+}
+
+@media(min-width: 768px) {
+  .body-copy li {
+      margin-bottom:1rem
+  }
+}
+
+.body-copy ul li:before {
+  content: "";
+  background-color: #181d33;
+  width: 6px;
+  height: 6px;
+  position: absolute;
+  top: 8px;
+  left: -1.5rem;
+  border-radius: 100%
+}
+
+@media(min-width: 1024px) {
+  .body-copy ul li:before {
+      width:8px;
+      height: 8px;
+      left: -1.5rem
+  }
+}
+
+.body-copy ol {
+  list-style: none;
+  counter-reset: my-counter;
+  margin: 2rem 0 2rem 1rem
+}
+
+.body-copy ol li {
+  counter-increment: my-counter;
+  padding-left: 0
+}
+
+.body-copy ol li:before {
+  content: counter(my-counter) ". ";
+  color: #282829;
+  position: absolute;
+  top: 0;
+  left: -1.5rem
+}
+
+.body-copy small ol,.body-copy small ol li:before,.body-copy small ul {
+  color: #282829
+}

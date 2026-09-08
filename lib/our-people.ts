@@ -42,8 +42,8 @@ export type OurPeopleContent = {
   seoImage: SeoImage | null;
 };
 
-const image = `mobile: url @transform(width: 768, mode: "fit", format: "webp", quality: 80, immediately: true) tablet: url @transform(width: 1440, mode: "fit", format: "webp", quality: 82, immediately: true) desktop: url @transform(width: 2400, mode: "fit", format: "webp", quality: 85, immediately: true)`;
-const cardImage = `mobile: url @transform(width: 600, mode: "fit", format: "webp", quality: 80, immediately: true) tablet: url @transform(width: 900, mode: "fit", format: "webp", quality: 82, immediately: true) desktop: url @transform(width: 1200, mode: "fit", format: "webp", quality: 85, immediately: true)`;
+const image = `mobile: url @transform(width: 1440, mode: "fit", format: "webp", quality: 85, immediately: true) tablet: url @transform(width: 1440, mode: "fit", format: "webp", quality: 82, immediately: true) desktop: url @transform(width: 2400, mode: "fit", format: "webp", quality: 85, immediately: true)`;
+const cardImage = `mobile: url @transform(width: 1024, mode: "fit", format: "webp", quality: 80, immediately: true) tablet: url @transform(width: 1024, mode: "fit", format: "webp", quality: 82, immediately: true) desktop: url @transform(width: 1200, mode: "fit", format: "webp", quality: 85, immediately: true)`;
 const ctaImage = `mobile: url @transform(width: 768, height: 900, position: "top-left", mode: "crop", format: "webp", quality: 80, immediately: true) tablet: url @transform(width: 1440, mode: "fit", format: "webp", quality: 82, immediately: true) desktop: url @transform(width: 2400, mode: "fit", format: "webp", quality: 85, immediately: true)`;
 
 const QUERY = /* GraphQL */ `
