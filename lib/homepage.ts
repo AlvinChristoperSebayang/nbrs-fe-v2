@@ -195,7 +195,13 @@ const HOMEPAGE_QUERY = /* GraphQL */ `
             buttonUrl
           }
         }
-        homepageAboutImage { mobile: url @transform(width: 600, height: 600, mode: "crop", format: "webp", quality: 80, immediately: true) tablet: url @transform(width: 900, height: 900, mode: "crop", format: "webp", quality: 82, immediately: true) desktop: url @transform(width: 1200, height: 1200, mode: "crop", format: "webp", quality: 85, immediately: true) }
+
+        homepageAboutImage { 
+          mobile: url @transform(width: 1024, height: 1024, mode: "fit", format: "webp", quality: 80, immediately: true) 
+          tablet: url @transform(width: 1200, height: 1200, mode: "fit", format: "webp", quality: 82, immediately: true) 
+          desktop: url @transform(width: 3080, height: 2400, mode: "fit", format: "webp", quality: 85, immediately: true) 
+        }
+
         homepageSectorsHeading
         homepageFeaturedSectors {
           ... on sector_Category {
