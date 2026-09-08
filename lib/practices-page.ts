@@ -64,7 +64,7 @@ const crop = (width: number, height: number, quality = 80) =>
   `url @transform(width: ${width}, height: ${height}, mode: "crop", format: "webp", quality: ${quality}, immediately: true)`;
 const heroFit = (width: number, quality = 85) =>
   `url @transform(width: ${width}, mode: "fit", format: "webp", quality: ${quality}, immediately: true)`;
-const heroImage = `mobile: ${heroFit(768, 80)} tablet: ${heroFit(1440, 82)} desktop: ${heroFit(2400, 85)}`;
+const heroImage = `mobile: ${heroFit(1440, 80)} tablet: ${heroFit(1440, 82)} desktop: ${heroFit(2400, 85)}`;
 const introImage = `mobile: ${crop(600, 500)} tablet: ${crop(1440, 900, 82)} desktop: ${crop(1540, 1200, 85)}`;
 const cardImage = `mobile: ${crop(600, 480)} tablet: ${crop(900, 720, 82)} desktop: ${crop(1200, 960, 85)}`;
 

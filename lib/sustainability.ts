@@ -99,7 +99,7 @@ const query = /* GraphQL */ `
         seoMetaDescription
         seoImage { url width height title }
         pageHeroImage {
-          mobile: url @transform(width: 768, mode: "fit", format: "webp", quality: 80, immediately: true)
+          mobile: url @transform(width: 1440, mode: "fit", format: "webp", quality: 85, immediately: true)
           tablet: url @transform(width: 1440, mode: "fit", format: "webp", quality: 82, immediately: true)
           desktop: url @transform(width: 2400, mode: "fit", format: "webp", quality: 85, immediately: true)
           title

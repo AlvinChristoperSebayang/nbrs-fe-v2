@@ -122,7 +122,7 @@ const crop = (width: number, height: number, quality = 80) =>
   `url @transform(width: ${width}, height: ${height}, mode: "crop", format: "webp", quality: ${quality}, immediately: true)`;
 const heroFit = (width: number, quality = 85) =>
   `url @transform(width: ${width}, mode: "fit", format: "webp", quality: ${quality}, immediately: true)`;
-const hero = `mobile: ${heroFit(768, 80)} tablet: ${heroFit(1440, 82)} desktop: ${heroFit(2400, 85)}`;
+const hero = `mobile: ${heroFit(1920, 80)} tablet: ${heroFit(1440, 82)} desktop: ${heroFit(2400, 85)}`;
 const landscape = `mobile: ${crop(600, 450)} tablet: ${crop(900, 675)} desktop: ${crop(1200, 900)}`;
 const fitTransform = (width: number, quality = 85) =>
   `url @transform(width: ${width}, mode: "fit", format: "webp", quality: ${quality}, immediately: true)`;

@@ -175,7 +175,7 @@ const HOMEPAGE_QUERY = /* GraphQL */ `
             linkText
             linkUrl
             image {
-              backgroundMobile: url @transform(width: 768, height: 1024, mode: "crop", format: "webp", quality: 90)
+              backgroundMobile: url @transform(width: 1200, height: 1600, mode: "crop", format: "webp", quality: 100)
               backgroundTablet: url @transform(width: 1920, height: 1200, mode: "crop", format: "webp", quality: 92)
               backgroundDesktop: url @transform(width: 2560, height: 1440, mode: "crop", format: "webp", quality: 95)
             }
