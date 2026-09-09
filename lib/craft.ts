@@ -1,6 +1,23 @@
-const CRAFT_GRAPHQL_URL =
-  process.env.CRAFT_GRAPHQL_URL ??
-  "https://new.cms.nbrs.com.au/api/";
+function resolveCraftGraphqlUrl() {
+  const configured =
+    process.env.CRAFT_GRAPHQL_URL ?? "https://new.cms.nbrs.com.au/api/";
+
+  // Valet/nginx 301 http → https. fetch() follows that redirect and drops the
+  // POST body, so Craft returns "No GraphQL query was supplied".
+  try {
+    const url = new URL(configured);
+    if (url.protocol === "http:" && url.hostname.endsWith(".test")) {
+      url.protocol = "https:";
+      return url.toString();
+    }
+  } catch {
+    return configured;
+  }
+
+  return configured;
+}
+
+const CRAFT_GRAPHQL_URL = resolveCraftGraphqlUrl();
 
 if (
   process.env.NODE_ENV === "development" ||

@@ -30,6 +30,64 @@ export async function generateMetadata({
   });
 }
 
+function getNewsMobileLines(title: string): string[] | undefined {
+  const words = title.trim().split(/\s+/).filter(Boolean);
+  if (words.length <= 5) return undefined;
+
+  function partitionIntoK(wordList: string[], k: number): string[] | null {
+    const n = wordList.length;
+    let best: string[] | null = null;
+    let bestScore = Infinity;
+
+    function search(wordIdx: number, currentLines: string[]) {
+      const linesLeft = k - currentLines.length;
+      const wordsLeft = n - wordIdx;
+      if (wordsLeft < linesLeft) return;
+
+      if (linesLeft === 1) {
+        const lastLine = wordList.slice(wordIdx).join(" ");
+        if (lastLine.length > 25) return;
+        const all = [...currentLines, lastLine];
+        const maxLen = Math.max(...all.map((l) => l.length));
+        const singleWordPenalty = all.reduce((acc, l) => acc + (!l.includes(" ") ? 50 : 0), 0);
+        const avgLen = all.reduce((a, b) => a + b.length, 0) / k;
+        const variance = all.reduce((a, b) => a + Math.pow(b.length - avgLen, 2), 0);
+        const score = maxLen * 10 + variance + singleWordPenalty;
+
+        if (score < bestScore) {
+          bestScore = score;
+          best = all;
+        }
+        return;
+      }
+
+      for (let take = 1; take <= wordsLeft - linesLeft + 1; take++) {
+        const line = wordList.slice(wordIdx, wordIdx + take).join(" ");
+        if (line.length > 25) break;
+        search(wordIdx + take, [...currentLines, line]);
+      }
+    }
+
+    search(0, []);
+    return best;
+  }
+
+  // If 6 or 7 words, try 3 lines first (if max line length <= 22 chars)
+  if (words.length <= 7) {
+    const lines3 = partitionIntoK(words, 3);
+    if (lines3 && Math.max(...lines3.map((l) => l.length)) <= 22) {
+      return lines3;
+    }
+  }
+
+  // Otherwise target 4 lines
+  const lines4 = partitionIntoK(words, 4);
+  if (lines4) return lines4;
+
+  const lines3 = partitionIntoK(words, 3);
+  return lines3 || undefined;
+}
+
 export default async function NewsDetailPage({
   params,
 }: {
@@ -40,6 +98,7 @@ export default async function NewsDetailPage({
   if (!article) notFound();
 
   const meta = [article.category, article.date].filter(Boolean).join(" • ");
+  const mobileLines = getNewsMobileLines(article.title);
 
   const articleSchema = {
     "@context": "https://schema.org",
@@ -63,23 +122,19 @@ export default async function NewsDetailPage({
     },
   };
 
-  const heroWidth = article.heroWidth || 16;
-  const heroHeight = article.heroHeight || 9;
-  const aspectRatio = `${heroWidth} / ${heroHeight}`;
-
   return (
     <article className="bg-white text-black min-h-screen">
       <JsonLd data={articleSchema} />
       <Hero
         image={article.hero ?? "/images/hero/hero6.png"}
         title={article.title}
-        imageClassName="object-contain object-center"
-        style={{ aspectRatio }}
-        className="!h-auto min-h-[350px] sm:min-h-0 bg-[#181d33]"
-        containerClassName="!pt-16 sm:!pt-20 md:!pt-24 lg:!pt-20 !pb-6 sm:!pb-8 lg:!pb-12"
-        titleClassName="!text-[34px] sm:!text-[36px] lg:!text-[70px]"
+        mobileLines={mobileLines}
+        imageClassName="object-cover object-bottom md:object-center"
+        className="!h-auto aspect-[1200/840] min-h-[260px] sm:aspect-[16/10] lg:!h-auto lg:!min-h-0 lg:aspect-[1200/840]"
+        containerClassName="!pt-14 sm:!pt-20 lg:!pt-20 !pb-4 sm:!pb-6 lg:!pb-12"
+        titleClassName="!text-[28px] sm:!text-[36px] lg:!text-[70px]"
         description={
-          meta ? <p className="mt-2 font-sans text-xs sm:text-sm font-normal text-white/90 md:text-base">{meta}</p> : undefined
+          meta ? <p className="mt-2 font-sans text-sm font-normal text-white/90 sm:text-base">{meta}</p> : undefined
         }
       />
 

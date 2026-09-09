@@ -41,7 +41,7 @@ export function FeatureGlassSection({
               <h2 className="font-heading text-2xl sm:text-3xl lg:text-[24px] xl:text-[32px] uppercase font-bold text-black leading-none mb-3 lg:mb-2 xl:mb-3">
                 {title}
               </h2>
-              <div className="flex flex-col gap-3 lg:gap-2 xl:gap-3 text-sm sm:text-base lg:text-[12px] xl:text-base text-zinc-900 leading-relaxed font-sans">
+              <div className="flex flex-col gap-3 lg:gap-2 xl:gap-3 text-base lg:text-[12px] xl:text-base text-zinc-900 leading-relaxed font-sans">
                 {paragraphs.map((paragraph, index) => (
                   <p key={index}>{paragraph}</p>
                 ))}
@@ -55,7 +55,7 @@ export function FeatureGlassSection({
                   href={buttonHref}
                   title={buttonText}
                   aria-label={buttonText}
-                  className="group inline-flex items-center gap-2 rounded-[5px] border border-black px-4 py-1.5 text-xs lg:px-4 lg:py-1.5 lg:text-xs xl:px-5 xl:py-2.5 xl:text-sm font-medium text-black transition-colors hover:bg-black hover:text-white"
+                  className="group inline-flex items-center gap-2 rounded-[5px] border border-black px-4 py-1.5 text-sm lg:px-4 lg:py-1.5 xl:px-5 xl:py-2.5 xl:text-sm font-medium text-black transition-colors hover:bg-black hover:text-white"
                 >
                   <span>{buttonText}</span>
                   <svg

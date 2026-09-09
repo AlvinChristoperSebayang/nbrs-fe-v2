@@ -126,11 +126,11 @@ export function TeamListSection({ members }: TeamListSectionProps) {
                     <h2 className="font-sans text-base sm:text-lg lg:text-xl font-bold leading-snug text-black">
                       {member.name}
                     </h2>
-                    <p className="font-sans text-xs sm:text-xs lg:text-sm font-semibold text-black leading-snug">
+                    <p className="font-sans text-sm font-semibold text-black leading-snug">
                       {member.role}
                     </p>
                     {member.registration && (
-                      <p className="font-sans text-[11px] sm:text-xs text-zinc-700 mt-1 leading-tight">
+                      <p className="font-sans text-sm text-zinc-700 mt-1 leading-tight">
                         Registration Number: {member.registration}
                       </p>
                     )}

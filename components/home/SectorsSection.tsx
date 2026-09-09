@@ -115,7 +115,7 @@ export function SectorsSection({
       <Container>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-6 lg:gap-x-[30px] lg:gap-y-[35px]">
           <div data-aos="fade-up" suppressHydrationWarning className="lg:col-span-4 flex flex-col justify-center">
-            <h2 className="font-heading text-[28px] sm:text-[34px] md:text-[38px] lg:text-[36px] xl:text-[46px] 2xl:text-[56px] leading-[1.05] uppercase text-black flex flex-col items-start">
+            <h2 className="font-heading text-[28px] sm:text-[48px] xl:text-[62px] 2xl:text-[56px] leading-[1.05] uppercase text-black flex flex-col items-start">
               {renderSectorsHeading(heading)}
             </h2>
           </div>

@@ -30,6 +30,7 @@ export default async function SocialSustainabilityPage() {
         title={content.hero.title}
         description={content.hero.description}
         descriptionClassName="max-w-[364px]"
+        singleLine={true}
       />
       <SocialInitiativesSection initiatives={content.initiatives} />
       <SupportedOrganisations

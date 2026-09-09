@@ -13,6 +13,18 @@
   --font-heading: var(--font-trade-gothic);
 }
 
+/* text-base = 18px only below Tailwind `sm` (640px) */
+@media (max-width: 639px) {
+  .text-base {
+    font-size: 1.125rem; /* 18px @ root 16px */
+    line-height: calc(1.75 / 1.125); /* 28px */
+  }
+
+  .text-sm {
+    font-size: 16px; /* 18px @ root 16px */
+  }
+}
+
 @keyframes hero-fade-up {
   from {
     opacity: 0;

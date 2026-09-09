@@ -45,7 +45,7 @@ export function SingleTeamBioSection({ name, bioHtml, quote }: SingleTeamBioProp
             {/* Top Bio Text Paragraphs */}
             {bioHtml && (
               <div
-                className="font-sans text-sm sm:text-base lg:text-[15px] xl:text-lg text-zinc-800 leading-relaxed max-w-3xl [&_a]:underline [&_a]:underline-offset-4 [&_p]:mb-5 [&_p:last-child]:mb-0"
+                className="font-sans text-base text-zinc-800 leading-relaxed max-w-3xl [&_a]:underline [&_a]:underline-offset-4 [&_p]:mb-5 [&_p:last-child]:mb-0"
                 dangerouslySetInnerHTML={{ __html: bioHtml }}
               />
             )}

@@ -45,7 +45,7 @@ export function ProjectDetailHero({
             <p
               data-aos="fade-up"
               data-aos-delay="200"
-              className="mt-5 lg:text-[20px] text-[16px] font-semibold"
+              className="mt-5 lg:text-[20px] text-base font-semibold"
               dangerouslySetInnerHTML={{ __html: formatCmsHtml(subheading) }}
             />
           )}
@@ -54,7 +54,7 @@ export function ProjectDetailHero({
             <p
               data-aos="fade-up"
               data-aos-delay="300"
-              className="mt-2 text-[16px] text-[#FFD6CD]"
+              className="mt-2 text-base text-[#FFD6CD]"
             >
               {[sectorLabel, practiceLabel].filter(Boolean).join(" | ")}
             </p>
@@ -81,23 +81,23 @@ export function ProjectDetailHero({
           <div className="mt-8 flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between lg:gap-0">
             {location && (
               <div data-aos="fade-up" data-aos-delay="100" className="lg:pr-6">
-                <p className="font-heading text-[16px] lg:text-[30px] uppercase">Location:</p>
-                <p className="mt-1 text-black text-[16px] lg:text-[22px]">{location}</p>
+                <p className="font-heading text-base lg:text-[30px] uppercase">Location:</p>
+                <p className="mt-1 text-black text-base lg:text-[22px]">{location}</p>
               </div>
             )}
             <div className="hidden h-[81px] w-[1px] bg-[#A7A7A7] lg:block" />
             {client && (
               <div data-aos="fade-up" data-aos-delay="200" className="lg:px-6">
-                <p className="font-heading text-[16px] lg:text-[30px] uppercase">Client:</p>
-                <p className="mt-1 text-black text-[16px] lg:text-[22px]">{client}</p>
+                <p className="font-heading text-base lg:text-[30px] uppercase">Client:</p>
+                <p className="mt-1 text-black text-base lg:text-[22px]">{client}</p>
               </div>
             )}
             <div className="hidden h-[81px] w-[1px] bg-[#A7A7A7] lg:block" />
 
             {collaborators && (
               <div data-aos="fade-up" data-aos-delay="300" className="lg:pl-6">
-                <p className="font-heading text-[16px] lg:text-[30px] uppercase">Collaborators:</p>
-                <p className="mt-1 text-black text-[16px] lg:text-[22px]">{collaborators}</p>
+                <p className="font-heading text-base lg:text-[30px] uppercase">Collaborators:</p>
+                <p className="mt-1 text-black text-base lg:text-[22px]">{collaborators}</p>
               </div>
             )}
           </div>

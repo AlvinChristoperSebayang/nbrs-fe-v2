@@ -38,7 +38,7 @@ export function AwardCard({ item }: AwardCardProps) {
       >
         {/* Year */}
         <span
-          className="text-xs lg:text-[12px] xl:text-base font-light transition-colors duration-300"
+          className="text-sm sm:text-base font-light transition-colors duration-300"
           style={{ color: isHovered ? "#000000" : "#ffffff" }}
         >
           {item.year}
@@ -46,7 +46,7 @@ export function AwardCard({ item }: AwardCardProps) {
 
         {/* Project Name */}
         <span
-          className="mt-1 text-sm lg:text-[13px] xl:text-base font-bold tracking-tight transition-colors duration-300"
+          className="mt-1 text-base font-bold tracking-tight transition-colors duration-300"
           style={{
             color: isHovered ? "#000000" : (item.projectCategoryColor ?? "#DADBEF"),
           }}
@@ -64,7 +64,7 @@ export function AwardCard({ item }: AwardCardProps) {
           </p>
           {item.commendation && (
             <span
-              className="mt-1 lg:mt-1.5 block font-sans text-xs lg:text-[12px] xl:text-base font-normal italic transition-colors duration-300"
+              className="mt-1 lg:mt-1.5 block font-sans text-xs  sm:text-base xl:text-base font-normal italic transition-colors duration-300"
               style={{ color: isHovered ? "#000000" : "#C9E5D2" }}
             >
               {item.commendation}

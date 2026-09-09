@@ -78,7 +78,7 @@ export function AboutPracticeSection({
               <h2 className="font-heading text-[#000000] text-[28px] sm:text-4xl md:text-[44px] lg:text-[52px] xl:text-[60px] uppercase leading-[1.05] tracking-tight flex flex-col items-start">
                 {renderPracticeHeading(heading)}
               </h2>
-              <p className="mt-6 text-sm text-black sm:text-base">
+              <p className="mt-6 text-black text-base">
                 {description}
               </p>
             </div>

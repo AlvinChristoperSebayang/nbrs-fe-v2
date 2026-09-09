@@ -34,7 +34,7 @@ export default async function EnvisionStudentProgramPage() {
       )}
 
       {page.research.length > 0 && (
-        <section className="bg-white pt-20 pb-16 lg:pt-16 lg:pb-24">
+        <section className="bg-white pt-5 pb-10 lg:pt-16 lg:pb-24">
           <Container>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
               {page.research.map((item, index) => (

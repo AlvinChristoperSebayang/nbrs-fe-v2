@@ -110,7 +110,7 @@ export function InitiativesSection({
                   />
                 </div>
 
-                <p className="font-sans text-sm sm:text-base lg:text-[15px] xl:text-base text-zinc-800 leading-relaxed">
+                <p className="font-sans text-base lg:text-[15px] xl:text-base text-zinc-800 leading-relaxed">
                   {item.description}
                 </p>
               </div>

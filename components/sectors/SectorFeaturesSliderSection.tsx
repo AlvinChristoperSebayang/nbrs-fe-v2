@@ -87,7 +87,7 @@ export function SectorFeaturesSliderSection({
               <h3 className="font-heading text-[22px] sm:text-[24px] uppercase font-bold text-white tracking-wide mb-2 leading-none max-w-[240px] px-1">
                 {currentItem.title}
               </h3>
-              <p className="font-sans text-xs sm:text-sm text-white/95 leading-snug max-w-[230px] px-1">
+              <p className="font-sans text-sm text-white/95 leading-snug max-w-[230px] px-1">
                 {currentItem.description}
               </p>
 

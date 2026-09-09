@@ -15,7 +15,7 @@ export function AwardsSection({ heading, description, items }: AwardsSectionProp
         <h2 className="font-heading text-3xl sm:text-4xl lg:text-[34px] xl:text-[40px] uppercase leading-none text-black max-w-[270px]">
           {heading}
         </h2>
-        <p className="text-sm sm:text-base lg:text-[15px] xl:text-base text-zinc-800 leading-normal max-w-[423px]">
+        <p className="text-base text-zinc-800 leading-normal max-w-[423px]">
           {description}
         </p>
       </div>

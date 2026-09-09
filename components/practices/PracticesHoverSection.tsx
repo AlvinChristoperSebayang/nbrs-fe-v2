@@ -119,7 +119,7 @@ export function PracticesHoverSection({
 
                       {/* Description (Shown on Hover / Smooth Expand) */}
                       <p
-                        className={`font-sans text-sm sm:text-base text-white/90 leading-snug transition-all duration-500 max-w-[280px] drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] ${
+                        className={`font-sans text-base text-white/90 leading-snug transition-all duration-500 max-w-[280px] drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] ${
                           isHovered
                             ? "max-h-20 opacity-100 mt-1"
                             : "max-h-0 opacity-0 overflow-hidden"

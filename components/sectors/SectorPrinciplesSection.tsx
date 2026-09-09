@@ -25,22 +25,22 @@ export function SectorPrinciplesSection({
             <div className="mb-3 lg:mb-3 xl:mb-4">
               {/* Mobile (< sm): Single line */}
               <div className="sm:hidden">
-                <span className="inline-block font-heading text-[24px] uppercase font-bold text-black leading-none border-b-4 border-black pb-1 whitespace-nowrap">
+                <span className="inline-block font-heading text-[28px] uppercase font-bold text-black leading-none border-b-4 border-black pb-1 whitespace-nowrap">
                   {prefix} {mainTitle}
                 </span>
               </div>
               {/* Tablet & Desktop (>= sm): Two lines */}
               <div className="hidden sm:block">
-                <span className="block font-heading text-[26px] sm:text-[28px] xl:text-[44px] 2xl:text-[56px] uppercase font-bold text-black leading-none">
+                <span className="block font-heading text-[26px] sm:text-[28px] lg:text-[36px] xl:text-[44px] 2xl:text-[56px] uppercase font-bold text-black leading-none">
                   {prefix}
                 </span>
-                <span className="inline-block font-heading text-[26px] sm:text-[28px] xl:text-[44px] 2xl:text-[56px] uppercase font-bold text-black leading-none mt-1 border-b-[3px] xl:border-b-4 border-black pb-1">
+                <span className="inline-block font-heading text-[26px] sm:text-[28px] lg:text-[36px] xl:text-[44px] 2xl:text-[56px] uppercase font-bold text-black leading-none mt-1 border-b-[3px] xl:border-b-4 border-black pb-1">
                   {mainTitle}
                 </span>
               </div>
             </div>
             <p
-              className="font-sans text-xs sm:text-sm lg:text-[13px] xl:text-[15px] 2xl:text-base text-zinc-900 leading-relaxed lg:leading-[1.42] xl:leading-relaxed"
+              className="font-sans lg:text-xs xl:text-base text-zinc-900 leading-relaxed lg:leading-[1.42] xl:leading-relaxed"
               dangerouslySetInnerHTML={{ __html: formatCmsHtml(description) }}
             />
           </div>
