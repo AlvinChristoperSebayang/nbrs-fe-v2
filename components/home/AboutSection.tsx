@@ -72,7 +72,7 @@ export function AboutSection({
   const formattedDescription = formatCmsHtml(description);
 
   const descriptionClassName = [
-    "text-base leading-relaxed text-white/90",
+    "text-base lg:text-sm xl:text-base leading-relaxed text-white/90",
     "[&_p]:m-0 [&_p+p]:mt-4",
     "[&_a]:underline [&_a]:underline-offset-2 hover:[&_a]:text-white",
     "[&_strong]:font-semibold",

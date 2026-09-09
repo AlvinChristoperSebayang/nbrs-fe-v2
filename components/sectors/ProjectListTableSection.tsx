@@ -69,7 +69,7 @@ export function ProjectListTableSection({
                     PROJECT
                   </span>
                 )}
-                <span className="font-sans text-base font-medium text-black leading-snug">
+                <span className="font-sans text-base lg:text-sm xl:text-base font-medium text-black leading-snug">
                   {row.project}
                 </span>
               </div>

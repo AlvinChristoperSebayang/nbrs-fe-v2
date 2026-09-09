@@ -39,7 +39,7 @@ export function SocialInitiativesList({
                   {initiative.title}
                 </h2>
                 <div
-                  className="font-sans text-base text-zinc-900 leading-relaxed [&_p]:mb-3 xl:[&_p]:mb-3.5 [&_p:last-child]:mb-0 [&_a]:underline [&_a]:underline-offset-2 [&_strong]:font-semibold [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5"
+                  className="font-sans text-base lg:text-[11px] xl:text-base text-zinc-900 leading-relaxed [&_p]:mb-3 xl:[&_p]:mb-3.5 [&_p:last-child]:mb-0 [&_a]:underline [&_a]:underline-offset-2 [&_strong]:font-semibold [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5"
                   dangerouslySetInnerHTML={{ __html: htmlContent }}
                 />
               </article>
