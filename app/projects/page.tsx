@@ -1,9 +1,14 @@
-import Link from "next/link";
-import { getProjectsListing } from "@/lib/projects-listing";
+import {
+  getProjectsCards,
+  getProjectsSeo,
+  getProjectsShell,
+  parseProjectFilterSlugs,
+  PROJECTS_PAGE_SIZE,
+} from "@/lib/projects-listing";
 import { Container } from "@/components/ui/Container";
 import { ProjectsHero } from "@/components/projects/ProjectsHero";
 import { ProjectsFilters } from "@/components/projects/ProjectsFilters";
-import { ProjectsGrid } from "@/components/projects/ProjectsGrid";
+import { ProjectsLoadMore } from "@/components/projects/ProjectsLoadMore";
 import { PreserveScrollOnNavigate } from "@/components/projects/PreserveScrollOnNavigate";
 import { createPageMetadata } from "@/lib/seo";
 import { Hero } from "@/components/ui/Hero";
@@ -11,25 +16,14 @@ import { Hero } from "@/components/ui/Hero";
 export const dynamic = "force-dynamic";
 
 export async function generateMetadata() {
-  const page = await getProjectsListing({ limit: 1 });
+  const seo = await getProjectsSeo();
   return createPageMetadata({
     pathname: "/projects",
-    title: page.pageHeading || "Projects",
-    cmsTitle: page.cmsSeoTitle,
-    description: page.seoDescription,
-    image: page.seoImage ?? page.pageHeroImageUrl,
+    title: seo.pageHeading || "Projects",
+    cmsTitle: seo.cmsSeoTitle,
+    description: seo.seoDescription,
+    image: seo.seoImage,
   });
-}
-
-const PAGE_SIZE = 9;
-
-function parseSlugParam(value: string | string[] | undefined): string[] {
-  if (!value) return [];
-  const raw = Array.isArray(value) ? value.join(",") : value;
-  return raw
-    .split(",")
-    .map((slug) => slug.trim())
-    .filter(Boolean);
 }
 
 export default async function ProjectsIndexPage(
@@ -37,24 +31,27 @@ export default async function ProjectsIndexPage(
 ) {
   const searchParams = await props.searchParams;
 
-  const selectedSectors = parseSlugParam(searchParams.sector);
-  const selectedPractices = parseSlugParam(searchParams.practice);
-  const page = Math.max(1, Number(searchParams.page) || 1);
-  const limit = PAGE_SIZE * page;
+  const selectedSectors = parseProjectFilterSlugs(searchParams.sector);
+  const selectedPractices = parseProjectFilterSlugs(searchParams.practice);
 
-  let listing: Awaited<ReturnType<typeof getProjectsListing>> | null = null;
+  let shell: Awaited<ReturnType<typeof getProjectsShell>> | null = null;
+  let cards: Awaited<ReturnType<typeof getProjectsCards>> | null = null;
+
   try {
-    listing = await getProjectsListing({
-      limit,
-      offset: 0,
-      sectorSlugs: selectedSectors,
-      practiceSlugs: selectedPractices,
-    });
+    [shell, cards] = await Promise.all([
+      getProjectsShell(),
+      getProjectsCards({
+        limit: PROJECTS_PAGE_SIZE,
+        offset: 0,
+        sectorSlugs: selectedSectors,
+        practiceSlugs: selectedPractices,
+      }),
+    ]);
   } catch (error) {
     console.warn("Failed to load projects listing from Craft:", error);
   }
 
-  if (!listing) {
+  if (!shell || !cards) {
     return (
       <div className="bg-white text-black min-h-screen">
         <ProjectsHero />
@@ -69,36 +66,7 @@ export default async function ProjectsIndexPage(
     );
   }
 
-  const {
-    sectors,
-    practices,
-    projects,
-    total,
-    pageHeading,
-    pageHeroImageUrl,
-  } = listing;
-
-  // Guarantee filtering works even if Craft API returns all entries in development/fallback
-  let displayProjects = projects;
-  if (selectedSectors.length > 0) {
-    displayProjects = displayProjects.filter((p) =>
-      p.sectors.some((s) => selectedSectors.includes(s.slug))
-    );
-  }
-  if (selectedPractices.length > 0) {
-    displayProjects = displayProjects.filter((p) =>
-      p.practices.some((pr) => selectedPractices.includes(pr.slug))
-    );
-  }
-
-  const hasMore = displayProjects.length < total;
-
-  const loadMoreParams = new URLSearchParams();
-  if (selectedSectors.length)
-    loadMoreParams.set("sector", selectedSectors.join(","));
-  if (selectedPractices.length)
-    loadMoreParams.set("practice", selectedPractices.join(","));
-  loadMoreParams.set("page", String(page + 1));
+  const filterKey = `${selectedSectors.join(",")}|${selectedPractices.join(",")}`;
 
   return (
     <article className="bg-white text-black min-h-screen">
@@ -107,8 +75,8 @@ export default async function ProjectsIndexPage(
         title={pageHeading}
       /> */}
       <Hero
-        image={pageHeroImageUrl || "/images/hero/hero3.png"}
-        title={pageHeading || "Projects"}
+        image={shell.pageHeroImageUrl || "/images/hero/hero3.png"}
+        title={shell.pageHeading || "Projects"}
         className="lg:!h-auto lg:!min-h-0 lg:aspect-[5760/3640] xl:!h-auto xl:!min-h-0"
         imageClassName="object-cover object-center"
         overlayClassName="bg-black/10"
@@ -118,32 +86,21 @@ export default async function ProjectsIndexPage(
       <Container className="py-16">
         <PreserveScrollOnNavigate>
           <ProjectsFilters
-            sectors={sectors}
-            practices={practices}
+            sectors={shell.sectors}
+            practices={shell.practices}
             selectedSectors={selectedSectors}
             selectedPractices={selectedPractices}
           />
 
-          <div className="mt-12">
-            <ProjectsGrid projects={displayProjects} />
-          </div>
-
-          {hasMore && (
-            <div className="mt-12 flex justify-center">
-              <Link
-                href={`/projects?${loadMoreParams.toString()}`}
-                scroll={false}
-                title="Load more projects"
-                aria-label="Load more projects"
-                className="inline-flex items-center rounded-full border border-black px-8 py-3 text-sm uppercase text-black transition hover:bg-black hover:text-white"
-              >
-                Load more
-              </Link>
-            </div>
-          )}
+          <ProjectsLoadMore
+            key={filterKey}
+            initialProjects={cards.projects}
+            total={cards.total}
+            sectorSlugs={selectedSectors}
+            practiceSlugs={selectedPractices}
+          />
         </PreserveScrollOnNavigate>
       </Container>
     </article>
   );
 }
-
