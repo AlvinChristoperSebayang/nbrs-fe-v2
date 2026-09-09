@@ -73,7 +73,7 @@ export default async function NewsDetailPage({
       <Hero
         image={article.hero ?? "/images/hero/hero6.png"}
         title={article.title}
-        imageClassName="object-contain object-center"
+        imageClassName="object-cover object-center"
         style={{ aspectRatio }}
         className="!h-auto min-h-[350px] sm:min-h-0 bg-[#181d33]"
         containerClassName="!pt-16 sm:!pt-20 md:!pt-24 lg:!pt-20 !pb-6 sm:!pb-8 lg:!pb-12"
