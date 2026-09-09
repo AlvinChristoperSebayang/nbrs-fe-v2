@@ -6,6 +6,7 @@ import { ProjectsFilters } from "@/components/projects/ProjectsFilters";
 import { ProjectsGrid } from "@/components/projects/ProjectsGrid";
 import { PreserveScrollOnNavigate } from "@/components/projects/PreserveScrollOnNavigate";
 import { createPageMetadata } from "@/lib/seo";
+import { Hero } from "@/components/ui/Hero";
 
 export const dynamic = "force-dynamic";
 
@@ -101,10 +102,19 @@ export default async function ProjectsIndexPage(
 
   return (
     <article className="bg-white text-black min-h-screen">
-      <ProjectsHero
+      {/* <ProjectsHero
         image={pageHeroImageUrl}
         title={pageHeading}
+      /> */}
+      <Hero
+        image={pageHeroImageUrl || "/images/hero/hero3.png"}
+        title={pageHeading || "Projects"}
+        className="lg:!h-auto lg:!min-h-0 lg:aspect-[5760/3640] xl:!h-auto xl:!min-h-0"
+        imageClassName="object-cover object-center"
+        overlayClassName="bg-black/10"
+        singleLine
       />
+
       <Container className="py-16">
         <PreserveScrollOnNavigate>
           <ProjectsFilters

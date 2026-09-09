@@ -81,7 +81,7 @@ export function Hero({
             <h1
               data-aos="fade-up"
               suppressHydrationWarning
-              className={`font-heading text-[36px] sm:text-[38px] uppercase leading-[1.05] text-white lg:text-[70px] ${
+              className={`font-heading text-[38px] sm:text-[38px] uppercase leading-[1.05] text-white lg:text-[56px] xl:text-[70px] ${
                 isShortTitle || singleLine
                   ? "max-w-none w-auto whitespace-nowrap"
                   : "max-w-2xl lg:max-w-none"
@@ -93,7 +93,7 @@ export function Hero({
             <h1
               data-aos="fade-up"
               suppressHydrationWarning
-              className={`font-heading text-[36px] sm:text-[38px] uppercase leading-[1.05] text-white lg:text-[70px] max-w-2xl lg:max-w-none ${titleClassName}`}
+              className={`font-heading text-[38px] sm:text-[38px] uppercase leading-[1.05] text-white lg:text-[70px] max-w-2xl lg:max-w-none ${titleClassName}`}
             >
               {title}
             </h1>
@@ -106,7 +106,7 @@ export function Hero({
                 data-aos="fade-up"
                 data-aos-delay="200"
                 suppressHydrationWarning
-                className={`mt-6 text-white text-base ${descriptionClassName ? descriptionClassName : "max-w-xl"} ${descriptionClassName && !descriptionClassName.includes("max-w-") ? "max-w-xl" : ""}`}
+                className={`mt-6 text-white text-base lg:text-sm xl:text-base ${descriptionClassName ? descriptionClassName : "max-w-xl"} ${descriptionClassName && !descriptionClassName.includes("max-w-") ? "max-w-xl" : ""}`}
                 dangerouslySetInnerHTML={{ __html: formatCmsHtml(description) }}
               />
             ) : (

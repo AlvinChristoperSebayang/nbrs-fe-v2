@@ -37,7 +37,7 @@ export function RapPage({ page }: { page: RapPageData }) {
       <Hero
         image={page.hero}
         title={page.title}
-        titleClassName="max-w-[900px] text-[38px] sm:text-[54px] lg:text-[62px] xl:text-[70px] leading-[0.95]"
+        titleClassName="max-w-[900px] text-[38px] sm:text-[54px] lg:text-[56px] xl:text-[70px] leading-[0.95]"
       />
 
       <div className="hidden lg:block relative z-20 mt-0 lg:-mt-16 container mx-auto">
