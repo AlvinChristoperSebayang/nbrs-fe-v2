@@ -201,10 +201,3 @@ body {
 .body-copy small ol,.body-copy small ol li:before,.body-copy small ul {
   color: #282829
 }
-
-.body-copy iframe {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  height: auto;
-  margin: 2.5rem 0;
-}
