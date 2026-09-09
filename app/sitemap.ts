@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { SECTORS_DATA } from "@/lib/sectors-data";
 import { PRACTICES_DATA } from "@/lib/practices-data";
-import { getProjectsListing } from "@/lib/projects-listing";
+import { getProjectsCards } from "@/lib/projects-listing";
 import { getNewsListing } from "@/lib/news-listing";
 import { getResearchListing } from "@/lib/research-listing";
 import { getOurPeopleContent } from "@/lib/our-people";
@@ -55,7 +55,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }));
 
   const [projectsResult, newsResult, researchResult, peopleResult] = await Promise.allSettled([
-    withTimeout(getProjectsListing({ limit: 100 }).catch(() => ({ projects: [] })), 4000, { projects: [] }),
+    withTimeout(getProjectsCards({ limit: 100 }).catch(() => ({ projects: [] })), 4000, { projects: [] }),
     withTimeout(getNewsListing({ limit: 100 }).catch(() => ({ articles: [] })), 4000, { articles: [] }),
     withTimeout(getResearchListing().catch(() => ({ articles: [], secondaryResearch: [] })), 4000, { articles: [], secondaryResearch: [] }),
     withTimeout(getOurPeopleContent().catch(() => ({ people: [] })), 4000, { people: [] }),
