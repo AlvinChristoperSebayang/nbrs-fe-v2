@@ -164,6 +164,13 @@ export function GridEffect({
               const desktopSrc = item.desktopImage ?? item.image ?? item.mobileImage;
               if (!mobileSrc || !desktopSrc) return null;
 
+              const currentImageClassName =
+                index === 0 && firstImageClassName
+                  ? firstImageClassName
+                  : Array.isArray(imageClassName)
+                    ? (imageClassName[index] ?? imageClassName[0] ?? "object-cover object-center")
+                    : (imageClassName || "object-cover object-center");
+
               return (
                 <ResponsiveImage
                   key={item.title}
@@ -171,7 +178,7 @@ export function GridEffect({
                   desktopSrc={desktopSrc}
                   alt={item.title || "NBRS Architecture"}
                   title={item.title || "NBRS Architecture"}
-                  className={`absolute inset-0 h-full w-full transition-opacity duration-500 object-cover ${
+                  className={`absolute inset-0 h-full w-full transition-opacity duration-500 ${currentImageClassName} ${
                     index === activeIndex ? "opacity-100" : "opacity-0"
                   }`}
                 />
