@@ -30,7 +30,7 @@ export default async function DesignApproachPage() {
         button={content.hero.button}
         descriptionClassName="max-w-[430px]"
         className="md:!h-auto md:!min-h-0 md:aspect-[16/10] lg:aspect-[16/9] xl:aspect-[16/9] 2xl:aspect-[16/9]"
-        imageClassName="object-cover object-right md:object-top"
+        imageClassName="object-cover object-[65%_center] md:object-top"
       />
       <div>
         <div className="bg-[#DEE1F2] h-1.5 md:h-0" />
