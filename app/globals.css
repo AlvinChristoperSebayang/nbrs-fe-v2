@@ -200,7 +200,6 @@ body {
 
 .body-copy small ol,.body-copy small ol li:before,.body-copy small ul {
   color: #282829
-<<<<<<< HEAD
 }
 
 
@@ -212,6 +211,4 @@ body {
   content: "";
   position: absolute;
   bottom: -19px;
-=======
->>>>>>> staging
 }
