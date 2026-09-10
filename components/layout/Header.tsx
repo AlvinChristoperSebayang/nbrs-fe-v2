@@ -176,7 +176,7 @@ export function Header() {
                 }`}
               />
               <img
-                src="/images/logo/logo-black-new.png"
+                src="/images/logo/logo-blue-new.png"
                 alt="NBRS Logo"
                 title="NBRS Logo"
                 width={100}
