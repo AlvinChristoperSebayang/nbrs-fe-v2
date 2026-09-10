@@ -2,6 +2,7 @@ import { cache } from "react";
 import { craftFetch } from "./craft";
 import { toImageSource } from "./media";
 import type { CtaContent, ImageSource, ResponsiveImage } from "./types";
+import type { CraftPreviewTokens } from "./craft-preview";
 
 type RawAsset = Partial<ResponsiveImage> & {
   url?: string;
@@ -207,8 +208,15 @@ function toCta(cta: RawCta | null): CtaContent {
   };
 }
 
-export const getNewsDetail = cache(async (slug: string): Promise<NewsDetail | null> => {
-  const data = await craftFetch<NewsDetailResponse>(NEWS_DETAIL_QUERY, { slug: [slug] });
+export const getNewsDetail = cache(async (
+  slug: string,
+  previewTokens?: CraftPreviewTokens
+): Promise<NewsDetail | null> => {
+  const data = await craftFetch<NewsDetailResponse>(
+    NEWS_DETAIL_QUERY,
+    { slug: [slug] },
+    { previewTokens }
+  );
   const entry = data.entries?.[0];
   if (!entry) return null;
 

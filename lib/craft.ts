@@ -1,3 +1,5 @@
+import { cache } from "react";
+
 function resolveCraftGraphqlUrl() {
   const configured =
     process.env.CRAFT_GRAPHQL_URL ?? "https://new.cms.nbrs.com.au/api/";
@@ -38,6 +40,11 @@ type CraftFetchOptions = {
   revalidate?: number;
   tags?: string[];
   signal?: AbortSignal;
+  /** Craft preview/share tokens from the page URL (`token`, `x-craft-preview`). */
+  previewTokens?: {
+    token?: string | null;
+    previewToken?: string | null;
+  };
 };
 
 function isGraphQLResponse(value: unknown): value is GraphQLResponse {
@@ -68,7 +75,18 @@ function normalizeLocalAssetUrls(value: unknown): unknown {
   return value;
 }
 
-import { cache } from "react";
+function getPreviewRequestHeaders(
+  previewTokens?: CraftFetchOptions["previewTokens"]
+): Record<string, string> {
+  const headers: Record<string, string> = {};
+  if (previewTokens?.token) {
+    headers["X-Craft-Token"] = previewTokens.token;
+  }
+  if (previewTokens?.previewToken) {
+    headers["X-Craft-Preview-Token"] = previewTokens.previewToken;
+  }
+  return headers;
+}
 
 const memoizedFetch = cache(
   async (
@@ -76,13 +94,19 @@ const memoizedFetch = cache(
     bodyString: string,
     bypassCache: boolean,
     revalidate: number,
-    tagsString: string
+    tagsString: string,
+    previewHeadersJson: string
   ): Promise<string> => {
+    const previewHeaders = previewHeadersJson
+      ? (JSON.parse(previewHeadersJson) as Record<string, string>)
+      : {};
+
     const res = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
+        ...previewHeaders,
       },
       body: bodyString,
       cache: bypassCache ? "no-store" : "force-cache",
@@ -111,8 +135,13 @@ export async function craftFetch<T>(
 ): Promise<T> {
   const isDev = process.env.NODE_ENV === "development";
   const cacheMode = process.env.CMS_CACHE_MODE ?? (isDev ? "no-store" : "revalidate");
+  const previewHeaders = getPreviewRequestHeaders(options?.previewTokens);
+  const hasPreview = Object.keys(previewHeaders).length > 0;
   const bypassCache =
-    isDev || cacheMode === "no-store" || options?.cache === "no-store";
+    isDev ||
+    hasPreview ||
+    cacheMode === "no-store" ||
+    options?.cache === "no-store";
   const revalidate = options?.revalidate ?? 60;
   const tagsString = (options?.tags ?? ["craft"]).join(",");
   const bodyString = JSON.stringify({ query, variables });
@@ -122,7 +151,8 @@ export async function craftFetch<T>(
     bodyString,
     bypassCache,
     revalidate,
-    tagsString
+    tagsString,
+    JSON.stringify(previewHeaders)
   );
 
   let json: unknown;
