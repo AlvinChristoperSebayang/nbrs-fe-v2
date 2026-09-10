@@ -21,9 +21,9 @@ export const NAV_STRUCTURE: NavItem[] = [
   {
     id: "purpose",
     label: "PURPOSE",
-    href: "/purpose/about-us",
+    href: "/purpose/about",
     subItems: [
-      { label: "About NBRS", href: "/purpose/about-us" },
+      { label: "About NBRS", href: "/purpose/about" },
       { label: "Design Approach", href: "/purpose/insights/design-approach" },
       { label: "Research", href: "/purpose/insights/research" },
       { label: "Awards", href: "/purpose/insights/awards" },
