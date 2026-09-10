@@ -2,6 +2,7 @@ import { craftFetch } from "./craft";
 import { toImageSource } from "./media";
 import type { ProjectCategory } from "./projects-listing";
 import type { ImageSource } from "./types";
+import type { CraftPreviewTokens } from "./craft-preview";
 
 export type ProjectSplashSlide = {
   imageUrl: ImageSource | null;
@@ -450,11 +451,14 @@ const PROJECT_DETAIL_QUERY = /* GraphQL */ `
 `;
 
 export async function getProjectDetail(
-  slug: string
+  slug: string,
+  previewTokens?: CraftPreviewTokens
 ): Promise<ProjectDetail | null> {
-  const data = await craftFetch<ProjectDetailResponse>(PROJECT_DETAIL_QUERY, {
-    slug: [slug],
-  });
+  const data = await craftFetch<ProjectDetailResponse>(
+    PROJECT_DETAIL_QUERY,
+    { slug: [slug] },
+    { previewTokens }
+  );
 
   // console.log("[getProjectDetail] raw entry for slug:", slug, data.entry);
 
