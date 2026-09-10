@@ -171,7 +171,7 @@ export function GridEffect({
                   desktopSrc={desktopSrc}
                   alt={item.title || "NBRS Architecture"}
                   title={item.title || "NBRS Architecture"}
-                  className={`absolute inset-0 h-full w-full transition-opacity duration-500 ${
+                  className={`absolute inset-0 h-full w-full transition-opacity duration-500 object-cover ${
                     index === activeIndex ? "opacity-100" : "opacity-0"
                   }`}
                 />
