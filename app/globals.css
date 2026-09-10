@@ -203,12 +203,7 @@ body {
 }
 
 
-.image-card::before {
-  background-color: black;
-  height: 20px;
-  width: 100%;
-  display: block;
-  content: "";
-  position: absolute;
-  bottom: -19px;
+.image-card {
+  position: relative;
+  bottom: -1px;
 }
