@@ -143,7 +143,7 @@ export function Footer({ content }: { content: FooterContent }) {
           <div data-aos="fade-up" className="flex flex-col gap-[65px] lg:gap-8 order-1 lg:order-1 mb-[30px] lg:mb-0">
             <Link href="/" aria-label="NBRS Home" title="NBRS Home" className="inline-block w-fit">
               <img
-                src="/images/logo/logo-white.png"
+                src="/images/logo/logo-white-new.png"
                 alt="NBRS"
                 title="NBRS"
                 width={180}

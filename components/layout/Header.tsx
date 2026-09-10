@@ -166,7 +166,7 @@ export function Header() {
               className="relative z-50 focus:outline-none block h-9 w-[100px]"
             >
               <img
-                src="/images/logo/logo-white.png"
+                src="/images/logo/logo-white-new.png"
                 alt="NBRS Logo"
                 title="NBRS Logo"
                 width={100}
@@ -176,7 +176,7 @@ export function Header() {
                 }`}
               />
               <img
-                src="/images/logo/logo-black.png"
+                src="/images/logo/logo-blue-new.png"
                 alt="NBRS Logo"
                 title="NBRS Logo"
                 width={100}

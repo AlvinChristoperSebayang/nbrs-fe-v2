@@ -54,7 +54,7 @@ export function ResearchCard({ item }: { item: ResearchCardItem }) {
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Card Image */}
-      <div className="relative aspect-[370/300] xl:min-h-[300px] xl:min-w-[370px] w-full overflow-hidden bg-zinc-100">
+      <div className="image-card relative aspect-[370/300] xl:min-h-[300px] xl:min-w-[370px] w-full overflow-hidden bg-zinc-100">
         <ResponsiveImage
           src={item.image}
           alt={item.title}

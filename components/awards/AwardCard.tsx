@@ -19,7 +19,7 @@ export function AwardCard({ item }: AwardCardProps) {
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Top Image */}
-      <div className="relative aspect-[370/300] w-full overflow-hidden bg-zinc-100">
+      <div className="image-card relative aspect-[370/300] w-full overflow-hidden bg-zinc-100">
         <ResponsiveImage
           src={item.image}
           alt={item.awardTitle}

@@ -16,6 +16,7 @@ type Entry = {
   designApproachHeroHeading: string | null;
   designApproachHeroDescription: string | null;
   designApproachHeroImage: Asset[];
+  heroImageMobile: Asset[];
   designApproachHeroCtaLabel: string | null;
   designApproachHeroCtaUrl: string | null;
   designApproachPillarsHeading: string | null;
@@ -162,6 +163,7 @@ const heroFit = (width: number, quality = 90) =>
 const landscape = `url mobile: ${fitTransform(640, 80)} tablet: ${fitTransform(1440, 82)} desktop: ${fitTransform(1920, 85)} width height title`;
 const gridEffectDesktopFit = `mobile: ${crop(640, 1024)} tablet: ${crop(768, 1024)} desktop: ${fitTransform(1200, 85)}`;
 const hero = `url mobile: ${heroFit(1440, 90)} tablet: ${heroFit(1440, 85)} desktop: ${heroFit(2400, 85)} width height title`;
+const heroMobile = `url mobile: ${heroFit(360, 90)} tablet: ${heroFit(1440, 85)} desktop: ${heroFit(1440, 85)} width height title`;
 const cta = `url mobile: ${fitTransform(768, 80)} tablet: ${fitTransform(1440, 82)} desktop: ${fitTransform(2400, 85)} width height title`;
 
 const QUERY = /* GraphQL */ `
@@ -180,6 +182,13 @@ const QUERY = /* GraphQL */ `
         designApproachHeroDescription
         designApproachHeroImage {
           ${hero}
+        }
+        heroImageMobile {
+          url 
+          mobile: url @transform(width: 1024, mode: "fit", format: "webp", quality: 90  , immediately: true) 
+          tablet:url @transform(width: 1200, mode: "fit", format: "webp", quality: 85, immediately: true)  
+          desktop: url @transform(width: 1200, mode: "fit", format: "webp", quality: 85, immediately: true) 
+          width height title
         }
         designApproachHeroCtaLabel
         designApproachHeroCtaUrl
@@ -268,6 +277,34 @@ function path(value: string | null): string | null {
   }
 }
 
+function withMobileImage(base: ImageSource | null, mobile: ImageSource | null): ImageSource | null {
+  if (!base) return mobile;
+  if (!mobile) return base;
+
+  const url = typeof mobile === "string" ? mobile : mobile.mobile;
+  const mobileDimensions = typeof mobile === "object" ? mobile.dimensions?.mobile : undefined;
+
+  if (typeof base === "string") {
+    return {
+      mobile: url,
+      tablet: base,
+      desktop: base,
+      ...(mobileDimensions ? { dimensions: { mobile: mobileDimensions } } : {}),
+    };
+  }
+
+  const dimensions = {
+    ...base.dimensions,
+    ...(mobileDimensions ? { mobile: mobileDimensions } : {}),
+  };
+
+  return {
+    ...base,
+    mobile: url,
+    ...(Object.keys(dimensions).length ? { dimensions } : {}),
+  };
+}
+
 export async function getDesignApproachContent(): Promise<DesignApproachContent> {
   try {
     const data = await craftFetch<{ entries: Entry[] }>(QUERY);
@@ -300,7 +337,11 @@ export async function getDesignApproachContent(): Promise<DesignApproachContent>
           "From Insight to\nTransformative Design"
         ),
         description: entry.designApproachHeroDescription?.trim() || DESIGN_APPROACH_FALLBACK.hero.description,
-        image: toImageSource(entry.designApproachHeroImage[0]) || DESIGN_APPROACH_FALLBACK.hero.image,
+        image:
+          withMobileImage(
+            toImageSource(entry.designApproachHeroImage[0]),
+            toImageSource(entry.heroImageMobile?.[0]),
+          ) || DESIGN_APPROACH_FALLBACK.hero.image,
         button: {
           text: entry.designApproachHeroCtaLabel?.trim() || DESIGN_APPROACH_FALLBACK.hero.button.text,
           href: entry.designApproachHeroCtaUrl?.trim() || DESIGN_APPROACH_FALLBACK.hero.button.href,
