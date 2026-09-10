@@ -239,7 +239,7 @@ function fallbackPage(): SustainabilityPageData {
       description:
         "NBRS continues to evolve its practice through research, partnerships and a deepening commitment to ecological design.",
       buttonText: "DISCOVER NBRS RESEARCH",
-      buttonHref: "/research",
+      buttonHref: "/purpose/insights/research",
       secondaryButtonText: "START A CONVERSATION",
       secondaryButtonHref: "/contact",
     },

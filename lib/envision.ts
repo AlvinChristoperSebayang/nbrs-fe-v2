@@ -104,7 +104,7 @@ export async function getEnvisionContent(): Promise<EnvisionContent> {
     const research = (entry.envPastResearch ?? []).flatMap((item, index) => {
       const image = toImageSource(item.thumbnail?.[0]);
       return item.title?.trim() && item.slug?.trim() && image
-        ? [{ id: item.id, slug: item.slug, title: item.title, image, href: `/research/${item.slug}`, hoverColor: ["#F0C7BD", "#FDD4B6", "#EDE3F0"][index % 3] }]
+        ? [{ id: item.id, slug: item.slug, title: item.title, image, href: `/purpose/insights/research/${item.slug}`, hoverColor: ["#F0C7BD", "#FDD4B6", "#EDE3F0"][index % 3] }]
         : [];
     });
     const faqItems = (entry.envFaqs ?? []).flatMap((item) => {

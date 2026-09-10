@@ -95,7 +95,7 @@ export async function craftFetch<T>(
   const isDev = process.env.NODE_ENV === "development";
   const cacheMode = process.env.CMS_CACHE_MODE ?? (isDev ? "no-store" : "revalidate");
   const bypassCache =
-    isDev || cacheMode === "no-store" || options?.cache === "no-store";
+    cacheMode === "no-store" || options?.cache === "no-store";
   const revalidate = options?.revalidate ?? 60;
   const tagsString = (options?.tags ?? ["craft"]).join(",");
   const bodyString = JSON.stringify({ query, variables });

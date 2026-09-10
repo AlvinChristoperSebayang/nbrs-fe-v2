@@ -8,7 +8,6 @@ import { getHomepageContent } from "@/lib/homepage";
 import { createPageMetadata } from "@/lib/seo";
 import type { Sector, GridEffectItem, CtaContent } from "@/lib/types";
 
-export const dynamic = "force-dynamic";
 export const revalidate = 60;
 
 const FALLBACK_SECTORS: Sector[] = [
@@ -75,13 +74,19 @@ const FALLBACK_CTA: CtaContent = {
 };
 
 export async function generateMetadata() {
-  const page = await getHomepageContent();
+  let page: Awaited<ReturnType<typeof getHomepageContent>> | null = null;
+  try {
+    page = await getHomepageContent();
+  } catch (error) {
+    console.warn("Failed to load Homepage SEO metadata from Craft:", error);
+  }
+
   return createPageMetadata({
     pathname: "/",
     title: "Architecture, Design & Heritage",
-    cmsTitle: page.cmsSeoTitle,
-    description: page.seoDescription,
-    image: page.seoImage,
+    cmsTitle: page?.cmsSeoTitle,
+    description: page?.seoDescription,
+    image: page?.seoImage,
   });
 }
 

@@ -12,12 +12,12 @@ import { createPageMetadata } from "@/lib/seo";
 
 export const revalidate = 60;
 
-export async function generateMetadata({ params }: PageProps<"/research/[slug]">): Promise<Metadata> {
+export async function generateMetadata({ params }: PageProps<"/purpose/insights/research/[slug]">): Promise<Metadata> {
   const { slug } = await params;
   const research = await getResearchDetail(slug);
 
   return createPageMetadata({
-    pathname: `/research/${slug}`,
+    pathname: `/purpose/insights/research/${slug}`,
     title: research?.title ?? "Research",
     cmsTitle: research?.seoTitle,
     description: research?.seoDescription,
@@ -39,7 +39,7 @@ function MetadataItem({ label, value }: { label: string; value: string | null })
   );
 }
 
-export default async function ResearchDetailPage({ params }: PageProps<"/research/[slug]">) {
+export default async function ResearchDetailPage({ params }: PageProps<"/purpose/insights/research/[slug]">) {
   const { slug } = await params;
   const research = await getResearchDetail(slug);
   if (!research) notFound();

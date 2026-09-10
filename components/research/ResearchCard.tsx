@@ -46,7 +46,7 @@ export function ResearchCard({ item }: { item: ResearchCardItem }) {
 
   return (
     <Link
-      href={`/research/${item.slug}`}
+      href={`/purpose/insights/research/${item.slug}`}
       title={item.title}
       aria-label={item.title}
       className="group flex flex-col w-full h-full overflow-hidden transition-all duration-300 rounded-[3px]"

@@ -47,9 +47,14 @@ export function GridEffect({
   const showViewAll = Boolean(viewAllLabel && viewAllUrl);
 
   useEffect(() => {
-    const handleScroll = () => {
+    let ticking = false;
+
+    const updateActiveCard = () => {
       // Only execute scroll-activation on mobile (< 1024px)
-      if (window.innerWidth >= 1024) return;
+      if (window.innerWidth >= 1024) {
+        ticking = false;
+        return;
+      }
 
       const targetY = 200; // Target threshold top 200px
       let closestIndex = -1;
@@ -71,11 +76,19 @@ export function GridEffect({
       if (closestIndex !== -1) {
         setActiveIndex(closestIndex);
       }
+      ticking = false;
+    };
+
+    const handleScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(updateActiveCard);
+      }
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("resize", handleScroll, { passive: true });
-    handleScroll();
+    updateActiveCard();
 
     return () => {
       window.removeEventListener("scroll", handleScroll);

@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { craftFetch } from "./craft";
 import type { HeroSlide } from "./hero";
 import { toImageSource, toSeoImage, type RawSeoAsset, type SeoImage } from "./media";
@@ -32,14 +33,14 @@ type RawHomepageCta = {
 
 const HERO_IMAGE_DIMENSIONS = {
   mobile: { width: 768, height: 1024 },
-  tablet: { width: 1920, height: 1200 },
-  desktop: { width: 2560, height: 1440 },
+  tablet: { width: 1440, height: 900 },
+  desktop: { width: 1920, height: 1080 },
 } satisfies ResponsiveImageDimensions;
 
 const HERO_FOREGROUND_DIMENSIONS = {
-  mobile: { width: 1080, height: 840 },
-  tablet: { width: 1920, height: 1494 },
-  desktop: { width: 2560, height: 1992 },
+  mobile: { width: 800, height: 622 },
+  tablet: { width: 1200, height: 934 },
+  desktop: { width: 1600, height: 1245 },
 } satisfies ResponsiveImageDimensions;
 
 const ABOUT_IMAGE_DIMENSIONS = {
@@ -49,9 +50,9 @@ const ABOUT_IMAGE_DIMENSIONS = {
 } satisfies ResponsiveImageDimensions;
 
 const CARD_IMAGE_DIMENSIONS = {
-  mobile: { width: 600, height: 450 },
-  tablet: { width: 900, height: 675 },
-  desktop: { width: 1200, height: 900 },
+  mobile: { width: 500, height: 375 },
+  tablet: { width: 600, height: 450 },
+  desktop: { width: 640, height: 480 },
 } satisfies ResponsiveImageDimensions;
 
 /** GridEffect desktop stage crop (`slideshowDesktop`). */
@@ -175,14 +176,14 @@ const HOMEPAGE_QUERY = /* GraphQL */ `
             linkText
             linkUrl
             image {
-              backgroundMobile: url @transform(width: 1200, height: 1600, mode: "crop", format: "webp", quality: 100)
-              backgroundTablet: url @transform(width: 1920, height: 1200, mode: "crop", format: "webp", quality: 92)
-              backgroundDesktop: url @transform(width: 2560, height: 1440, mode: "crop", format: "webp", quality: 95)
+              backgroundMobile: url @transform(width: 768, height: 1024, mode: "crop", format: "webp", quality: 80)
+              backgroundTablet: url @transform(width: 1440, height: 900, mode: "crop", format: "webp", quality: 80)
+              backgroundDesktop: url @transform(width: 1920, height: 1080, mode: "crop", format: "webp", quality: 80)
             }
             foregroundImage {
-              mobile: url @transform(width: 1080, mode: "fit", format: "webp", quality: 90)
-              tablet: url @transform(width: 1920, mode: "fit", format: "webp", quality: 92)
-              desktop: url @transform(width: 2560, mode: "fit", format: "webp", quality: 95)
+              mobile: url @transform(width: 800, mode: "fit", format: "webp", quality: 80)
+              tablet: url @transform(width: 1200, mode: "fit", format: "webp", quality: 80)
+              desktop: url @transform(width: 1600, mode: "fit", format: "webp", quality: 80)
             }
           }
         }
@@ -197,9 +198,9 @@ const HOMEPAGE_QUERY = /* GraphQL */ `
         }
 
         homepageAboutImage { 
-          mobile: url @transform(width: 1024, height: 1024, mode: "fit", format: "webp", quality: 80, immediately: true) 
-          tablet: url @transform(width: 1200, height: 1200, mode: "fit", format: "webp", quality: 82, immediately: true) 
-          desktop: url @transform(width: 3080, height: 2400, mode: "fit", format: "webp", quality: 85, immediately: true) 
+          mobile: url @transform(width: 800, height: 800, mode: "fit", format: "webp", quality: 80, immediately: true) 
+          tablet: url @transform(width: 1200, height: 1000, mode: "fit", format: "webp", quality: 80, immediately: true) 
+          desktop: url @transform(width: 1600, height: 1250, mode: "fit", format: "webp", quality: 80, immediately: true) 
         }
 
         homepageSectorsHeading
@@ -210,7 +211,7 @@ const HOMEPAGE_QUERY = /* GraphQL */ `
             uri
             tagline
             accentColor
-            thumbnail { mobile: url @transform(width: 600, height: 450, mode: "crop", format: "webp", quality: 80, immediately: true) tablet: url @transform(width: 900, height: 675, mode: "crop", format: "webp", quality: 80, immediately: true) desktop: url @transform(width: 1200, height: 900, mode: "crop", format: "webp", quality: 80, immediately: true) }
+            thumbnail { mobile: url @transform(width: 500, height: 375, mode: "crop", format: "webp", quality: 80, immediately: true) tablet: url @transform(width: 600, height: 450, mode: "crop", format: "webp", quality: 80, immediately: true) desktop: url @transform(width: 640, height: 480, mode: "crop", format: "webp", quality: 80, immediately: true) }
           }
         }
         sectionHeading
@@ -226,7 +227,7 @@ const HOMEPAGE_QUERY = /* GraphQL */ `
             slideshowDesktop { 
               mobile: url @transform(width: 1266, height: 620, mode: "crop", format: "webp", quality: 80, immediately: true) 
               tablet: url @transform(width: 1266, height: 620, mode: "crop", format: "webp", quality: 80, immediately: true) 
-              desktop: url @transform(width: 1266, height: 620, mode: "crop", format: "webp", quality: 95, immediately: true) 
+              desktop: url @transform(width: 1266, height: 620, mode: "crop", format: "webp", quality: 80, immediately: true) 
             }
            
             slideShowMobile { 
@@ -255,7 +256,7 @@ const HOMEPAGE_QUERY = /* GraphQL */ `
         slideshowDesktop {
           mobile: url @transform(width: 1266, height: 620, mode: "crop", format: "webp", quality: 80, immediately: true)
           tablet: url @transform(width: 1266, height: 620, mode: "crop", format: "webp", quality: 80, immediately: true)
-          desktop: url @transform(width: 1266, height: 620, mode: "crop", format: "webp", quality: 95, immediately: true)
+          desktop: url @transform(width: 1266, height: 620, mode: "crop", format: "webp", quality: 80, immediately: true)
         }
         slideShowMobile {
           mobile: url @transform(width: 480, height: 1031, mode: "crop", format: "webp", quality: 80, immediately: true)
@@ -287,7 +288,7 @@ function mapNewsArticles(articles: RawNewsArticle[]): GridEffectItem[] {
     }));
 }
 
-export async function getHomepageContent(): Promise<HomepageContent> {
+export const getHomepageContent = cache(async (): Promise<HomepageContent> => {
   const emptyFallback: HomepageContent = {
     slides: [],
     about: null,
@@ -371,7 +372,7 @@ export async function getHomepageContent(): Promise<HomepageContent> {
               homepage.whatWeDo[0].buttonText && homepage.whatWeDo[0].buttonUrl
                 ? {
                     text: homepage.whatWeDo[0].buttonText,
-                    href: path(homepage.whatWeDo[0].buttonUrl) || "/about",
+                    href: path(homepage.whatWeDo[0].buttonUrl) || "/purpose/about-us",
                   }
                 : null,
             image: toImageSource(
@@ -387,7 +388,7 @@ export async function getHomepageContent(): Promise<HomepageContent> {
         .map((sector) => ({
           label: sector.title,
           image: toImageSource(sector.thumbnail[0], CARD_IMAGE_DIMENSIONS)!,
-          href: `/sectors/${sector.slug}`,
+          href: `/sector/${sector.slug}`,
           description: sector.tagline ?? "",
           hoverColor: sector.accentColor ?? "#E0EFF4",
         })),
@@ -403,4 +404,4 @@ export async function getHomepageContent(): Promise<HomepageContent> {
     console.warn("Failed to load Homepage content from Craft, using fallback:", error);
     return emptyFallback;
   }
-}
+});

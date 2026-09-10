@@ -26,7 +26,7 @@ function formatSustainabilityIntroHeading(heading?: string | null): string {
 export async function generateMetadata() {
   const page = await getSustainabilityPage();
   return createPageMetadata({
-    pathname: "/sustainability",
+    pathname: "/purpose/sustainability",
     title: page.title,
     cmsTitle: page.cmsSeoTitle,
     description: page.seoDescription,

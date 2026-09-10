@@ -78,9 +78,9 @@ const FALLBACK_CTA: CtaContent = {
   title: "BEYOND RECOGNITION, THERE’S RESPONSIBILITY",
   description: "Every accolade is a reflection of deeper intent. Explore the thinking behind the work.",
   buttonText: "DISCOVER THE DESIGN APPROACH",
-  buttonHref: "/design-approach",
+  buttonHref: "/purpose/insights/design-approach",
   secondaryButtonText: "SEE RESEARCH & INSIGHTS",
-  secondaryButtonHref: "/research",
+  secondaryButtonHref: "/purpose/insights/research",
 };
 
 const FALLBACK: AwardsPageContent = {

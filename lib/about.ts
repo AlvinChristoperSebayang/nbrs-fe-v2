@@ -87,7 +87,7 @@ export const ABOUT_FALLBACK: AboutContent = {
       image: "/images/about/practice3.jpg",
     },
   ],
-  viewAll: { label: "VIEW ALL SECTORS", href: "/sectors" },
+  viewAll: { label: "VIEW ALL SECTORS", href: "/sector" },
   practice: {
     heading: "OUR INTEGRATED PRACTICE",
     description:

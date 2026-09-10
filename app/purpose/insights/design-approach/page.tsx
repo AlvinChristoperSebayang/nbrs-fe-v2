@@ -10,7 +10,7 @@ import { getDesignApproachContent } from "@/lib/design-approach";
 export async function generateMetadata() {
   const page = await getDesignApproachContent();
   return createPageMetadata({
-    pathname: "/design-approach",
+    pathname: "/purpose/insights/design-approach",
     title: page.hero.title,
     cmsTitle: page.cmsSeoTitle,
     description: page.seoDescription ?? page.hero.description,
