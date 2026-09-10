@@ -77,7 +77,11 @@ export default async function ProjectsIndexPage(
       <Hero
         image={shell.pageHeroImageUrl || "/images/hero/hero3.png"}
         title={shell.pageHeading || "Projects"}
+<<<<<<< HEAD
+        className="lg:h-auto! lg:min-h-0! lg:aspect-5760/3640 xl:h-auto! xl:min-h-0!"
+=======
         className="lg:!h-auto lg:!min-h-0 lg:aspect-[5760/3640] xl:!h-auto xl:!min-h-0"
+>>>>>>> staging
         imageClassName="object-cover object-center"
         overlayClassName="bg-black/10"
         singleLine

@@ -200,4 +200,18 @@ body {
 
 .body-copy small ol,.body-copy small ol li:before,.body-copy small ul {
   color: #282829
+<<<<<<< HEAD
+}
+
+
+.image-card::before {
+  background-color: black;
+  height: 20px;
+  width: 100%;
+  display: block;
+  content: "";
+  position: absolute;
+  bottom: -19px;
+=======
+>>>>>>> staging
 }
