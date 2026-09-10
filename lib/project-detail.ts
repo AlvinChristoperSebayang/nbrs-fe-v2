@@ -276,9 +276,10 @@ const PROJECT_DETAIL_QUERY = /* GraphQL */ `
             proV2Heading
             proV2Text
             proV2Image {
+              url
               mobile: url @transform(width: 1440, mode: "fit", format: "webp", quality: 80, immediately: true)
               tablet: url @transform(width: 1440, mode: "fit", format: "webp", quality: 82, immediately: true)
-              desktop: url @transform(width: 2400, mode: "fit", format: "webp", quality: 85, immediately: true)
+              desktop: url @transform(width: 1920, mode: "fit", format: "webp", quality: 80, immediately: true)
               width
               height
               title
@@ -292,9 +293,10 @@ const PROJECT_DETAIL_QUERY = /* GraphQL */ `
           ... on projectV2Media_Entry {
             proV2MediaTreatment
             proV2Image {
+              url
               mobile: url @transform(width: 1440, mode: "fit", format: "webp", quality: 80, immediately: true)
               tablet: url @transform(width: 1440, mode: "fit", format: "webp", quality: 82, immediately: true)
-              desktop: url @transform(width: 2400, mode: "fit", format: "webp", quality: 85, immediately: true)
+              desktop: url @transform(width: 1920, mode: "fit", format: "webp", quality: 80, immediately: true)
               width
               height
               title
@@ -304,9 +306,10 @@ const PROJECT_DETAIL_QUERY = /* GraphQL */ `
             proV2Heading
             proV2Text
             proV2Image {
+              url
               mobile: url @transform(width: 1440, mode: "fit", format: "webp", quality: 80, immediately: true)
               tablet: url @transform(width: 1440, mode: "fit", format: "webp", quality: 82, immediately: true)
-              desktop: url @transform(width: 2400, mode: "fit", format: "webp", quality: 85, immediately: true)
+              desktop: url @transform(width: 1920, mode: "fit", format: "webp", quality: 80, immediately: true)
               width
               height
               title

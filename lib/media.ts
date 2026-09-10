@@ -75,24 +75,23 @@ export function toImageSource(
   asset?: RawResponsiveAsset | null,
   dimensions?: ResponsiveImageDimensions,
 ): ImageSource | null {
-  const desktop = asset?.desktop ?? asset?.url;
+  const desktop = asset?.desktop ?? asset?.tablet ?? asset?.mobile ?? asset?.url;
   if (!desktop) return null;
 
-  if (asset?.mobile && asset.tablet) {
-    const inferredDimensions = inferResponsiveDimensions(asset);
-    const resolvedDimensions = inferredDimensions || dimensions
-      ? { ...inferredDimensions, ...dimensions }
-      : undefined;
+  const mobile = asset?.mobile ?? desktop;
+  const tablet = asset?.tablet ?? desktop;
 
-    return {
-      mobile: asset.mobile,
-      tablet: asset.tablet,
-      desktop,
-      ...(resolvedDimensions ? { dimensions: resolvedDimensions } : {}),
-    };
-  }
+  const inferredDimensions = inferResponsiveDimensions({ ...asset, mobile, tablet, desktop });
+  const resolvedDimensions = inferredDimensions || dimensions
+    ? { ...inferredDimensions, ...dimensions }
+    : undefined;
 
-  return desktop;
+  return {
+    mobile,
+    tablet,
+    desktop,
+    ...(resolvedDimensions ? { dimensions: resolvedDimensions } : {}),
+  };
 }
 
 /** Preserves the original Craft asset metadata used by Open Graph/Twitter. */
