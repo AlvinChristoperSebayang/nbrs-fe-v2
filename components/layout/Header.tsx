@@ -61,7 +61,7 @@ export const NAV_STRUCTURE: NavItem[] = [
     href: "/practices",
     subItems: [
       { label: "Architecture", href: "/practices/architecture" },
-      { label: "Landscape Architecture", href: "/practices/landscape-architecture" },
+      { label: "Landscape Architecture", href: "/practices/landscape-architects" },
       { label: "Interior Design", href: "/practices/interior-design" },
     ],
   },

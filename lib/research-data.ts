@@ -35,7 +35,7 @@ export const SECTOR_OPTIONS: CategoryOption[] = [
 export const PRACTICE_OPTIONS: CategoryOption[] = [
   { id: "p-1", label: "Architecture", slug: "architecture" },
   { id: "p-2", label: "Interior Design", slug: "interior-design" },
-  { id: "p-3", label: "Landscape Architecture", slug: "landscape-architecture" },
+  { id: "p-3", label: "Landscape Architecture", slug: "landscape-architects" },
 ];
 
 export const DUMMY_RESEARCH_ITEMS: ResearchItem[] = [
@@ -106,7 +106,7 @@ export const DUMMY_RESEARCH_ITEMS: ResearchItem[] = [
     excerpt: "Shared facilities as catalysts for social cohesion and civic pride.",
     sectorSlug: "community",
     sectorName: "Community",
-    practiceSlug: "landscape-architecture",
+    practiceSlug: "landscape-architects",
     practiceName: "Landscape Architecture",
     image: "/images/home/sector1.png",
     hoverColor: "#F2E8D8",

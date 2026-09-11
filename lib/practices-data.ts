@@ -77,7 +77,7 @@ export const PRACTICES_DATA: PracticeDetail[] = [
   },
   {
     id: "p-3",
-    slug: "landscape-architecture",
+    slug: "landscape-architects",
     title: "LANDSCAPE ARCHITECTURE",
     description: "Connecting built environments with natural landscapes.",
     heroImage: "/images/hero/hero4.png",

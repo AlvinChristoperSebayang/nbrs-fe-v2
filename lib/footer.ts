@@ -93,7 +93,7 @@ const fallbackFooter: FooterContent = {
     ["sectors", "Secure Spaces", "/sectors/secure-spaces"],
     ["sectors", "Heritage", "/sectors/heritage"],
     ["practices", "Architecture", "/practices/architecture"],
-    ["practices", "Landscape Architecture", "/practices/landscape-architecture"],
+    ["practices", "Landscape Architecture", "/practices/landscape-architects"],
     ["practices", "Interior Design", "/practices/interior-design"],
     ["legal", "Terms & Conditions", "/terms"],
     ["legal", "Privacy Policy", "/privacy"],
