@@ -92,13 +92,18 @@ export function Header() {
 
   const isResearchDetail = Boolean(
     pathname &&
-    pathname.startsWith("/research/") &&
-    pathname.replace(/\/$/, "") !== "/research"
+    ((pathname.startsWith("/research/") && pathname.replace(/\/$/, "") !== "/research") ||
+     (pathname.startsWith("/purpose/insights/research/") && pathname.replace(/\/$/, "") !== "/purpose/insights/research"))
   );
 
   const isContactPage = Boolean(
     pathname &&
     (pathname === "/contact" || pathname.startsWith("/contact/"))
+  );
+
+  const isNineDayFortnightPage = Boolean(
+    pathname &&
+    (pathname === "/9-day-fortnight" || pathname.startsWith("/9-day-fortnight/"))
   );
 
   useEffect(() => {
@@ -142,7 +147,9 @@ export function Header() {
   }, [open]);
 
   const isScrolledHeader = scrolled && !open;
-  const useDarkElements = (scrolled || isResearchDetail || isContactPage) && !open;
+  const useDarkElements =
+    (scrolled || isResearchDetail || isContactPage || isNineDayFortnightPage) &&
+    !open;
 
   const currentActiveItem = NAV_STRUCTURE.find(
     (item) => item.id === activeCategory
@@ -245,9 +252,12 @@ export function Header() {
           clipPath: open
             ? "circle(150% at calc(100% - 2.5rem) 2.5rem)"
             : "circle(0% at calc(100% - 2.5rem) 2.5rem)",
+          WebkitClipPath: open
+            ? "circle(150% at calc(100% - 2.5rem) 2.5rem)"
+            : "circle(0% at calc(100% - 2.5rem) 2.5rem)",
         }}
-        className={`fixed inset-0 z-40 bg-[#131722] text-white transition-[clip-path] duration-700 ease-[cubic-bezier(0.65,0,0.35,1)] will-change-[clip-path] transform-gpu overflow-y-auto ${
-          open ? "pointer-events-auto" : "pointer-events-none"
+        className={`fixed inset-0 z-40 bg-[#131722] text-white transition-[clip-path,visibility] duration-700 ease-[cubic-bezier(0.65,0,0.35,1)] will-change-[clip-path] transform-gpu overflow-y-auto ${
+          open ? "visible pointer-events-auto" : "invisible pointer-events-none"
         }`}
       >
         <Container className="h-full flex flex-col justify-start pt-24 pb-12">
