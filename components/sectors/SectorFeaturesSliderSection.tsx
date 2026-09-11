@@ -166,7 +166,7 @@ export function SectorFeaturesSliderSection({
 
                       {item.description && (
                         <p
-                          className={`max-w-[231px] lg:max-w-full text-sm text-white/90 transition-opacity duration-300 ${
+                          className={`max-w-[231px] lg:max-w-full text-sm text-xs xl:text-sm text-white/90 transition-opacity duration-300 ${
                             isActive ? "opacity-100" : "opacity-0"
                           }`}
                         >
