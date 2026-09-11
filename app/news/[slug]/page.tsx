@@ -6,17 +6,20 @@ import { CtaSection } from "@/components/cta/CtaSection";
 import { NewsArticleContent } from "@/components/news/NewsArticleContent";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { getNewsDetail } from "@/lib/news-detail";
+import { craftPreviewFromSearchParams } from "@/lib/craft-preview";
 import { createPageMetadata, SITE_URL } from "@/lib/seo";
 
 export const revalidate = 60;
 
 export async function generateMetadata({
   params,
+  searchParams,
 }: {
   params: Promise<{ slug: string }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const article = await getNewsDetail(slug);
+  const article = await getNewsDetail(slug, craftPreviewFromSearchParams(await searchParams));
 
   return createPageMetadata({
     pathname: `/news/${slug}`,
@@ -90,11 +93,13 @@ function getNewsMobileLines(title: string): string[] | undefined {
 
 export default async function NewsDetailPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ slug: string }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const { slug } = await params;
-  const article = await getNewsDetail(slug);
+  const article = await getNewsDetail(slug, craftPreviewFromSearchParams(await searchParams));
   if (!article) notFound();
 
   const meta = [article.category, article.date].filter(Boolean).join(" • ");

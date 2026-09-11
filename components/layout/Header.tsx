@@ -94,11 +94,18 @@ export function Header() {
     pathname &&
     pathname.startsWith("/purpose/insights/research/") &&
     pathname.replace(/\/$/, "") !== "/purpose/insights/research"
+    ((pathname.startsWith("/research/") && pathname.replace(/\/$/, "") !== "/research") ||
+     (pathname.startsWith("/purpose/insights/research/") && pathname.replace(/\/$/, "") !== "/purpose/insights/research"))
   );
 
   const isContactPage = Boolean(
     pathname &&
     (pathname === "/contact" || pathname.startsWith("/contact/"))
+  );
+
+  const isNineDayFortnightPage = Boolean(
+    pathname &&
+    (pathname === "/9-day-fortnight" || pathname.startsWith("/9-day-fortnight/"))
   );
 
   useEffect(() => {
@@ -142,7 +149,9 @@ export function Header() {
   }, [open]);
 
   const isScrolledHeader = scrolled && !open;
-  const useDarkElements = (scrolled || isResearchDetail || isContactPage) && !open;
+  const useDarkElements =
+    (scrolled || isResearchDetail || isContactPage || isNineDayFortnightPage) &&
+    !open;
 
   const currentActiveItem = NAV_STRUCTURE.find(
     (item) => item.id === activeCategory
@@ -166,7 +175,7 @@ export function Header() {
               className="relative z-50 focus:outline-none block h-9 w-[100px]"
             >
               <img
-                src="/images/logo/logo-white.png"
+                src="/images/logo/logo-white-new.png"
                 alt="NBRS Logo"
                 title="NBRS Logo"
                 width={100}
@@ -176,7 +185,7 @@ export function Header() {
                 }`}
               />
               <img
-                src="/images/logo/logo-black.png"
+                src="/images/logo/logo-blue-new.png"
                 alt="NBRS Logo"
                 title="NBRS Logo"
                 width={100}

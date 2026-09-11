@@ -3,6 +3,7 @@ import type { NewsContentBlock } from "./news-detail";
 import { craftFetch } from "./craft";
 import { toImageSource } from "./media";
 import type { CtaContent, ImageSource, ResponsiveImage } from "./types";
+import type { CraftPreviewTokens } from "./craft-preview";
 
 type RawAsset = Partial<ResponsiveImage> & {
   url?: string;
@@ -330,8 +331,15 @@ function toRelatedResearchItems(entries: RawRelatedResearch[], currentSlug: stri
     }));
 }
 
-export const getResearchDetail = cache(async (slug: string): Promise<ResearchDetail | null> => {
-  const data = await craftFetch<ResearchDetailResponse>(RESEARCH_DETAIL_QUERY, { slug: [slug] });
+export const getResearchDetail = cache(async (
+  slug: string,
+  previewTokens?: CraftPreviewTokens
+): Promise<ResearchDetail | null> => {
+  const data = await craftFetch<ResearchDetailResponse>(
+    RESEARCH_DETAIL_QUERY,
+    { slug: [slug] },
+    { previewTokens }
+  );
   const entry = data.entries?.[0];
   if (!entry) return null;
 

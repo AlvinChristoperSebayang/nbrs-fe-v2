@@ -2,6 +2,7 @@ import { cache } from "react";
 import { craftFetch } from "./craft";
 import { toImageSource } from "./media";
 import type { ImageSource, ResponsiveImage } from "./types";
+import type { CraftPreviewTokens } from "./craft-preview";
 
 type RawAsset = Partial<ResponsiveImage> & {
   width: number | null;
@@ -91,8 +92,15 @@ function formatStudio(value: string | undefined) {
   return /(?:office|studio)$/i.test(value) ? value : `${value} Office`;
 }
 
-export const getPeopleDetail = cache(async (slug: string): Promise<PeopleDetail | null> => {
-  const data = await craftFetch<PeopleDetailResponse>(PEOPLE_DETAIL_QUERY, { slug: [slug] });
+export const getPeopleDetail = cache(async (
+  slug: string,
+  previewTokens?: CraftPreviewTokens
+): Promise<PeopleDetail | null> => {
+  const data = await craftFetch<PeopleDetailResponse>(
+    PEOPLE_DETAIL_QUERY,
+    { slug: [slug] },
+    { previewTokens }
+  );
   const entry = data.entries[0];
   if (!entry) return null;
 

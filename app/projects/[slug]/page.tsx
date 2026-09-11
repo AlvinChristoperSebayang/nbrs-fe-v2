@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getProjectDetail, getKeyProjectsForDetail } from "@/lib/project-detail";
+import { craftPreviewFromSearchParams } from "@/lib/craft-preview";
 import { ProjectDetailHero } from "@/components/projects/ProjectDetailHero";
 import { ProjectDetailLegacyBody } from "@/components/projects/ProjectDetailLegacyBody";
 import { ProjectDetailV2Body } from "@/components/projects/ProjectDetailV2Body";
@@ -34,7 +35,10 @@ export async function generateMetadata(
   props: PageProps<"/projects/[slug]">
 ): Promise<Metadata> {
   const { slug } = await props.params;
-  const project = await getProjectDetail(slug);
+  const project = await getProjectDetail(
+    slug,
+    craftPreviewFromSearchParams(await props.searchParams)
+  );
   if (!project) {
     return createPageMetadata({
       pathname: `/projects/${slug}`,
@@ -59,7 +63,10 @@ export default async function ProjectPage(
   props: PageProps<"/projects/[slug]">
 ) {
   const { slug } = await props.params;
-  const project = await getProjectDetail(slug);
+  const project = await getProjectDetail(
+    slug,
+    craftPreviewFromSearchParams(await props.searchParams)
+  );
 
   if (!project) notFound();
 

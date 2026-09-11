@@ -7,14 +7,21 @@ import { ResearchDetailHero } from "@/components/research/ResearchDetailHero";
 import { Container } from "@/components/ui/Container";
 import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
 import { getResearchDetail } from "@/lib/research-detail";
+import { craftPreviewFromSearchParams } from "@/lib/craft-preview";
 import { ResearchShareButtons } from "@/components/research/ResearchShareButtons";
 import { createPageMetadata } from "@/lib/seo";
 
 export const revalidate = 60;
 
-export async function generateMetadata({ params }: PageProps<"/purpose/insights/research/[slug]">): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+  searchParams,
+}: PageProps<"/purpose/insights/research/[slug]">): Promise<Metadata> {
   const { slug } = await params;
-  const research = await getResearchDetail(slug);
+  const research = await getResearchDetail(
+    slug,
+    craftPreviewFromSearchParams(await searchParams)
+  );
 
   return createPageMetadata({
     pathname: `/purpose/insights/research/${slug}`,
@@ -39,9 +46,15 @@ function MetadataItem({ label, value }: { label: string; value: string | null })
   );
 }
 
-export default async function ResearchDetailPage({ params }: PageProps<"/purpose/insights/research/[slug]">) {
+export default async function ResearchDetailPage({
+  params,
+  searchParams,
+}: PageProps<"/purpose/insights/research/[slug]">) {
   const { slug } = await params;
-  const research = await getResearchDetail(slug);
+  const research = await getResearchDetail(
+    slug,
+    craftPreviewFromSearchParams(await searchParams)
+  );
   if (!research) notFound();
 
   const taxonomy = [research.sectors.join(", "), research.practices.join(", ")].filter(Boolean).join(" / ");
