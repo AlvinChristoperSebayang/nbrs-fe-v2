@@ -84,10 +84,10 @@ export function SectorFeaturesSliderSection({
               </button>
 
               {/* Card Content */}
-              <h3 className="font-heading text-[22px] sm:text-[24px] uppercase font-bold text-white tracking-wide mb-2 leading-none max-w-[240px] px-1">
+              <h3 className="font-heading text-[24px] uppercase font-bold text-white tracking-wide mb-2 leading-none max-w-[240px] px-1">
                 {currentItem.title}
               </h3>
-              <p className="font-sans text-sm text-white/95 leading-snug max-w-[230px] px-1">
+              <p className="font-sans text-xs lg:text-sm text-white/95 leading-snug max-w-[230px] px-1">
                 {currentItem.description}
               </p>
 
@@ -157,7 +157,7 @@ export function SectorFeaturesSliderSection({
                       <h3
                         className={`font-heading uppercase leading-tight duration-300 max-w-[260px] ${
                           isActive
-                            ? "text-white text-[20px] xl:text-[30px] 2xl:text-[34px]"
+                            ? "text-white text-[24px] xl:text-[30px] 2xl:text-[34px]"
                             : "text-[17px] xl:text-[20px] text-black"
                         }`}
                       >
@@ -166,7 +166,7 @@ export function SectorFeaturesSliderSection({
 
                       {item.description && (
                         <p
-                          className={`max-w-57.75 text-sm text-white/90 transition-opacity duration-300 ${
+                          className={` text-xs lg:text-sm text-white/90 transition-opacity duration-300 ${
                             isActive ? "opacity-100" : "opacity-0"
                           }`}
                         >
