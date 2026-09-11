@@ -101,7 +101,7 @@ export function createPageMetadata({
   const resolvedTitle = resolvedCmsTitle || title?.trim();
   const socialTitle = resolvedCmsTitle
     || (resolvedTitle ? `${resolvedTitle} | NBRS` : undefined);
-  const resolvedDescription = description || DEFAULT_SEO_DESCRIPTION;
+  const resolvedDescription = description?.trim() || DEFAULT_SEO_DESCRIPTION;
   const imageMetadata = getImageMetadata(
     image,
     imageAlt || title || "NBRS Architecture"

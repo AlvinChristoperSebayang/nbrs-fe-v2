@@ -16,7 +16,7 @@ export const revalidate = 60;
 export async function generateMetadata({
   params,
   searchParams,
-}: PageProps<"/research/[slug]">): Promise<Metadata> {
+}: PageProps<"/purpose/insights/research/[slug]">): Promise<Metadata> {
   const { slug } = await params;
   const research = await getResearchDetail(
     slug,
@@ -24,7 +24,7 @@ export async function generateMetadata({
   );
 
   return createPageMetadata({
-    pathname: `/research/${slug}`,
+    pathname: `/purpose/insights/research/${slug}`,
     title: research?.title ?? "Research",
     cmsTitle: research?.seoTitle,
     description: research?.seoDescription,
@@ -49,7 +49,7 @@ function MetadataItem({ label, value }: { label: string; value: string | null })
 export default async function ResearchDetailPage({
   params,
   searchParams,
-}: PageProps<"/research/[slug]">) {
+}: PageProps<"/purpose/insights/research/[slug]">) {
   const { slug } = await params;
   const research = await getResearchDetail(
     slug,

@@ -25,7 +25,7 @@ export function RelatedResearchSection({ items }: { items: RelatedResearchItem[]
               className="group flex h-full w-full flex-col pt-2"
             >
               <Link
-                href={`/research/${item.slug}`}
+                href={`/purpose/insights/research/${item.slug}`}
                 className="flex h-full w-full flex-1 flex-col overflow-hidden rounded-[2px] bg-black shadow-md transition-all duration-500 ease-out group-hover:-translate-y-2 group-hover:shadow-2xl will-change-transform"
               >
                 <div className="relative aspect-[370/300] w-full shrink-0 overflow-hidden bg-zinc-800">

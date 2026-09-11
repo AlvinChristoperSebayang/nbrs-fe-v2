@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useState, type CSSProperties } from "react";
+import { useEffect, useId, useState, type CSSProperties } from "react";
 import { ResponsiveImage } from "@/components/ui/ResponsiveImage";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { A11y, Autoplay, EffectFade, Navigation, Pagination } from "swiper/modules";
@@ -44,6 +44,12 @@ export function HeroSlider({ slides, autoplayDelay = DEFAULT_HERO_DELAY }: HeroS
   const nextId = `hero-next-${uid}`;
 
   const [activeIndex, setActiveIndex] = useState(0);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const activeSlide = slides[activeIndex] || slides[0];
 
   const handleSlideChange = (swiper: SwiperInstance) => {
@@ -54,20 +60,24 @@ export function HeroSlider({ slides, autoplayDelay = DEFAULT_HERO_DELAY }: HeroS
 
   return (
     <section className="relative overflow-hidden hero-slider">
-      {slides.map((slide, index) => (
-        <ResponsiveImage
-          key={`${slide.title}-${index}-bg`}
-          src={imageSource(slide.backgroundImage)}
-          alt={slide.title || "NBRS Architecture"}
-          title={slide.title || "NBRS Architecture"}
-          className={`absolute inset-0 z-10 h-full w-full object-cover transition-opacity duration-700 ease-in-out ${
-            index === activeIndex ? "opacity-100" : "opacity-0"
-          }`}
-          priority
-          width={2400}
-          height={1200}
-        />
-      ))}
+      {slides.map((slide, index) => {
+        if (index > 0 && !mounted) return null;
+
+        return (
+          <ResponsiveImage
+            key={`${slide.title}-${index}-bg`}
+            src={imageSource(slide.backgroundImage)}
+            alt={slide.title || "NBRS Architecture"}
+            title={slide.title || "NBRS Architecture"}
+            className={`absolute inset-0 z-10 h-full w-full object-cover transition-opacity duration-700 ease-in-out ${
+              index === activeIndex ? "opacity-100" : "opacity-0"
+            }`}
+            priority={index === 0}
+            width={2400}
+            height={1200}
+          />
+        );
+      })}
       <div className="absolute inset-0 z-20 h-full w-full bg-black/35 pointer-events-none" />
       <Container className="relative z-30 pt-40 pb-10 lg:py-30">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-[30px] items-center relative">
@@ -129,7 +139,7 @@ export function HeroSlider({ slides, autoplayDelay = DEFAULT_HERO_DELAY }: HeroS
                       alt={slide.title || "NBRS Architecture"}
                       title={slide.title || "NBRS Architecture"}
                       className="h-full w-full object-cover"
-                      priority
+                      priority={index === 0}
                       width={2400}
                       height={1200}
                     />

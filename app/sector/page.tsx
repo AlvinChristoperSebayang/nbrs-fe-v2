@@ -9,7 +9,7 @@ export const revalidate = 60;
 export async function generateMetadata() {
   const page = await getSectorsPageContent();
   return createPageMetadata({
-    pathname: "/sectors",
+    pathname: "/sector",
     title: page.hero.title,
     cmsTitle: page.cmsSeoTitle,
     description: page.seoDescription ?? page.hero.description,

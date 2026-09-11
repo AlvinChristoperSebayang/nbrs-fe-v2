@@ -21,14 +21,14 @@ export const NAV_STRUCTURE: NavItem[] = [
   {
     id: "purpose",
     label: "PURPOSE",
-    href: "/about",
+    href: "/purpose/about-us",
     subItems: [
-      { label: "About NBRS", href: "/about" },
-      { label: "Design Approach", href: "/design-approach" },
-      { label: "Research", href: "/research" },
-      { label: "Awards", href: "/awards" },
-      { label: "Sustainability", href: "/sustainability" },
-      { label: "Social Responsibility", href: "/social-responsibility" },
+      { label: "About NBRS", href: "/purpose/about-us" },
+      { label: "Design Approach", href: "/purpose/insights/design-approach" },
+      { label: "Research", href: "/purpose/insights/research" },
+      { label: "Awards", href: "/purpose/insights/awards" },
+      { label: "Sustainability", href: "/purpose/sustainability" },
+      { label: "Social Responsibility", href: "/purpose/social-responsibility" },
       { label: "Reflect Reconciliation Action Plan", href: "/rap" },
     ],
   },
@@ -40,19 +40,19 @@ export const NAV_STRUCTURE: NavItem[] = [
       { label: "Our Leaders", href: "/people/team" },
       { label: "Culture", href: "/people/culture" },
       { label: "Careers", href: "/people/careers" },
-      { label: "Envision Student Partnerships", href: "/people/envision-student-program" },
+      { label: "Envision Student Partnerships", href: "/people/envision-student-partnership-program" },
     ],
   },
   {
     id: "sectors",
     label: "SECTORS",
-    href: "/sectors",
+    href: "/sector",
     subItems: [
-      { label: "Education", href: "/sectors/education" },
-      { label: "Heritage", href: "/sectors/heritage" },
-      { label: "Wellness", href: "/sectors/wellness" },
-      { label: "Community", href: "/sectors/community" },
-      { label: "Secure Spaces", href: "/sectors/secure-spaces" },
+      { label: "Education", href: "/sector/education" },
+      { label: "Heritage", href: "/sector/heritage" },
+      { label: "Wellness", href: "/sector/wellness" },
+      { label: "Community", href: "/sector/community" },
+      { label: "Secure Spaces", href: "/sector/secure-spaces" },
     ],
   },
   {
@@ -92,8 +92,10 @@ export function Header() {
 
   const isResearchDetail = Boolean(
     pathname &&
-    ((pathname.startsWith("/research/") && pathname.replace(/\/$/, "") !== "/research") ||
-     (pathname.startsWith("/purpose/insights/research/") && pathname.replace(/\/$/, "") !== "/purpose/insights/research"))
+    ((pathname.startsWith("/research/") &&
+      pathname.replace(/\/$/, "") !== "/research") ||
+      (pathname.startsWith("/purpose/insights/research/") &&
+        pathname.replace(/\/$/, "") !== "/purpose/insights/research"))
   );
 
   const isContactPage = Boolean(
@@ -248,6 +250,7 @@ export function Header() {
         aria-modal={open}
         aria-label="Site Navigation"
         aria-hidden={!open}
+        inert={!open ? true : undefined}
         style={{
           clipPath: open
             ? "circle(150% at calc(100% - 2.5rem) 2.5rem)"

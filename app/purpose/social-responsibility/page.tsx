@@ -10,7 +10,7 @@ import {
 export async function generateMetadata() {
   const page = await getSocialSustainabilityContent().catch(() => SOCIAL_SUSTAINABILITY_FALLBACK);
   return createPageMetadata({
-    pathname: "/social-responsibility",
+    pathname: "/purpose/social-responsibility",
     title: page.hero.title,
     cmsTitle: page.cmsSeoTitle,
     description: page.seoDescription ?? page.hero.description,

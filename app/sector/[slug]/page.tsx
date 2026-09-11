@@ -27,14 +27,14 @@ export async function generateMetadata({
   const sector = await getSectorDetailContent(slug);
   if (!sector) {
     return createPageMetadata({
-      pathname: `/sectors/${slug}`,
+      pathname: `/sector/${slug}`,
       title: "Sector Not Found",
       noIndex: true,
     });
   }
 
   return createPageMetadata({
-    pathname: `/sectors/${slug}`,
+    pathname: `/sector/${slug}`,
     title: sector.title,
     cmsTitle: sector.cmsSeoTitle,
     description: sector.seoDescription,
