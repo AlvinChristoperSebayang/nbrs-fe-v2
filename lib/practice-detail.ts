@@ -190,13 +190,13 @@ const FALLBACK_SECTORS: Sector[] = SECTORS_DATA.map(({ label, image, href, descr
 
 function mapFeaturedSectors(sectors: FeaturedSector[]): Sector[] {
   const mapped = sectors.map((sector) => {
-    const fallback = FALLBACK_SECTORS.find((item) => item.href === `/sectors/${sector.slug}`);
+    const fallback = FALLBACK_SECTORS.find((item) => item.href === `/sector/${sector.slug}`);
     if (!fallback) return null;
 
     return {
       label: sector.title.trim() || fallback.label,
       image: toImageSource(sector.thumbnail[0]) ?? fallback.image,
-      href: `/sectors/${sector.slug}`,
+      href: `/sector/${sector.slug}`,
       description: sector.tagline?.trim() || fallback.description,
       hoverColor: sector.accentColor?.trim() || fallback.hoverColor,
     };

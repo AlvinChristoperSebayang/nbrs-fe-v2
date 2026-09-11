@@ -11,7 +11,7 @@ export const revalidate = 60;
 export async function generateMetadata() {
   const page = await getEnvisionContent();
   return createPageMetadata({
-    pathname: "/people/envision-student-program",
+    pathname: "/people/envision-student-partnership-program",
     title: page.hero?.title || "Envision Student Program",
     cmsTitle: page.cmsSeoTitle,
     description: page.seoDescription || page.hero?.description,

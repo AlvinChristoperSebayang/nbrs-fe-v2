@@ -10,7 +10,7 @@ import type { CtaContent } from "@/lib/types";
 
 export async function generateMetadata() {
   const page = await getResearchListing();
-  return createPageMetadata({ pathname: "/research", title: page.pageHeading || "Research", cmsTitle: page.cmsSeoTitle, description: page.seoDescription, image: page.seoImage ?? page.pageHeroImageUrl });
+  return createPageMetadata({ pathname: "/purpose/insights/research", title: page.pageHeading || "Research", cmsTitle: page.cmsSeoTitle, description: page.seoDescription, image: page.seoImage ?? page.pageHeroImageUrl });
 }
 export const dynamic = "force-dynamic";
 
@@ -20,7 +20,7 @@ const cta: CtaContent = {
   buttonText: "START A CONVERSATION",
   buttonHref: "/contact",
   secondaryButtonText: "SEE NBRS APPROACH",
-  secondaryButtonHref: "/design-approach",
+  secondaryButtonHref: "/purpose/insights/design-approach",
 };
 
 export default async function ResearchPage() {

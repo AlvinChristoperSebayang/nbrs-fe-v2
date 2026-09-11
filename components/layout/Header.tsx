@@ -21,14 +21,14 @@ export const NAV_STRUCTURE: NavItem[] = [
   {
     id: "purpose",
     label: "PURPOSE",
-    href: "/about",
+    href: "/purpose/about-us",
     subItems: [
-      { label: "About NBRS", href: "/about" },
-      { label: "Design Approach", href: "/design-approach" },
-      { label: "Research", href: "/research" },
-      { label: "Awards", href: "/awards" },
-      { label: "Sustainability", href: "/sustainability" },
-      { label: "Social Responsibility", href: "/social-responsibility" },
+      { label: "About NBRS", href: "/purpose/about-us" },
+      { label: "Design Approach", href: "/purpose/insights/design-approach" },
+      { label: "Research", href: "/purpose/insights/research" },
+      { label: "Awards", href: "/purpose/insights/awards" },
+      { label: "Sustainability", href: "/purpose/sustainability" },
+      { label: "Social Responsibility", href: "/purpose/social-responsibility" },
       { label: "Reflect Reconciliation Action Plan", href: "/rap" },
     ],
   },
@@ -40,19 +40,19 @@ export const NAV_STRUCTURE: NavItem[] = [
       { label: "Our Leaders", href: "/people/team" },
       { label: "Culture", href: "/people/culture" },
       { label: "Careers", href: "/people/careers" },
-      { label: "Envision Student Partnerships", href: "/people/envision-student-program" },
+      { label: "Envision Student Partnerships", href: "/people/envision-student-partnership-program" },
     ],
   },
   {
     id: "sectors",
     label: "SECTORS",
-    href: "/sectors",
+    href: "/sector",
     subItems: [
-      { label: "Education", href: "/sectors/education" },
-      { label: "Heritage", href: "/sectors/heritage" },
-      { label: "Wellness", href: "/sectors/wellness" },
-      { label: "Community", href: "/sectors/community" },
-      { label: "Secure Spaces", href: "/sectors/secure-spaces" },
+      { label: "Education", href: "/sector/education" },
+      { label: "Heritage", href: "/sector/heritage" },
+      { label: "Wellness", href: "/sector/wellness" },
+      { label: "Community", href: "/sector/community" },
+      { label: "Secure Spaces", href: "/sector/secure-spaces" },
     ],
   },
   {
@@ -92,13 +92,20 @@ export function Header() {
 
   const isResearchDetail = Boolean(
     pathname &&
-    pathname.startsWith("/research/") &&
-    pathname.replace(/\/$/, "") !== "/research"
+    ((pathname.startsWith("/research/") &&
+      pathname.replace(/\/$/, "") !== "/research") ||
+      (pathname.startsWith("/purpose/insights/research/") &&
+        pathname.replace(/\/$/, "") !== "/purpose/insights/research"))
   );
 
   const isContactPage = Boolean(
     pathname &&
     (pathname === "/contact" || pathname.startsWith("/contact/"))
+  );
+
+  const isNineDayFortnightPage = Boolean(
+    pathname &&
+    (pathname === "/9-day-fortnight" || pathname.startsWith("/9-day-fortnight/"))
   );
 
   useEffect(() => {
@@ -142,7 +149,9 @@ export function Header() {
   }, [open]);
 
   const isScrolledHeader = scrolled && !open;
-  const useDarkElements = (scrolled || isResearchDetail || isContactPage) && !open;
+  const useDarkElements =
+    (scrolled || isResearchDetail || isContactPage || isNineDayFortnightPage) &&
+    !open;
 
   const currentActiveItem = NAV_STRUCTURE.find(
     (item) => item.id === activeCategory
@@ -241,13 +250,17 @@ export function Header() {
         aria-modal={open}
         aria-label="Site Navigation"
         aria-hidden={!open}
+        inert={!open ? true : undefined}
         style={{
           clipPath: open
             ? "circle(150% at calc(100% - 2.5rem) 2.5rem)"
             : "circle(0% at calc(100% - 2.5rem) 2.5rem)",
+          WebkitClipPath: open
+            ? "circle(150% at calc(100% - 2.5rem) 2.5rem)"
+            : "circle(0% at calc(100% - 2.5rem) 2.5rem)",
         }}
-        className={`fixed inset-0 z-40 bg-[#131722] text-white transition-[clip-path] duration-700 ease-[cubic-bezier(0.65,0,0.35,1)] will-change-[clip-path] transform-gpu overflow-y-auto ${
-          open ? "pointer-events-auto" : "pointer-events-none"
+        className={`fixed inset-0 z-40 bg-[#131722] text-white transition-[clip-path,visibility] duration-700 ease-[cubic-bezier(0.65,0,0.35,1)] will-change-[clip-path] transform-gpu overflow-y-auto ${
+          open ? "visible pointer-events-auto" : "invisible pointer-events-none"
         }`}
       >
         <Container className="h-full flex flex-col justify-start pt-24 pb-12">

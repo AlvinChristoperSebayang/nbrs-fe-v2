@@ -10,7 +10,7 @@ import { ABOUT_FALLBACK, getAboutContent } from "@/lib/about";
 export async function generateMetadata() {
   const page = await getAboutContent().catch(() => ABOUT_FALLBACK);
   return createPageMetadata({
-    pathname: "/about",
+    pathname: "/purpose/about-us",
     title: page.hero.title,
     cmsTitle: page.cmsSeoTitle,
     description: page.seoDescription ?? page.hero.description,

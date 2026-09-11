@@ -8,7 +8,7 @@ import { getAwardsPage } from "@/lib/awards";
 
 export async function generateMetadata() {
   const page = await getAwardsPage();
-  return createPageMetadata({ pathname: "/awards", title: page.hero.title, cmsTitle: page.cmsSeoTitle, description: page.seoDescription, image: page.seoImage ?? page.hero.image });
+  return createPageMetadata({ pathname: "/purpose/insights/awards", title: page.hero.title, cmsTitle: page.cmsSeoTitle, description: page.seoDescription, image: page.seoImage ?? page.hero.image });
 }
 
 function formatIntroHeading(heading?: string | null): string {

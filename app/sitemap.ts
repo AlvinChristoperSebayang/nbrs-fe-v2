@@ -19,12 +19,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const staticPaths = [
     "",
-    "/about",
-    "/sustainability",
-    "/social-responsibility",
+    "/purpose/about-us",
+    "/purpose/sustainability",
+    "/purpose/social-responsibility",
     "/rap",
-    "/awards",
-    "/design-approach",
+    "/purpose/insights/awards",
+    "/purpose/insights/design-approach",
     "/contact",
     "/privacy",
     "/terms",
@@ -32,13 +32,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/people/team",
     "/people/culture",
     "/people/careers",
-    "/people/envision-student-program",
-    "/sectors",
+    "/people/envision-student-partnership-program",
+    "/sector",
     "/practices",
     "/projects",
     "/news",
     "/news/reflect-reconciliation-action-plan",
-    "/research",
+    "/purpose/insights/research",
     "/9-day-fortnight",
   ];
 
@@ -47,7 +47,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }));
 
   const sectorPages: MetadataRoute.Sitemap = SECTORS_DATA.map((sector) => ({
-    url: `${SITE_URL}/sectors/${sector.slug}`,
+    url: `${SITE_URL}/sector/${sector.slug}`,
   }));
 
   const practicePages: MetadataRoute.Sitemap = PRACTICES_DATA.map((practice) => ({
@@ -77,7 +77,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const allResearch = [...(researchData.articles || []), ...(researchData.secondaryResearch || [])];
   const uniqueResearchSlugs = Array.from(new Set(allResearch.map((research) => research.slug).filter(Boolean)));
   const researchPages: MetadataRoute.Sitemap = uniqueResearchSlugs.map((slug) => ({
-    url: `${SITE_URL}/research/${slug}`,
+    url: `${SITE_URL}/purpose/insights/research/${slug}`,
   }));
 
   const peoplePages: MetadataRoute.Sitemap = (peopleData.people || []).map((person) => ({

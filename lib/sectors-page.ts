@@ -79,10 +79,10 @@ export async function getSectorsPageContent(): Promise<SectorsPageContent> {
     if (!entry) return FALLBACK;
 
     const sectors = entry.sectorsFeatured?.map((sector) => {
-      const fallback = FALLBACK.sectors.find((item) => item.href === `/sectors/${sector.slug}`);
+      const fallback = FALLBACK.sectors.find((item) => item.href === `/sector/${sector.slug}`);
       const image = toImageSource(sector.thumbnail?.[0]);
       if (!fallback || !image) return null;
-      return { label: sector.title.trim() || fallback.label, image, href: `/sectors/${sector.slug}`, description: sector.tagline?.trim() || fallback.description, hoverColor: sector.accentColor?.trim() || fallback.hoverColor };
+      return { label: sector.title.trim() || fallback.label, image, href: `/sector/${sector.slug}`, description: sector.tagline?.trim() || fallback.description, hoverColor: sector.accentColor?.trim() || fallback.hoverColor };
     }).filter((sector): sector is Sector => Boolean(sector));
 
     return {
