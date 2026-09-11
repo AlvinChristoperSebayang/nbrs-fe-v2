@@ -38,7 +38,7 @@ const PRACTICES_ITEMS: PracticeCardItem[] = [
     description: "Connecting built environments with natural landscapes.",
     image: "/images/hero/hero4.png",
     bgImage: "/images/hero/hero4.png",
-    href: "/practices/landscape-architecture",
+    href: "/practices/landscape-architects",
   },
 ];
 
