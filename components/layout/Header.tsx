@@ -92,10 +92,10 @@ export function Header() {
 
   const isResearchDetail = Boolean(
     pathname &&
-    pathname.startsWith("/purpose/insights/research/") &&
-    pathname.replace(/\/$/, "") !== "/purpose/insights/research"
-    ((pathname.startsWith("/research/") && pathname.replace(/\/$/, "") !== "/research") ||
-     (pathname.startsWith("/purpose/insights/research/") && pathname.replace(/\/$/, "") !== "/purpose/insights/research"))
+    ((pathname.startsWith("/research/") &&
+      pathname.replace(/\/$/, "") !== "/research") ||
+      (pathname.startsWith("/purpose/insights/research/") &&
+        pathname.replace(/\/$/, "") !== "/purpose/insights/research"))
   );
 
   const isContactPage = Boolean(
