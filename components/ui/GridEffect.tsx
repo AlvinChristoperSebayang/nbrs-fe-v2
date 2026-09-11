@@ -55,7 +55,7 @@ export function GridEffect({
     let ticking = false;
 
     const updateMobile = () => {
-      if (window.innerWidth >= 1024) {
+      if (window.innerWidth >= 640) {
         ticking = false;
         return;
       }
@@ -151,9 +151,7 @@ export function GridEffect({
         ticking = true;
         requestAnimationFrame(updateMobile);
       }
-      ticking = false;
     };
-
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("resize", handleScroll, { passive: true });
