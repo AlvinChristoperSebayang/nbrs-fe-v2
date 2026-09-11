@@ -166,7 +166,7 @@ export function SectorFeaturesSliderSection({
 
                       {item.description && (
                         <p
-                          className={` text-xs lg:text-sm text-white/90 transition-opacity duration-300 ${
+                          className={` text-xs xl:text-sm text-white/90 transition-opacity duration-300 ${
                             isActive ? "opacity-100" : "opacity-0"
                           }`}
                         >
