@@ -246,8 +246,11 @@ export function Header() {
           clipPath: open
             ? "circle(150% at calc(100% - 2.5rem) 2.5rem)"
             : "circle(0% at calc(100% - 2.5rem) 2.5rem)",
+          WebkitClipPath: open
+            ? "circle(150% at calc(100% - 2.5rem) 2.5rem)"
+            : "circle(0% at calc(100% - 2.5rem) 2.5rem)",
         }}
-        className={`fixed inset-0 z-40 bg-[#131722] text-white transition-[clip-path] duration-700 ease-[cubic-bezier(0.65,0,0.35,1)] will-change-[clip-path] transform-gpu overflow-y-auto ${
+        className={`fixed inset-0 z-40 bg-[#131722] text-white transition-[clip-path,visibility] duration-700 ease-[cubic-bezier(0.65,0,0.35,1)] will-change-[clip-path] transform-gpu overflow-y-auto ${
           open ? "visible pointer-events-auto" : "invisible pointer-events-none"
         }`}
       >
