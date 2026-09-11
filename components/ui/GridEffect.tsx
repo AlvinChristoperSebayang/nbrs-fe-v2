@@ -170,7 +170,7 @@ export function GridEffect({
       {/* MOBILE PINNED 100VH SCROLL VIEW (< 1024px) */}
       <div
         ref={mobileTrackRef}
-        className={`relative w-full lg:hidden ${className}`}
+        className={`relative w-full sm:hidden ${className}`}
         style={{
           height: items.length > 1 ? `${items.length * 100}svh` : "100svh",
           backgroundColor,
@@ -396,7 +396,7 @@ export function GridEffect({
       </div>
 
       {/* DESKTOP VIEW (>= 1024px) */}
-      <section className={`hidden lg:block py-16 lg:py-20 xl:py-24 ${className}`} style={{ backgroundColor }}>
+      <section className={`hidden sm:block py-16 lg:py-20 xl:py-24 ${className}`} style={{ backgroundColor }}>
         <Container className="overflow-hidden">
           <div data-aos="fade-up" suppressHydrationWarning className="mb-6 flex items-start justify-between gap-6">
             <div className="flex flex-col gap-2">
