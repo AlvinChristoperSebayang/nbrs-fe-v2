@@ -84,10 +84,10 @@ export function SectorFeaturesSliderSection({
               </button>
 
               {/* Card Content */}
-              <h3 className="font-heading text-[22px] sm:text-[24px] uppercase font-bold text-white tracking-wide mb-2 leading-none max-w-[240px] px-1">
+              <h3 className="font-heading text-[24px] uppercase font-bold text-white tracking-wide mb-2 leading-none max-w-[240px] px-1">
                 {currentItem.title}
               </h3>
-              <p className="font-sans text-sm text-white/95 leading-snug max-w-[230px] px-1">
+              <p className="font-sans text-xs lg:text-sm text-white/95 leading-snug max-w-[230px] px-1">
                 {currentItem.description}
               </p>
 
@@ -140,12 +140,12 @@ export function SectorFeaturesSliderSection({
             </div>
 
             {/* Grid Cards Container */}
-            <div className="grid grid-cols-3 items-stretch gap-6 lg:gap-8 xl:gap-14 2xl:gap-20 py-16 lg:py-24 xl:py-32 px-4 relative z-10">
+            <div className="grid w-full grid-cols-12 gap-6 xl:gap-[30px] items-stretch pb-16 lg:py-16 xl:py-24 px-8 xl:px-12 relative z-10">
               {items.map((item, index) => {
                 const isActive = index === activeIndex;
                 const hasHref = Boolean(item.href);
 
-                const cardClassName = `group flex h-80 flex-col justify-between gap-8 overflow-hidden p-6 transition-colors duration-300 cursor-pointer ${
+                const cardClassName = `col-span-4 group flex h-64 flex-col justify-between gap-4 sm:gap-6 overflow-hidden p-5 transition-colors duration-300 lg:h-[245px] xl:h-[320px] lg:p-5 xl:p-8 cursor-pointer ${
                   isActive
                     ? "bg-black/50 backdrop-blur-[5px] border-b-[5px] border-white"
                     : "bg-white/70 backdrop-blur-[0px] border-b-[5px] border-transparent"
@@ -155,10 +155,10 @@ export function SectorFeaturesSliderSection({
                   <>
                     <div className="flex flex-col gap-2">
                       <h3
-                        className={`font-heading text-2xl uppercase leading-tight duration-300 max-w-57.75 lg:max-w-full ${
+                        className={`font-heading uppercase leading-tight duration-300 max-w-[260px] ${
                           isActive
-                            ? "text-white text-[32px]"
-                            : "text-black text-[20px]"
+                            ? "text-white text-[24px] xl:text-[30px] 2xl:text-[34px]"
+                            : "text-[17px] xl:text-[20px] text-black"
                         }`}
                       >
                         {item.title}
@@ -166,7 +166,7 @@ export function SectorFeaturesSliderSection({
 
                       {item.description && (
                         <p
-                          className={`max-w-[231px] lg:max-w-full text-sm text-white/90 transition-opacity duration-300 ${
+                          className={` text-xs xl:text-sm text-white/90 transition-opacity duration-300 ${
                             isActive ? "opacity-100" : "opacity-0"
                           }`}
                         >

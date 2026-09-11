@@ -95,7 +95,7 @@ Sectors (/sectors)
 
 Practices (/practices)
 ├── Architecture (/practices/architecture)
-├── Landscape Architecture (/practices/landscape-architecture)
+├── Landscape Architecture (/practices/landscape-architects)
 └── Interior Design (/practices/interior-design)
 
 Projects (/projects)
