@@ -140,12 +140,12 @@ export function SectorFeaturesSliderSection({
             </div>
 
             {/* Grid Cards Container */}
-            <div className="grid grid-cols-3 items-stretch gap-6 lg:gap-8 xl:gap-14 2xl:gap-20 py-16 lg:py-24 xl:py-32 px-4 relative z-10">
+            <div className="grid grid-cols-12 items-stretch gap-6 lg:gap-6 2xl:gap-20 pb-16 lg:py-16 xl:py-24 px-8 xl:px-12 relative z-10">
               {items.map((item, index) => {
                 const isActive = index === activeIndex;
                 const hasHref = Boolean(item.href);
 
-                const cardClassName = `group flex h-80 flex-col justify-between gap-8 overflow-hidden p-6 transition-colors duration-300 cursor-pointer ${
+                const cardClassName = `group col-span-12 lg:col-span-4 flex aspect-square flex-col justify-between gap-8 overflow-hidden p-6 transition-colors duration-300 cursor-pointer ${
                   isActive
                     ? "bg-black/50 backdrop-blur-[5px] border-b-[5px] border-white"
                     : "bg-white/70 backdrop-blur-[0px] border-b-[5px] border-transparent"
@@ -157,7 +157,7 @@ export function SectorFeaturesSliderSection({
                       <h3
                         className={`font-heading text-2xl uppercase leading-tight duration-300 max-w-57.75 lg:max-w-full ${
                           isActive
-                            ? "text-white text-[32px]"
+                            ? "text-white text-[32px] lg:text-[28px] xl:text-[32px]"
                             : "text-black text-[20px]"
                         }`}
                       >
