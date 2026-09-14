@@ -59,7 +59,6 @@ export function MasonryGallery({
         <ResponsiveImage
           src={images[0]}
           alt={`${altPrefix} 1`}
-          title={`${altPrefix} 1`}
           className="h-auto w-full rounded-[3px] object-cover object-center"
         />
       </div>
@@ -75,7 +74,6 @@ export function MasonryGallery({
               <ResponsiveImage
                 src={image}
                 alt={`${altPrefix} ${originalIndex + 1}`}
-                title={`${altPrefix} ${originalIndex + 1}`}
                 onLoad={(e) => handleImageLoad(originalIndex, e)}
                 className="h-auto w-full rounded-[3px] object-cover object-center"
               />

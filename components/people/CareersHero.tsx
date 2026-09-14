@@ -131,7 +131,6 @@ export function CareersHero({
         <ResponsiveImage
           src={imageSrc}
           alt={altTitle}
-          title={altTitle}
           className={`h-full w-full object-cover ${imagePosition} filter brightness-[0.35] contrast-[1.1]`}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-[#0B131F] via-[#0B131F]/80 to-transparent" />
@@ -202,7 +201,6 @@ export function CareersHero({
               <ResponsiveImage
                 src={imageSrc}
                 alt="NBRS Featured Hero"
-                title="NBRS Featured Hero"
                 className={`h-full w-full object-cover ${imagePosition} ${imageClassName}`}
               />
             </div>

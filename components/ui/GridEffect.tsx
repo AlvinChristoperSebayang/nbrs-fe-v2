@@ -197,7 +197,6 @@ export function GridEffect({
                   src={mobileSrc || desktopSrc!}
                   desktopSrc={desktopSrc || mobileSrc!}
                   alt={item.title || "NBRS Architecture"}
-                  title={item.title || "NBRS Architecture"}
                   priority={index === 0}
                   className={`absolute inset-0 h-full w-full transition-opacity duration-700 will-change-opacity transform-gpu ${currentImageClassName} ${
                     index === mobileActiveIndex ? "opacity-100" : "opacity-0"
@@ -296,7 +295,6 @@ export function GridEffect({
               {showViewAll && (
                 <Link
                   href={viewAllUrl}
-                  title={viewAllLabel}
                   aria-label={viewAllLabel}
                   className="group inline-flex items-center gap-2 font-heading text-sm uppercase text-white/95 hover:text-white mt-1"
                 >
@@ -377,7 +375,6 @@ export function GridEffect({
                       {item.href ? (
                         <Link
                           href={item.href}
-                          title={item.title}
                           aria-label={item.title}
                           className="block w-full h-full focus:outline-none"
                         >
@@ -410,7 +407,6 @@ export function GridEffect({
             {showViewAll && (
               <Link
                 href={viewAllUrl}
-                title={viewAllLabel}
                 aria-label={viewAllLabel}
                 className="group items-center gap-2 font-heading text-lg lg:text-[20px] xl:text-[22px] uppercase text-black flex"
               >
@@ -453,7 +449,6 @@ export function GridEffect({
                     src={mobileSrc}
                     desktopSrc={desktopSrc}
                     alt={item.title || "NBRS Architecture"}
-                    title={item.title || "NBRS Architecture"}
                     className={`absolute inset-0 h-full w-full transition-opacity duration-500 ${currentImageClassName} ${
                       index === activeIndex ? "opacity-100" : "opacity-0"
                     }`}
@@ -535,7 +530,6 @@ export function GridEffect({
                         cardRefs.current[index] = el;
                       }}
                       href={item.href!}
-                      title={item.title}
                       aria-label={item.title}
                       onMouseEnter={() => setActiveIndex(index)}
                       className={cardClassName}

@@ -109,7 +109,6 @@ function FooterLinkGroup({
               <li key={link.label}>
                 <Link
                   href={link.href}
-                  title={link.label}
                   aria-label={link.label}
                   className="text-[18px] lg:text-lg text-white/70 transition-colors duration-200 hover:text-white"
                 >
@@ -141,11 +140,10 @@ export function Footer({ content }: { content: FooterContent }) {
         <div className="grid grid-cols-1 gap-[35px] sm:grid-cols-2 lg:grid-cols-3 lg:gap-12">
           {/* Column 1: Business Info & Logo */}
           <div data-aos="fade-up" className="flex flex-col gap-[65px] lg:gap-8 order-1 lg:order-1 mb-[30px] lg:mb-0">
-            <Link href="/" aria-label="NBRS Home" title="NBRS Home" className="inline-block w-fit">
+            <Link href="/" aria-label="NBRS Home" className="inline-block w-fit">
               <img
                 src="/images/logo/logo-white-new.png"
                 alt="NBRS"
-                title="NBRS"
                 width={180}
                 height={65}
                 className="w-[150px] sm:w-[165px] lg:w-[180px] h-auto object-contain"
@@ -167,7 +165,6 @@ export function Footer({ content }: { content: FooterContent }) {
               <div>
                 <Link
                   href="/contact"
-                  title="Contact Us"
                   aria-label="Contact Us"
                   className="group font-heading text-[26px] leading-[27px] uppercase font-bold tracking-normal text-white inline-flex items-center gap-3.5 hover:text-white/80 transition-colors"
                 >
@@ -192,7 +189,6 @@ export function Footer({ content }: { content: FooterContent }) {
                 {content.contactMessage && content.contactLink ? (
                   <a
                     href={content.contactLink}
-                    title={content.contactMessage}
                     aria-label={content.contactMessage}
                     className="mt-3.5 inline-block whitespace-pre-line text-base lg:text-lg text-white/70 transition-colors hover:text-white"
                   >
@@ -212,7 +208,6 @@ export function Footer({ content }: { content: FooterContent }) {
                         target="_blank"
                         rel="noreferrer"
                         aria-label={social.label}
-                        title={social.label}
                         className="text-white/80 transition hover:text-white"
                       >
                         {social.icon}

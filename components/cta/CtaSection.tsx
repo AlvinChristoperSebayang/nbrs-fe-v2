@@ -35,7 +35,6 @@ export function CtaSection({
       <ResponsiveImage
         src={data.image}
         alt={data.title || "NBRS Call to Action"}
-        title={data.title || "NBRS Call to Action"}
         className={`absolute inset-0 h-full w-full object-cover ${imageClassName ?? ""}`}
         priority={priority}
         width={2400}
@@ -64,7 +63,6 @@ export function CtaSection({
               <Link
                 target={data.buttonHref.startsWith("http") ? "_blank" : undefined}
                 href={data.buttonHref}
-                title={data.buttonText}
                 aria-label={data.buttonText}
                 className="group inline-flex items-center justify-center gap-2 rounded-full bg-white px-3 py-3.5 sm:px-10 sm:py-4 text-sm sm:text-[20px] font-normal text-[#D18148] transition hover:bg-white/90 uppercase"
               >
@@ -89,7 +87,6 @@ export function CtaSection({
             {data.secondaryButtonText && data.secondaryButtonHref && (
               <Link
                 href={data.secondaryButtonHref}
-                title={data.secondaryButtonText}
                 aria-label={data.secondaryButtonText}
                 className="group inline-flex items-center justify-center gap-2 text-sm sm:text-base uppercase tracking-wider text-white/90 transition-opacity hover:opacity-100 font-medium mt-1"
               >

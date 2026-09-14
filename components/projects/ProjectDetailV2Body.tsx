@@ -37,7 +37,7 @@ export function ProjectDetailV2Body({ blocks }: { blocks: ProjectV2Block[] }) {
                 </Container>
                 {block.image && (
                   <Container className="relative z-10 translate-y-8 lg:translate-y-12">
-                    <ResponsiveImage src={block.image} alt={block.heading || "Project image"} title={block.heading || "Project image"} className="w-full h-auto max-md:aspect-auto lg:aspect-[1170/650] object-cover" />
+                    <ResponsiveImage src={block.image} alt={block.heading || "Project image"} className="w-full h-auto max-md:aspect-auto lg:aspect-[1170/650] object-cover" />
                   </Container>
                 )}
               </section>
@@ -57,7 +57,7 @@ export function ProjectDetailV2Body({ blocks }: { blocks: ProjectV2Block[] }) {
 
           if (block.type === "media") {
             if (!block.image) return null;
-            const image = <ResponsiveImage src={block.image} alt="Project media" title="Project media" className="h-full w-full object-cover" />;
+            const image = <ResponsiveImage src={block.image} alt="Project media" className="h-full w-full object-cover" />;
             return block.treatment === "fullBleed" ? (
               <div key={index} className="w-full">{image}</div>
             ) : (
@@ -84,7 +84,7 @@ export function ProjectDetailV2Body({ blocks }: { blocks: ProjectV2Block[] }) {
               <RichText html={block.textHtml} className={block.heading ? "mt-4" : ""} />
             </div>
           );
-          const image = block.image ? <ResponsiveImage src={block.image} alt={block.heading || "Project image"} title={block.heading || "Project image"} className="w-full h-auto max-md:aspect-auto lg:aspect-[570/300] object-cover" /> : null;
+          const image = block.image ? <ResponsiveImage src={block.image} alt={block.heading || "Project image"} className="w-full h-auto max-md:aspect-auto lg:aspect-[570/300] object-cover" /> : null;
 
           return (
             <Container key={index}>

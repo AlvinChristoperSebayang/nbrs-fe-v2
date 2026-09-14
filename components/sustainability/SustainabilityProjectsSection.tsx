@@ -13,7 +13,6 @@ export function SustainabilityProjectsSection({ projects }: { projects: Sustaina
           <h2 className="font-heading text-3xl uppercase leading-none sm:text-4xl">Sustainable projects</h2>
           <Link
             href="/projects"
-            title="View all sustainable projects"
             aria-label="View all sustainable projects"
             className="text-sm underline underline-offset-4"
           >
@@ -25,7 +24,6 @@ export function SustainabilityProjectsSection({ projects }: { projects: Sustaina
             <Link
               key={`${project.href}-${project.title}`}
               href={project.href}
-              title={project.title}
               aria-label={project.title}
               className="group block"
             >
@@ -34,7 +32,6 @@ export function SustainabilityProjectsSection({ projects }: { projects: Sustaina
                   <ResponsiveImage
                     src={project.image}
                     alt={project.title}
-                    title={project.title}
                     className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
                   />
                 ) : null}

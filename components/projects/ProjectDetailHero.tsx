@@ -71,7 +71,6 @@ export function ProjectDetailHero({
             <ResponsiveImage
               src={image}
               alt={title}
-              title={title}
               className="w-full h-auto max-md:min-h-0 lg:aspect-[16/10] object-cover"
             />
           </figure>

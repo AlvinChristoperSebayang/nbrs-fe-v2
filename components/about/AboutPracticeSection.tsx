@@ -92,7 +92,6 @@ export function AboutPracticeSection({
             <ResponsiveImage
               src={mainImage}
               alt="NBRS Practice Architecture & Design"
-              title="NBRS Practice Architecture & Design"
               className="h-full w-full object-cover"
             />
           </div>
@@ -109,7 +108,6 @@ export function AboutPracticeSection({
               <ResponsiveImage
                 src={src}
                 alt={`NBRS Practice gallery image ${index + 1}`}
-                title={`NBRS Practice gallery image ${index + 1}`}
                 className="h-full w-full object-cover"
               />
             </div>

@@ -104,7 +104,6 @@ export function TeamListSection({ members }: TeamListSectionProps) {
             <div key={member.id} data-aos="fade-up" data-aos-delay={(index % 3) * 60} className="flex flex-col">
               <Link
                 href={`/people/team/${member.id}`}
-                title={member.name}
                 aria-label={member.name}
                 className="group flex flex-col flex-1 h-full overflow-hidden bg-white cursor-pointer"
               >
@@ -113,7 +112,6 @@ export function TeamListSection({ members }: TeamListSectionProps) {
                   <ResponsiveImage
                     src={member.image}
                     alt={member.name}
-                    title={member.name}
                     className="h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
                   />
                 </div>

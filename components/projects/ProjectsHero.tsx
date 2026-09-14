@@ -19,7 +19,6 @@ export function ProjectsHero({
         <ResponsiveImage
           src={image || "/images/hero/hero3.png"}
           alt={headingText}
-          title={headingText}
           className="h-full w-full object-cover lg:object-top"
           priority
         />

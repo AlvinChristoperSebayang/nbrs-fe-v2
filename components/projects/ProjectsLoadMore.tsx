@@ -88,7 +88,6 @@ export function ProjectsLoadMore({
             type="button"
             onClick={() => void loadMore()}
             disabled={isLoading}
-            title="Load more projects"
             aria-label="Load more projects"
             className="inline-flex items-center rounded-full border border-black px-8 py-3 text-sm uppercase text-black transition hover:bg-black hover:text-white disabled:cursor-wait disabled:opacity-60"
           >

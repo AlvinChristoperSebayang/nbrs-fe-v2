@@ -41,7 +41,6 @@ export function ResearchShareButtons({ title }: { title: string }) {
       <button
         type="button"
         onClick={handleShare}
-        title={copied ? "Link copied!" : "Share article"}
         aria-label="Share article"
         className="relative flex items-center justify-center text-[#AEAEAE] transition-colors hover:text-black cursor-pointer"
       >
@@ -66,7 +65,6 @@ export function ResearchShareButtons({ title }: { title: string }) {
         href={getLinkedInShareUrl()}
         target="_blank"
         rel="noopener noreferrer"
-        title="Share on LinkedIn"
         aria-label="Share on LinkedIn"
         className="flex items-center justify-center text-[#AEAEAE] transition-colors hover:text-[#0077B5] cursor-pointer"
       >

@@ -29,7 +29,6 @@ export function PeopleNavigationGrid({ cards }: PeopleNavigationGridProps) {
         <div data-aos="fade-up">
           <Link
             href={teamCard.href}
-            title={teamCard.title}
             aria-label={teamCard.title}
             className="group relative grid grid-cols-1 lg:grid-cols-12 overflow-hidden bg-black text-white cursor-pointer"
           >
@@ -79,7 +78,6 @@ export function PeopleNavigationGrid({ cards }: PeopleNavigationGridProps) {
               <ResponsiveImage
                 src={teamCard.image}
                 alt={teamCard.title}
-                title={teamCard.title}
                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
               />
             </div>
@@ -89,7 +87,6 @@ export function PeopleNavigationGrid({ cards }: PeopleNavigationGridProps) {
               <ResponsiveImage
                 src={teamCard.image}
                 alt={teamCard.title}
-                title={teamCard.title}
                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
               />
             </div>
@@ -102,7 +99,6 @@ export function PeopleNavigationGrid({ cards }: PeopleNavigationGridProps) {
             <div key={card.id} data-aos="fade-up" data-aos-delay={index * 100}>
               <Link
                 href={card.href}
-                title={card.title}
                 aria-label={card.title}
                 className="group relative flex flex-col overflow-hidden bg-black text-white lg:justify-between lg:p-6 lg:pt-8 xl:p-7 lg:aspect-[370/290] lg:min-h-0 cursor-pointer"
               >
@@ -115,7 +111,6 @@ export function PeopleNavigationGrid({ cards }: PeopleNavigationGridProps) {
                 <ResponsiveImage
                   src={card.image}
                   alt={card.title}
-                  title={card.title}
                   className="hidden lg:block absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
                 />
 
@@ -158,7 +153,6 @@ export function PeopleNavigationGrid({ cards }: PeopleNavigationGridProps) {
                   <ResponsiveImage
                     src={card.image}
                     alt={card.title}
-                    title={card.title}
                     className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
                   />
                 </div>

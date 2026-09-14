@@ -35,7 +35,6 @@ export function QuoteSection({
             <ResponsiveImage
               src={image}
               alt={cleanAuthor || "Quote author"}
-              title={cleanAuthor || "Quote author"}
               className={`h-full w-full object-cover object-center max-lg:rounded-none ${imageClassName ?? ""}`}
             />
           </div>

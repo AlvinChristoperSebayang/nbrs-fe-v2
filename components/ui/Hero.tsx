@@ -64,7 +64,6 @@ export function Hero({
         <ResponsiveImage
           src={image}
           alt={typeof title === "string" ? title.replace(/\n/g, " ") : "NBRS Architecture"}
-          title={typeof title === "string" ? title.replace(/\n/g, " ") : "NBRS Architecture"}
           className={`h-full w-full ${/object-(contain|cover|fill|none|scale-down)/.test(imageClassName) ? "" : "object-cover"} ${imageClassName}`.trim()}
           priority
         />
@@ -125,7 +124,6 @@ export function Hero({
           {button && (
             <Link
               href={button.href}
-              title={button.text}
               aria-label={button.text}
               data-aos="fade-up"
               data-aos-delay="300"

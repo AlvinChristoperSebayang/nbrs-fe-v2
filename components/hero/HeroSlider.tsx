@@ -68,7 +68,6 @@ export function HeroSlider({ slides, autoplayDelay = DEFAULT_HERO_DELAY }: HeroS
             key={`${slide.title}-${index}-bg`}
             src={imageSource(slide.backgroundImage)}
             alt={slide.title || "NBRS Architecture"}
-            title={slide.title || "NBRS Architecture"}
             className={`absolute inset-0 z-10 h-full w-full object-cover transition-opacity duration-700 ease-in-out ${
               index === activeIndex ? "opacity-100" : "opacity-0"
             }`}
@@ -137,7 +136,6 @@ export function HeroSlider({ slides, autoplayDelay = DEFAULT_HERO_DELAY }: HeroS
                     <ResponsiveImage
                       src={src}
                       alt={slide.title || "NBRS Architecture"}
-                      title={slide.title || "NBRS Architecture"}
                       className="h-full w-full object-cover"
                       priority={index === 0}
                       width={2400}
