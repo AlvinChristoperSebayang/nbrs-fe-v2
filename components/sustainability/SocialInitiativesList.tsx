@@ -57,7 +57,6 @@ export function SocialInitiativesList({
                 <ResponsiveImage
                   src={initiative.image}
                   alt={initiative.title}
-                  title={initiative.title}
                   className="h-full w-full object-cover object-center"
                 />
               </div>

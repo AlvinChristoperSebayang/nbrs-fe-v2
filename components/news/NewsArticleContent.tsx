@@ -17,7 +17,7 @@ export function NewsArticleContent({ blocks }: { blocks: NewsContentBlock[] }) {
         }
 
         if (block.type === "image") {
-          return <ResponsiveImage key={index} src={block.image} alt="News article image" title="News article image" className="h-auto w-full rounded-[3px] object-contain" />;
+          return <ResponsiveImage key={index} src={block.image} alt="News article image" className="h-auto w-full rounded-[3px] object-contain" />;
         }
 
         if (block.type === "gallery") {

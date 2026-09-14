@@ -171,13 +171,11 @@ export function Header() {
               href="/"
               onClick={() => setOpen(false)}
               aria-label="NBRS Home"
-              title="NBRS Home"
               className="relative z-50 focus:outline-none block h-9 w-[100px]"
             >
               <img
                 src="/images/logo/logo-white-new.png"
                 alt="NBRS Logo"
-                title="NBRS Logo"
                 width={100}
                 height={36}
                 className={`absolute inset-0 h-full w-full object-contain transition-opacity duration-300 ${
@@ -187,7 +185,6 @@ export function Header() {
               <img
                 src="/images/logo/logo-blue-new.png"
                 alt="NBRS Logo"
-                title="NBRS Logo"
                 width={100}
                 height={36}
                 className={`absolute inset-0 h-full w-full object-contain transition-opacity duration-300 ${
@@ -284,7 +281,6 @@ export function Header() {
                   >
                     <Link
                       href={item.href}
-                      title={item.label}
                       aria-label={item.label}
                       data-no-loading={
                         item.subItems && item.subItems.length > 0 && activeCategory !== item.id
@@ -324,7 +320,6 @@ export function Header() {
                     <Link
                       key={sub.label}
                       href={sub.href}
-                      title={sub.label}
                       aria-label={sub.label}
                       onClick={() => setOpen(false)}
                       className={`font-sans text-[14px] sm:text-base lg:text-lg text-white/90 hover:text-white transition-all duration-500 ease-out py-0.5 inline-block hover:translate-x-1 leading-relaxed ${

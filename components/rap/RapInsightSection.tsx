@@ -32,7 +32,6 @@ export function RapInsightSection({
           <ResponsiveImage
             src={image}
             alt={image_alt || heading || "RAP Insight Artwork"}
-            title={image_alt || heading || "RAP Insight Artwork"}
             className="aspect-square w-full object-cover"
           />
         </div>

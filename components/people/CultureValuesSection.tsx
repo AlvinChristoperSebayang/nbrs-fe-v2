@@ -37,7 +37,6 @@ export function CultureValuesSection({
               <ResponsiveImage
                 src={image}
                 alt="NBRS Our Values Diagram"
-                title="NBRS Our Values Diagram"
                 className="w-full h-auto object-contain mix-blend-multiply"
               />
             </div>

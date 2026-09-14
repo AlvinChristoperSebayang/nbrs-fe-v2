@@ -55,7 +55,6 @@ export function ProjectListTableSection({
             <Link
               key={row.id || row.project}
               href={row.href}
-              title={row.project}
               aria-label={row.project}
               data-aos="fade-up"
               data-aos-delay={index * 80}

@@ -208,7 +208,6 @@ export function SectorFeaturesSliderSection({
                     <Link
                       key={index}
                       href={item.href!}
-                      title={item.title}
                       aria-label={item.title}
                       onMouseEnter={() => setActiveIndex(index)}
                       className={cardClassName}

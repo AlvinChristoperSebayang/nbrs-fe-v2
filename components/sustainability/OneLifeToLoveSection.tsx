@@ -30,7 +30,6 @@ export function OneLifeToLoveSection() {
             <ResponsiveImage
               src="/images/about/creative-partnership.jpg"
               alt="One Life to Love Campus Design"
-              title="One Life to Love Campus Design"
               className="h-full w-full object-cover"
             />
           </div>

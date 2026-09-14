@@ -30,7 +30,6 @@ export function ResponsiveImage({
   onLoad,
 }: ResponsiveImageProps) {
   const computedAlt = (alt && alt.trim()) ? alt.trim() : (title && title.trim()) ? title.trim() : "NBRS Architecture";
-  const computedTitle = (title && title.trim()) ? title.trim() : computedAlt;
   const sourceDimensions = desktopSrc
     ? typeof desktopSrc === "string"
       ? getImageDimensions(desktopSrc)
@@ -42,7 +41,6 @@ export function ResponsiveImage({
   const intrinsicHeight = height ?? sourceDimensions?.height;
 
   const imageProps = {
-    title: computedTitle,
     className,
     loading: priority ? ("eager" as const) : ("lazy" as const),
     fetchPriority: priority ? ("high" as const) : undefined,

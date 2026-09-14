@@ -45,7 +45,6 @@ export function AtAGlanceSection({
                     <ResponsiveImage
                       src={item.icon}
                       alt={item.text || "Research metric icon"}
-                      title={item.text || "Research metric icon"}
                       className="h-full w-full object-contain"
                     />
                   ) : (

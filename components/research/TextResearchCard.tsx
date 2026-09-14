@@ -6,7 +6,6 @@ export function TextResearchCard({ item }: { item: SecondaryResearchItem }) {
   return (
     <Link
       href={`/purpose/insights/research/${item.slug}`}
-      title={item.title}
       aria-label={item.title}
       className="group flex h-[150px] w-full flex-col overflow-hidden border border-[#E7E7E7] transition-all duration-300 hover:border-black"
     >

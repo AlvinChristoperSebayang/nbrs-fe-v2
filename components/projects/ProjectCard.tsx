@@ -7,7 +7,6 @@ export function ProjectCard({ project }: { project: Project }) {
     <li>
       <Link        
         href={`/projects/${project.slug}`}
-        title={project.title}
         aria-label={project.title}
         className="group block"
       >
@@ -16,7 +15,6 @@ export function ProjectCard({ project }: { project: Project }) {
             // src={project.image}
             src="/images/placeholder-project.png"
             alt={project.title}
-            title={project.title}
             className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
         </div>

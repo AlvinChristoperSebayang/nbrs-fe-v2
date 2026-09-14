@@ -34,7 +34,6 @@ export function ProjectStorySection() {
         <img
           src="/images/about/creative-partnership.jpg"
           alt="Melonba Campus Exterior"
-          title="Melonba Campus Exterior"
           width={4096}
           height={2731}
           className="w-full h-auto max-h-[779px] object-cover"
@@ -60,7 +59,6 @@ export function ProjectStorySection() {
           <img
             src="/images/about/practice1.jpg"
             alt="Melonba Aerial View"
-            title="Melonba Aerial View"
             width={4000}
             height={3488}
             className="w-full h-auto max-h-[650px] object-cover"

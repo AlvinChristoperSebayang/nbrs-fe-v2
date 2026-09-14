@@ -57,7 +57,6 @@ function renderEmailLinks(value: string) {
       <a
         key={`${part}-${index}`}
         href={`mailto:${part}`}
-        title={`Send email to ${part}`}
         aria-label={`Send email to ${part}`}
         className="font-medium text-black underline underline-offset-4 hover:text-rose-600 transition-colors"
       >
@@ -175,7 +174,6 @@ export function CareersAccordionSection({
                   joining our award‑winning studio are invited to connect with us at{" "}
                   <a
                     href="mailto:careers@nbrs.com.au"
-                    title="Send email to careers@nbrs.com.au"
                     aria-label="Send email to careers@nbrs.com.au"
                     className="font-medium text-black underline underline-offset-4 hover:text-rose-600 transition-colors"
                   >

@@ -82,7 +82,6 @@ export function SupportedOrganisations({
                 <ResponsiveImage
                   src={org.logo}
                   alt={org.name}
-                  title={org.name}
                   className="max-h-full max-w-full object-contain transition-all duration-300"
                 />
               </div>
@@ -101,7 +100,6 @@ export function SupportedOrganisations({
                 <ResponsiveImage
                   src={org.logo}
                   alt={org.name}
-                  title={org.name}
                   className="max-h-full max-w-full object-contain"
                 />
               </div>

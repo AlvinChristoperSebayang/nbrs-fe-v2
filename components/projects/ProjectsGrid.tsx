@@ -52,7 +52,6 @@ export function ProjectsGrid({ projects }: { projects: ProjectListItem[] }) {
         >
           <Link
             href={`/projects/${project.slug}`}
-            title={project.heading}
             aria-label={project.heading}
             className="group block w-full h-full flex flex-col"
           >

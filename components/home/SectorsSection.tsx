@@ -124,7 +124,6 @@ export function SectorsSection({
             <Link
               key={`${sector.label}-${index}`}
               href={sector.href}
-              title={sector.label}
               aria-label={sector.label}
               data-aos="fade-up"
               data-aos-delay={100 + index * 100}
@@ -166,7 +165,6 @@ export function SectorsSection({
               <ResponsiveImage
                 src={sector.image}
                 alt={sector.label}
-                title={sector.label}
                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 z-[5]"
                 width={1200}
                 height={900}
