@@ -126,7 +126,7 @@ export function ContactForm({ title, serviceOptions, sectorOptions, referralSour
         message: String(formData.get("message") || ""),
         hearAbout: selectedSources,
         website: String(formData.get("website") || ""),
-        elapsedMs: Date.now() - formStartedAt.current,
+        formStartedAt: formStartedAt.current,
       };
 
       const response = await fetch("/api/contact", {
