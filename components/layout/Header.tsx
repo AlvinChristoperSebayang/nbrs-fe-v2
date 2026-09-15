@@ -199,13 +199,11 @@ export function Header() {
               aria-expanded={open}
               aria-controls="mobile-nav-drawer"
               onClick={() => setOpen((prev) => !prev)}
-              className={`relative z-50 flex h-10 w-10 cursor-pointer flex-col items-center justify-center gap-[6px] rounded-full p-2 transition-transform duration-500 ease-[cubic-bezier(0.65,0,0.35,1)] active:scale-90 ${
-                open ? "rotate-180" : "rotate-0 hover:scale-105"
-              }`}
+              className="relative z-50 flex h-10 w-10 cursor-pointer flex-col items-center justify-center gap-[6px] rounded-full p-2 active:scale-90"
             >
               {/* Top Line */}
               <span
-                className={`h-[2px] w-6 rounded-full transition-all duration-500 ease-[cubic-bezier(0.65,0,0.35,1)] origin-center ${
+                className={`h-[2px] w-6 rounded-full origin-center ${
                   open
                     ? "translate-y-[8px] rotate-45 bg-white"
                     : useDarkElements
@@ -216,7 +214,7 @@ export function Header() {
 
               {/* Middle Line */}
               <span
-                className={`h-[2px] rounded-full transition-all duration-400 ease-in-out origin-right ${
+                className={`h-[2px] rounded-full origin-right ${
                   open
                     ? "w-0 opacity-0 scale-x-0 bg-white"
                     : useDarkElements
@@ -227,7 +225,7 @@ export function Header() {
 
               {/* Bottom Line */}
               <span
-                className={`h-[2px] w-6 rounded-full transition-all duration-500 ease-[cubic-bezier(0.65,0,0.35,1)] origin-center ${
+                className={`h-[2px] w-6 rounded-full origin-center ${
                   open
                     ? "-translate-y-[8px] -rotate-45 bg-white"
                     : useDarkElements
@@ -248,16 +246,8 @@ export function Header() {
         aria-label="Site Navigation"
         aria-hidden={!open}
         inert={!open ? true : undefined}
-        style={{
-          clipPath: open
-            ? "circle(150% at calc(100% - 2.5rem) 2.5rem)"
-            : "circle(0% at calc(100% - 2.5rem) 2.5rem)",
-          WebkitClipPath: open
-            ? "circle(150% at calc(100% - 2.5rem) 2.5rem)"
-            : "circle(0% at calc(100% - 2.5rem) 2.5rem)",
-        }}
-        className={`fixed inset-0 z-40 bg-[#131722] text-white transition-[clip-path,visibility] duration-700 ease-[cubic-bezier(0.65,0,0.35,1)] will-change-[clip-path] transform-gpu overflow-y-auto ${
-          open ? "visible pointer-events-auto" : "invisible pointer-events-none"
+        className={`fixed inset-0 z-40 bg-[#131722] text-white overflow-y-auto ${
+          open ? "block pointer-events-auto" : "hidden pointer-events-none"
         }`}
       >
         <Container className="h-full flex flex-col justify-start pt-24 pb-12">
@@ -265,19 +255,14 @@ export function Header() {
           <div className="grid grid-cols-12 gap-3 sm:gap-8 md:gap-12 items-start pt-17">
             {/* Left Column: Main Categories (Menu font 26px on mobile) */}
             <div className="col-span-6 flex flex-col items-start gap-13 sm:gap-14">
-              {NAV_STRUCTURE.map((item, index) => {
+              {NAV_STRUCTURE.map((item) => {
                 const isActive = activeCategory === item.id;
 
                 return (
                   <div
                     key={item.id}
                     onMouseEnter={() => setActiveCategory(item.id)}
-                    className={`w-fit cursor-pointer group flex flex-col transition-all duration-500 ease-out ${
-                      open ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
-                    }`}
-                    style={{
-                      transitionDelay: open ? `${120 + index * 50}ms` : "0ms",
-                    }}
+                    className="w-fit cursor-pointer group flex flex-col"
                   >
                     <Link
                       href={item.href}
@@ -299,7 +284,7 @@ export function Header() {
                           setOpen(false);
                         }
                       }}
-                      className={`font-heading text-[26px] sm:text-3xl lg:text-[38px] uppercase tracking-wide leading-tight transition-all duration-300 ${
+                      className={`font-heading text-[26px] sm:text-3xl lg:text-[38px] uppercase tracking-wide leading-tight transition-colors duration-200 ${
                         isActive
                           ? "text-white font-bold opacity-100"
                           : "text-white/35 font-semibold hover:text-white/70"
@@ -312,22 +297,17 @@ export function Header() {
               })}
             </div>
 
-            {/* Right Column: Submenu Links with Staggered Entrance Animation */}
+            {/* Right Column: Submenu Links */}
             <div className="col-span-6 flex flex-col gap-4 pt-1 sm:pt-2 pl-2 sm:pl-8 lg:pl-12 justify-start">
               {currentActiveItem?.subItems && (
                 <div key={activeCategory} className="flex flex-col gap-3.5">
-                  {currentActiveItem.subItems.map((sub, subIndex) => (
+                  {currentActiveItem.subItems.map((sub) => (
                     <Link
                       key={sub.label}
                       href={sub.href}
                       aria-label={sub.label}
                       onClick={() => setOpen(false)}
-                      className={`font-sans text-[14px] sm:text-base lg:text-lg text-white/90 hover:text-white transition-all duration-500 ease-out py-0.5 inline-block hover:translate-x-1 leading-relaxed ${
-                        open ? "translate-y-0 opacity-100" : "translate-y-5 opacity-0"
-                      }`}
-                      style={{
-                        transitionDelay: open ? `${150 + subIndex * 50}ms` : "0ms",
-                      }}
+                      className="font-sans text-[14px] sm:text-base lg:text-lg text-white/90 hover:text-white py-0.5 inline-block hover:translate-x-1 transition-transform duration-200 leading-relaxed"
                     >
                       {sub.label}
                     </Link>
