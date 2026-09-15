@@ -48,6 +48,21 @@
   }
 }
 
+@keyframes contact-alert-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-contact-alert-in {
+  animation: contact-alert-in 220ms ease-out both;
+}
+
 body {
   background: #ffffff;
   color: var(--foreground);

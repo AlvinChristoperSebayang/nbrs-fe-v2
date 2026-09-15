@@ -76,6 +76,13 @@ export default async function ContactPage() {
             sectorOptions={content.sectorOptions}
             referralSources={content.referralSources}
             privacyNotice={content.privacyNotice}
+            successTitle={
+              process.env.CONTACT_SUCCESS_TITLE?.trim() || "Thank you"
+            }
+            successMessage={
+              process.env.CONTACT_SUCCESS_MESSAGE?.trim() ||
+              "We've received your enquiry and will be in touch shortly."
+            }
           />
 
           <div data-aos="fade-up" className="order-2 lg:order-1 lg:col-span-3 xl:col-span-4 flex flex-col gap-6 lg:gap-24 pt-2 lg:pt-4">

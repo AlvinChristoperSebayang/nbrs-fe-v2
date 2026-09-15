@@ -1,6 +1,7 @@
 "use client";
 
-import { type FormEvent, useEffect, useRef, useState } from "react";
+import { type FormEvent, useCallback, useEffect, useRef, useState } from "react";
+import { ContactSubmissionAlert } from "@/components/contact/ContactSubmissionAlert";
 
 type ContactFormProps = {
   title: string;
@@ -8,6 +9,8 @@ type ContactFormProps = {
   sectorOptions: string[];
   referralSources: string[];
   privacyNotice: string | null;
+  successTitle: string;
+  successMessage: string;
 };
 
 const slugify = (value: string) =>
@@ -77,16 +80,30 @@ function CheckboxGroup({
   );
 }
 
-export function ContactForm({ title, serviceOptions, sectorOptions, referralSources, privacyNotice }: ContactFormProps) {
+export function ContactForm({
+  title,
+  serviceOptions,
+  sectorOptions,
+  referralSources,
+  privacyNotice,
+  successTitle,
+  successMessage,
+}: ContactFormProps) {
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const [selectedSectors, setSelectedSectors] = useState<string[]>([]);
   const [selectedSources, setSelectedSources] = useState<string[]>([]);
   const [submissionState, setSubmissionState] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [submissionMessage, setSubmissionMessage] = useState("");
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const formStartedAt = useRef(0);
 
   useEffect(() => {
     formStartedAt.current = Date.now();
+  }, []);
+
+  const closeSuccessAlert = useCallback(() => {
+    setShowSuccessAlert(false);
+    setSubmissionState("idle");
   }, []);
 
   const toggle = (value: string, setSelected: React.Dispatch<React.SetStateAction<string[]>>) => {
@@ -147,7 +164,8 @@ export function ContactForm({ title, serviceOptions, sectorOptions, referralSour
       setSelectedSources([]);
       formStartedAt.current = Date.now();
       setSubmissionState("success");
-      setSubmissionMessage("Thank you. Your enquiry has been sent.");
+      setSubmissionMessage("");
+      setShowSuccessAlert(true);
     } catch (error) {
       setSubmissionState("error");
       setSubmissionMessage(error instanceof Error ? error.message : "We could not send your enquiry. Please try again.");
@@ -329,8 +347,8 @@ export function ContactForm({ title, serviceOptions, sectorOptions, referralSour
             </button>
           </div>
 
-          {submissionState !== "idle" && (
-            <p role="status" aria-live="polite" className={submissionState === "success" ? "font-sans text-sm text-emerald-700" : submissionState === "error" ? "font-sans text-sm text-red-700" : "sr-only"}>
+          {submissionState === "error" && submissionMessage && (
+            <p role="status" aria-live="polite" className="font-sans text-sm text-red-700">
               {submissionMessage}
             </p>
           )}
@@ -338,6 +356,13 @@ export function ContactForm({ title, serviceOptions, sectorOptions, referralSour
           {privacyNotice && <div className="font-sans text-xs text-stone-500 leading-relaxed pt-2 [&_a]:underline [&_a]:text-stone-700 hover:[&_a]:text-black" dangerouslySetInnerHTML={{ __html: privacyNotice }} />}
         </form>
       </div>
+
+      <ContactSubmissionAlert
+        open={showSuccessAlert}
+        title={successTitle}
+        message={successMessage}
+        onClose={closeSuccessAlert}
+      />
     </div>
   );
 }
