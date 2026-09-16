@@ -57,7 +57,7 @@ const FALLBACK: PracticesPageContent = {
 const routeByCategorySlug: Record<string, string> = {
   architecture: "/practices/architecture",
   interiors: "/practices/interior-design",
-  landscape: "/practices/landscape-architects",
+  "landscape-architects": "/practices/landscape-architects",
 };
 
 const crop = (width: number, height: number, quality = 80) =>
