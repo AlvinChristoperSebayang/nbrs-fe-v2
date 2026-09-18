@@ -18,7 +18,7 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import "./globals.css";
 import "./header.css";
 
-const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
+const GTM_ID = "GTM-NRF3CRZD";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -102,19 +102,17 @@ export default async function RootLayout({
       suppressHydrationWarning
       className={`${roboto.variable} ${tradeGothic.variable} h-full antialiased`}
     >
-      {GTM_ID ? <GoogleTagManager gtmId={GTM_ID} /> : null}
+      <GoogleTagManager gtmId={GTM_ID} />
       <body className="flex min-h-full flex-col" suppressHydrationWarning>
-        {GTM_ID ? (
-          <noscript>
-            <iframe
-              src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
-              height="0"
-              width="0"
-              style={{ display: "none", visibility: "hidden" }}
-              title="Google Tag Manager"
-            />
-          </noscript>
-        ) : null}
+        <noscript>
+          <iframe
+            src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+            title="Google Tag Manager"
+          />
+        </noscript>
         <JsonLd data={organizationSchema} />
         <ScrollToTop />
         <AosInit />
