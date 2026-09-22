@@ -39,9 +39,9 @@ export function HeritageServicesSection({
                 {group.items.map((item) => (
                   <div
                     key={item}
-                    className={`min-h-14 px-4 py-3 text-sm font-medium leading-snug ${group.accent ? "bg-[#f2d5ce]" : "bg-[#eeeeee]"}`}
+                    className={`min-h-14 px-4 py-3 text-sm font-medium leading-snug ${group.accent ? "bg-[#f2d5ce]" : "bg-[#EDEDED]"}`}
                   >
-                    {item}
+                    {item} hello
                   </div>
                 ))}
               </div>
