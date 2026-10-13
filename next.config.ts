@@ -1,5 +1,14 @@
 import type { NextConfig } from "next";
 
+// Origins allowed to embed the frontend for Craft live preview. These must
+// exactly match the Craft control-panel origins, including their protocol.
+const craftPreviewFrameAncestors = [
+  "'self'",
+  "http://nbrs-update.test",
+  "https://staging.cms.nbrs.com.au",
+  "https://new.cms.nbrs.com.au",
+].join(" ");
+
 const nextConfig: NextConfig = {
   // Apache proxies this local Next server through https://nbrs-fe.test.
   // Next 16 rejects its development resources unless the browser origin is
@@ -87,10 +96,6 @@ const nextConfig: NextConfig = {
             value: "max-age=63072000; includeSubDomains; preload",
           },
           {
-            key: "X-Frame-Options",
-            value: "SAMEORIGIN",
-          },
-          {
             key: "X-Content-Type-Options",
             value: "nosniff",
           },
@@ -116,7 +121,7 @@ const nextConfig: NextConfig = {
               "font-src 'self' data: https:",
               "connect-src 'self' https: http://localhost:* ws://localhost:* http://127.0.0.1:* ws://127.0.0.1:* http://nbrs-staging.test http://nbrs-update.test",
               "frame-src 'self' https: http://nbrs-staging.test http://nbrs-update.test",
-              "frame-ancestors 'self'",
+              `frame-ancestors ${craftPreviewFrameAncestors}`,
               "base-uri 'self'",
               "form-action 'self' https:",
               "object-src 'none'",

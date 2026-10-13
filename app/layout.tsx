@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { GoogleTagManager } from "@next/third-parties/google";
 import { roboto, tradeGothic } from "@/lib/fonts";
 import { Suspense } from "react";
 import { Header } from "@/components/layout/Header";
@@ -17,6 +18,8 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import "./globals.css";
 import "./header.css";
 
+const GTM_ID = "GTM-NRF3CRZD";
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
@@ -30,8 +33,11 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/icon.svg", type: "image/svg+xml" },
-      { url: "/images/logo/logo-white-2.svg", type: "image/svg+xml" },
+     {
+      url: "/favicon-48x48.png",
+      type: "image/png",
+      sizes: "48x48",
+    },
     ],
     apple: [
       { url: "/apple-icon.svg", type: "image/svg+xml" },
@@ -99,7 +105,17 @@ export default async function RootLayout({
       suppressHydrationWarning
       className={`${roboto.variable} ${tradeGothic.variable} h-full antialiased`}
     >
+      <GoogleTagManager gtmId={GTM_ID} />
       <body className="flex min-h-full flex-col" suppressHydrationWarning>
+        <noscript>
+          <iframe
+            src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+            title="Google Tag Manager"
+          />
+        </noscript>
         <JsonLd data={organizationSchema} />
         <ScrollToTop />
         <AosInit />
