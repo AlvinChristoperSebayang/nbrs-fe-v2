@@ -49,14 +49,14 @@ const FALLBACK: PracticesPageContent = {
   },
   practices: [
     { id: "architecture", title: "ARCHITECTURE", description: "Design for purpose, responding to people.", image: "/images/hero/hero1.png", bgImage: "/images/hero/hero1.png", href: "/practices/architecture" },
-    { id: "interiors", title: "INTERIOR DESIGN", description: "Creating intuitive, sensory-rich interior environments.", image: "/images/hero/hero3.png", bgImage: "/images/hero/hero3.png", href: "/practices/interior-design" },
+    { id: "interior-design", title: "INTERIOR DESIGN", description: "Creating intuitive, sensory-rich interior environments.", image: "/images/hero/hero3.png", bgImage: "/images/hero/hero3.png", href: "/practices/interior-design" },
     { id: "landscape", title: "LANDSCAPE ARCHITECTURE", description: "Connecting built environments with natural landscapes.", image: "/images/hero/hero4.png", bgImage: "/images/hero/hero4.png", href: "/practices/landscape-architects" },
   ],
 };
 
 const routeByCategorySlug: Record<string, string> = {
   architecture: "/practices/architecture",
-  interiors: "/practices/interior-design",
+  "interior-design": "/practices/interior-design",
   "landscape-architects": "/practices/landscape-architects",
 };
 

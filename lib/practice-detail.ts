@@ -64,7 +64,7 @@ export type PracticeDetailContent = {
 
 const CATEGORY_SLUGS: Record<string, string> = {
   architecture: "architecture",
-  "interior-design": "interiors",
+  "interior-design": "interior-design",
   "landscape-architects": "landscape-architects",
 };
 
