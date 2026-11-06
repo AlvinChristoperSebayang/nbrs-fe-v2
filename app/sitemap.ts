@@ -1,96 +1,64 @@
 import type { MetadataRoute } from "next";
 import { SECTORS_DATA } from "@/lib/sectors-data";
 import { PRACTICES_DATA } from "@/lib/practices-data";
-import { getProjectsCards } from "@/lib/projects-listing";
-import { getNewsListing } from "@/lib/news-listing";
-import { getResearchListing } from "@/lib/research-listing";
-import { getOurPeopleContent } from "@/lib/our-people";
+import { getSitemapData, type SitemapEntry } from "@/lib/sitemap-data";
 import { ALLOW_INDEXING, SITE_URL } from "@/lib/seo";
 
-function withTimeout<T>(promise: Promise<T>, timeoutMs: number, fallback: T): Promise<T> {
-  return Promise.race([
-    promise,
-    new Promise<T>((resolve) => setTimeout(() => resolve(fallback), timeoutMs)),
-  ]);
+// ISR: the sitemap is built at deploy time and regenerated in the background
+// at most once an hour, on the first request after the hour has passed. If a
+// regeneration fails (CMS down/slow), Next keeps serving the last good sitemap.
+export const revalidate = 3600;
+
+const STATIC_PATHS = [
+  "",
+  "/purpose/about-us",
+  "/purpose/sustainability",
+  "/purpose/social-responsibility",
+  "/rap",
+  "/purpose/insights/awards",
+  "/purpose/insights/design-approach",
+  "/contact",
+  "/privacy",
+  "/terms",
+  "/people",
+  "/people/team",
+  "/people/culture",
+  "/people/careers",
+  "/people/envision-student-partnership-program",
+  "/sector",
+  "/practices",
+  "/projects",
+  "/news",
+  "/news/reflect-reconciliation-action-plan",
+  "/purpose/insights/research",
+  "/9-day-fortnight",
+];
+
+function fromEntries(prefix: string, entries: SitemapEntry[]): MetadataRoute.Sitemap {
+  return entries.map((entry) => ({
+    url: `${SITE_URL}${prefix}/${entry.slug}`,
+    ...(entry.dateUpdated ? { lastModified: entry.dateUpdated } : {}),
+  }));
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   if (!ALLOW_INDEXING) return [];
 
-  const staticPaths = [
-    "",
-    "/purpose/about-us",
-    "/purpose/sustainability",
-    "/purpose/social-responsibility",
-    "/rap",
-    "/purpose/insights/awards",
-    "/purpose/insights/design-approach",
-    "/contact",
-    "/privacy",
-    "/terms",
-    "/people",
-    "/people/team",
-    "/people/culture",
-    "/people/careers",
-    "/people/envision-student-partnership-program",
-    "/sector",
-    "/practices",
-    "/projects",
-    "/news",
-    "/news/reflect-reconciliation-action-plan",
-    "/purpose/insights/research",
-    "/9-day-fortnight",
+  // Throws if the CMS cannot deliver every section (see lib/sitemap-data.ts).
+  const data = await getSitemapData(revalidate);
+
+  const pages: MetadataRoute.Sitemap = [
+    ...STATIC_PATHS.map((path) => ({ url: `${SITE_URL}${path}` })),
+    // Sector and practice routes come from local data (their pages'
+    // generateStaticParams use the same lists).
+    ...SECTORS_DATA.map((sector) => ({ url: `${SITE_URL}/sector/${sector.slug}` })),
+    ...PRACTICES_DATA.map((practice) => ({ url: `${SITE_URL}/practices/${practice.slug}` })),
+    ...fromEntries("/projects", data.projects),
+    ...fromEntries("/news", data.news),
+    ...fromEntries("/purpose/insights/research", data.research),
+    ...fromEntries("/people/team", data.people),
   ];
 
-  const staticPages: MetadataRoute.Sitemap = staticPaths.map((path) => ({
-    url: `${SITE_URL}${path}`,
-  }));
-
-  const sectorPages: MetadataRoute.Sitemap = SECTORS_DATA.map((sector) => ({
-    url: `${SITE_URL}/sector/${sector.slug}`,
-  }));
-
-  const practicePages: MetadataRoute.Sitemap = PRACTICES_DATA.map((practice) => ({
-    url: `${SITE_URL}/practices/${practice.slug}`,
-  }));
-
-  const [projectsResult, newsResult, researchResult, peopleResult] = await Promise.allSettled([
-    withTimeout(getProjectsCards({ limit: 100 }).catch(() => ({ projects: [] })), 4000, { projects: [] }),
-    withTimeout(getNewsListing({ limit: 100 }).catch(() => ({ articles: [] })), 4000, { articles: [] }),
-    withTimeout(getResearchListing().catch(() => ({ articles: [], secondaryResearch: [] })), 4000, { articles: [], secondaryResearch: [] }),
-    withTimeout(getOurPeopleContent().catch(() => ({ people: [] })), 4000, { people: [] }),
-  ]);
-
-  const projectsData = projectsResult.status === "fulfilled" ? projectsResult.value : { projects: [] };
-  const newsData = newsResult.status === "fulfilled" ? newsResult.value : { articles: [] };
-  const researchData = researchResult.status === "fulfilled" ? researchResult.value : { articles: [], secondaryResearch: [] };
-  const peopleData = peopleResult.status === "fulfilled" ? peopleResult.value : { people: [] };
-
-  const projectPages: MetadataRoute.Sitemap = (projectsData.projects || []).map((project) => ({
-    url: `${SITE_URL}/projects/${project.slug}`,
-  }));
-
-  const newsPages: MetadataRoute.Sitemap = (newsData.articles || []).map((article) => ({
-    url: `${SITE_URL}/news/${article.slug}`,
-  }));
-
-  const allResearch = [...(researchData.articles || []), ...(researchData.secondaryResearch || [])];
-  const uniqueResearchSlugs = Array.from(new Set(allResearch.map((research) => research.slug).filter(Boolean)));
-  const researchPages: MetadataRoute.Sitemap = uniqueResearchSlugs.map((slug) => ({
-    url: `${SITE_URL}/purpose/insights/research/${slug}`,
-  }));
-
-  const peoplePages: MetadataRoute.Sitemap = (peopleData.people || []).map((person) => ({
-    url: `${SITE_URL}/people/team/${person.id}`,
-  }));
-
-  return [
-    ...staticPages,
-    ...sectorPages,
-    ...practicePages,
-    ...projectPages,
-    ...newsPages,
-    ...researchPages,
-    ...peoplePages,
-  ];
+  const seen = new Set<string>();
+  return pages.filter((page) => !seen.has(page.url) && Boolean(seen.add(page.url)));
 }
