@@ -90,6 +90,9 @@ export function toImageSource(
     mobile,
     tablet,
     desktop,
+    ...(asset?.mobile2x ? { mobile2x: asset.mobile2x } : {}),
+    ...(asset?.tablet2x ? { tablet2x: asset.tablet2x } : {}),
+    ...(asset?.desktop2x ? { desktop2x: asset.desktop2x } : {}),
     ...(resolvedDimensions ? { dimensions: resolvedDimensions } : {}),
   };
 }

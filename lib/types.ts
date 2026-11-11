@@ -26,6 +26,10 @@ export type ResponsiveImage = {
   mobile: string;
   tablet: string;
   desktop: string;
+  /** Optional 2x (HiDPI) sources per breakpoint, rendered as `srcset` density candidates. */
+  mobile2x?: string;
+  tablet2x?: string;
+  desktop2x?: string;
   /** Intrinsic dimensions of each Craft crop, when its transform is known. */
   dimensions?: ResponsiveImageDimensions;
 };

@@ -68,11 +68,16 @@ export function ResponsiveImage({
     );
   }
 
+  // Density candidates: "<1x> 1x, <2x> 2x" when a HiDPI crop exists, so Retina
+  // screens get the sharper file and standard screens keep the smaller one.
+  const withDensity = (oneX: string, twoX?: string) => (twoX ? `${oneX} 1x, ${twoX} 2x` : oneX);
+
   return (
     <picture>
       {desktopSrcSet && <source media="(min-width: 1024px)" srcSet={desktopSrcSet} />}
-      <source media="(max-width: 767px)" srcSet={src.mobile} />
-      <source media="(max-width: 1199px)" srcSet={src.tablet} />
+      <source media="(max-width: 767px)" srcSet={withDensity(src.mobile, src.mobile2x)} />
+      <source media="(max-width: 1199px)" srcSet={withDensity(src.tablet, src.tablet2x)} />
+      {src.desktop2x && <source srcSet={withDensity(src.desktop, src.desktop2x)} />}
       <img src={src.desktop} alt={computedAlt} {...imageProps} />
     </picture>
   );

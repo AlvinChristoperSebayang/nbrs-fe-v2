@@ -180,9 +180,12 @@ const RESEARCH_DETAIL_QUERY = /* GraphQL */ `
           width
           height
           title
-          mobile: url @transform(width: 768, mode: "fit", format: "webp", quality: 80, immediately: true)
-          tablet: url @transform(width: 1440, mode: "fit", format: "webp", quality: 82, immediately: true)
-          desktop: url @transform(width: 1920, mode: "fit", format: "webp", quality: 85, immediately: true)
+          mobile: url @transform(width: 768, mode: "fit", format: "webp", quality: 90, immediately: true)
+          tablet: url @transform(width: 1440, mode: "fit", format: "webp", quality: 90, immediately: true)
+          desktop: url @transform(width: 1920, mode: "fit", format: "webp", quality: 90, immediately: true)
+          mobile2x: url @transform(width: 1536, mode: "fit", format: "webp", quality: 90, immediately: true)
+          tablet2x: url @transform(width: 2880, mode: "fit", format: "webp", quality: 90, immediately: true)
+          desktop2x: url @transform(width: 3840, mode: "fit", format: "webp", quality: 90, immediately: true)
         }
         artHdrPortraitImage {
           url
